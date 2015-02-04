@@ -7,8 +7,12 @@ template(name="layout")
     .navbar.navbar-inverse.navbar-fixed.top
         .container
             .navbar-header
-                a.navbar-brand Ranavirus
+              a.navbar-brand Ranavirus
+            ul.nav.navbar-nav
+              li
+                a(href="/") Form
+              li
+                a(href="/map") Map
 
     .container
-        h1 Welcome to Meteor!
-        +hello
+        +yield

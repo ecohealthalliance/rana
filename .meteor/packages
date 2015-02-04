@@ -13,3 +13,10 @@ mquandalle:jade
 underscore
 iron:router
 twbs:bootstrap
+aldeed:autoform
+yogiben:autoform-map
+yogiben:autoform-file
+aldeed:collection2
+cfs:standard-packages
+cfs:gridfs
+fuatsengul:leaflet
