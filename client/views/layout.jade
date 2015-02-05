@@ -8,7 +8,8 @@ template(name="layout")
         .container
             .navbar-header
                 a.navbar-brand Ranavirus
+            .navbar-right
+                +loginButtons
 
     .container
-        h1 Welcome to Meteor!
-        +hello
+        +yield

@@ -1,0 +1,9 @@
+template(name="newOrg")
+  if currentUser
+
+    h2 Create an Organization
+
+    +quickForm collection=orgs id="new-org-form" type="insert"
+    
+  else
+    h4 Sign in to create an organization
