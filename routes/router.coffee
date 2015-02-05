@@ -17,3 +17,7 @@ Router.map () ->
       #]
   )
 
+  @route('info',
+    path: '/info'
+    where: 'client'
+  )
