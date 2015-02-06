@@ -7,8 +7,8 @@ Router.route "/org/:orgPath", () ->
     data: () ->
       org: org
       orgs: Orgs
-      orgAdmins: Roles.getUsersInRole "admin", org._id
-      orgUsers: Roles.getUsersInRole "user", org._id
+      orgAdmins: Roles.getUsersInRole "admin", org?._id
+      orgUsers: Roles.getUsersInRole "user", org?._id
   }
     
 
