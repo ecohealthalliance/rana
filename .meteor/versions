@@ -68,6 +68,7 @@ mrt:googlemaps@0.0.2
 observe-sequence@1.0.4
 ordered-dict@1.0.2
 perak:markdown@1.0.4
+proj4:proj4@2.3.4-alpha
 raix:eventemitter@0.1.1
 random@1.0.2
 reactive-dict@1.0.5

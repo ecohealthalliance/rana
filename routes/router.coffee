@@ -17,6 +17,11 @@ Router.map () ->
       #]
   )
 
+  @route('gmapForm',
+    path: '/gmap'
+    where: 'client'
+  )
+
   @route('info',
     path: '/info'
     where: 'client'

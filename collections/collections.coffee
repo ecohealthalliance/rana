@@ -42,10 +42,10 @@ numInvolvedOptions =
   "51_100":	"51 to 100"
   "101_500":	"101 to 500"
   "500_":	"more than 500"
-ageClasses = 
+ageClasses =
   "Egg": """
   Egg:
-  Includes samples from early embryonic development in the case of amphibians. 
+  Includes samples from early embryonic development in the case of amphibians.
   """
   "Larvae/Hatchling": """
   Larvae/Hatchling:
@@ -80,7 +80,7 @@ ranavirusConfirmMethods =
   grown in tissue culture and the cytopathic effect observed in the cells.
   The cells were then subsequently harvested and the presence of
   ranavirus virions was confirmed through other methods
-  (e.g. PCR or electron microscopy). 
+  (e.g. PCR or electron microscopy).
   """
   "Sequencing": """
   Sequencing:
@@ -93,7 +93,7 @@ ranavirusConfirmMethods =
   The presence of pox-like
   (i.e. icosahedral virus particles)
   particles in tissue samples taken directly from an infected animal
-  or samples of virus isolate obtained through virus isolation and culture. 
+  or samples of virus isolate obtained through virus isolation and culture.
   """
   #TODO: Definition in progress?
   "In Situ Hybridization": """
@@ -114,7 +114,7 @@ sampleTypes =
   Internal Swabs:
   A wet or dry swab taken from a body cavity, either during necropsy or during
   routine sampling. Internal swabs include oropharyngeal swabs, rectal swabs,
-  swabs taken from the lumen or surface of the internal organs. 
+  swabs taken from the lumen or surface of the internal organs.
   """
   externalSwabs: """
   External Swabs:
@@ -131,7 +131,7 @@ sampleTypes =
   """
   blood: """
   Blood:
-  Blood obtained during a necropsy or from a live animal, uncontaminated by other tissue types. 
+  Blood obtained during a necropsy or from a live animal, uncontaminated by other tissue types.
   """
   other: """
   Other:
@@ -163,13 +163,13 @@ sampleTypes =
   institutionAddress:
     label: """
     Enter the name and full address of the institution,
-    diagnostic lab or government agency of the person that is reporting the current case. 
+    diagnostic lab or government agency of the person that is reporting the current case.
     """
     type: Object
     optional: true
-  'institutionAddress.name': 
+  'institutionAddress.name':
     type: String
-  'institutionAddress.street': 
+  'institutionAddress.street':
     type: String
   'institutionAddress.street2':
     type: String,
@@ -216,7 +216,34 @@ sampleTypes =
         geolocation: true
         searchBox: true
         autolocate: true
-  eventCountry: 
+  locationSource:
+    type: String
+    autoform:
+      afFieldInput:
+        type: "hidden"
+      afFormGroup:
+        label: false
+  lon:
+    type: Number
+    decimal: true
+    label: 'Lon'
+  lat:
+    type: Number
+    decimal: true
+    label: 'Lat'
+  northing:
+    type: Number
+    decimal: true
+    label: 'Northing'
+  easting:
+    type: Number
+    decimal: true
+    label: 'Easting'
+  zone:
+    type: Number
+    decimal: true
+    label: 'Zone'
+  eventCountry:
     label: """
     Please provide the country where the event occurred.
     """
@@ -385,7 +412,7 @@ sampleTypes =
     #TODO: This label is shown above each item and I can't figure out how to hide it.
     label: """
     Images from mortality events or of lesions on individual animals from
-    the mortality event being reported can be shared here. 
+    the mortality event being reported can be shared here.
     Please do not share images that you do not want other users to see and/or potentially use.
     """
   'images.$':
@@ -401,10 +428,10 @@ sampleTypes =
   genBankAccessionNumbers:
     type: Array
     optional: true
-    label: """  
+    label: """
     Please provide the GenBank Accession numbers of
     the sequences associated with the current event being reported
-    if they are available. 
+    if they are available.
     """
   'genBankAccessionNumbers.$':
     type: Object
@@ -421,7 +448,7 @@ sampleTypes =
         "Do not share"
         #TODO: Describe what we will obfuscate
         "Share obfuscated"
-        "Share full record" 
+        "Share full record"
       ].map((value)-> {label:value, value: value})
       afFieldInput:
         noselect: true

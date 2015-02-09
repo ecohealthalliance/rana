@@ -21,3 +21,4 @@ cfs:standard-packages
 cfs:gridfs
 fuatsengul:leaflet
 perak:markdown
+proj4:proj4
