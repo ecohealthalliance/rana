@@ -2,4 +2,4 @@ Router.configure
   layoutTemplate: "layout"
 
 Router.route "/", () ->
-  Router.go "/org/rana"
+  Router.go "/group/rana"

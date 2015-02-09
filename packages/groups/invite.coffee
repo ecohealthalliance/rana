@@ -1,4 +1,4 @@
-Orgs = @Orgs
+Groups = @Groups
 
 Invites = new Mongo.Collection 'invites'
 
@@ -7,7 +7,7 @@ InviteSchema = new SimpleSchema {
     type: String
     regEx: SimpleSchema.RegEx.Email
     label: "Invite a user by email"
-  org:
+  group:
     type: String
     autoform:
       type: "hidden"
@@ -24,27 +24,27 @@ if Meteor.isServer
   Meteor.methods {
     invite: (doc) ->
       check doc, InviteSchema
-      if Roles.userIsInRole @userId, "admin", doc.org
+      if Roles.userIsInRole @userId, "admin", doc.group
         
-        inviteId = Invites.insert {'email': doc.email, 'org': doc.org}
-        orgName = Orgs.findOne(doc.org).name
+        inviteId = Invites.insert {'email': doc.email, 'group': doc.group}
+        groupName = Groups.findOne(doc.group).name
 
         userEmail = Meteor.users.findOne(@userId).emails[0].address
 
         Email.send {
-          from: "#{orgName} Administrator"
+          from: "#{groupName} Administrator"
           to: doc.email
-          subject: "Join #{orgName}"
-          text: "You have been invited to #{orgName} by #{userEmail}. Visit #{Meteor.absoluteUrl()}join/#{inviteId} to join."
+          subject: "Join #{groupName}"
+          text: "You have been invited to #{groupName} by #{userEmail}. Visit #{Meteor.absoluteUrl()}join/#{inviteId} to join."
         }
       else
-        throw new Meteor.Error "403", "user is not an org admin"
+        throw new Meteor.Error "403", "user is not a group admin"
         
     join: (inviteId) ->
       if @userId
         invite = Invites.findOne inviteId
         if invite
-          Roles.addUsersToRoles @userId, "user", invite.org
+          Roles.addUsersToRoles @userId, "user", invite.group
           Invites.remove invite._id
         else
           throw new Meteor.Error "404", "invite not found"

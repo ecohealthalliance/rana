@@ -1,6 +1,6 @@
-Orgs = new Mongo.Collection 'organizations'
+Groups = new Mongo.Collection 'groups'
 
-Orgs.allow {
+Groups.allow {
   insert: (userId, doc) ->
     if userId
       true
@@ -9,28 +9,28 @@ Orgs.allow {
       true
 }
 
-Orgs.after.insert (userId, doc) ->
+Groups.after.insert (userId, doc) ->
   Roles.addUsersToRoles userId, 'admin', @._id
 
-OrgSchema = new SimpleSchema {
+GroupSchema = new SimpleSchema {
   name: {
     type: String
-    label: "Organization name"
+    label: "Group name"
     max: 100
   },
   path: {
     type: String
-    label: "URL path for the organization - #{Meteor.absoluteUrl('org/*path*')}"
+    label: "URL path for the group - #{Meteor.absoluteUrl('group/*path*')}"
     max: 20
     unique: true
   },
   description: {
     type: String
-    label: "Short description of the organization"
+    label: "Short description of the group"
     max: 200
   }
 }
 
-Orgs.attachSchema OrgSchema
+Groups.attachSchema GroupSchema
 
-@Orgs = Orgs
+@Groups = Groups

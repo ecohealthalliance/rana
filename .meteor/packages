@@ -12,6 +12,6 @@ mquandalle:jade
 underscore
 iron:router
 twbs:bootstrap
-organizations
 accounts-password
 accounts-ui
+groups
