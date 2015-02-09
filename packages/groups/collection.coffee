@@ -10,7 +10,7 @@ Groups.allow {
 }
 
 Groups.after.insert (userId, doc) ->
-  Roles.addUsersToRoles userId, 'admin', @._id
+  Roles.addUsersToRoles userId, ['admin', 'user'], @._id
 
 GroupSchema = new SimpleSchema {
   name: {
