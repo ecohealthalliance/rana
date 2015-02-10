@@ -92,7 +92,7 @@ ranavirusConfirmMethods =
   "Immunohistochemistry": """
   Immunohistochemistry
   """
-  "Other": """
+  other: """
   Other:
   Any other molecular diagnostic tests, not listed here (e.g. ELISA or LUMINEX)
   that has been shown to be a reliable method for determining the presence of live
@@ -144,6 +144,7 @@ AddressSchema = new SimpleSchema(
   'postalCode':
     type: String
     label: "ZIP"
+    regEx: /^[0-9]+$/
 )
 
 @collections.Reports = new Mongo.Collection("reports")
@@ -184,6 +185,7 @@ AddressSchema = new SimpleSchema(
     If this date is unavailable or unknown, then the date that the diagnostic tests were performed can be used.
     """
     type: Date
+    optional: true
   # TODO: I suggest we omit this question.
   # However, there is currently no way to deselect a geopoint, so it might
   # be good for that.
@@ -192,6 +194,7 @@ AddressSchema = new SimpleSchema(
     label: """
     Do you have the coordinates where the carcasses were collected?
     """
+    optional: true
     autoform:
        type: "boolean-radios"
        trueLabel: "Yes"
@@ -201,7 +204,7 @@ AddressSchema = new SimpleSchema(
     Where were the carcasses actually collected or animals sampled?
     Please provide the highest resolution data possible using (UTM or DD coordinates).
     """
-    type: [Number]
+    type: String
     optional: true
     autoform:
       type: 'map'
@@ -215,11 +218,13 @@ AddressSchema = new SimpleSchema(
     Please provide the country where the event occurred.
     """
     type: String
+    optional: true
   populationType:
     label: """
     Type of Population:
     """
     type: String
+    optional: true
     autoform:
       afFieldInput:
         options: _.map(populationTypes, (definition, option)-> {label:definition, value: option})
@@ -229,13 +234,14 @@ AddressSchema = new SimpleSchema(
     Reason for Screening:
     """
     type: String
+    optional: true
     autoform:
       afFieldInput:
         options: _.map(screeningReasons, (definition, option)-> {label:definition, value: option})
         noselect: true
   vertebrateClasses:
     type: Array
-    minCount: 0
+    optional: true
     autoform:
       options: _.map(vertebrateClasses, (definition, option)-> {label:definition, value: option})
       afFieldInput:
@@ -253,16 +259,20 @@ AddressSchema = new SimpleSchema(
   speciesGenus:
     label: "Species Affected Genus"
     type: String
+    optional: true
   speciesName:
     label: "Species Affected Name"
     type: String
+    optional: true
   speciesNotes:
     label: "Species Notes"
     type: String
+    optional: true
     autoform:
       rows: 5
   speciesAffectedType:
     type: String
+    optional: true
     autoform:
       afFieldInput:
         options: [
@@ -284,11 +294,13 @@ AddressSchema = new SimpleSchema(
   numInvolved:
     label: "Estimated Number of Individuals Involved in the Mortality Event"
     type: String
+    optional: true
     autoform:
       afFieldInput:
         options: _.map(numInvolvedOptions, (definition, option)-> {label:definition, value: option})
   ageClasses:
     type: Array
+    optional: true
     autoform:
       options: _.map(ageClasses, (definition, option)-> {label:definition, value: option})
       afFieldInput:
@@ -304,6 +316,7 @@ AddressSchema = new SimpleSchema(
         noselect: true
   ranavirusConfirmMethods:
     type: Array
+    optional: true
     autoform:
       options: _.map(ranavirusConfirmMethods, (definition, option)-> {label:definition, value: option})
       afFieldInput:
@@ -311,32 +324,38 @@ AddressSchema = new SimpleSchema(
   "ranavirusConfirmMethods.$":
     label: "Ranavirus Confirmation Method"
     type: String
-    optional: true
     autoform:
       afFieldInput:
         noselect: true
   specifyOtherRanavirusConfirmationMethods:
     type: [String]
+    optional: true
+    autoform:
+      template: "afFieldValueContains"
+      afFieldValueContains:
+        name: "ranavirusConfirmMethods"
+        value: "other"
   # TODO: Maybe this should be a repeated group bc the spec says:
   # The other section would ideally have an input field for text.
   # It would be very useful if there was a way here to incorporate the number of
   # individuals tested and the results. This could be incorporated into
   # the quality score of the data that we hope to develop.
   sampleType:
-    type: Array
+    type: [String]
+    label: "Type of Sample Used for Ranavirus Confirmation"
+    optional: true
     autoform:
       options: _.map(sampleTypes, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
-  "sampleType.$":
-    label: "Type of Sample Used for Ranavirus Confirmation"
-    type: String
-    optional: true
-    autoform:
-      afFieldInput:
-        noselect: true
   specifyOtherRanavirusSampleTypes:
     type: [String]
+    optional: true
+    autoform:
+      template: "afFieldValueContains"
+      afFieldValueContains:
+        name: "sampleType"
+        value: "other"
   totalAnimalsTested:
     label: """
     Total Number of Animals Tested:
@@ -344,6 +363,7 @@ AddressSchema = new SimpleSchema(
     for the event being reported. Please note that this is per species.
     """
     type: Number
+    optional: true
   totalAnimalsConfirmedInfected:
     label: """
     Total Number of Animals Confirmed Infected:
@@ -352,6 +372,7 @@ AddressSchema = new SimpleSchema(
     and species currently being reported.
     """
     type: Number
+    optional: true
   totalAnimalsConfirmedDiseased:
     label: """
     Total Number of Animals Confirmed Diseased:
@@ -360,11 +381,13 @@ AddressSchema = new SimpleSchema(
     has tested positively for the pathogen during specific diagnostic testing.
     """
     type: Number
+    optional: true
   pathologyReports:
     type: Array
     optional: true
   'pathologyReports.$':
     type: Object
+    optional: true
   'pathologyReports.$.report':
     type: String
     label: """
@@ -372,6 +395,7 @@ AddressSchema = new SimpleSchema(
     Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents.
     If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
     """
+    optional: true
     autoform:
       afFieldInput:
         type: 'fileUpload'
@@ -395,6 +419,8 @@ AddressSchema = new SimpleSchema(
     """
   'images.$':
     type: Object
+    autoform:
+      template: "noLabel"
   'images.$.image':
     type: String
     autoform:
@@ -449,11 +475,12 @@ AddressSchema = new SimpleSchema(
     diagnosed presence of other pathogens, observations of gross pathological signs).
     """
     type: String
+    optional: true
     autoform:
       rows: 5
-    optional: true
   publicationInfo:
     type: Object
+    optional: true
   "publicationInfo.dataPublished":
     type: Boolean
     label: "Publication Status of the Data"
@@ -467,6 +494,8 @@ AddressSchema = new SimpleSchema(
     label: """
     If the data has been published please provide a PDF.
     """
+    # For some reason the optional value on the parent obj doesn't apply to this
+    optional: true
     autoform:
       afFieldInput:
         type: 'fileUpload'
@@ -476,6 +505,7 @@ AddressSchema = new SimpleSchema(
     label: """
     If the data has been published please provide a full reference
     """
+    optional: true
     autoform:
       rows: 3
   # TODO: Case quality score Assigned internally based on algorithm determined by experts
