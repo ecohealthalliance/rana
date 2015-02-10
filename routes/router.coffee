@@ -1,23 +1,28 @@
+getCollections = => @collections
+
 Router.configure
   layoutTemplate: "layout"
 
-Router.map () ->
+Router.route('/form',
+  where: 'client'
+)
 
-  @route('form',
-    path: '/'
-    where: 'client'
-  )
+Router.route('/map',
+  where: 'client'
+  data: ->
+    getCollections().Reports.find({
+        location: { $ne : null }
+      })
+      .map((report)-> {
+        location: report.location.split(',').map(parseFloat)
+        popupHTML: '<a href="">#{report.name}</a>'
+      })
+  #waitOn: ->
+    #[
+      #Meteor.subscribe("reports")
+    #]
+)
 
-  @route('map',
-    path: '/map'
-    where: 'client'
-    #waitOn: ->
-      #[
-        #Meteor.subscribe("reports")
-      #]
-  )
-
-  @route('info',
-    path: '/info'
-    where: 'client'
-  )
+Router.route('/info',
+  where: 'client'
+)

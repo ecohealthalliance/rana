@@ -24,17 +24,6 @@ vertebrateClasses =
   fish:	"Fish"
   amphibian:	"Amphibian"
   reptile:	"Reptile (turtles and tortoises, crocodilians, snakes and lizards)"
-speciesTypes =
-  native: """
-  Native: A species that is found inhabiting its accepted, natural species range.
-  """
-  introduced: """
-  Introduced: A species that is present in a geographical area outside of its accepted,
-  natural species range. This category would include farmed animals not native to the area.
-  """
-  captured: """
-  Captured: Any animal that is held in a facility. (e.g. zoological collection, private collection)
-  """
 numInvolvedOptions =
   "1": "1"
   "2_10":	"2 to 10"
@@ -138,6 +127,25 @@ sampleTypes =
   Any other type of sample not listed here. Please specify.
   """
 
+AddressSchema = new SimpleSchema(
+  'name': 
+    type: String
+  'street': 
+    type: String
+  'street2':
+    type: String,
+    optional: true
+  'city':
+    type: String
+  'stateOrProvince':
+    type: String
+  'country':
+    type: String
+  'postalCode':
+    type: String
+    label: "ZIP"
+)
+
 @collections.Reports = new Mongo.Collection("reports")
 @collections.Reports.attachSchema(new SimpleSchema(
   name:
@@ -160,29 +168,15 @@ sampleTypes =
     (This must include the country code.)
     """
     type: String
+    autoform:
+      type: "tel"
   institutionAddress:
     label: """
     Enter the name and full address of the institution,
     diagnostic lab or government agency of the person that is reporting the current case. 
     """
-    type: Object
+    type: AddressSchema
     optional: true
-  'institutionAddress.name': 
-    type: String
-  'institutionAddress.street': 
-    type: String
-  'institutionAddress.street2':
-    type: String,
-    optional: true
-  'institutionAddress.city':
-    type: String
-  'institutionAddress.stateOrProvince':
-    type: String
-  'institutionAddress.country':
-    type: String
-  'institutionAddress.postalCode':
-    type: String
-    label: "ZIP"
   eventDate:
     label: """
     Enter the date when the ranavirus event being reported occurred or was discovered.
@@ -202,9 +196,9 @@ sampleTypes =
        type: "boolean-radios"
        trueLabel: "Yes"
        falseLabel: "No"
-  eventLocaion:
+  eventLocation:
     label: """
-    Where were the carcasses were actually collected or animals were sampled.
+    Where were the carcasses actually collected or animals sampled?
     Please provide the highest resolution data possible using (UTM or DD coordinates).
     """
     type: [Number]
@@ -228,7 +222,7 @@ sampleTypes =
     type: String
     autoform:
       afFieldInput:
-        options: _.map(populationTypes, (value, key)-> {label:value, value: key})
+        options: _.map(populationTypes, (definition, option)-> {label:definition, value: option})
         noselect: true
   screeningReason:
     label: """
@@ -237,13 +231,13 @@ sampleTypes =
     type: String
     autoform:
       afFieldInput:
-        options: _.map(screeningReasons, (value, key)-> {label:value, value: key})
+        options: _.map(screeningReasons, (definition, option)-> {label:definition, value: option})
         noselect: true
   vertebrateClasses:
     type: Array
     minCount: 0
     autoform:
-      options: _.map(vertebrateClasses, (value, key)-> {label:value, value: key})
+      options: _.map(vertebrateClasses, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
   "vertebrateClasses.$":
@@ -262,29 +256,60 @@ sampleTypes =
   speciesName:
     label: "Species Affected Name"
     type: String
-  # TODO: Check about this reply on spec question sheet
-  speciesType:
-    label: "Species Affected Type"
+  speciesNotes:
+    label: "Species Notes"
+    type: String
+    autoform:
+      rows: 5
+  speciesAffectedNativeOrIntroduced:
     type: String
     autoform:
       afFieldInput:
-        options: _.map(speciesTypes, (value, key)-> {label:value, value: key})
+        options: [
+          {
+            label: "native"
+            value: """
+            Native: A species that is found inhabiting its accepted, natural species range.
+            """
+          }
+          {
+            label: "introduced"
+            value: """
+            Introduced: A species that is present in a geographical area outside of its accepted,
+            natural species range. This category would include farmed animals not native to the area.
+            """
+          }
+        ]
+        noselect: true
+  speciesAffectedCapturedOrWild:
+    type: String
+    autoform:
+      afFieldInput:
+        options: [
+          {
+            label: "captured"
+            value: """
+            Captured: Any animal that is held in a facility. (e.g. zoological collection, private collection)
+            """
+          }
+          {
+            label: "wild"
+            value: """
+            Wild
+            """
+          }
+        ]
         noselect: true
   numInvolved:
     label: "Estimated Number of Individuals Involved in the Mortality Event"
     type: String
     autoform:
       afFieldInput:
-        options: _.map(numInvolvedOptions, (value, key)-> {label:value, value: key})
-  speciesNotes:
-    label: "Species Notes"
-    type: String
-    autoform:
-      rows: 5
+        options: _.map(numInvolvedOptions, (definition, option)-> {label:definition, value: option})
   ageClasses:
     type: Array
     autoform:
-      options: _.map(ageClasses, (value, key)-> {label:value, value: key})
+      options: _.map(ageClasses, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
   "ageClasses.$":
@@ -299,11 +324,11 @@ sampleTypes =
   ranavirusConfirmMethods:
     type: Array
     autoform:
-      options: _.map(ranavirusConfirmMethods, (value, key)-> {label:value, value: key})
+      options: _.map(ranavirusConfirmMethods, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
   "ranavirusConfirmMethods.$":
-    label: "General Methods Used to Confirm Ranavirus Presence and Result"
+    label: "Ranavirus Confirmation Method"
     type: String
     optional: true
     autoform:
@@ -319,7 +344,7 @@ sampleTypes =
   sampleType:
     type: Array
     autoform:
-      options: _.map(sampleTypes, (value, key)-> {label:value, value: key})
+      options: _.map(sampleTypes, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
   "sampleType.$":
@@ -382,7 +407,6 @@ sampleTypes =
   images:
     type: Array
     optional: true
-    #TODO: This label is shown above each item and I can't figure out how to hide it.
     label: """
     Images from mortality events or of lesions on individual animals from
     the mortality event being reported can be shared here. 
@@ -396,19 +420,21 @@ sampleTypes =
       afFieldInput:
         type: 'fileUpload'
         collection: 'images'
-  # TODO: Spec says:
-  # It would be great to provide a link to GenBank here.
   genBankAccessionNumbers:
     type: Array
     optional: true
     label: """  
-    Please provide the GenBank Accession numbers of
-    the sequences associated with the current event being reported
-    if they are available. 
+    Please provide the
+    <a href="http://www.ncbi.nlm.nih.gov/genbank/" target="_blank">GenBank</a>
+    Accession numbers of the sequences associated with the current event being
+    reported if they are available. 
     """
+    autoform:
+      template: "htmlLabel"
   'genBankAccessionNumbers.$':
     type: Object
-    label: false
+    autoform:
+      template: "noLabel"
   'genBankAccessionNumbers.$.genBankAccessionNumber':
     type: String
   dataUsePermissions:
@@ -444,16 +470,17 @@ sampleTypes =
     type: String
     autoform:
       rows: 5
+    optional: true
   publicationInfo:
     type: Object
   "publicationInfo.dataPublished":
     type: Boolean
     label: "Publication Status of the Data"
     autoform:
-       type: "boolean-radios"
-       trueLabel: "Published"
-       falseLabel: "Unpublished"
-       value: false
+      type: "boolean-radios"
+      trueLabel: "Published"
+      falseLabel: "Unpublished"
+      value: false
   'publicationInfo.pdf':
     type: String
     label: """
