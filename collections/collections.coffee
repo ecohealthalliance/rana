@@ -261,41 +261,22 @@ AddressSchema = new SimpleSchema(
     type: String
     autoform:
       rows: 5
-  speciesAffectedNativeOrIntroduced:
+  speciesAffectedType:
     type: String
     autoform:
       afFieldInput:
         options: [
           {
-            label: "native"
-            value: """
+            value: "native"
+            label: """
             Native: A species that is found inhabiting its accepted, natural species range.
             """
           }
           {
-            label: "introduced"
-            value: """
+            value: "introduced"
+            label: """
             Introduced: A species that is present in a geographical area outside of its accepted,
             natural species range. This category would include farmed animals not native to the area.
-            """
-          }
-        ]
-        noselect: true
-  speciesAffectedCapturedOrWild:
-    type: String
-    autoform:
-      afFieldInput:
-        options: [
-          {
-            label: "captured"
-            value: """
-            Captured: Any animal that is held in a facility. (e.g. zoological collection, private collection)
-            """
-          }
-          {
-            label: "wild"
-            value: """
-            Wild
             """
           }
         ]
