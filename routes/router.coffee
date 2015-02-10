@@ -3,6 +3,8 @@ getCollections = => @collections
 Router.configure
   layoutTemplate: "layout"
 
+Router.route('/', ()-> @redirect('/form'))
+
 Router.route('/form',
   where: 'client'
 )
@@ -11,12 +13,14 @@ Router.route('/map',
   where: 'client'
   data: ->
     getCollections().Reports.find({
-        location: { $ne : null }
-      })
-      .map((report)-> {
-        location: report.location.split(',').map(parseFloat)
-        popupHTML: '<a href="">#{report.name}</a>'
-      })
+      eventLocation: { $ne : null },
+      dataUsePermissions: "Share full record",
+      consent: true
+    })
+    .map((report)-> {
+      location: report.eventLocation.split(',').map(parseFloat)
+      popupHTML: """<a href="">#{report.name}</a>"""
+    })
   #waitOn: ->
     #[
       #Meteor.subscribe("reports")
