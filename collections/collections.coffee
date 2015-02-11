@@ -22,7 +22,7 @@ screeningReasons =
   mortality: """
   Mortality: Any event where ranaviral disease or infection is associated with animal death either through disease or other natural processes. May involve as few as one individual to as many as hundreds.
   """
-  routine: "Routine Disease Surveillance"
+  routine: 'Routine Disease Surveillance'
 
 vertebrateClasses =
   fish:	'Fish'
