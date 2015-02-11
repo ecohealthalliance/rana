@@ -9,9 +9,6 @@ Groups.allow {
       true
 }
 
-Groups.after.insert (userId, doc) ->
-  Roles.addUsersToRoles userId, ['admin', 'user'], @._id
-
 GroupSchema = new SimpleSchema {
   name: {
     type: String
@@ -20,9 +17,10 @@ GroupSchema = new SimpleSchema {
   },
   path: {
     type: String
-    label: "URL path for the group - #{Meteor.absoluteUrl('group/*path*')}"
-    max: 20
     unique: true
+    autoform:
+      type: "hidden"
+      label: false
   },
   description: {
     type: String
@@ -31,6 +29,12 @@ GroupSchema = new SimpleSchema {
   }
 }
 
+Groups.before.insert (userId, doc) ->
+  doc.path = doc.name.toLowerCase().replace /[^a-z0-9]+/g, '-'
+
+Groups.after.insert (userId, doc) ->
+  Roles.addUsersToRoles userId, ['admin', 'user'], @._id
+                      
 Groups.attachSchema GroupSchema
 
 @Groups = Groups
