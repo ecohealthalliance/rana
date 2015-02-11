@@ -488,7 +488,6 @@ AddressSchema = new SimpleSchema(
       type: "boolean-radios"
       trueLabel: "Published"
       falseLabel: "Unpublished"
-      value: false
   'publicationInfo.pdf':
     type: String
     label: """
