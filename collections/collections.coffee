@@ -1,10 +1,13 @@
 @collections = {}
+
 @collections.Images = new FS.Collection("images",
   stores: [new FS.Store.GridFS("images", {})]
 )
+
 @collections.Files = new FS.Collection("files",
   stores: [new FS.Store.GridFS("files", {})]
 )
+
 populationTypes =
   wild:	"""
   Wild: Animals living in the natural environment, this includes lakes, ponds, garden ponds, rivers etc. Animals living in this type of environment may or may not be subject to active management.
@@ -20,50 +23,53 @@ screeningReasons =
   Mortality: Any event where ranaviral disease or infection is associated with animal death either through disease or other natural processes. May involve as few as one individual to as many as hundreds.
   """
   routine: "Routine Disease Surveillance"
+
 vertebrateClasses =
-  fish:	"Fish"
-  amphibian:	"Amphibian"
-  reptile:	"Reptile (turtles and tortoises, crocodilians, snakes and lizards)"
+  fish:	'Fish'
+  amphibian:	'Amphibian'
+  reptile:	'Reptile (turtles and tortoises, crocodilians, snakes and lizards)'
+
 numInvolvedOptions =
-  "1": "1"
-  "2_10":	"2 to 10"
-  "11_50":	"11 to 50"
-  "51_100":	"51 to 100"
-  "101_500":	"101 to 500"
-  "500_":	"more than 500"
+  '1': '1'
+  '2_10':	'2 to 10'
+  '11_50':	'11 to 50'
+  '51_100':	'51 to 100'
+  '101_500':	'101 to 500'
+  '500_':	'more than 500'
+
 ageClasses =
-  "Egg": """
+  'Egg': """
   Egg:
   Includes samples from early embryonic development in the case of amphibians.
   """
-  "Larvae/Hatchling": """
+  'Larvae/Hatchling': """
   Larvae/Hatchling:
   Early developmental stages after hatching from the egg or egg jelly
   but before they are conventionally considered to be juveniles,
   meaning that they retain larval/hatchling characteristics.
   """
-  "Juvenile": """
+  'Juvenile': """
   Juvenile:
   Animals that have grown beyond the larval/hatchling stage, resembling adults,
   but are not yet sexually mature. In the case of amphibians,
   this would include individuals in which the forelimbs have emerged.
   """
-  "Adult": """
+  'Adult': """
   Adult:
   Any sexually mature animal.
   It does not have to have achieved the maximum adult size.
   """
 ranavirusConfirmMethods =
-  "Traditional PCR": """
+  'Traditional PCR': """
   Traditional PCR:
   Polymerase chain reaction assay where the products are quantified using gel electrophoresis.
   """
-  "Quantitative Real Time PCR": """
+  'Quantitative Real Time PCR': """
   Quantitative Real Time PCR:
   Polymerase chain reaction assay where the amount of product is measured throughout the assay.
   Often referred to as TaqMan PCR.
   """
-  "Virus Isolation": """
+  'Virus Isolation': """
   Virus Isolation:
   Ranavirus particles were isolated from infected tissue,
   grown in tissue culture and the cytopathic effect observed in the cells.
@@ -71,13 +77,13 @@ ranavirusConfirmMethods =
   ranavirus virions was confirmed through other methods
   (e.g. PCR or electron microscopy).
   """
-  "Sequencing": """
+  'Sequencing': """
   Sequencing:
   After the presence of the ranavirus is determined,
   analysis of the viral sequence is performed and the sequences
   are similar to one or more ranavirus isolates available on GenBank.
   """
-  "Electron Microscopy": """
+  'Electron Microscopy': """
   Electron Microscopy:
   The presence of pox-like
   (i.e. icosahedral virus particles)
@@ -85,19 +91,20 @@ ranavirusConfirmMethods =
   or samples of virus isolate obtained through virus isolation and culture.
   """
   #TODO: Definition in progress?
-  "In Situ Hybridization": """
+  'In Situ Hybridization': """
   In Situ Hybridization
   """
   #TODO: Definition in progress?
-  "Immunohistochemistry": """
+  'Immunohistochemistry': """
   Immunohistochemistry
   """
-  other: """
+  'other': """
   Other:
   Any other molecular diagnostic tests, not listed here (e.g. ELISA or LUMINEX)
   that has been shown to be a reliable method for determining the presence of live
   or preserved ranavirus particles.
   """
+
 sampleTypes =
   internalSwabs: """
   Internal Swabs:
@@ -277,13 +284,13 @@ AddressSchema = new SimpleSchema(
       afFieldInput:
         options: [
           {
-            value: "native"
+            value: 'native'
             label: """
             Native: A species that is found inhabiting its accepted, natural species range.
             """
           }
           {
-            value: "introduced"
+            value: 'introduced'
             label: """
             Introduced: A species that is present in a geographical area outside of its accepted,
             natural species range. This category would include farmed animals not native to the area.
@@ -420,7 +427,7 @@ AddressSchema = new SimpleSchema(
   'images.$':
     type: Object
     autoform:
-      template: "noLabel"
+      template: 'noLabel'
   'images.$.image':
     type: String
     autoform:
@@ -437,7 +444,7 @@ AddressSchema = new SimpleSchema(
     reported if they are available.
     """
     autoform:
-      template: "htmlLabel"
+      template: 'htmlLabel'
   'genBankAccessionNumbers.$':
     type: Object
     autoform:
