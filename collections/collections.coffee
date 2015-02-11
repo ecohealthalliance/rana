@@ -150,7 +150,7 @@ AddressSchema = new SimpleSchema(
     type: String
   'postalCode':
     type: String
-    label: "ZIP"
+    label: 'ZIP'
     regEx: /^[0-9]+$/
 )
 
@@ -169,7 +169,7 @@ AddressSchema = new SimpleSchema(
     type: String
     regEx: SimpleSchema.RegEx.Email
     autoform:
-      type: "email"
+      type: 'email'
   phone:
     label: """
     Enter the institutional telephone number of the individual who is reporting the case:
@@ -177,7 +177,7 @@ AddressSchema = new SimpleSchema(
     """
     type: String
     autoform:
-      type: "tel"
+      type: 'tel'
   institutionAddress:
     label: """
     Enter the name and full address of the institution,
@@ -203,9 +203,9 @@ AddressSchema = new SimpleSchema(
     """
     optional: true
     autoform:
-       type: "boolean-radios"
-       trueLabel: "Yes"
-       falseLabel: "No"
+       type: 'boolean-radios'
+       trueLabel: 'Yes'
+       falseLabel: 'No'
   eventLocation:
     label: """
     Where were the carcasses actually collected or animals sampled?
@@ -253,7 +253,7 @@ AddressSchema = new SimpleSchema(
       options: _.map(vertebrateClasses, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
-  "vertebrateClasses.$":
+  'vertebrateClasses.$':
     label: """
     Vertebrate Class(es) Involved
     """
@@ -264,15 +264,15 @@ AddressSchema = new SimpleSchema(
         noselect: true
   # TODO: Dropdown is preferred, but we need genus data for that
   speciesGenus:
-    label: "Species Affected Genus"
+    label: 'Species Affected Genus'
     type: String
     optional: true
   speciesName:
-    label: "Species Affected Name"
+    label: 'Species Affected Name'
     type: String
     optional: true
   speciesNotes:
-    label: "Species Notes"
+    label: 'Species Notes'
     type: String
     optional: true
     autoform:
