@@ -1,7 +1,7 @@
 Groups = @Groups
 Invites = @Invites
 
-Router.route "/group/:groupPath", () ->
+Router.route "/group/:groupPath", ( () ->
   group = Groups.findOne {path: @params.groupPath}
   @render "groupHome", {
     data: () ->
@@ -10,6 +10,10 @@ Router.route "/group/:groupPath", () ->
       groupAdmins: Roles.getUsersInRole "admin", group?._id
       groupUsers: Roles.getUsersInRole "user", group?._id
   }
+), {
+ waitOn: () ->
+  Meteor.subscribe "userData"
+}
     
 
 Router.route "/newGroup", () ->
