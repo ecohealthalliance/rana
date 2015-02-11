@@ -31,10 +31,10 @@ numInvolvedOptions =
   "51_100":	"51 to 100"
   "101_500":	"101 to 500"
   "500_":	"more than 500"
-ageClasses = 
+ageClasses =
   "Egg": """
   Egg:
-  Includes samples from early embryonic development in the case of amphibians. 
+  Includes samples from early embryonic development in the case of amphibians.
   """
   "Larvae/Hatchling": """
   Larvae/Hatchling:
@@ -69,7 +69,7 @@ ranavirusConfirmMethods =
   grown in tissue culture and the cytopathic effect observed in the cells.
   The cells were then subsequently harvested and the presence of
   ranavirus virions was confirmed through other methods
-  (e.g. PCR or electron microscopy). 
+  (e.g. PCR or electron microscopy).
   """
   "Sequencing": """
   Sequencing:
@@ -82,7 +82,7 @@ ranavirusConfirmMethods =
   The presence of pox-like
   (i.e. icosahedral virus particles)
   particles in tissue samples taken directly from an infected animal
-  or samples of virus isolate obtained through virus isolation and culture. 
+  or samples of virus isolate obtained through virus isolation and culture.
   """
   #TODO: Definition in progress?
   "In Situ Hybridization": """
@@ -103,7 +103,7 @@ sampleTypes =
   Internal Swabs:
   A wet or dry swab taken from a body cavity, either during necropsy or during
   routine sampling. Internal swabs include oropharyngeal swabs, rectal swabs,
-  swabs taken from the lumen or surface of the internal organs. 
+  swabs taken from the lumen or surface of the internal organs.
   """
   externalSwabs: """
   External Swabs:
@@ -120,7 +120,7 @@ sampleTypes =
   """
   blood: """
   Blood:
-  Blood obtained during a necropsy or from a live animal, uncontaminated by other tissue types. 
+  Blood obtained during a necropsy or from a live animal, uncontaminated by other tissue types.
   """
   other: """
   Other:
@@ -128,9 +128,9 @@ sampleTypes =
   """
 
 AddressSchema = new SimpleSchema(
-  'name': 
+  'name':
     type: String
-  'street': 
+  'street':
     type: String
   'street2':
     type: String,
@@ -147,7 +147,7 @@ AddressSchema = new SimpleSchema(
     regEx: /^[0-9]+$/
 )
 
-@collections.Reports = new Mongo.Collection("reports")
+@collections.Reports = new Mongo.Collection('reports')
 @collections.Reports.attachSchema(new SimpleSchema(
   name:
     label: """
@@ -174,7 +174,7 @@ AddressSchema = new SimpleSchema(
   institutionAddress:
     label: """
     Enter the name and full address of the institution,
-    diagnostic lab or government agency of the person that is reporting the current case. 
+    diagnostic lab or government agency of the person that is reporting the current case.
     """
     type: AddressSchema
     optional: true
@@ -213,7 +213,7 @@ AddressSchema = new SimpleSchema(
         geolocation: true
         searchBox: true
         autolocate: true
-  eventCountry: 
+  eventCountry:
     label: """
     Please provide the country where the event occurred.
     """
@@ -292,7 +292,7 @@ AddressSchema = new SimpleSchema(
         ]
         noselect: true
   numInvolved:
-    label: "Estimated Number of Individuals Involved in the Mortality Event"
+    label: """Estimated Number of Individuals Involved in the Mortality Event"""
     type: String
     optional: true
     autoform:
@@ -305,7 +305,7 @@ AddressSchema = new SimpleSchema(
       options: _.map(ageClasses, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
-  "ageClasses.$":
+  'ageClasses.$':
     label: """
     Age Class(es) Involved
     """
@@ -321,8 +321,8 @@ AddressSchema = new SimpleSchema(
       options: _.map(ranavirusConfirmMethods, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
-  "ranavirusConfirmMethods.$":
-    label: "Ranavirus Confirmation Method"
+  'ranavirusConfirmMethods.$':
+    label: """Ranavirus Confirmation Method"""
     type: String
     autoform:
       afFieldInput:
@@ -331,10 +331,10 @@ AddressSchema = new SimpleSchema(
     type: [String]
     optional: true
     autoform:
-      template: "afFieldValueContains"
+      template: 'afFieldValueContains'
       afFieldValueContains:
-        name: "ranavirusConfirmMethods"
-        value: "other"
+        name: 'ranavirusConfirmMethods'
+        value: 'other'
   # TODO: Maybe this should be a repeated group bc the spec says:
   # The other section would ideally have an input field for text.
   # It would be very useful if there was a way here to incorporate the number of
@@ -342,7 +342,7 @@ AddressSchema = new SimpleSchema(
   # the quality score of the data that we hope to develop.
   sampleType:
     type: [String]
-    label: "Type of Sample Used for Ranavirus Confirmation"
+    label: 'Type of Sample Used for Ranavirus Confirmation'
     optional: true
     autoform:
       options: _.map(sampleTypes, (definition, option)-> {label:definition, value: option})
@@ -352,10 +352,10 @@ AddressSchema = new SimpleSchema(
     type: [String]
     optional: true
     autoform:
-      template: "afFieldValueContains"
+      template: 'afFieldValueContains'
       afFieldValueContains:
-        name: "sampleType"
-        value: "other"
+        name: 'sampleType'
+        value: 'other'
   totalAnimalsTested:
     label: """
     Total Number of Animals Tested:
@@ -414,7 +414,7 @@ AddressSchema = new SimpleSchema(
     optional: true
     label: """
     Images from mortality events or of lesions on individual animals from
-    the mortality event being reported can be shared here. 
+    the mortality event being reported can be shared here.
     Please do not share images that you do not want other users to see and/or potentially use.
     """
   'images.$':
@@ -430,18 +430,18 @@ AddressSchema = new SimpleSchema(
   genBankAccessionNumbers:
     type: Array
     optional: true
-    label: """  
+    label: """
     Please provide the
     <a href="http://www.ncbi.nlm.nih.gov/genbank/" target="_blank">GenBank</a>
     Accession numbers of the sequences associated with the current event being
-    reported if they are available. 
+    reported if they are available.
     """
     autoform:
       template: "htmlLabel"
   'genBankAccessionNumbers.$':
     type: Object
     autoform:
-      template: "noLabel"
+      template: 'noLabel'
   'genBankAccessionNumbers.$.genBankAccessionNumber':
     type: String
   dataUsePermissions:
@@ -451,10 +451,10 @@ AddressSchema = new SimpleSchema(
     """
     autoform:
       options: [
-        "Do not share"
+        'Do not share'
         #TODO: Describe what we will obfuscate
-        "Share obfuscated"
-        "Share full record" 
+        'Share obfuscated'
+        'Share full record'
       ].map((value)-> {label:value, value: value})
       afFieldInput:
         noselect: true
@@ -465,9 +465,9 @@ AddressSchema = new SimpleSchema(
     the Ranavirus Reporting System website as per the data use permissions?
     """
     autoform:
-       type: "boolean-radios"
-       trueLabel: "Yes, I consent"
-       falseLabel: "No, I do NOT consent"
+       type: 'boolean-radios'
+       trueLabel: 'Yes, I consent'
+       falseLabel: 'No, I do NOT consent'
   additionalNotes:
     label: """
     List additional information (not previously provided) that describes
@@ -481,13 +481,13 @@ AddressSchema = new SimpleSchema(
   publicationInfo:
     type: Object
     optional: true
-  "publicationInfo.dataPublished":
+  'publicationInfo.dataPublished':
     type: Boolean
-    label: "Publication Status of the Data"
+    label: 'Publication Status of the Data'
     autoform:
-      type: "boolean-radios"
-      trueLabel: "Published"
-      falseLabel: "Unpublished"
+      type: 'boolean-radios'
+      trueLabel: 'Published'
+      falseLabel: 'Unpublished'
   'publicationInfo.pdf':
     type: String
     label: """
@@ -501,9 +501,7 @@ AddressSchema = new SimpleSchema(
         collection: 'files'
   'publicationInfo.reference':
     type: String
-    label: """
-    If the data has been published please provide a full reference
-    """
+    label: """If the data has been published please provide a full reference"""
     optional: true
     autoform:
       rows: 3
