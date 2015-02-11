@@ -29,6 +29,10 @@ GroupSchema = new SimpleSchema {
   }
 }
 
+GroupSchema.messages {
+  "notUnique path": "The group name is too similar to an existing group." 
+}
+
 Groups.before.insert (userId, doc) ->
   doc.path = doc.name.toLowerCase().replace /[^a-z0-9]+/g, '-'
 
