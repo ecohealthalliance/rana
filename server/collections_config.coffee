@@ -1,12 +1,11 @@
-@collections.Images.allow
+@collections.Files.allow
   insert: (userId, doc) ->
     true
   download: (userId)->
     true
 
-Meteor.publish 'images', ->
-  collections.Images.find()
+Meteor.publish 'files', ->
+  collections.Files.find()
 
 Meteor.publish 'reports', ->
   collections.Reports.find()
-  
