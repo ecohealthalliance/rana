@@ -24,7 +24,6 @@ email@1.0.5
 fastclick@1.0.2
 follower-livedata@1.0.3
 geojson-utils@1.0.2
-groups@0.0.1
 html-tools@1.0.3
 htmljs@1.0.3
 http@1.0.10
@@ -56,6 +55,7 @@ mquandalle:jade@0.4.1
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
 ordered-dict@1.0.2
+rana:groups@0.0.1
 random@1.0.2
 reactive-dict@1.0.5
 reactive-var@1.0.4
