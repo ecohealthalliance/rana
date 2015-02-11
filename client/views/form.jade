@@ -38,11 +38,13 @@ template(name="form")
 
     +afQuickField name='ranavirusConfirmMethods' id='ranavirusConfirmMethods'
 
-    +afQuickField name='specifyOtherRanavirusConfirmationMethods' id='specifyOtherRanavirusConfirmationMethods'
+    if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+      +afQuickField name='specifyOtherRanavirusConfirmationMethods'
 
     +afQuickField name='sampleType' id='sampleType'
 
-    +afQuickField name='specifyOtherRanavirusSampleTypes' id='specifyOtherRanavirusSampleTypes'
+    if afFieldValueContains name='sampleType' value='other'
+      +afQuickField name='specifyOtherRanavirusSampleTypes'
 
     +afQuickField name='totalAnimalsTested' id='totalAnimalsTested'
 
