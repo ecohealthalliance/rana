@@ -437,18 +437,17 @@ AddressSchema = new SimpleSchema(
   genBankAccessionNumbers:
     type: Array
     optional: true
-    label: """
+    label: () -> Spacebars.SafeString """
     Please provide the
     <a href="http://www.ncbi.nlm.nih.gov/genbank/" target="_blank">GenBank</a>
     Accession numbers of the sequences associated with the current event being
     reported if they are available.
     """
-    autoform:
-      template: 'htmlLabel'
   'genBankAccessionNumbers.$':
     type: Object
     autoform:
-      template: 'noLabel'
+      afFieldInput:
+        label: false
   'genBankAccessionNumbers.$.genBankAccessionNumber':
     type: String
   dataUsePermissions:
