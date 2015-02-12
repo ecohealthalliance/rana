@@ -1,9 +1,5 @@
 @collections = {}
 
-@collections.Images = new FS.Collection("images",
-  stores: [new FS.Store.GridFS("images", {})]
-)
-
 @collections.Files = new FS.Collection("files",
   stores: [new FS.Store.GridFS("files", {})]
 )
@@ -433,7 +429,7 @@ AddressSchema = new SimpleSchema(
     autoform:
       afFieldInput:
         type: 'fileUpload'
-        collection: 'images'
+        collection: 'files'
   genBankAccessionNumbers:
     type: Array
     optional: true

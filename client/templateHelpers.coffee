@@ -1,5 +1,5 @@
-regHelper = Template.registerHelper
-
+# This code is based on the helpers code from autoform:
+# https://github.com/aldeed/meteor-autoform/blob/9447f734f38c47ab47bdc8b630ec4575433ab23b/autoform-helpers.js
 parseOptions = (options, helperName) ->
   hash = (options or {}).hash or {}
   # Find the autoform context
@@ -8,10 +8,7 @@ parseOptions = (options, helperName) ->
   hash.name and AutoForm.Utility.getDefs(afContext.ss, hash.name)
   _.extend {}, afContext, hash
 
-if typeof regHelper != 'function'
-  regHelper = UI.registerHelper
-
-regHelper 'afFieldLabelHTML', (options) ->
+Template.registerHelper 'afFieldLabelHTML', (options) ->
   options = parseOptions(options, 'afFieldLabelText')
   if SimpleSchema._makeGeneric(options.name).slice(-1) == '$'
     # for array items we don't want to inflect the label because
