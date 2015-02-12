@@ -1,0 +1,5 @@
+template(name="afObjectField_noLabel")
+  if afFieldIsInvalid name=this.atts.name
+    .help-block #{afFieldMessage name=this.atts.name}
+
+  +afQuickFields name=this.atts.name label-class='hidden-label'

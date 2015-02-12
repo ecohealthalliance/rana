@@ -446,8 +446,7 @@ AddressSchema = new SimpleSchema(
   'genBankAccessionNumbers.$':
     type: Object
     autoform:
-      afFieldInput:
-        label: false
+      template: 'noLabel'
   'genBankAccessionNumbers.$.genBankAccessionNumber':
     type: String
   dataUsePermissions:
