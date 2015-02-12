@@ -21,3 +21,7 @@ cfs:standard-packages
 cfs:gridfs
 fuatsengul:leaflet
 perak:markdown
+xolvio:webdriver
+eha:autoform-fixtures
+xolvio:cucumber
+velocity:html-reporter
