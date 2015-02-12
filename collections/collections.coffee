@@ -1,7 +1,9 @@
 @collections = {}
+
 @collections.Files = new FS.Collection("files",
   stores: [new FS.Store.GridFS("files", {})]
 )
+
 populationTypes =
   wild:	"""
   Wild: Animals living in the natural environment, this includes lakes, ponds, garden ponds, rivers etc. Animals living in this type of environment may or may not be subject to active management.
@@ -16,91 +18,95 @@ screeningReasons =
   mortality: """
   Mortality: Any event where ranaviral disease or infection is associated with animal death either through disease or other natural processes. May involve as few as one individual to as many as hundreds.
   """
-  routine: "Routine Disease Surveillance"
+  routine: 'Routine Disease Surveillance'
+
 vertebrateClasses =
-  fish:	"Fish"
-  amphibian:	"Amphibian"
-  reptile:	"Reptile (turtles and tortoises, crocodilians, snakes and lizards)"
+  fish:	'Fish'
+  amphibian:	'Amphibian'
+  reptile:	'Reptile (turtles and tortoises, crocodilians, snakes and lizards)'
+
 numInvolvedOptions =
-  "1": "1"
-  "2_10":	"2 to 10"
-  "11_50":	"11 to 50"
-  "51_100":	"51 to 100"
-  "101_500":	"101 to 500"
-  "500_":	"more than 500"
-ageClasses = 
-  "Egg": """
+  '1': '1'
+  '2_10':	'2 to 10'
+  '11_50':	'11 to 50'
+  '51_100':	'51 to 100'
+  '101_500':	'101 to 500'
+  '500_':	'more than 500'
+
+ageClasses =
+  'Egg': """
   Egg:
-  Includes samples from early embryonic development in the case of amphibians. 
+  Includes samples from early embryonic development in the case of amphibians.
   """
-  "Larvae/Hatchling": """
+  'Larvae/Hatchling': """
   Larvae/Hatchling:
   Early developmental stages after hatching from the egg or egg jelly
   but before they are conventionally considered to be juveniles,
   meaning that they retain larval/hatchling characteristics.
   """
-  "Juvenile": """
+  'Juvenile': """
   Juvenile:
   Animals that have grown beyond the larval/hatchling stage, resembling adults,
   but are not yet sexually mature. In the case of amphibians,
   this would include individuals in which the forelimbs have emerged.
   """
-  "Adult": """
+  'Adult': """
   Adult:
   Any sexually mature animal.
   It does not have to have achieved the maximum adult size.
   """
 ranavirusConfirmMethods =
-  "Traditional PCR": """
+  'Traditional PCR': """
   Traditional PCR:
   Polymerase chain reaction assay where the products are quantified using gel electrophoresis.
   """
-  "Quantitative Real Time PCR": """
+  'Quantitative Real Time PCR': """
   Quantitative Real Time PCR:
   Polymerase chain reaction assay where the amount of product is measured throughout the assay.
   Often referred to as TaqMan PCR.
   """
-  "Virus Isolation": """
+  'Virus Isolation': """
   Virus Isolation:
   Ranavirus particles were isolated from infected tissue,
   grown in tissue culture and the cytopathic effect observed in the cells.
   The cells were then subsequently harvested and the presence of
   ranavirus virions was confirmed through other methods
-  (e.g. PCR or electron microscopy). 
+  (e.g. PCR or electron microscopy).
   """
-  "Sequencing": """
+  'Sequencing': """
   Sequencing:
   After the presence of the ranavirus is determined,
   analysis of the viral sequence is performed and the sequences
   are similar to one or more ranavirus isolates available on GenBank.
   """
-  "Electron Microscopy": """
+  'Electron Microscopy': """
   Electron Microscopy:
   The presence of pox-like
   (i.e. icosahedral virus particles)
   particles in tissue samples taken directly from an infected animal
-  or samples of virus isolate obtained through virus isolation and culture. 
+  or samples of virus isolate obtained through virus isolation and culture.
   """
   #TODO: Definition in progress?
-  "In Situ Hybridization": """
+  'In Situ Hybridization': """
   In Situ Hybridization
   """
   #TODO: Definition in progress?
-  "Immunohistochemistry": """
+  'Immunohistochemistry': """
   Immunohistochemistry
   """
-  "Other": """
+  'other': """
   Other:
   Any other molecular diagnostic tests, not listed here (e.g. ELISA or LUMINEX)
   that has been shown to be a reliable method for determining the presence of live
   or preserved ranavirus particles.
   """
+
 sampleTypes =
   internalSwabs: """
   Internal Swabs:
   A wet or dry swab taken from a body cavity, either during necropsy or during
   routine sampling. Internal swabs include oropharyngeal swabs, rectal swabs,
-  swabs taken from the lumen or surface of the internal organs. 
+  swabs taken from the lumen or surface of the internal organs.
   """
   externalSwabs: """
   External Swabs:
@@ -117,7 +123,7 @@ sampleTypes =
   """
   blood: """
   Blood:
-  Blood obtained during a necropsy or from a live animal, uncontaminated by other tissue types. 
+  Blood obtained during a necropsy or from a live animal, uncontaminated by other tissue types.
   """
   other: """
   Other:
@@ -125,9 +131,9 @@ sampleTypes =
   """
 
 AddressSchema = new SimpleSchema(
-  'name': 
+  'name':
     type: String
-  'street': 
+  'street':
     type: String
   'street2':
     type: String,
@@ -140,10 +146,11 @@ AddressSchema = new SimpleSchema(
     type: String
   'postalCode':
     type: String
-    label: "ZIP"
+    label: 'ZIP'
+    regEx: /^[0-9]+$/
 )
 
-@collections.Reports = new Mongo.Collection("reports")
+@collections.Reports = new Mongo.Collection('reports')
 @collections.Reports.attachSchema(new SimpleSchema(
   name:
     label: """
@@ -158,7 +165,7 @@ AddressSchema = new SimpleSchema(
     type: String
     regEx: SimpleSchema.RegEx.Email
     autoform:
-      type: "email"
+      type: 'email'
   phone:
     label: """
     Enter the institutional telephone number of the individual who is reporting the case:
@@ -166,11 +173,11 @@ AddressSchema = new SimpleSchema(
     """
     type: String
     autoform:
-      type: "tel"
+      type: 'tel'
   institutionAddress:
     label: """
     Enter the name and full address of the institution,
-    diagnostic lab or government agency of the person that is reporting the current case. 
+    diagnostic lab or government agency of the person that is reporting the current case.
     """
     type: AddressSchema
     optional: true
@@ -181,6 +188,7 @@ AddressSchema = new SimpleSchema(
     If this date is unavailable or unknown, then the date that the diagnostic tests were performed can be used.
     """
     type: Date
+    optional: true
   # TODO: I suggest we omit this question.
   # However, there is currently no way to deselect a geopoint, so it might
   # be good for that.
@@ -189,16 +197,17 @@ AddressSchema = new SimpleSchema(
     label: """
     Do you have the coordinates where the carcasses were collected?
     """
+    optional: true
     autoform:
-       type: "boolean-radios"
-       trueLabel: "Yes"
-       falseLabel: "No"
+       type: 'boolean-radios'
+       trueLabel: 'Yes'
+       falseLabel: 'No'
   eventLocation:
     label: """
     Where were the carcasses actually collected or animals sampled?
     Please provide the highest resolution data possible using (UTM or DD coordinates).
     """
-    type: [Number]
+    type: String
     optional: true
     autoform:
       type: 'map'
@@ -207,16 +216,18 @@ AddressSchema = new SimpleSchema(
         geolocation: true
         searchBox: true
         autolocate: true
-  eventCountry: 
+  eventCountry:
     label: """
     Please provide the country where the event occurred.
     """
     type: String
+    optional: true
   populationType:
     label: """
     Type of Population:
     """
     type: String
+    optional: true
     autoform:
       afFieldInput:
         options: _.map(populationTypes, (definition, option)-> {label:definition, value: option})
@@ -226,18 +237,19 @@ AddressSchema = new SimpleSchema(
     Reason for Screening:
     """
     type: String
+    optional: true
     autoform:
       afFieldInput:
         options: _.map(screeningReasons, (definition, option)-> {label:definition, value: option})
         noselect: true
   vertebrateClasses:
     type: Array
-    minCount: 0
+    optional: true
     autoform:
       options: _.map(vertebrateClasses, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
-  "vertebrateClasses.$":
+  'vertebrateClasses.$':
     label: """
     Vertebrate Class(es) Involved
     """
@@ -248,29 +260,33 @@ AddressSchema = new SimpleSchema(
         noselect: true
   # TODO: Dropdown is preferred, but we need genus data for that
   speciesGenus:
-    label: "Species Affected Genus"
+    label: 'Species Affected Genus'
     type: String
+    optional: true
   speciesName:
-    label: "Species Affected Name"
+    label: 'Species Affected Name'
     type: String
+    optional: true
   speciesNotes:
-    label: "Species Notes"
+    label: 'Species Notes'
     type: String
+    optional: true
     autoform:
       rows: 5
   speciesAffectedType:
     type: String
+    optional: true
     autoform:
       afFieldInput:
         options: [
           {
-            value: "native"
+            value: 'native'
             label: """
             Native: A species that is found inhabiting its accepted, natural species range.
             """
           }
           {
-            value: "introduced"
+            value: 'introduced'
             label: """
             Introduced: A species that is present in a geographical area outside of its accepted,
             natural species range. This category would include farmed animals not native to the area.
@@ -279,18 +295,20 @@ AddressSchema = new SimpleSchema(
         ]
         noselect: true
   numInvolved:
-    label: "Estimated Number of Individuals Involved in the Mortality Event"
+    label: """Estimated Number of Individuals Involved in the Mortality Event"""
     type: String
+    optional: true
     autoform:
       afFieldInput:
         options: _.map(numInvolvedOptions, (definition, option)-> {label:definition, value: option})
   ageClasses:
     type: Array
+    optional: true
     autoform:
       options: _.map(ageClasses, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
-  "ageClasses.$":
+  'ageClasses.$':
     label: """
     Age Class(es) Involved
     """
@@ -301,39 +319,46 @@ AddressSchema = new SimpleSchema(
         noselect: true
   ranavirusConfirmMethods:
     type: Array
+    optional: true
     autoform:
       options: _.map(ranavirusConfirmMethods, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
-  "ranavirusConfirmMethods.$":
-    label: "Ranavirus Confirmation Method"
+  'ranavirusConfirmMethods.$':
+    label: """Ranavirus Confirmation Method"""
     type: String
-    optional: true
     autoform:
       afFieldInput:
         noselect: true
   specifyOtherRanavirusConfirmationMethods:
     type: [String]
+    optional: true
+    autoform:
+      template: 'afFieldValueContains'
+      afFieldValueContains:
+        name: 'ranavirusConfirmMethods'
+        value: 'other'
   # TODO: Maybe this should be a repeated group bc the spec says:
   # The other section would ideally have an input field for text.
   # It would be very useful if there was a way here to incorporate the number of
   # individuals tested and the results. This could be incorporated into
   # the quality score of the data that we hope to develop.
   sampleType:
-    type: Array
+    type: [String]
+    label: 'Type of Sample Used for Ranavirus Confirmation'
+    optional: true
     autoform:
       options: _.map(sampleTypes, (definition, option)-> {label:definition, value: option})
       afFieldInput:
         noselect: true
-  "sampleType.$":
-    label: "Type of Sample Used for Ranavirus Confirmation"
-    type: String
-    optional: true
-    autoform:
-      afFieldInput:
-        noselect: true
   specifyOtherRanavirusSampleTypes:
     type: [String]
+    optional: true
+    autoform:
+      template: 'afFieldValueContains'
+      afFieldValueContains:
+        name: 'sampleType'
+        value: 'other'
   totalAnimalsTested:
     label: """
     Total Number of Animals Tested:
@@ -341,6 +366,7 @@ AddressSchema = new SimpleSchema(
     for the event being reported. Please note that this is per species.
     """
     type: Number
+    optional: true
   totalAnimalsConfirmedInfected:
     label: """
     Total Number of Animals Confirmed Infected:
@@ -349,6 +375,7 @@ AddressSchema = new SimpleSchema(
     and species currently being reported.
     """
     type: Number
+    optional: true
   totalAnimalsConfirmedDiseased:
     label: """
     Total Number of Animals Confirmed Diseased:
@@ -357,11 +384,13 @@ AddressSchema = new SimpleSchema(
     has tested positively for the pathogen during specific diagnostic testing.
     """
     type: Number
+    optional: true
   pathologyReports:
     type: Array
     optional: true
   'pathologyReports.$':
     type: Object
+    optional: true
   'pathologyReports.$.report':
     type: String
     label: """
@@ -369,6 +398,7 @@ AddressSchema = new SimpleSchema(
     Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents.
     If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
     """
+    optional: true
     autoform:
       afFieldInput:
         type: 'fileUpload'
@@ -387,11 +417,13 @@ AddressSchema = new SimpleSchema(
     optional: true
     label: """
     Images from mortality events or of lesions on individual animals from
-    the mortality event being reported can be shared here. 
+    the mortality event being reported can be shared here.
     Please do not share images that you do not want other users to see and/or potentially use.
     """
   'images.$':
     type: Object
+    autoform:
+      template: 'noLabel'
   'images.$.image':
     type: String
     autoform:
@@ -401,18 +433,16 @@ AddressSchema = new SimpleSchema(
   genBankAccessionNumbers:
     type: Array
     optional: true
-    label: """  
+    label: () -> Spacebars.SafeString """
     Please provide the
     <a href="http://www.ncbi.nlm.nih.gov/genbank/" target="_blank">GenBank</a>
     Accession numbers of the sequences associated with the current event being
-    reported if they are available. 
+    reported if they are available.
     """
-    autoform:
-      template: "htmlLabel"
   'genBankAccessionNumbers.$':
     type: Object
     autoform:
-      template: "noLabel"
+      template: 'noLabel'
   'genBankAccessionNumbers.$.genBankAccessionNumber':
     type: String
   dataUsePermissions:
@@ -422,10 +452,10 @@ AddressSchema = new SimpleSchema(
     """
     autoform:
       options: [
-        "Do not share"
+        'Do not share'
         #TODO: Describe what we will obfuscate
-        "Share obfuscated"
-        "Share full record" 
+        'Share obfuscated'
+        'Share full record'
       ].map((value)-> {label:value, value: value})
       afFieldInput:
         noselect: true
@@ -436,9 +466,9 @@ AddressSchema = new SimpleSchema(
     the Ranavirus Reporting System website as per the data use permissions?
     """
     autoform:
-       type: "boolean-radios"
-       trueLabel: "Yes, I consent"
-       falseLabel: "No, I do NOT consent"
+       type: 'boolean-radios'
+       trueLabel: 'Yes, I consent'
+       falseLabel: 'No, I do NOT consent'
   additionalNotes:
     label: """
     List additional information (not previously provided) that describes
@@ -446,33 +476,34 @@ AddressSchema = new SimpleSchema(
     diagnosed presence of other pathogens, observations of gross pathological signs).
     """
     type: String
+    optional: true
     autoform:
       rows: 5
-    optional: true
   publicationInfo:
     type: Object
-  "publicationInfo.dataPublished":
+    optional: true
+  'publicationInfo.dataPublished':
     type: Boolean
-    label: "Publication Status of the Data"
+    label: 'Publication Status of the Data'
     autoform:
-      type: "boolean-radios"
-      trueLabel: "Published"
-      falseLabel: "Unpublished"
-      value: false
+      type: 'boolean-radios'
+      trueLabel: 'Published'
+      falseLabel: 'Unpublished'
   'publicationInfo.pdf':
     type: String
     label: """
     If the data has been published please provide a PDF.
     """
+    # For some reason the optional value on the parent obj doesn't apply to this
+    optional: true
     autoform:
       afFieldInput:
         type: 'fileUpload'
         collection: 'files'
   'publicationInfo.reference':
     type: String
-    label: """
-    If the data has been published please provide a full reference
-    """
+    label: """If the data has been published please provide a full reference"""
+    optional: true
     autoform:
       rows: 3
   # TODO: Case quality score Assigned internally based on algorithm determined by experts
