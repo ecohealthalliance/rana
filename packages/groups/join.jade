@@ -1,0 +1,11 @@
+template(name="join")
+  if invite
+  
+    if currentUser
+      button.btn.btn-primary.btn-large.join-button Join #{group.name}
+    
+    else
+      h4 Sign in or create an account to join #{group.name}
+
+  else
+    .alert.alert-danger Invite is invalid or has already been used

@@ -1,0 +1,9 @@
+template(name="newGroup")
+  if currentUser
+
+    h2 Create a Group
+
+    +quickForm collection=groups id="new-group-form" type="insert"
+    
+  else
+    h4 Sign in to create a group

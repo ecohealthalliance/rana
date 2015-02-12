@@ -6,10 +6,12 @@
 
 meteor-platform
 autopublish
-insecure
 coffeescript
 stylus
 mquandalle:jade
 underscore
 iron:router
 twbs:bootstrap
+accounts-password
+accounts-ui
+rana:groups
