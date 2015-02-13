@@ -17,6 +17,7 @@ Package.onUse(function(api) {
   api.use('aldeed:autoform@4.2.2');
   api.use('alanning:roles@1.2.11');
   api.use('matb33:collection-hooks@0.7.5');
+  api.use('useraccounts:core@1.7.0');
   
   api.addFiles("users.coffee", ['client', 'server']);
   api.addFiles('collection.coffee', ['client', 'server']);

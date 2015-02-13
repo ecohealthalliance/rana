@@ -1,0 +1,1 @@
+AccountsTemplates.configureRoute "signIn"

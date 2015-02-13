@@ -21,6 +21,8 @@ Router.route "/group/:groupPath", {
 Router.route "/newGroup", {
   data: () ->
     groups: Groups
+    
+  onBeforeAction: AccountsTemplates.ensureSignedIn
 }
 
 Router.route "/join/:inviteId", {
@@ -30,5 +32,7 @@ Router.route "/join/:inviteId", {
     invite = Invites.findOne(@params.inviteId)
       
     invite: invite
-    group: Groups.findOne(invite?.group)    
+    group: Groups.findOne(invite?.group)  
+  
+  onBeforeAction: AccountsTemplates.ensureSignedIn
 }
