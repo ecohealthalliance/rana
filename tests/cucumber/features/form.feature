@@ -8,3 +8,9 @@ Feature: A form for reporting Ranavirus outbreaks
     When I fill out the form with the name "Test user"
     And I click submit
     Then the database should have a report with the name "Test user"
+
+  Scenario: Submitting an invalid ranavirus form
+    Given I am on the "form" page
+    When I fill out the form with the email "invalid"
+    And I click submit
+    Then the database should not have a report with the email "invalid"

@@ -6,6 +6,19 @@
 
     var helper = this;
 
+    var _resetTestDB = Meteor.bindEnvironment(function(next) {
+      var connection = DDP.connect(helper.world.cucumber.mirror.host);
+      connection.call('/fixtures/resetDB', function(err) {
+        if (err) {
+          console.log(err);
+          next.fail('Error in /fixtures/resetDB DDP call to ' + helper.world.cucumber.mirror.host, err);
+        } else {
+          next();
+        }
+        connection.disconnect();
+      });
+    });
+
     this.Before(function () {
       var world = helper.world;
       var next = arguments[arguments.length - 1];
@@ -15,7 +28,10 @@
           width: 1280,
           height: 1024
         }).
-        call(next);
+        call(function(){
+          _resetTestDB(next);
+        });
+        
     });
 
     this.After(function () {
