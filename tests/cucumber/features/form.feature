@@ -19,12 +19,12 @@ Feature: A form for reporting Ranavirus outbreaks
     Given I am on the "form" page
     When I fill out the form with the telephone number "greater than 15 digits"
     And I click submit
-    Then the website should display error, "too many digits"
+    Then the website should display error
     
   Scenario: Submitting an invalid ranavirus form field 
     Given I am on the "form" page
     When I fill out the form with the telephone number "less than 12 digits"
     And I click submit
-    Then the website should display error, "too few digits"
+    Then the website should display error
       
       
