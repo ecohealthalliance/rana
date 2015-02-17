@@ -15,16 +15,16 @@ Feature: A form for reporting Ranavirus outbreaks
     And I click submit
     Then the database should not have a report with the email "invalid"
 
-Scenario: Submitting an invalid ranavirus form field 
+  Scenario: Submitting an invalid ranavirus form field 
     Given I am on the "form" page
     When I fill out the form with the telephone number "greater than 15 digits"
     And I click submit
-    Then the database should display error, "too many digits"
+    Then the website should display error, "too many digits"
     
     Scenario: Submitting an invalid ranavirus form field 
       Given I am on the "form" page
       When I fill out the form with the telephone number "less than 12 digits"
       And I click submit
-      Then the database should display error, "too few digits"
+      Then the website should display error, "too few digits"
       
       
