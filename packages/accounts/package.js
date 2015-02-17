@@ -16,6 +16,8 @@ Package.onUse(function(api) {
   api.use('accounts-password');
   api.use('useraccounts:core@1.7.0');
   
+  api.addFiles('user_publication.coffee', 'server');
+  
   api.addFiles('profile_schema.coffee', 'client');
   
   api.addFiles('header_buttons.jade', 'client');
