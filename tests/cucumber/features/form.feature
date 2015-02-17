@@ -3,10 +3,15 @@ Feature: A form for reporting Ranavirus outbreaks
   I want to fill out a form to report ranavirus events
   So I can submit the data for analysis
 
-Scenario: Account settings for form reporting 
+Scenario: Submitting a ranavirus form
   Given I am on the "form" page
   If I have not filled out my account information
   Then I will be unable to interact with the form
+
+Scenario: Submitting a ranavirus form
+  Given I am on the "form" page
+  When I begin to type information for the institution fields 
+  Then the institution associated with group account information will be suggested to fill in the institution information
 
   Scenario: Submitting a ranavirus form
     Given I am on the "form" page
