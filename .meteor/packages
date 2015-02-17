@@ -12,8 +12,5 @@ mquandalle:jade
 underscore
 iron:router
 twbs:bootstrap
-accounts-password
 rana:groups
 useraccounts:bootstrap
-aldeed:collection2
-aldeed:autoform
