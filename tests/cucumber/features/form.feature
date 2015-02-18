@@ -26,8 +26,8 @@ Feature: A form for reporting Ranavirus outbreaks
     Then the webpage should display a validation error
     And the database should not have a report with the email "invalid"
     
-  # Are we sure these number of digits won't inadvertantly prevent people
-  # from signing up?
+# Are we sure these number of digits won't inadvertantly prevent people
+# from signing up?
   Scenario: Submitting an invalid phone number
     Given I am on the "form" page
     When I fill out the form with a telephone number greater than 15 digits
@@ -60,7 +60,7 @@ Feature: A form for reporting Ranavirus outbreaks
     When I click submit
     Then the webpage should display a validation error
 
-  Scenario: Submitting a ranavirus form
+  Scenario: Submitting a publication without a reference
     Given I fill out a form
     And I upload a pdf publication
     But I do not provide text for the reference field
