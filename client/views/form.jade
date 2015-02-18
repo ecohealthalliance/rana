@@ -1,70 +1,369 @@
 template(name="form")
 
-  +autoForm collection="collections.Reports" type="insert"
+  .container-fluid
+    form
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title Reporting individual info
+        .panel-body
+          .row
+            .col-lg-4
+              label(for="name") Name
+                  a.more-info(data-toggle="popover" data-placement="bottom" data-content="They must be willing to communicate about the case if so requested.") 
+                    span.glyphicon.glyphicon-question-sign
+              input.form-control(type="text" name="name" )
+            .col-lg-4
+              label(for="email") Email
+              input.form-control(type="text" name="email" placeholder="name@domain.com")
+            .col-lg-4
+              label(for="phone") Phone Number 
+                span.minor-label (Must include the country code)
+              input.form-control(type="phone" name="phone")
+    
 
-    +afQuickField name='name' id='name'
+      .panel.panel-default
+        .panel-heading 
+          h2.panel-title Reporting institution, diagnostic lab or government agency info
+        .panel-body
+          .row
+            .col-lg-5
+              label(for="institutionName") Name
+              input.form-control(type="text" name="institutionName")
+          .row
+            .col-lg-5
+              label(for="street") Street Address
+              input.form-control(type="text" name="street")
+            .col-lg-5
+              label(for="street2") Street Address (2)
+              input.form-control(type="text" name="street2")
+          .row
+            .col-lg-4
+              label(for="city") City
+              input.form-control(type="text" name="city")
+            .col-lg-4
+              label(for="stateOrProvince") State or province
+              input.form-control(type="text" name="stateOrProvince")
+            .col-lg-2
+              label(for="zip") Zip
+              input.form-control(type="text" name="zip")
+          .row
+            .col-lg-4
+              label(for="country") Country
+              input.form-control(type="text" name="country")
 
-    +afQuickField name='email' id='email'
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title Event Date and Location
+        .panel-body
+          .row
+            .col-lg-6
+              .form-group
+                label Report date or occurrence/discovery date of ranavirus event
+                  a.more-info(data-toggle="popover" data-placement="bottom" data-content="This may be the date that carcasses were collected. If this date is unavailable or unknown, then the date that the diagnostic tests were performed can be used.") 
+                    span.glyphicon.glyphicon-question-sign
+                input(type="date" name="eventDate")
+              .form-group
+                label Do you have the coordinates where the carcasses were collected?
+                  .radio
+                    label
+                      input(type="radio" name="coordinatesAvailable" value="false")
+                      span No
+                  .radio.no-margin-btm
+                    label
+                      input(type="radio" name="coordinatesAvailable" value="true")
+                      span Yes
+              .form-group
+                label Where were the carcasses actually collected or animals sampled?
+                  span.minor-label.block Please provide the highest resolution data possible using (UTM or DD coordinates).
+                .row
+                  .col-xs-8
+                    input.form-control(type="text" name="")
+            .col-lg-6
+              +map
 
-    +afQuickField name='phone' id='phone'
+      .row
+        .col-lg-4
+          h3 Type of population:
+          .radio
+            label 
+              input(type="radio" name="populationTypes" value="wild" checked)
+              span Wild
+            a.more-info(data-toggle="popover" data-placement="bottom" data-content="Animals living in the natural environment, this includes lakes, ponds, garden ponds, rivers etc. Animals living in this type of environment may or may not be subject to active management.") 
+                span.glyphicon.glyphicon-question-sign
+          .radio
+            label
+              input(type="radio" name="populationTypes" value="zoological")
+              span Zoological Facility
+            a.more-info(data-toggle="popover" data-placement="bottom" data-content="Animals living in the natural environment, this includes lakes, ponds, garden ponds, rivers etc. Animals living in this type of environment may or may not be subject to active management.") 
+                span.glyphicon.glyphicon-question-sign
+          .radio
+            label
+              input(type="radio" name="populationTypes" value="production") 
+              span Production Facility
+            a.more-info(data-toggle="popover" data-placement="bottom" data-content="Animals living in the natural environment, this includes lakes, ponds, garden ponds, rivers etc. Animals living in this type of environment may or may not be subject to active management.") 
+              span.glyphicon.glyphicon-question-sign
+        .col-lg-4
+          h3 Reason for Screening:
+          .radio
+            label
+              input(type="radio" name="screeningReason" value="mortality" checked) 
+              span Mortality
+            a.more-info(data-toggle="popover" data-placement="bottom" data-content="Any event where ranaviral disease or infection is associated with animal death either through disease or other natural processes. May involve as few as one individual to as many as hundreds.") 
+              span.glyphicon.glyphicon-question-sign
+          .radio
+            label
+              input(type="radio" name="screeningReason" value="routine") 
+              span Routine Disease Surveillance
+        .col-lg-4
+          h3 Vertebrate Classes
+          .checkbox
+            label
+              input(type="checkbox" name="vertebrateClasses" value="fish") 
+              span Fish
+          .checkbox
+            label
+              input(type="checkbox" name="vertebrateClasses" value="amphibian") 
+              span Fish
+          .checkbox
+            label
+              input(type="checkbox" name="vertebrateClasses" value="reptile") 
+              span Reptile
+                a.more-info(data-toggle="popover" data-placement="bottom" data-content="Turtles and tortoises, crocodilians, snakes and lizards")  
+                  span.glyphicon.glyphicon-question-sign
 
-    +afQuickField name='institutionAddress' id='institutionAddress'
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title Species Information
+        .panel-body
+          .row
+            .col-lg-6
+              .form-group
+                label Species Affected Genus
+                input.form-control(type="text" name="speciesName")
 
-    +afQuickField name='eventDate' id='eventDate'
+              .form-group
+                label Species Affected Name
+                input.form-control(type="text" name="speciesGenus")
 
-    +afQuickField name='coordinatesAvailable' id='coordinatesAvailable'
+              .form-group
+                label Estimated Number of Individuals Involved in the Mortality Event
+                select.form-control(name='numInvolved' data-schema-key='numInvolved' autocomplete='off')
+                  option(value='') (Select One)
+                  option(value='1') 1
+                  option(value='2_10') 2 to 10
+                  option(value='11_50') 11 to 50
+                  option(value='51_100') 51 to 100
+                  option(value='101_500') 101 to 500
+                  option(value='500_') more than 500
+            .col-lg-6
+              .form-group
+                label Species Notes
+                textarea(name="speciesNotes").form-control
+      .row
+        .col-lg-4
+          .form-group
+            label.control-label Age classes
+              .checkbox
+                label
+                  input(type='checkbox' value='Egg' name='ageClasses')
+                  span Egg
+                a.more-info(data-toggle="popover" data-placement="bottom" data-content="Includes samples from early embryonic development in the case of amphibians.")  
+                  span.glyphicon.glyphicon-question-sign
+              .checkbox
+                label
+                  input(type='checkbox' value='Larvae/Hatchling' name='ageClasses')
+                  span Larvae/Hatchling
+                a.more-info(data-toggle="popover" data-placement="bottom" data-content="Early developmental stages after hatching from the egg or egg jellybut before they are conventionally considered to be juveniles,meaning that they retain larval/hatchling characteristics.")  
+                  span.glyphicon.glyphicon-question-sign
+              .checkbox
+                label
+                  input(type='checkbox' value='Juvenile' name='ageClasses')
+                  span Juvenile
+                a.more-info(data-toggle="popover" data-placement="bottom" data-content="Animals that have grown beyond the larval/hatchling stage, resembling adults,but are not yet sexually mature. In the case of amphibians,this would include individuals in which the forelimbs have emerged.")  
+                  span.glyphicon.glyphicon-question-sign
+              .checkbox
+                label
+                  input(type='checkbox' value='Adult' name='ageClasses')
+                  span Adult
+                a.more-info(data-toggle="popover" data-placement="bottom" data-content="Any sexually mature animal. It does not have to have achieved the maximum adult size.")  
+                  span.glyphicon.glyphicon-question-sign
+        .col-lg-4
+          .form-group
+            label.control-label Ranavirus confirm methods
+            .checkbox
+              label
+                input#ranavirusConfirmMethods(type='checkbox' value='Traditional PCR' name='ranavirusConfirmMethods')
+                span Traditional PCR
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="Polymerase chain reaction assay where the products are quantified using gel electrophoresis.") 
+                span.glyphicon.glyphicon-question-sign              
 
-    +afQuickField name='eventLocation' id='eventLocation'
+            .checkbox
+              label
+                input#ranavirusConfirmMethods(type='checkbox' value='Quantitative Real Time PCR' name='ranavirusConfirmMethods')
+                span Quantitative Real Time PCR
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="Polymerase chain reaction assay where the amount of product is measured throughout the assay. Often referred to as TaqMan PCR.") 
+                span.glyphicon.glyphicon-question-sign              
+            .checkbox
+              label
+                input#ranavirusConfirmMethods(type='checkbox' value='Virus Isolation' name='ranavirusConfirmMethods')
+                span Virus Isolation
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="Ranavirus particles were isolated from infected tissue, grown in tissue culture and the cytopathic effect observed in the cells. The cells were then subsequently harvested and the presence of ranavirus virions was confirmed through other methods (e.g. PCR or electron microscopy).") 
+                span.glyphicon.glyphicon-question-sign
+            .checkbox
+              label
+                input#ranavirusConfirmMethods(type='checkbox' value='Sequencing' name='ranavirusConfirmMethods')
+                span Sequencing 
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="After the presence of the ranavirus is determined,analysis of the viral sequence is performed and the sequencesare similar to one or more ranavirus isolates available on GenBank.") 
+                span.glyphicon.glyphicon-question-sign
+            .checkbox
+              label
+                input#ranavirusConfirmMethods(type='checkbox' value='Electron Microscopy' name='ranavirusConfirmMethods')
+                span Electron Microscopy
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="The presence of pox-like(i.e. icosahedral virus particles)particles in tissue samples taken directly from an infected animalor samples of virus isolate obtained through virus isolation and culture.") 
+                span.glyphicon.glyphicon-question-sign
+            .checkbox
+              label
+                input#ranavirusConfirmMethods(type='checkbox' value='In Situ Hybridization' name='ranavirusConfirmMethods')
+                span In Situ Hybridization
+            .checkbox
+              label
+                input#ranavirusConfirmMethods(type='checkbox' value='Immunohistochemistry' name='ranavirusConfirmMethods')
+                span Immunohistochemistry
+            .checkbox
+              label
+                input#ranavirusConfirmMethods(type='checkbox' value='other' name='ranavirusConfirmMethods')
+                span Other
+              span.minor-label Any other molecular diagnostic tests, not listed here
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="(e.g. ELISA or LUMINEX)that has been shown to be a reliable method for determining the presence of liveor preserved ranavirus particles.") 
+                span.glyphicon.glyphicon-question-sign 
+                input(type='text' name='specifyOtherRanavirusConfirmationMethods').form-control
+        .col-lg-4
+          .form-group
+            label.control-label Type of Sample Used for Ranavirus Confirmation
+            .checkbox
+              label
+                input(type='checkbox' value='internalSwabs' name='sampleType')
+                span Internal Swabs
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="A wet or dry swab taken from a body cavity, either during necropsy or duringroutine sampling. Internal swabs include oropharyngeal swabs, rectal swabs,swabs taken from the lumen or surface of the internal organs.") 
+                  span.glyphicon.glyphicon-question-sign 
+            .checkbox
+              label
+                input(type='checkbox' value='externalSwabs' name='sampleType')
+                span External Swabs
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="A wet or dry swab taken from the epidermal surfaces exposed to the external environment.") 
+                  span.glyphicon.glyphicon-question-sign 
+            .checkbox
+              label
+                input(type='checkbox' value='internalOrganTissues' name='sampleType')
+                span Internal Organ Tissues
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="Any portion of an internal organ that is used for analytical tests or virus isolation.Common tissues used for ranavirus screening and isolation are liver, kidney and spleen samples.") 
+                  span.glyphicon.glyphicon-question-sign 
+            .checkbox
+              label
+                input(type='checkbox' value='tailToeClips' name='sampleType')
+                span Tail/Toe Clips
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="Skin, bone and blood obtained from the removal of a portion (or entire) digit or of the tail.") 
+                  span.glyphicon.glyphicon-question-sign 
+            .checkbox
+              label
+                input(type='checkbox' value='blood' name='sampleType')
+                span Blood
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="Blood obtained during a necropsy or from a live animal, uncontaminated by other tissue types.") 
+                  span.glyphicon.glyphicon-question-sign 
+            .checkbox
+              label
+                input(type='checkbox' value='other' name='sampleType')
+                span Other
+                  span.minor-label Any other type of sample not listed here. Please specify
+                input(type="text" name="specifyOtherRanavirusSampleTypes").form-control                
+      .row
+        .col-lg-4
+          .form-group
+            label.control-label
+              span Total Number of Animals Tested
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="BThe total number of animals tested for the presence of the ranavirus for the event being reported. Please note that this is per species.") 
+                span.glyphicon.glyphicon-question-sign             
+            input.form-control(type='number' name='totalAnimalsTested' data-schema-key='totalAnimalsTested')
+        .col-lg-4
+          .form-group
+            label.control-label
+              span Total Number of Animals Confirmed Infected
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="The total number of animals confirmed to be infectedwith the ranavirus through diagnostic tests with positive results for the eventand species currently being reported.") 
+                span.glyphicon.glyphicon-question-sign     
+            input.form-control(type='number' name='totalAnimalsConfirmedInfected' data-schema-key='totalAnimalsConfirmedInfected')
+        .col-lg-4
+          .form-group
+            label.control-label
+              span Total Number of Animals Confirmed Diseased
+              a.more-info(data-toggle="popover" data-placement="bottom" data-content="The total number of animals having signs of disease consistentwith ranavirus infection by a certified pathologist AND the individualhas tested positively for the pathogen during specific diagnostic testing.") 
+                span.glyphicon.glyphicon-question-sign  
+            input.form-control(type='number' name='totalAnimalsConfirmedDiseased' data-schema-key='totalAnimalsConfirmedDiseased')
 
-    +afQuickField name='eventCountry' id='eventCountry'
-
-    +afQuickField name='populationType' id='populationType'
-
-    +afQuickField name='screeningReason' id='screeningReason'
-
-    +afQuickField name='vertebrateClasses' id='vertebrateClasses'
-
-    +afQuickField name='speciesGenus' id='speciesGenus'
-
-    +afQuickField name='speciesName' id='speciesName'
-
-    +afQuickField name='speciesAffectedType' id='speciesAffectedType'
-
-    +afQuickField name='numInvolved' id='numInvolved'
-
-    +afQuickField name='speciesNotes' id='speciesNotes'
-
-    +afQuickField name='ageClasses' id='ageClasses'
-
-    +afQuickField name='ranavirusConfirmMethods' id='ranavirusConfirmMethods'
-
-    if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-      +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-
-    +afQuickField name='sampleType' id='sampleType'
-
-    if afFieldValueContains name='sampleType' value='other'
-      +afQuickField name='specifyOtherRanavirusSampleTypes'
-
-    +afQuickField name='totalAnimalsTested' id='totalAnimalsTested'
-
-    +afQuickField name='totalAnimalsConfirmedInfected' id='totalAnimalsConfirmedInfected'
-
-    +afQuickField name='totalAnimalsConfirmedDiseased' id='totalAnimalsConfirmedDiseased'
-
-    +afQuickField name='pathologyReports' id='pathologyReports'
-
-    +afQuickField name='images' id='images'
-
-    +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
-
-    +afQuickField name='dataUsePermissions' id='dataUsePermissions'
-
-    +afQuickField name='consent' id='consent'
-
-    +afQuickField name='additionalNotes' id='additionalNotes'
-
-    +afQuickField name='publicationInfo' id='publicationInfo'
+      .row
+        .col-lg-4
+          .panel.panel-default.content-panel
+            .panel-heading 
+              h2.panel-title Pathology reports
+            .panel-body.no-padding
+              p.panel-intro Upload (MS Word or PDF) copies of pathology reports for other users to view.
+                span.minor-label Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents. If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
+              ul.list-group
+                input(type='hidden' name='pathologyReports.0' data-schema-key='pathologyReports.0' data-null-value='true')
+                input(type='hidden' name='pathologyReports.1' data-schema-key='pathologyReports.1' data-null-value='true')
+                input(type='hidden' name='pathologyReports.2' data-schema-key='pathologyReports.2' data-null-value='true')
+                input(type='hidden' name='pathologyReports.3' data-schema-key='pathologyReports.3' data-null-value='true')
+                input(type='hidden' name='pathologyReports.4' data-schema-key='pathologyReports.4' data-null-value='true')
+                li.list-group-item
+                  .content-block
+                    .form-group
+                      .form-group.file-upload
+                        label.btn.btn-default(for='file-pathologyReports.0.report')
+                          | Choose file
+                          input.hidden(id='file-pathologyReports.0.report' file-input='pathologyReports.0.report' type='file')
+                        // <div class="">{{> afQuickField name=name}}</div>
+                        input(type='text' style='display:none;' data-cfs-collection='[object Object]' name='pathologyReports.0.report' data-schema-key='pathologyReports.0.report')
+                      span.help-block
+                    .form-group
+                      label.control-label Do you have permission to upload this report?
+                      .af-radio-group(data-schema-key='pathologyReports.0.permission')
+                        .radio
+                          label
+                            input(type='radio' value='Yes' name='pathologyReports.0.permission' required='') 
+                            span Yes
+                        .radio
+                          label
+                            input(type='radio' value='Permission Not Granted' name='pathologyReports.0.permission' required='') 
+                            span Permission Not Granted
+                        .radio
+                          label
+                            input(type='radio' value='Not Available or Applicable' name='pathologyReports.0.permission' required='')  
+                            span Not Available or Applicable
+                  button.add-content 
+                    span.glyphicon.glyphicon-plus
+                    span Add another file
+        .col-lg-4
+          .panel.panel-default.content-panel
+            .panel-heading 
+              h2.panel-title Images
+            .panel-body
+              p Images from mortality events or of lesions on individual animals from the mortality event being reported can be shared here. Please do not share images that you do not want other users to see and/or potentially use.
+            ul.list-group
+              li.list-group-item.autoform-array-item
+                .media
+                  button.btn.btn-primary.autoform-remove-item.pull-left(type='button')
+                    span.glyphicon.glyphicon-minus
+                  .media-body
+                    .form-group
+                      label.hidden-label.control-label Image
+                      .form-group.file-upload
+                        label.btn.btn-default(for='file-images.0.image') Choose file
+                          input.hidden(id='file-images.0.image' file-input='images.0.image' type='file')
+                        // <div class="">{{> afQuickField name=name}}</div>
+                        input(type='text' style='display:none;' data-cfs-collection='' name='' required='')
+                      span.help-block
+              li.list-group-item
+                button.btn.btn-primary.autoform-add-item(type='button' data-autoform-field='images')
+                  span.glyphicon.glyphicon-plus
 
     .form-group
       button(type='submit' class='btn btn-primary') Submit
