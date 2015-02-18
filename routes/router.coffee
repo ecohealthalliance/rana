@@ -21,10 +21,10 @@ Router.route('/map',
       location: report.eventLocation.split(',').map(parseFloat)
       popupHTML: """<a href="">#{report.name}</a>"""
     })
-  #waitOn: ->
-    #[
-      #Meteor.subscribe("reports")
-    #]
+  waitOn: ->
+    [
+      Meteor.subscribe("reports")
+    ]
 )
 
 Router.route('/info',
