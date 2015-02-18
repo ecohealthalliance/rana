@@ -3,7 +3,7 @@ getCollections = => @collections
 Router.configure
   layoutTemplate: "layout"
 
-Router.route('/', ()-> @redirect('/form'))
+Router.route('/', ()-> @redirect('/group/rana'))
 
 Router.route('/form',
   where: 'client'

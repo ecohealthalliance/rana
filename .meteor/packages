@@ -6,7 +6,6 @@
 
 meteor-platform
 autopublish
-insecure
 coffeescript
 stylus
 mquandalle:jade
@@ -24,4 +23,7 @@ perak:markdown
 xolvio:webdriver
 eha:autoform-fixtures
 xolvio:cucumber
+accounts-password
+accounts-ui
+rana:groups
 velocity:html-reporter

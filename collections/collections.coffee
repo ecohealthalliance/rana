@@ -86,11 +86,9 @@ ranavirusConfirmMethods =
   particles in tissue samples taken directly from an infected animal
   or samples of virus isolate obtained through virus isolation and culture.
   """
-  #TODO: Definition in progress?
   'In Situ Hybridization': """
   In Situ Hybridization
   """
-  #TODO: Definition in progress?
   'Immunohistochemistry': """
   Immunohistochemistry
   """
@@ -147,7 +145,6 @@ AddressSchema = new SimpleSchema(
   'postalCode':
     type: String
     label: 'ZIP'
-    regEx: /^[0-9]+$/
 )
 
 @collections.Reports = new Mongo.Collection('reports')
@@ -189,9 +186,6 @@ AddressSchema = new SimpleSchema(
     """
     type: Date
     optional: true
-  # TODO: I suggest we omit this question.
-  # However, there is currently no way to deselect a geopoint, so it might
-  # be good for that.
   coordinatesAvailable:
     type: Boolean
     label: """
@@ -258,7 +252,6 @@ AddressSchema = new SimpleSchema(
     autoform:
       afFieldInput:
         noselect: true
-  # TODO: Dropdown is preferred, but we need genus data for that
   speciesGenus:
     label: 'Species Affected Genus'
     type: String
@@ -338,11 +331,6 @@ AddressSchema = new SimpleSchema(
       afFieldValueContains:
         name: 'ranavirusConfirmMethods'
         value: 'other'
-  # TODO: Maybe this should be a repeated group bc the spec says:
-  # The other section would ideally have an input field for text.
-  # It would be very useful if there was a way here to incorporate the number of
-  # individuals tested and the results. This could be incorporated into
-  # the quality score of the data that we hope to develop.
   sampleType:
     type: [String]
     label: 'Type of Sample Used for Ranavirus Confirmation'
@@ -453,7 +441,6 @@ AddressSchema = new SimpleSchema(
     autoform:
       options: [
         'Do not share'
-        #TODO: Describe what we will obfuscate
         'Share obfuscated'
         'Share full record'
       ].map((value)-> {label:value, value: value})
@@ -506,5 +493,4 @@ AddressSchema = new SimpleSchema(
     optional: true
     autoform:
       rows: 3
-  # TODO: Case quality score Assigned internally based on algorithm determined by experts
 ))
