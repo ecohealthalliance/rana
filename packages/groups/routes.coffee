@@ -16,7 +16,7 @@ Router.route "/group/:groupPath", {
   waitOn: () ->
     group = Groups.findOne {path: @params.groupPath}
     
-    Meteor.subscribe "usersInGroup", group._id
+    Meteor.subscribe "usersInGroup", group?._id
 }
     
 
