@@ -4,6 +4,12 @@
 # Testing
 ---------
 
+### To enable testing add these pacakges:
+
+```
+meteor add xolvio:cucumber velocity:html-reporter
+```
+
 When testing is enabled the
 [cucumber tests](https://github.com/xolvio/meteor-cucumber)
 will run automatically when meteor starts.
@@ -27,9 +33,3 @@ I20150211-08:38:41.990(-5)?      -> init()
 ```
 
 [related issue??](https://github.com/xolvio/meteor-cucumber/issues/19)
-
-### To disable testing remove these pacakges:
-
-```
-meteor remove xolvio:cucumber velocity:html-reporter
-```
