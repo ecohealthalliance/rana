@@ -1,7 +1,8 @@
 Package.describe({
   name: 'eha:autoform-fixtures',
   summary: 'Get fixtures data from SimpleSchema with AutoForm',
-  version: '1.1.4'
+  version: '1.1.4',
+  debugOnly: true
 });
 
 Package.onUse(function(api) {
