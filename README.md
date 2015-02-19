@@ -33,3 +33,6 @@ I20150211-08:38:41.990(-5)?      -> init()
 ```
 
 [related issue??](https://github.com/xolvio/meteor-cucumber/issues/19)
+
+Make sure you aren't runing anything on port 5000 as the mirror
+app that is used for testing will not work.

@@ -5,6 +5,8 @@
 
   var assert = require('assert');
 
+  var _ = Package["underscore"]._;
+
   module.exports = function () {
 
     var helper = this;
@@ -45,9 +47,12 @@
         generatedFormData[prop] = value;
         Session.set('reportDoc', generatedFormData);
       }, prop, value, function(err, res){
-        if(err) return callback.fail(err);
-      })
-      .call(callback);
+        if(err) {
+          return callback.fail(err);
+        } else {
+          callback();
+        }
+      });
     });
 
     this.When(/^I click submit$/, function (callback) {
@@ -56,32 +61,41 @@
         .call(callback);
     });
 
-    this.Then("the webpage should display a validation error",
-    function(callback){
+    this.Then(/^the webpage should( not)? display a validation error$/,
+    function(shouldNot, callback){
       helper.world.browser
       .isExisting('.has-error', function(err, exists){
         if(err) return callback.fail(err);
-        if(!exists) callback.fail("Missing validation error");
-      })
-      .call(callback);
+        if(!shouldNot && !exists) return callback.fail("Missing validation error");
+        if(shouldNot && exists) return callback.fail("Validation error");
+        callback();
+      });
     });
 
     this.Then(
       /^the database should( not)? have a report with the (name|email) "([^"]*)"$/,
     function (shouldNot, prop, value, callback) {
+      console.log(prop, value);
       helper.world.browser
-      .execute(function(prop, value){
+      .executeAsync(function(prop, value, done){
         var query = {};
         query[prop] = value;
-        return collections.Reports.findOne(query);
-      }, prop, value, function(err, ret){
+        Meteor.subscribe("reports");
+        Tracker.autorun(function(){
+          var reports = collections.Reports.find(query);
+          if(reports.count() > 0) done(reports.fetch());
+        });
+        window.setTimeout(done, 2000);
+      }, prop, value, _.once(function(err, ret){
+        console.log(ret);
         if(err) return callback.fail(err);
-        if(shouldNot) {
-          if(ret.value !== null) return callback.fail('Report found');
+        if(ret.value && ret.value.length === 1) {
+          if(shouldNot) return callback.fail('Report found');
         } else {
-          if(ret.value === null) return callback.fail('Report not found');
+          if(!shouldNot) return callback.fail('Report not found');
         }
-      }).call(callback);
+        callback();
+      }));
     });
     
     this.When(/^I click on a report location marker$/, function (callback) {
@@ -105,15 +119,15 @@
           for(var i=0;i<props.length;i++) {
             var prop = props[i];
             if(!RegExp(prop, "i").test(value)) {
-              callback.fail("Missing Property: " + prop);
-              break;
+              return callback.fail("Missing Property: " + prop);
             }
           }
-        })
-        .call(callback);
+          callback();
+        });
     });
     
     this.Given(/^there is a report with a geopoint in the database$/, function (callback) {
+      return callback();
       helper.world.browser
       .executeAsync(function(done){
         Tracker.autorun(function(){
@@ -123,10 +137,11 @@
           if(report) done(report);
         });
         window.setTimeout(done, 2000);
-      }, function(err, ret){
+      }, _.once(function(err, ret){
         if(err) return callback.fail(err);
         if(!ret.value) return callback.fail("No reports with a geopoint in the database");
-      }).call(callback);
+        callback();
+      }));
     });
     
   };

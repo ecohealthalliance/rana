@@ -3,20 +3,21 @@ Feature: A form for reporting Ranavirus outbreaks
   I want to fill out a form to report ranavirus events
   So I can submit the data for analysis
 
-  Scenario: Filling out a form without logged in
-    Given I am not logged in
-    And I am on the "form" page
+  Scenario: Filling out a form without logging in
+    Given I am on the "form" page
+    And I am not logged in
     Then I will see a message that requires me to log in
   
   Scenario: Filling in institution information
-    Given I am logged in
-    And I am on the "form" page
+    Given I am on the "form" page
+    And I am logged in
     Then the information for the institution fields should be prepopulated
-    
+
   Scenario: Submitting a ranavirus form
     Given I am on the "form" page
     When I fill out the form with the name "Test user"
     And I click submit
+    Then the webpage should not display a validation error
     Then the database should have a report with the name "Test user"
 
   Scenario: Submitting an invalid email
@@ -25,21 +26,16 @@ Feature: A form for reporting Ranavirus outbreaks
     And I click submit
     Then the webpage should display a validation error
     And the database should not have a report with the email "invalid"
-    
-# Are we sure these number of digits won't inadvertantly prevent people
-# from signing up?
+
   Scenario: Submitting an invalid phone number
     Given I am on the "form" page
     When I fill out the form with a telephone number greater than 15 digits
     And I click submit
     Then the webpage should display a validation error
-    
-  Scenario: Submitting an invalid phone number
-    Given I am on the "form" page
     When I fill out the form with a telephone number less than 12 digits
     And I click submit
     Then the webpage should display a validation error
-  
+
   Scenario: Submitting an invalid date
     Given I am on the "form" page
     When I fill out the form with the date "08/dd/1990"
