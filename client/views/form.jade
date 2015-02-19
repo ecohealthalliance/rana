@@ -1,8 +1,8 @@
 template(name="form")
 
-  .container-fluid
+  .container-fluid.report-form
     form
-      .panel.panel-default
+      .panel.panel-default.form-input-block
         .panel-heading
           h2.panel-title Reporting individual info
         .panel-body
@@ -21,7 +21,7 @@ template(name="form")
               input.form-control(type="phone" name="phone")
     
 
-      .panel.panel-default
+      .panel.panel-default.form-input-block
         .panel-heading 
           h2.panel-title Reporting institution, diagnostic lab or government agency info
         .panel-body
@@ -51,7 +51,7 @@ template(name="form")
               label(for="country") Country
               input.form-control(type="text" name="country")
 
-      .panel.panel-default
+      .panel.panel-default.form-input-block
         .panel-heading
           h2.panel-title Event Date and Location
         .panel-body
@@ -81,7 +81,7 @@ template(name="form")
             .col-lg-6
               +map
 
-      .row
+      .row.form-input-block
         .col-lg-4
           h3 Type of population:
           .radio
@@ -131,7 +131,7 @@ template(name="form")
                 a.more-info(data-toggle="popover" data-placement="bottom" data-content="Turtles and tortoises, crocodilians, snakes and lizards")  
                   span.glyphicon.glyphicon-question-sign
 
-      .panel.panel-default
+      .panel.panel-default.form-input-block
         .panel-heading
           h2.panel-title Species Information
         .panel-body
@@ -159,8 +159,8 @@ template(name="form")
               .form-group
                 label Species Notes
                 textarea(name="speciesNotes").form-control
-      .row
-        .col-lg-4
+      .row.form-input-block
+        .col-lg-3
           .form-group
             label.control-label Age classes
               .checkbox
@@ -233,9 +233,9 @@ template(name="form")
               label
                 input#ranavirusConfirmMethods(type='checkbox' value='other' name='ranavirusConfirmMethods')
                 span Other
-              span.minor-label Any other molecular diagnostic tests, not listed here
-              a.more-info(data-toggle="popover" data-placement="bottom" data-content="(e.g. ELISA or LUMINEX)that has been shown to be a reliable method for determining the presence of liveor preserved ranavirus particles.") 
-                span.glyphicon.glyphicon-question-sign 
+                span.minor-label Any other molecular diagnostic tests, not listed here
+                a.more-info(data-toggle="popover" data-placement="bottom" data-content="(e.g. ELISA or LUMINEX)that has been shown to be a reliable method for determining the presence of liveor preserved ranavirus particles.") 
+                  span.glyphicon.glyphicon-question-sign 
                 input(type='text' name='specifyOtherRanavirusConfirmationMethods').form-control
         .col-lg-4
           .form-group
@@ -276,7 +276,7 @@ template(name="form")
                 span Other
                   span.minor-label Any other type of sample not listed here. Please specify
                 input(type="text" name="specifyOtherRanavirusSampleTypes").form-control                
-      .row
+      .row.form-input-block
         .col-lg-4
           .form-group
             label.control-label
@@ -299,7 +299,7 @@ template(name="form")
                 span.glyphicon.glyphicon-question-sign  
             input.form-control(type='number' name='totalAnimalsConfirmedDiseased' data-schema-key='totalAnimalsConfirmedDiseased')
 
-      .row
+      .row.form-input-block
         .col-lg-4
           .panel.panel-default.content-panel
             .panel-heading 
@@ -308,16 +308,11 @@ template(name="form")
               p.panel-intro Upload (MS Word or PDF) copies of pathology reports for other users to view.
                 span.minor-label Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents. If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
               ul.list-group
-                input(type='hidden' name='pathologyReports.0' data-schema-key='pathologyReports.0' data-null-value='true')
-                input(type='hidden' name='pathologyReports.1' data-schema-key='pathologyReports.1' data-null-value='true')
-                input(type='hidden' name='pathologyReports.2' data-schema-key='pathologyReports.2' data-null-value='true')
-                input(type='hidden' name='pathologyReports.3' data-schema-key='pathologyReports.3' data-null-value='true')
-                input(type='hidden' name='pathologyReports.4' data-schema-key='pathologyReports.4' data-null-value='true')
                 li.list-group-item
                   .content-block
                     .form-group
                       .form-group.file-upload
-                        label.btn.btn-default(for='file-pathologyReports.0.report')
+                        label.btn.btn-default.btn-block(for='file-pathologyReports.0.report')
                           | Choose file
                           input.hidden(id='file-pathologyReports.0.report' file-input='pathologyReports.0.report' type='file')
                         // <div class="">{{> afQuickField name=name}}</div>
@@ -325,7 +320,6 @@ template(name="form")
                       span.help-block
                     .form-group
                       label.control-label Do you have permission to upload this report?
-                      .af-radio-group(data-schema-key='pathologyReports.0.permission')
                         .radio
                           label
                             input(type='radio' value='Yes' name='pathologyReports.0.permission' required='') 
@@ -340,30 +334,109 @@ template(name="form")
                             span Not Available or Applicable
                   button.add-content 
                     span.glyphicon.glyphicon-plus
-                    span Add another file
+                    span Add another report
         .col-lg-4
           .panel.panel-default.content-panel
             .panel-heading 
               h2.panel-title Images
-            .panel-body
-              p Images from mortality events or of lesions on individual animals from the mortality event being reported can be shared here. Please do not share images that you do not want other users to see and/or potentially use.
-            ul.list-group
-              li.list-group-item.autoform-array-item
-                .media
-                  button.btn.btn-primary.autoform-remove-item.pull-left(type='button')
-                    span.glyphicon.glyphicon-minus
-                  .media-body
+            .panel-body.no-padding
+              p.panel-intro Images from mortality events or of lesions on individual animals from the mortality event being reported can be shared here. Please do not share images that you do not want other users to see and/or potentially use.
+              ul.list-group
+                li.list-group-item
+                  .content-block
                     .form-group
                       label.hidden-label.control-label Image
                       .form-group.file-upload
-                        label.btn.btn-default(for='file-images.0.image') Choose file
-                          input.hidden(id='file-images.0.image' file-input='images.0.image' type='file')
-                        // <div class="">{{> afQuickField name=name}}</div>
+                        label.btn.btn-default.btn-block(for='file-images.0.image') Choose file
                         input(type='text' style='display:none;' data-cfs-collection='' name='' required='')
-                      span.help-block
-              li.list-group-item
-                button.btn.btn-primary.autoform-add-item(type='button' data-autoform-field='images')
+                button.add-content 
                   span.glyphicon.glyphicon-plus
+                  span Add another image
 
-    .form-group
-      button(type='submit' class='btn btn-primary') Submit
+        .col-lg-4
+          .panel.panel-default.content-panel
+            .panel-heading 
+              h2.panel-title GenBank Accession numbers
+            .panel-body.no-padding
+              p.panel-intro GenBank Accession Numbers of the sequences associated with the current event being reported if they are available.
+              ul.list-group
+                li.list-group-item
+                  .content-block
+                    .form-group
+                      label.hidden-label.control-label Number
+                      input.form-control(type="text" name="")
+                      span.help-block
+                button.add-content
+                  span.glyphicon.glyphicon-plus
+                  span Add another accession number
+    .row.form-input-block
+      .col-lg-6
+        .form-group
+          label.control-label Please select the information that can be shared with other users.
+          .radio
+            label
+              input(type='radio' value='Do not share' name='dataUsePermissions' required='')
+              span Do not share
+          .radio
+            label
+              input(type='radio' value='Share obfuscated' name='dataUsePermissions' required='')
+              span Share obfuscated
+          .radio
+            label
+              input(type='radio' value='Share full record' name='dataUsePermissions' required='')
+              span Share full record
+      .col-lg-6
+        .form-group
+          label.control-label
+            | Do you consent to have this data published and made searchable on
+            | the Ranavirus Reporting System website as per the data use permissions?
+          div(data-schema-key='consent')
+            .radio
+              label
+                input(type='radio' value='false' name='consent' required='')
+                span No, I do NOT consent
+            .radio
+              label
+                input(type='radio' value='true' name='consent' required='')
+                span Yes, I consent
+    .row.form-input-block
+      .col-lg-8
+        .form-group
+          label.control-label Additional information (not previously provided) that describes unique features of case 
+            a.more-info(data-toggle="popover" data-placement="bottom" data-content="Observations of habitat or husbandry conditions, diagnosed presence of other pathogens, observations of gross") 
+              span.glyphicon.glyphicon-question-sign 
+          textarea.form-control(rows='5', name='additionalNotes', data-schema-key='additionalNotes')
+
+    .panel.panel-default.form-input-block
+      .panel-heading
+        h3.panel-title Publication info
+      .panel-body
+        .row
+          .col-lg-5
+            .form-group
+              label.control-label Publication Status of the Data
+                .radio
+                  label
+                    input(type='radio', value='false', name='publicationInfo.dataPublished', required='')
+                    span Unpublished
+                .radio
+                  label
+                    input(type='radio', value='true', name='publicationInfo.dataPublished', required='')
+                    span Published
+              span.help-block
+            .form-group
+              label.control-label If the data has been published please provide a PDF.
+              .form-group.file-upload
+                label.btn.btn-default(for='file-publicationInfo.pdf') Choose file
+                  input.hidden(id='file-publicationInfo.pdf', file-input='publicationInfo.pdf', type='file')
+                input(type='text', style='display:none;', data-cfs-collection='[object Object]', name='publicationInfo.pdf', data-schema-key='publicationInfo.pdf')
+          .col-lg-7
+            .form-group
+              label.control-label If the data has been published please provide a full reference
+              textarea.form-control(rows='3', name='publicationInfo.reference', data-schema-key='publicationInfo.reference')
+
+
+    .row
+      .col-lg-4
+        .form-group
+          button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
