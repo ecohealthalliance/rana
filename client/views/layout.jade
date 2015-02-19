@@ -3,7 +3,6 @@ head
 
 template(name="layout")
   body
-
     .navbar.navbar-inverse.navbar-fixed.top
         .container
             .navbar-header
@@ -15,5 +14,7 @@ template(name="layout")
                 a(href="/map") Map of Reports
               li
                 a(href="/info") Ranavirus Information
+            .navbar-right
+                +accountsHeaderButtons
     .container
         +yield
