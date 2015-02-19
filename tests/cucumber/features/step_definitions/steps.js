@@ -36,7 +36,7 @@
     function (prop, value, callback) {
       helper.world.browser
       .waitForExist('.form-group')
-      .execute(function(prop, value){
+      .execute(function(){
         var schema = collections.Reports.simpleSchema()._schema;
         var types = {};
         _.each(schema, function (value, key) {
@@ -75,7 +75,7 @@
           formData: AutoForm.Fixtures.getData(collections.Reports.simpleSchema()),
           schemaTypes: types
         };
-      }, prop, value, function(err, res){
+      }, function(err, res){
         if(err) {
           return callback.fail(err);
         } else {
