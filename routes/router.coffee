@@ -10,6 +10,8 @@ Router.route('/form',
   onBeforeAction: ()->
     Session.set("reportDoc", null)
     @next()
+  data: ->
+    type: "insert"
 )
 
 Router.route('/form/:reportId',
@@ -22,6 +24,8 @@ Router.route('/form/:reportId',
     [
       Meteor.subscribe("reports")
     ]
+  data: ->
+    type: "update"
 )
 
 Router.route('/table',
