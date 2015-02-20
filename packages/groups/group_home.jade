@@ -38,6 +38,9 @@ template(name="groupAdmin")
               
 template(name="groupUser")
   div
+    span {{profile.name}}
+      if profile.organization
+        i {{profile.organization}}
     each emails
       span {{address}}
       

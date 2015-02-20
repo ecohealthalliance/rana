@@ -20,6 +20,6 @@ cfs:standard-packages
 cfs:gridfs
 fuatsengul:leaflet
 perak:markdown
-accounts-password
-accounts-ui
+rana:accounts
 rana:groups
+useraccounts:bootstrap
