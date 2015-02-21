@@ -1,41 +1,18 @@
 template(name='gmapForm')
 
   +autoForm(
-    collection='collections.Reports'
+    collection='collections.Mappings'
     id='gmapForm'
     type='insert'
     validation='blur'
   )
 
+    +afQuickField name='test'
 
-    +afQuickField name='locationSource' id='locationSource'
+    +afQuickField name='location'
 
-    .col-md-6
-      .form-group
-        h3.form-group-header Location
+    +afQuickField name='locationTwo'
 
-        h4.form-group-header Degrees Decimal
-        .col-md-6
-          +afQuickField name='lon' id='lon'
-        .col-md-6
-          +afQuickField name='lat' id='lat'
-
-        h4.form-group-header Universal Transverse Mercator
-        .col-md-4
-          +afQuickField name='easting' id='easting'
-        .col-md-4
-          +afQuickField name='northing' id='northing'
-        .col-md-4
-          +afQuickField name='zone' id='zone'
-
-    .col-md-6
-      +gmap
-
-
-template(name='gmap')
-  div
-    input#gmap-search.map-controls(type='text')
-    div#gmap-canvas
-    a#gmap-locate.btn.btn-default
-      i.fa.fa-map-marker
-      | My location
+    .btn-group
+      button(class='gmap-submit', type='submit', class="btn btn-primary") Submit
+      button(class='gmap-reset', type='reset', class="btn") Reset

@@ -1,0 +1,34 @@
+template(name='gmap')
+  div(data-schema-key=schemaKey)
+
+    input.locationSource(type='hidden', name='source', class='source')
+
+    .col-md-6
+      .form-group
+
+        h4.form-group-header Degrees Decimal
+        .col-md-6
+          label(for='lon') Longitude
+          input(name='lon' class='lon')
+        .col-md-6
+          label(for='lat') Latitude
+          input(name='lat' class='lat')
+
+        h4.form-group-header Universal Transverse Mercator
+        .col-md-4
+          label(for='easting') Easting
+          input(name='easting' class='easting')
+        .col-md-4
+          label(for='norting') Northing
+          input(name='northing' class='northing')
+        .col-md-4
+          label(for='zone') Zone
+          input(name='zone' class='zone')
+
+    .col-md-6
+      div
+        input.gmap-search.map-controls(type='text')
+        div.gmap-canvas
+        .btn-group
+          button.gmap-locate.btn.btn-default My location
+          button.gmap-clear.btn.btn-default Clear
