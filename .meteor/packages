@@ -13,7 +13,6 @@ mquandalle:jade
 underscore
 iron:router
 twbs:bootstrap
-aldeed:autoform
 yogiben:autoform-map
 yogiben:autoform-file
 aldeed:collection2
@@ -22,3 +21,6 @@ cfs:gridfs
 fuatsengul:leaflet
 perak:markdown
 proj4:proj4
+autoform-gmap
+aldeed:autoform
+mrt:googlemaps
