@@ -28,7 +28,7 @@ Template.gmap.helpers
   schemaKey: ->
     @atts['data-schema-key']
 
-Template.gmap.rendered = ->
+Template.gmap.rendered = () ->
 
   @data.options = _.extend {}, defaults, @data.atts
 
@@ -85,29 +85,31 @@ Template.gmap.rendered = ->
     @data.map.setCenter new google.maps.LatLng @data.options.defaultLat, @data.options.defaultLon
     @data.map.setZoom @data.options.defaultZoom
 
-  mapOptions =
-    zoom: @data.options.defaultZoom
-    center: new google.maps.LatLng @data.options.defaultLat, @data.options.defaultLon
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+  GoogleMaps.init { libraries: 'places' }, () =>
 
-  @data.map = new google.maps.Map @data.canvas, mapOptions
+    mapOptions =
+      zoom: @data.options.defaultZoom
+      center: new google.maps.LatLng @data.options.defaultLat, @data.options.defaultLon
+      mapTypeId: google.maps.MapTypeId.ROADMAP
 
-  input = @$('.gmap-search')[0]
+    @data.map = new google.maps.Map @data.canvas, mapOptions
 
-  @data.map.controls[google.maps.ControlPosition.TOP_LEFT].push input
-  @data.searchBox = new google.maps.places.SearchBox input
+    input = @$('.gmap-search')[0]
 
-  google.maps.event.addListener @data.searchBox, 'places_changed', =>
-    location = @data.searchBox.getPlaces()[0].geometry.location
-    @data.setMarker location
-    @data.map.setCenter location
+    @data.map.controls[google.maps.ControlPosition.TOP_LEFT].push input
+    @data.searchBox = new google.maps.places.SearchBox input
 
-  google.maps.event.addListener @data.map, 'click', (e) =>
-    $(@$('.source')[0]).val 'map'
-    @data.setMarker e.latLng
+    google.maps.event.addListener @data.searchBox, 'places_changed', =>
+      location = @data.searchBox.getPlaces()[0].geometry.location
+      @data.setMarker location
+      @data.map.setCenter location
 
-  @$('.gmap-canvas').closest('form').on 'reset', =>
-    @data.reset()
+    google.maps.event.addListener @data.map, 'click', (e) =>
+      $(@$('.source')[0]).val 'map'
+      @data.setMarker e.latLng
+
+    @$('.gmap-canvas').closest('form').on 'reset', =>
+      @data.reset()
 
 
 Template.gmap.events

@@ -23,7 +23,8 @@ Package.onUse(function(api) {
       'templating',
       'stylus',
       'mquandalle:jade@0.4.1',
-      'aldeed:autoform@4.2.2'
+      'aldeed:autoform@4.2.2',
+      'mrt:googlemaps@0.0.2'
     ], 'client'
   );
 
