@@ -18,9 +18,10 @@ yogiben:autoform-file
 aldeed:collection2
 cfs:standard-packages
 cfs:gridfs
-fuatsengul:leaflet
 perak:markdown
 proj4:proj4
 autoform-gmap
+autoform-leaflet
 aldeed:autoform
 mrt:googlemaps
+mrt:leaflet

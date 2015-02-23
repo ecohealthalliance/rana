@@ -8,17 +8,8 @@ Router.map () ->
     where: 'client'
   )
 
-  @route('map',
+  @route('mapForm',
     path: '/map'
-    where: 'client'
-    #waitOn: ->
-      #[
-        #Meteor.subscribe("reports")
-      #]
-  )
-
-  @route('gmapForm',
-    path: '/gmap'
     where: 'client'
   )
 

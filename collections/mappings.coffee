@@ -42,16 +42,16 @@ LocationSchema = new SimpleSchema
           return 'latOutOfRange' unless -90 <= @value[1] <= 90
 
 MappingsScehma = new SimpleSchema
-  location:
+  locationGoogle:
     optional: true
     type: LocationSchema
     autoform:
       type: 'gmap'
-  locationTwo:
+  locationLeaflet:
     optional: true
     type: LocationSchema
     autoform:
-      type: 'gmap'
+      type: 'leaflet'
   test:
     type: String
 
