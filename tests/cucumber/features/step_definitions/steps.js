@@ -11,18 +11,24 @@
 
     var helper = this;
 
-    this.Given(/^I am on the "([^"]*)" page$/, function (path, callback) {
-      helper.world.browser.
-        url(helper.world.cucumber.mirror.rootUrl + path).
-        call(callback);
-    });
-
-    this.When(/^I navigate to "([^"]*)"$/, function (path, callback) {
-      helper.world.browser.
-        url(helper.world.cucumber.mirror.rootUrl + path).
-        call(callback);
-    });
-
+    this.visit = function (path, callback) {
+      helper.world.browser
+      .url(helper.world.cucumber.mirror.rootUrl + path)
+      .waitForExist(".container", function(err, exists){
+        assert(!err);
+        assert(exists, "Could not find container element");
+      })
+      .getText(".container", function(err, text){
+        assert(!err);
+        var regexString = "no route on the client or the server for url"
+          .split(" ")
+          .join("\\s+");
+        assert(!RegExp(regexString, "i").test(text), "Missing page");
+      }).call(callback);
+    };
+    this.Given('I am on the "$path" page', this.visit);
+    this.When('I navigate to "$path"', this.visit);
+    
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
         title(function (err, res) {
@@ -44,6 +50,9 @@
         generatedFormData['pathologyReports'] = [];
         generatedFormData['publicationInfo']['pdf'] = null;
         generatedFormData['eventLocation'] = null;
+        //These are needed to make sure the form is visible:
+        generatedFormData['consent'] = true;
+        generatedFormData['dataUsePermissions'] = 'Share full record';
         generatedFormData[prop] = value;
         Session.set('reportDoc', generatedFormData);
       }, prop, value, function(err, res){
@@ -61,6 +70,20 @@
         .call(callback);
     });
 
+    this.When('I click the "$buttonName" button',
+    function (buttonName, callback) {
+      var buttonNameToSelector = {
+        "Columns" : ".reactive-table-columns-dropdown button"
+      };
+      var selector = buttonName;
+      if(buttonName in buttonNameToSelector) {
+        selector = buttonNameToSelector[buttonName];
+      }
+      helper.world.browser
+        .click(selector)
+        .call(callback);
+    });
+
     this.Then(/^the webpage should( not)? display a validation error$/,
     function(shouldNot, callback){
       helper.world.browser
@@ -75,7 +98,6 @@
     this.Then(
       /^the database should( not)? have a report with the (name|email) "([^"]*)"$/,
     function (shouldNot, prop, value, callback) {
-      console.log(prop, value);
       helper.world.browser
       .executeAsync(function(prop, value, done){
         var query = {};
@@ -87,7 +109,6 @@
         });
         window.setTimeout(done, 2000);
       }, prop, value, _.once(function(err, ret){
-        console.log(ret);
         if(err) return callback.fail(err);
         if(ret.value && ret.value.length === 1) {
           if(shouldNot) return callback.fail('Report found');
@@ -98,17 +119,20 @@
       }));
     });
     
-    this.When(/^I click on a report location marker$/, function (callback) {
+    this.When(/^I click on a report location marker$/,
+    function (callback) {
       helper.world.browser
         .waitForExist('.leaflet-marker-icon')
         .click('.leaflet-marker-icon')
         .call(callback);
     });
     
-    this.Then(/^I should see a popup with information from the report$/, function (callback) {
+    this.Then(/^I should see a popup with information from the report$/,
+    function (callback) {
       helper.world.browser
+        .waitForExist('.leaflet-popup-content')
         .getText('.leaflet-popup-content', function(err, value){
-          if(err) return callback.fail(err);
+          assert(!err);
           var props = [
             'date',
             'type of population',
@@ -118,30 +142,41 @@
           ];
           for(var i=0;i<props.length;i++) {
             var prop = props[i];
-            if(!RegExp(prop, "i").test(value)) {
-              return callback.fail("Missing Property: " + prop);
-            }
+            assert(RegExp(prop, "i").test(value), "Missing Property: " + prop);
           }
+        }).call(callback);
+    });
+
+    this.Given(/^there is a report( with a geopoint)? in the database$/,
+    function(withGeo, callback) {
+      helper.resetTestDB([{
+        consent: true,
+        dataUsePermissions: "Share full record",
+        email: "test@test.com",
+        eventLocation: "25.046919772516173,121.55189514218364",
+        name: "Mock data",
+        phone: "12345"
+      }], function(){
+        helper.world.browser
+        .executeAsync(function(done){
+          Tracker.autorun(function(){
+            var report = collections.Reports.findOne({
+              eventLocation: {$exists: true}
+            });
+            if(report) done(report);
+          });
+          window.setTimeout(done, 2000);
+        }, _.once(function(err, ret){
+          assert(!err);
+          assert(ret.value, "No reports with a geopoint in the database");
           callback();
-        });
+        }));
+      });
     });
     
-    this.Given(/^there is a report with a geopoint in the database$/, function (callback) {
-      return callback();
-      helper.world.browser
-      .executeAsync(function(done){
-        Tracker.autorun(function(){
-          var report = collections.Reports.findOne({
-            eventLocation: {$exists: true}
-          });
-          if(report) done(report);
-        });
-        window.setTimeout(done, 2000);
-      }, _.once(function(err, ret){
-        if(err) return callback.fail(err);
-        if(!ret.value) return callback.fail("No reports with a geopoint in the database");
-        callback();
-      }));
+    this.Given(/^there are no reports in the database$/,
+    function (callback) {
+      helper.resetTestDB([], callback);
     });
     
   };

@@ -23,7 +23,9 @@ xolvio:webdriver
 eha:autoform-fixtures
 accounts-password
 accounts-ui
-rana:groups
 xolvio:cucumber
 velocity:html-reporter
 aslagle:reactive-table
+rana:accounts
+rana:groups
+useraccounts:bootstrap

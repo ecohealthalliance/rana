@@ -14,13 +14,17 @@ Router.route "/group/:groupPath", {
     groupUsers: Roles.getUsersInRole "user", group?._id
 
   waitOn: () ->
-    Meteor.subscribe "userData"
+    group = Groups.findOne {path: @params.groupPath}
+    
+    Meteor.subscribe "usersInGroup", group?._id
 }
     
 
 Router.route "/newGroup", {
   data: () ->
     groups: Groups
+    
+  onBeforeAction: AccountsTemplates.ensureSignedIn
 }
 
 Router.route "/join/:inviteId", {
@@ -30,5 +34,7 @@ Router.route "/join/:inviteId", {
     invite = Invites.findOne(@params.inviteId)
       
     invite: invite
-    group: Groups.findOne(invite?.group)    
+    group: Groups.findOne(invite?.group)  
+  
+  onBeforeAction: AccountsTemplates.ensureSignedIn
 }

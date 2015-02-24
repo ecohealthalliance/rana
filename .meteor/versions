@@ -82,6 +82,7 @@ perak:markdown@1.0.4
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3
 raix:eventemitter@0.1.1
+rana:accounts@0.0.1
 rana:groups@0.0.1
 random@1.0.2
 reactive-dict@1.0.5
@@ -92,6 +93,7 @@ routepolicy@1.0.4
 service-configuration@1.0.3
 session@1.0.5
 sha@1.0.2
+softwarerero:accounts-t9n@1.0.6
 spacebars@1.0.5
 spacebars-compiler@1.0.4
 srp@1.0.2
@@ -102,14 +104,16 @@ twbs:bootstrap@3.3.2
 ui@1.0.5
 underscore@1.0.2
 url@1.0.3
+useraccounts:bootstrap@1.8.1
+useraccounts:core@1.8.1
 velocity:core@0.4.5
 velocity:html-reporter@0.4.2
-velocity:node-soft-mirror@0.2.8
+velocity:node-soft-mirror@0.3.1
 velocity:shim@0.1.0
 velocity:test-proxy@0.0.4
 webapp@1.1.6
 webapp-hashing@1.0.2
-xolvio:cucumber@0.3.8
-xolvio:webdriver@0.2.1
+xolvio:cucumber@0.4.0
+xolvio:webdriver@0.3.0
 yogiben:autoform-file@0.2.0
 yogiben:autoform-map@0.0.3
