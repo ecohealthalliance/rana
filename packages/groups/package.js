@@ -10,15 +10,17 @@ Package.onUse(function(api) {
   api.use('templating');
   api.use('coffeescript');
   api.use('mquandalle:jade@0.4.1');
-  api.use('stylus');
   api.use('email');
   api.use('iron:router@1.0.7');
   api.use('aldeed:collection2@2.3.2');
   api.use('aldeed:autoform@4.2.2');
   api.use('alanning:roles@1.2.11');
   api.use('matb33:collection-hooks@0.7.5');
+  api.use('useraccounts:core@1.7.0');
   
-  api.addFiles("users.coffee", ['client', 'server']);
+  api.use('rana:accounts@0.0.1');
+  
+  api.addFiles("group_publication.coffee", ['server']);
   api.addFiles('collection.coffee', ['client', 'server']);
   
   api.addFiles('invite.jade', 'client');
