@@ -130,6 +130,7 @@
     this.Then(/^I should see a popup with information from the report$/,
     function (callback) {
       helper.world.browser
+        .waitForExist('.leaflet-popup-content')
         .getText('.leaflet-popup-content', function(err, value){
           assert(!err);
           var props = [
