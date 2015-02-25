@@ -40,7 +40,7 @@ Feature: A form for reporting Ranavirus outbreaks
 
   Scenario: Submitting an invalid date
     Given I am on the "form" page
-    When I fill out the form with the date "08/dd/1990"
+    When I fill out the form with the eventDate "08/dd/1990"
     And I click submit
     Then the website should display the question "No date specified. Would you like to submit anyways?"
 
