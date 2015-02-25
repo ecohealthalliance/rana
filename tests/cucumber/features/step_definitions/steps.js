@@ -27,7 +27,7 @@
       }).call(callback);
     };
     this.Given('I am on the "$path" page', this.visit);
-    this.When('I navigate to "$path"', this.visit);
+    this.When('I navigate to the "$path" page', this.visit);
     
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
@@ -37,12 +37,10 @@
         });
     });
 
-    this.When(
-      /^I fill out the form with the (name|email) "([^"]*)"$/,
-    function (prop, value, callback) {
+    this.fillInForm = function (customValues, callback) {
       helper.world.browser
       .waitForExist('.form-group')
-      .execute(function(prop, value){
+      .execute(function(customValues){
         var generatedFormData = AutoForm.Fixtures.getData(collections.Reports.simpleSchema());
         generatedFormData['email'] = 'a@b.com';
         generatedFormData['institutionAddress']['postalCode'] = '12345';
@@ -53,15 +51,29 @@
         //These are needed to make sure the form is visible:
         generatedFormData['consent'] = true;
         generatedFormData['dataUsePermissions'] = 'Share full record';
-        generatedFormData[prop] = value;
+        _.extend(generatedFormData, customValues);
         Session.set('reportDoc', generatedFormData);
-      }, prop, value, function(err, res){
-        if(err) {
-          return callback.fail(err);
-        } else {
-          callback();
-        }
-      });
+      }, customValues, function(err, res){
+        assert(!err);
+      }).call(callback);
+    };
+    
+    this.When(/^I fill out the form with the (name|email) "([^"]*)"$/,
+    function(prop, value, callback){
+      var customValues = {};
+      customValues[prop] = value;
+      helper.fillInForm(customValues, callback);
+    });
+    
+    this.When("I fill out the form", function(callback){
+      helper.fillInForm({}, callback);
+    });
+
+    this.When("I create a report without consenting to publish it",
+    function(callback){
+      var customValues = {};
+      customValues['consent'] = false;
+      helper.fillInForm(customValues, callback);
     });
 
     this.When(/^I click submit$/, function (callback) {
@@ -98,25 +110,52 @@
     this.Then(
       /^the database should( not)? have a report with the (name|email) "([^"]*)"$/,
     function (shouldNot, prop, value, callback) {
+      var query = {};
+      query[prop] = value;
       helper.world.browser
-      .executeAsync(function(prop, value, done){
-        var query = {};
-        query[prop] = value;
+      .executeAsync(function(query, done){
         Meteor.subscribe("reports");
         Tracker.autorun(function(){
           var reports = collections.Reports.find(query);
           if(reports.count() > 0) done(reports.fetch());
         });
         window.setTimeout(done, 2000);
-      }, prop, value, _.once(function(err, ret){
-        if(err) return callback.fail(err);
-        if(ret.value && ret.value.length === 1) {
-          if(shouldNot) return callback.fail('Report found');
+      }, query, _.once(function(err, ret){
+        assert(!err);
+        if(shouldNot) {
+          assert(!ret.value, 'Report found');
         } else {
-          if(!shouldNot) return callback.fail('Report not found');
+          assert.equal(ret.value.length, 1, 'Incorrect number of reports');
         }
-        callback();
-      }));
+      })).call(callback);
+    });
+    
+    this.Then(/the database should( not)? have a report linked to my account/,
+    function (shouldNot, query, callback) {
+      helper.world.browser
+      .getMyReports({}, function(err, ret){
+        assert(!err);
+        assert(ret.value);
+        if(shouldNot) {
+          assert(!ret.value, 'Report found');
+        } else {
+          assert.equal(ret.value.length, 1, 'Incorrect number of reports');
+        }
+      }).call(callback);
+    });
+    
+    this.Then(/my reports without consent should(not)? be avaible/,
+    function(shouldNot, callback){
+      helper.world.browser
+      .getMyReports({consent: false}, function(err, ret){
+        assert(!err);
+        if(shouldNot) {
+          assert(!ret.value);
+        } else {
+          assert(ret.value);
+          assert(ret.value.length > 1);
+        }
+      }).call(callback);
     });
     
     this.When(/^I click on a report location marker$/,
@@ -177,6 +216,76 @@
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
+    });
+    
+    this.Given("I register an account", function(callback){
+      helper.world.browser
+      .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
+      //.getHTML("body", console.log.bind(console))
+      .waitForExist("#at-signUp", 3000, function(err, exists){
+        assert(!err);
+        if(!exists) {
+          helper.world.browser.getHTML("body", console.log.bind(console));
+          assert(exists, "Register button missing");
+        }
+      })
+      .click("#at-signUp", function(err){
+        assert(!err);
+      })
+      .waitForExist(".form-control")
+      .setValue('#at-field-email', 'test@user.com')
+      .setValue('#at-field-password', 'testuser')
+      .setValue('#at-field-password_again', 'testuser')
+      .setValue('#at-field-name', 'Test User')
+      .submitForm('#at-field-email', function(err){
+        assert(!err);
+      })
+      .waitForExist(".form-control", 500, true, function(err, dne){
+        assert(!err);
+        assert(dne);
+      })
+      .call(callback);
+    });
+  
+    this.When("I log in", function(callback){
+      helper.world.browser
+      .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
+      .waitForExist(".form-control", function(err, exists){
+        assert(!err);
+        assert(exists);
+      })
+      .setValue('#at-field-email', 'test@user.com')
+      .setValue('#at-field-password', 'testuser')
+      .submitForm('#at-field-email', function(err){
+        assert(!err);
+      })
+      .waitForExist(".form-control", 500, true, function(err, dne){
+        assert(!err);
+        assert(dne);
+      })
+      .call(callback);
+    });
+  
+    this.Given(/I am( not)? authenticated/,
+    function(amNot, callback){
+      helper.world.browser
+      .execute(function(){
+        return Meteor.userId();
+      }, function(err, ret){
+        assert(!err);
+        if(amNot) {
+          assert.equal(ret.value, null, "Authenticated");
+        } else {
+          assert(ret.value, "Not authenticated");
+        }
+      }).call(callback);
+    });
+    
+    this.When("I log out",
+    function (callback) {
+      helper.world.browser
+        .click('.at-nav-button')
+        .call(callback);
     });
     
   };

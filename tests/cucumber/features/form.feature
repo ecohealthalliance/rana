@@ -5,20 +5,22 @@ Feature: A form for reporting Ranavirus outbreaks
 
   Scenario: Filling out a form without logging in
     Given I am on the "form" page
-    And I am not logged in
+    And I am not authenticated
     Then I will see a message that requires me to log in
   
   Scenario: Filling in institution information
-    Given I am on the "form" page
-    And I am logged in
+    Given I register an account
+    And I am on the "form" page
     Then the information for the institution fields should be prepopulated
 
   Scenario: Submitting a ranavirus form
-    Given I am on the "form" page
-    When I fill out the form with the name "Test user"
+    Given I register an account
+    And I am on the "form" page
+    And I am authenticated
+    When I fill out the form
     And I click submit
     Then the webpage should not display a validation error
-    Then the database should have a report with the name "Test user"
+    And the database should have a report linked to my account
 
   Scenario: Submitting an invalid email
     Given I am on the "form" page
