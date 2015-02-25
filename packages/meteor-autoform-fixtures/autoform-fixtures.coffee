@@ -147,6 +147,7 @@ AutoForm.Fixtures.getPreData = (ss, getFakeTextCallback) ->
           result[k] = moment(max).add(-Math.round(Math.random() * 15000), 'day').toDate()
         else
           result[k] = new Date()
+        result[k] = JSON.stringify(result[k])
         continue
       if field.type.name is "Boolean"
         result[k] = !!Math.round(Math.random())
