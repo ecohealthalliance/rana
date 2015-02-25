@@ -179,6 +179,40 @@
       helper.resetTestDB([], callback);
     });
     
+    this.Then("I should not see a checkbox for the edit column",
+    function (callback) {
+      helper.world.browser
+        .waitForVisible('.leaflet-popup-content')
+        .waitForVisible('.leaflet-popup-content', function(err, visible){
+          assert(!err);
+          assert(value);
+        }).call(callback);
+    });
+    
+    this.Then("I should not see a checkbox for the edit column",
+    function (callback) {
+      helper.world.browser
+        .waitForVisible('.reactive-table-columns-dropdown .controls',
+        function(err, visible){
+          assert(!err);
+          assert(!visible, "Controls column has visible checkbox.");
+        }).call(callback);
+    });
+    
+    this.Then('I should see the text "$text"',
+    function (text, callback) {
+      helper.world.browser
+        .waitForText('body')
+        .getText('body', function(err, bodyText){
+          console.log(bodyText);
+          assert(!err);
+          assert(
+            new RegExp(text, "i").test(bodyText),
+            '"' + text + '" not in "' + bodyText + '"'
+          );
+        }).call(callback);
+    });
+    
   };
 
 })();

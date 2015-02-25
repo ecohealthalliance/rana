@@ -1,4 +1,7 @@
-Template.table.settings = () =>
+Template.table.isEmpty = =>
+  not @collections.Reports.findOne()
+
+Template.table.settings = =>
   schema = @collections.Reports.simpleSchema().schema()
   return {
     showColumnToggles: true
