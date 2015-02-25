@@ -32,7 +32,7 @@
     });
 
     this.When(
-      /^I fill out the form with the (name|email) "([^"]*)"$/,
+      /^I fill out the form with the (name|email|eventDate) "([^"]*)"$/,
     function (prop, value, callback) {
       helper.world.browser
       .waitForExist('.form-group')
@@ -87,6 +87,11 @@
           generatedFormData['pathologyReports'] = [];
           generatedFormData['publicationInfo']['pdf'] = null;
           generatedFormData['eventLocation'] = null;
+          if (generatedFormData.hasOwnProperty('eventDate')) {
+            generatedFormData['eventDate'] = new Date(
+              JSON.parse(generatedFormData['eventDate']))
+              .toISOString().slice(0,10);
+          }
           generatedFormData[prop] = value;
 
           var browser = helper.world.browser;
@@ -109,8 +114,7 @@
                 browser.click('div[data-schema-key="' + key + '"] input[value="' + element + '"]');
               });
             } else if (schemaTypes[key] === 'Date') {
-              // The autoform fixtures package is giving {} for this
-              //browser.setValue('input[data-schema-key="' + key + '"]', '');
+              browser.setValue('input[data-schema-key="' + key + '"]', '');
             } else if (schemaTypes[key] === 'Object') {
               _.each(value, function (subValue, subKey) {
                 var schemaKey = key + '.' + subKey;
