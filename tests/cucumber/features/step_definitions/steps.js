@@ -85,11 +85,12 @@
       helper.resetTestDB([{
         consent: true,
         dataUsePermissions: "Share full record",
-        email: "test@test.com",
-        eventLocation: "25.046919772516173,121.55189514218364",
-        name: "Mock data",
-        phone: "12345"
-      }], function(){
+        eventLocation: "25.046919772516173,121.55189514218364"
+      }], function(err){
+        if(err) {
+          console.log(err);
+        }
+        assert(!err);
         helper.world.browser
         .executeAsync(function(done){
           Tracker.autorun(function(){
@@ -101,7 +102,7 @@
           window.setTimeout(done, 2000);
         }, _.once(function(err, ret){
           assert(!err);
-          assert(ret.value, "No reports with a geopoint in the database");
+          assert(ret.value, "No reports in the database");
           callback();
         }));
       });

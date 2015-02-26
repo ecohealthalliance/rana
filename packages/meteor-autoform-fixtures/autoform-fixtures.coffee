@@ -100,7 +100,6 @@ AutoForm.Fixtures.getPreData = (ss, getFakeTextCallback) ->
         count = field.maxCount || 3
         result[k] = _.range(count)
         continue
-      console.log arrayField
       options = field.autoform?.options or
         field.autoform?.afFieldInput?.options or
         arrayField?.autoform?.options or
@@ -156,11 +155,18 @@ AutoForm.Fixtures.getPreData = (ss, getFakeTextCallback) ->
 
 AutoForm.Fixtures.normalizeData = (data) ->
   result = {}
-  for k of data
+  for k in Object.keys(data).sort()
     namespace = k.split(".")
     resultObjPointer = result
     for pathComponent in namespace.slice(0,-1)
+      if not (pathComponent of resultObjPointer)
+        # If the parent object is omitted then the key should
+        # be skipped.
+        resultObjPointer = null
+        break
       resultObjPointer = resultObjPointer[pathComponent]
+    if resultObjPointer == null
+      continue
     resultObjPointer[namespace.slice(-1)[0]] = data[k]
   result
 

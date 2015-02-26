@@ -60,7 +60,6 @@
         } else {
           var schemaTypes = res.value.schemaTypes;
           var generatedFormData = res.value.formData;
-          generatedFormData['email'] = 'a@b.com';
           generatedFormData['institutionAddress']['postalCode'] = '12345';
           generatedFormData['images'] = [];
           generatedFormData['pathologyReports'] = [];
@@ -72,7 +71,6 @@
               .toISOString().slice(0,10);
           }
           _.extend(generatedFormData, customValues);
-
           var browser = helper.world.browser;
           _.each(generatedFormData, function (value, key) {
             if (schemaTypes[key] === 'String' || 
@@ -103,14 +101,14 @@
               // do nothing
             } else {
               var error = 'unknown type in schema: ' + schemaTypes[key];
-              callback.fail(error);
+              throw new Error(error);
             }
           });
           callback();
         }});
     };
     
-    this.When(/^I fill out the form with the (name|email|eventDate) "([^"]*)"$/,
+    this.When(/^I fill out the form with the (eventDate) "([^"]*)"$/,
     function(prop, value, callback){
       var customValues = {};
       customValues[prop] = value;
@@ -121,7 +119,7 @@
       helper.fillInForm({}, callback);
     });
 
-    this.When("I create a report without consenting to publish it",
+    this.When("I fill out a report without consenting to publish it",
     function(callback){
       var customValues = {};
       customValues['consent'] = false;
@@ -165,12 +163,30 @@
     this.Then(/^the webpage should( not)? display a validation error$/,
     function(shouldNot, callback){
       helper.world.browser
-      .isExisting('.has-error', function(err, exists){
-        if(err) return callback.fail(err);
-        if(!shouldNot && !exists) return callback.fail("Missing validation error");
-        if(shouldNot && exists) return callback.fail("Validation error");
-        callback();
-      });
+      .waitForExist('.has-error', function(err, exists){
+        assert.equal(err, null);
+        if(shouldNot) {
+          assert(!exists, "Validation error");
+        } else {
+          assert(exists, "Missing validation error");
+        }
+      }).call(callback);
+    });
+
+    this.Then('I should see a "$message" toast',
+    function(message, callback){
+      helper.world.browser
+      .waitForText(".toast-success", function(err, exists){
+        assert(!err);
+        assert(exists, "Could not find toast element");
+      })
+      .getText(".toast-success", function(err, text){
+        assert(!err);
+        var regexString = message
+          .split(" ")
+          .join("\\s+");
+        assert(RegExp(regexString, "i").test(text), message + " not found in " + text);
+      }).call(callback);
     });
 
   };

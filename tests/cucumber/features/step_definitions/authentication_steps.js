@@ -110,6 +110,7 @@
     function (callback) {
       helper.world.browser
         .click('.at-nav-button')
+        .pause(500)
         .call(callback);
     });
     

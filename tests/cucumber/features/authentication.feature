@@ -7,8 +7,12 @@ Feature: The ability to authenticate users
     Given I have not logged in
     When I am on the "form" page
     And I log in
-    When I create a report without consenting to publish it
-    And I navigate to the "map" page
+    Given I am logged in
+    When I fill out a report without consenting to publish it
+    And I click submit
+    Then the webpage should not display a validation error
+    And I should see a "insert successful" toast
+    When I navigate to the "map" page
     Then my reports without consent should be available
     When I log out
     And I navigate to the "map" page

@@ -1,69 +1,68 @@
 template(name="form")
-  +autoForm id="ranavirus-report" collection="collections.Reports" type="insert" doc=reportDoc
-
-    +afQuickField name='name' id='name'
-
-    +afQuickField name='email' id='email'
-
-    +afQuickField name='phone' id='phone'
-
-    +afQuickField name='institutionAddress' id='institutionAddress'
-
-    +afQuickField name='eventDate' id='eventDate'
-
-    +afQuickField name='coordinatesAvailable' id='coordinatesAvailable'
-
-    +afQuickField name='eventLocation' id='eventLocation'
-
-    +afQuickField name='eventCountry' id='eventCountry'
-
-    +afQuickField name='populationType' id='populationType'
-
-    +afQuickField name='screeningReason' id='screeningReason'
-
-    +afQuickField name='vertebrateClasses' id='vertebrateClasses'
-
-    +afQuickField name='speciesGenus' id='speciesGenus'
-
-    +afQuickField name='speciesName' id='speciesName'
-
-    +afQuickField name='speciesAffectedType' id='speciesAffectedType'
-
-    +afQuickField name='numInvolved' id='numInvolved'
-
-    +afQuickField name='speciesNotes' id='speciesNotes'
-
-    +afQuickField name='ageClasses' id='ageClasses'
-
-    +afQuickField name='ranavirusConfirmMethods' id='ranavirusConfirmMethods'
-
-    if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-      +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-
-    +afQuickField name='sampleType' id='sampleType'
-
-    if afFieldValueContains name='sampleType' value='other'
-      +afQuickField name='specifyOtherRanavirusSampleTypes'
-
-    +afQuickField name='totalAnimalsTested' id='totalAnimalsTested'
-
-    +afQuickField name='totalAnimalsConfirmedInfected' id='totalAnimalsConfirmedInfected'
-
-    +afQuickField name='totalAnimalsConfirmedDiseased' id='totalAnimalsConfirmedDiseased'
-
-    +afQuickField name='pathologyReports' id='pathologyReports'
-
-    +afQuickField name='images' id='images'
-
-    +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
-
-    +afQuickField name='dataUsePermissions' id='dataUsePermissions'
-
-    +afQuickField name='consent' id='consent'
-
-    +afQuickField name='additionalNotes' id='additionalNotes'
-
-    +afQuickField name='publicationInfo' id='publicationInfo'
-
-    .form-group
-      button(type='submit' class='btn btn-primary') Submit
+  unless currentUser
+    h2 You must
+      a(href="/sign-in") sign in
+      | to submit a report.
+  else
+    +autoForm id="ranavirus-report" collection="collections.Reports" type="insert" doc=reportDoc
+  
+      +afQuickField name='institutionAddress' id='institutionAddress'
+  
+      +afQuickField name='eventDate' id='eventDate'
+  
+      +afQuickField name='coordinatesAvailable' id='coordinatesAvailable'
+  
+      +afQuickField name='eventLocation' id='eventLocation'
+  
+      +afQuickField name='eventCountry' id='eventCountry'
+  
+      +afQuickField name='populationType' id='populationType'
+  
+      +afQuickField name='screeningReason' id='screeningReason'
+  
+      +afQuickField name='vertebrateClasses' id='vertebrateClasses'
+  
+      +afQuickField name='speciesGenus' id='speciesGenus'
+  
+      +afQuickField name='speciesName' id='speciesName'
+  
+      +afQuickField name='speciesAffectedType' id='speciesAffectedType'
+  
+      +afQuickField name='numInvolved' id='numInvolved'
+  
+      +afQuickField name='speciesNotes' id='speciesNotes'
+  
+      +afQuickField name='ageClasses' id='ageClasses'
+  
+      +afQuickField name='ranavirusConfirmMethods' id='ranavirusConfirmMethods'
+  
+      if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+        +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+  
+      +afQuickField name='sampleType' id='sampleType'
+  
+      if afFieldValueContains name='sampleType' value='other'
+        +afQuickField name='specifyOtherRanavirusSampleTypes'
+  
+      +afQuickField name='totalAnimalsTested' id='totalAnimalsTested'
+  
+      +afQuickField name='totalAnimalsConfirmedInfected' id='totalAnimalsConfirmedInfected'
+  
+      +afQuickField name='totalAnimalsConfirmedDiseased' id='totalAnimalsConfirmedDiseased'
+  
+      +afQuickField name='pathologyReports' id='pathologyReports'
+  
+      +afQuickField name='images' id='images'
+  
+      +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+  
+      +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+  
+      +afQuickField name='consent' id='consent'
+  
+      +afQuickField name='additionalNotes' id='additionalNotes'
+  
+      +afQuickField name='publicationInfo' id='publicationInfo'
+  
+      .form-group
+        button(type='submit' class='btn btn-primary') Submit

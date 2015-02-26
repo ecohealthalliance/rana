@@ -20,23 +20,8 @@ Feature: A form for reporting Ranavirus outbreaks
     When I fill out the form
     And I click submit
     Then the webpage should not display a validation error
+    And I should see a "insert successful" toast
     And the database should have a report linked to my account
-
-  Scenario: Submitting an invalid email
-    Given I am on the "form" page
-    When I fill out the form with the email "invalid"
-    And I click submit
-    Then the webpage should display a validation error
-    And the database should not have a report with the email "invalid"
-
-  Scenario: Submitting an invalid phone number
-    Given I am on the "form" page
-    When I fill out the form with a telephone number greater than 15 digits
-    And I click submit
-    Then the webpage should display a validation error
-    When I fill out the form with a telephone number less than 12 digits
-    And I click submit
-    Then the webpage should display a validation error
 
   Scenario: Submitting an invalid date
     Given I am on the "form" page
