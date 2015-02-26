@@ -4,6 +4,7 @@
   'use strict';
 
   var assert = require('assert');
+  var path = require('path');
 
   var _ = Package["underscore"]._;
 
@@ -126,7 +127,41 @@
       customValues['consent'] = false;
       helper.fillInForm(customValues, callback);
     });
-
+    
+    this.When('I select "Permission Not Granted"',
+    function(callback){
+      helper.world.browser
+      .selectByValue(
+        'select[data-schema-key="pathologyReports.0.permission"]',
+        "Permission Not Granted"
+      )
+      .call(callback);
+    });
+    
+    this.When('I choose a non-PDF publication to upload', function(callback){
+      function getMeteorDir(){
+        var outPath = process.cwd();
+        while(path.basename(outPath) !== ".meteor") {
+          assert(outPath.length > 1);
+          outPath = path.join(outPath, '..');
+        }
+        return outPath;
+      }
+      helper.world.browser
+      .chooseFile(
+        'input[data-schema-key="publicationInfo.pdf"]', 
+        getMeteorDir() + '/' + "packages",
+        function(err){
+          // This is throwing an "Invalid Command Method" error
+          // and I think the issue might be with phantomJS.
+          // Possibly related:
+          // https://github.com/ariya/phantomjs/issues/12575
+          assert.equal(err, null);
+        }
+      )
+      .call(callback);
+    });
+    
     this.Then(/^the webpage should( not)? display a validation error$/,
     function(shouldNot, callback){
       helper.world.browser

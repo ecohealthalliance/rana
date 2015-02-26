@@ -45,21 +45,25 @@ Feature: A form for reporting Ranavirus outbreaks
     Then the website should display the question "No date specified. Would you like to submit anyways?"
 
   Scenario: Submitting a file without permission
-    Given I fill out a form
+    Given I am on the "form" page
+    When I fill out the form
+    And I add a pathology report
     And I select "Permission Not Granted"
     And I choose a file to upload
-    When I click submit
+    And I click submit
     Then the website should display a validation error
     And the database should not have a report containing the uploaded file
 
   Scenario: Submitting a non-PDF publication
-    Given I fill out a form
+    Given I am on the "form" page
+    When I fill out the form
     And I choose a non-PDF publication to upload
     When I click submit
     Then the webpage should display a validation error
 
   Scenario: Submitting a publication without a reference
-    Given I fill out a form
+    Given I am on the "form" page
+    When I fill out the form
     And I upload a pdf publication
     But I do not provide text for the reference field
     When I click submit
