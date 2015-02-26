@@ -4,13 +4,13 @@ Feature: The ability to authenticate users
   so the public cannot view and edit my reports
 
   Scenario: Reports are not publicly visible without consent
-    Given I register an account
-    And I am on the "form" page
-    And I am authenticated
+    Given I have not logged in
+    When I am on the "form" page
+    And I log in
     When I create a report without consenting to publish it
     And I navigate to the "map" page
-    Then my reports without consent should be avaible
+    Then my reports without consent should be available
     When I log out
     And I navigate to the "map" page
-    Then I am not authenticated
-    And reports without consent should not be avaible
+    Then I am not logged in
+    And my reports without consent should not be available

@@ -11,6 +11,10 @@
         _.each(reports, function (report) {
           collections.Reports.insert(report);
         });
+        Accounts.createUser({
+          email: "test@test.com",
+          password: "testuser"
+        });
       }
     });
 

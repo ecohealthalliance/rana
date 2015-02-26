@@ -221,7 +221,7 @@
       }).call(callback);
     });
     
-    this.Then(/my reports without consent should(not)? be avaible/,
+    this.Then(/my reports without consent should(not)? be available/,
     function(shouldNot, callback){
       helper.world.browser
       .getMyReports({consent: false}, function(err, ret){
@@ -295,7 +295,7 @@
       helper.resetTestDB([], callback);
     });
     
-    this.Given("I register an account", function(callback){
+    this.When("I register an account", function(callback){
       helper.world.browser
       .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
       //.getHTML("body", console.log.bind(console))
@@ -310,7 +310,7 @@
         assert(!err);
       })
       .waitForExist(".form-control")
-      .setValue('#at-field-email', 'test@user.com')
+      .setValue('#at-field-email', 'test' + Math.floor(Math.random()*100) + '@user.com')
       .setValue('#at-field-password', 'testuser')
       .setValue('#at-field-password_again', 'testuser')
       .setValue('#at-field-name', 'Test User')
@@ -324,15 +324,15 @@
       .call(callback);
     });
   
-    this.When("I log in", function(callback){
+    this.When(/I log in/, function(callback){
       helper.world.browser
       .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
       .waitForExist(".form-control", function(err, exists){
         assert(!err);
         assert(exists);
       })
-      .setValue('#at-field-email', 'test@user.com')
-      .setValue('#at-field-password', 'testuser')
+      .setValue('#at-field-email', "test@test.com")
+      .setValue('#at-field-password', "testuser")
       .submitForm('#at-field-email', function(err){
         assert(!err);
       })
@@ -343,7 +343,27 @@
       .call(callback);
     });
   
-    this.Given(/I am( not)? authenticated/,
+    this.Given(/I have not logged in/,
+    function(callback){
+      helper.world.browser.execute(function () {
+        Meteor.logout();
+      }).call(callback);
+    });
+    
+    this.Given(/I have logged in/, function (callback) {
+      helper.world.browser.execute(function () {
+        Meteor.loginWithPassword("test@test.com", "testuser");
+      }).call(callback);
+    });
+    
+    this.When("I log out",
+    function (callback) {
+      helper.world.browser
+        .click('.at-nav-button')
+        .call(callback);
+    });
+    
+    this.Then(/I am( not)? logged in/,
     function(amNot, callback){
       helper.world.browser
       .execute(function(){
@@ -356,13 +376,6 @@
           assert(ret.value, "Not authenticated");
         }
       }).call(callback);
-    });
-    
-    this.When("I log out",
-    function (callback) {
-      helper.world.browser
-        .click('.at-nav-button')
-        .call(callback);
     });
     
   };

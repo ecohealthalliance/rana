@@ -5,7 +5,7 @@ Feature: A form for reporting Ranavirus outbreaks
 
   Scenario: Filling out a form without logging in
     Given I am on the "form" page
-    And I am not authenticated
+    And I have not logged in
     Then I will see a message that requires me to log in
   
   Scenario: Filling in institution information
@@ -16,7 +16,7 @@ Feature: A form for reporting Ranavirus outbreaks
   Scenario: Submitting a ranavirus form
     Given I register an account
     And I am on the "form" page
-    And I am authenticated
+    And I have logged in
     When I fill out the form
     And I click submit
     Then the webpage should not display a validation error
