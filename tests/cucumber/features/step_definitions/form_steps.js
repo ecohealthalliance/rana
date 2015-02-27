@@ -14,7 +14,10 @@
 
     this.fillInForm = function (customValues, callback) {
       helper.world.browser
-      .waitForExist('.form-group')
+      .waitForExist('.form-group', function (err, exists) {
+        assert(!err);
+        assert(exists);
+      })
       .execute(function(){
         var schema = collections.Reports.simpleSchema()._schema;
         var types = {};
@@ -176,6 +179,9 @@
     this.Then('I should see a "$message" toast',
     function(message, callback){
       helper.world.browser
+      .waitForVisible(".toast-success", function (err) {
+        assert(!err);
+      })
       .waitForText(".toast-success", function(err, exists){
         assert(!err);
         assert(exists, "Could not find toast element");

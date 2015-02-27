@@ -96,11 +96,11 @@
     
     this.Given(/I have logged in/, function (callback) {
       helper.world.browser.executeAsync(function (done) {
-        Meteor.loginWithPassword("test@test.com", "testuser", function(err){
-          if(err) return done();
+        Meteor.loginWithPassword("test@test.com", "testuser", function (err) {
+          if (err) return done();
           done(Meteor.userId());
         });
-      }, function(err, ret){
+      }, function (err, ret) {
         assert(!err);
         assert(ret.value);
       }).call(callback);

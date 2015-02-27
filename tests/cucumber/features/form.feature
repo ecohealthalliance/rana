@@ -4,7 +4,8 @@ Feature: A form for reporting Ranavirus outbreaks
   So I can submit the data for analysis
 
   Scenario: Filling out a form without logging in
-    Given I am on the "form" page
+    Given I have logged in
+    And I am on the "form" page
     And I have not logged in
     Then I will see a message that requires me to log in
   
@@ -24,13 +25,15 @@ Feature: A form for reporting Ranavirus outbreaks
     And the database should have a report linked to my account
 
   Scenario: Submitting an invalid date
-    Given I am on the "form" page
+    Given I have logged in
+    And I am on the "form" page
     When I fill out the form with the eventDate "08/dd/1990"
     And I click submit
     Then the website should display the question "No date specified. Would you like to submit anyways?"
 
   Scenario: Submitting a file without permission
-    Given I am on the "form" page
+    Given I have logged in
+    And I am on the "form" page
     When I fill out the form
     And I add a pathology report
     And I select "Permission Not Granted"
@@ -40,14 +43,16 @@ Feature: A form for reporting Ranavirus outbreaks
     And the database should not have a report containing the uploaded file
 
   Scenario: Submitting a non-PDF publication
-    Given I am on the "form" page
+    Given I have logged in
+    And I am on the "form" page
     When I fill out the form
     And I choose a non-PDF publication to upload
     When I click submit
     Then the webpage should display a validation error
 
   Scenario: Submitting a publication without a reference
-    Given I am on the "form" page
+    Given I have logged in
+    And I am on the "form" page
     When I fill out the form
     And I upload a pdf publication
     But I do not provide text for the reference field

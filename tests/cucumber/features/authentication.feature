@@ -8,7 +8,8 @@ Feature: The ability to authenticate users
     When I am on the "form" page
     And I log in
     Given I am logged in
-    When I fill out a report without consenting to publish it
+    When I navigate to the "form" page
+    And I fill out a report without consenting to publish it
     And I click submit
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast

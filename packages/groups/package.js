@@ -15,7 +15,7 @@ Package.onUse(function(api) {
   api.use('aldeed:collection2@2.3.2');
   api.use('aldeed:autoform@4.2.2');
   api.use('alanning:roles@1.2.11');
-  api.use('matb33:collection-hooks@0.7.5');
+  api.use('matb33:collection-hooks@0.7.11');
   api.use('useraccounts:core@1.7.0');
   
   api.use('rana:accounts@0.0.1');

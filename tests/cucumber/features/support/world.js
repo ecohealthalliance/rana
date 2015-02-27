@@ -34,7 +34,7 @@
         browser.call(next);
       });
 
-    };
+    }; 
 
   };
 
