@@ -94,9 +94,7 @@ Template.importForm.helpers
       []
 
   unmatchedHeadersString: () ->
-    headers = Object.keys Session.get('csvData')[0]
-    fields = Object.keys getCollections().Reports.simpleSchema()._schema
-    ( header for header in headers when header not in fields ).join ', '
+    headerMatches().unmatched.join ', '
 
 AutoForm.hooks
     importForm:
