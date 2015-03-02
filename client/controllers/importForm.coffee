@@ -51,9 +51,6 @@ headerMatches = () ->
 
   res
 
-# Template.importForm.rendered = () ->
-#   Session.set 'csvData', []
-
 Template.importForm.events
   'change .file-upload': (e, t) ->
 
