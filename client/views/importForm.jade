@@ -1,22 +1,30 @@
-template(name="form")
+template(name="importForm")
 
-  +autoForm collection="collections.Reports" type="insert"
+  +autoForm collection="collections.Studies" type="insert" id="importForm"
 
-    +afQuickField name='name' id='name'
+    .form-group.csv-file
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title CSV file upload
+        .panel-body
+          if importReports.count
+            b File: &nbsp;
+            tt #{csvFileName}
+            | &nbsp;
+            b Id: &nbsp;
+            tt #{csvFileId}
+          +afQuickField name='csvFile' id='csvFile'
 
-    +afQuickField name='email' id='email'
+          if importReports.count
+            +reactiveTable collection=importReports fields=importFields
 
-    +afQuickField name='phone' id='phone'
+            if unmatchedHeadersString
+              h4 Unused fields in your data
+              tt #{unmatchedHeadersString}
 
-    +afQuickField name='institutionAddress' id='institutionAddress'
+    p Please fill out any of the following fields that apply to all reports in this study.
 
-    +afQuickField name='eventDate' id='eventDate'
-
-    +afQuickField name='coordinatesAvailable' id='coordinatesAvailable'
-
-    +afQuickField name='eventLocation' id='eventLocation'
-
-    +afQuickField name='eventCountry' id='eventCountry'
+    +afQuickField name='contact' id='contact'
 
     +afQuickField name='populationType' id='populationType'
 
@@ -29,8 +37,6 @@ template(name="form")
     +afQuickField name='speciesName' id='speciesName'
 
     +afQuickField name='speciesAffectedType' id='speciesAffectedType'
-
-    +afQuickField name='numInvolved' id='numInvolved'
 
     +afQuickField name='speciesNotes' id='speciesNotes'
 
@@ -46,19 +52,13 @@ template(name="form")
     if afFieldValueContains name='sampleType' value='other'
       +afQuickField name='specifyOtherRanavirusSampleTypes'
 
-    +afQuickField name='totalAnimalsTested' id='totalAnimalsTested'
+    +afQuickField name='dataUsePermissions' id='dataUsePermissions'
 
-    +afQuickField name='totalAnimalsConfirmedInfected' id='totalAnimalsConfirmedInfected'
-
-    +afQuickField name='totalAnimalsConfirmedDiseased' id='totalAnimalsConfirmedDiseased'
-
-    +afQuickField name='pathologyReports' id='pathologyReports'
-
-    +afQuickField name='images' id='images'
-
-    +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+    +afQuickField name='consent' id='consent'
 
     +afQuickField name='additionalNotes' id='additionalNotes'
+
+    +afQuickField name='publicationInfo' id='publicationInfo'
 
     .form-group
       button(type='submit' class='btn btn-primary') Submit

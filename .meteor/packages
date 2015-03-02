@@ -23,3 +23,6 @@ perak:markdown
 rana:accounts
 rana:groups
 useraccounts:bootstrap
+cfs:filesystem
+csats:csv-parse
+aslagle:reactive-table
