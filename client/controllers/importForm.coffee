@@ -47,7 +47,7 @@ headerMatches = () ->
 
   res =
     matched: ( header for header in headers when header in fields )
-    unmatched: ( header for header in headers when header in fields )
+    unmatched: ( header for header in headers when header not in fields )
 
   res
 
