@@ -12,8 +12,5 @@
 @collections.Reports = new Mongo.Collection 'reports'
 @collections.Reports.attachSchema @reportSchema
 
-@collections.ImportReports = new Mongo.Collection null
-@collections.ImportReports.attachSchema @reportSchema
-
 @collections.Studies = new Mongo.Collection 'studies'
 @collections.Studies.attachSchema @studySchema
