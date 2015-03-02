@@ -12,7 +12,7 @@
     var helper = this;
 
     this.Then(/the database should( not)? have a report linked to my account/,
-    function (shouldNot, query, callback) {
+    function (shouldNot, callback) {
       helper.world.browser
       .getMyReports({}, function(err, ret){
         assert(!err);
