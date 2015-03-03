@@ -13,9 +13,16 @@ Template.map.rendered = ->
   markers.addTo(lMap)
   
   @autorun ()=>
-    data = getCollections().Reports.find({
-      eventLocation: { $ne : null }
-    })
+    data = getCollections().Reports.find(
+      $and: [
+        {
+          eventLocation: { $ne : null }
+        }
+        {
+          eventLocation: { $ne : ","}
+        }
+      ]
+    )
     .map((report)-> {
       location: report.eventLocation.split(',').map(parseFloat)
       popupHTML: """
@@ -32,7 +39,7 @@ Template.map.rendered = ->
         <dt>Number of individuals involved</dt>
         <dd>#{report.numInvolved}</dd>
         <dt>Reported By</dt>
-        <dd>#{report.name}</dd>
+        <dd>#{report.createdBy.name}</dd>
       </dl>
       <a class="btn btn-primary btn-edit" href="/form/#{report._id}">Edit</a>
       </div>

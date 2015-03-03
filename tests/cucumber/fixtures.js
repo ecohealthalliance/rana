@@ -8,13 +8,20 @@
       '/fixtures/resetDB': function (reports) {
         collections.Reports.remove({});
         Meteor.users.remove({});
-        _.each(reports, function (report) {
-          collections.Reports.insert(report);
-        });
-        Accounts.createUser({
+        var userId = Accounts.createUser({
           email: "test@test.com",
           password: "testuser"
         });
+        _.each(reports, function (report) {
+          report = _.extend(report, {
+            createdBy: {
+              userId: userId,
+              name: "Test User"
+            }
+          });
+          collections.Reports.insert(report);
+        });
+        return reports;
       }
     });
 

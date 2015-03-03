@@ -12,7 +12,7 @@
     var helper = this;
 
     this.Then(/the database should( not)? have a report linked to my account/,
-    function (shouldNot, query, callback) {
+    function (shouldNot, callback) {
       helper.world.browser
       .getMyReports({}, function(err, ret){
         assert(!err);
@@ -25,7 +25,7 @@
       }).call(callback);
     });
     
-    this.Then(/my reports without consent should(not)? be available/,
+    this.Then(/my reports without consent should( not)? be available/,
     function(shouldNot, callback){
       helper.world.browser
       .getMyReports({consent: false}, function(err, ret){
@@ -34,7 +34,7 @@
           assert(!ret.value);
         } else {
           assert(ret.value);
-          assert(ret.value.length > 1);
+          assert(ret.value.length >= 1);
         }
       }).call(callback);
     });
@@ -96,11 +96,11 @@
     
     this.Given(/I have logged in/, function (callback) {
       helper.world.browser.executeAsync(function (done) {
-        Meteor.loginWithPassword("test@test.com", "testuser", function(err){
-          if(err) return done();
+        Meteor.loginWithPassword("test@test.com", "testuser", function (err) {
+          if (err) return done();
           done(Meteor.userId());
         });
-      }, function(err, ret){
+      }, function (err, ret) {
         assert(!err);
         assert(ret.value);
       }).call(callback);
@@ -109,7 +109,8 @@
     this.When("I log out",
     function (callback) {
       helper.world.browser
-        .click('.at-nav-button')
+        .click('#at-nav-button')
+        .pause(500)
         .call(callback);
     });
     
