@@ -233,6 +233,18 @@
       }).call(callback);
     });
 
+    this.Then("the information for the institution fields should be prepopulated",
+    function(callback){
+      helper.world.browser
+      .pause(2000)
+      .checkValue('[data-schema-key="institutionAddress.name"]', "EHA")
+      .checkValue('[data-schema-key="institutionAddress.street"]', "460 West 34th Street – 17th floor")
+      .checkValue('[data-schema-key="institutionAddress.city"]', "New York")
+      .checkValue('[data-schema-key="institutionAddress.stateOrProvince"]', "NY")
+      .checkValue('[data-schema-key="institutionAddress.country"]', "USA")
+      .checkValue('[data-schema-key="institutionAddress.postalCode"]', "10001")
+      .call(callback);
+    });
   };
 
 })();

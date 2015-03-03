@@ -10,7 +10,15 @@
         Meteor.users.remove({});
         var userId = Accounts.createUser({
           email: "test@test.com",
-          password: "testuser"
+          password: "testuser",
+          profile: {
+            organization : "EHA",
+            organizationStreet : "460 West 34th Street – 17th floor",
+            organizationCity: "New York",
+            organizationStateOrProvince: "NY",
+            organizationCountry: "USA",
+            organizationPostalCode : "10001"
+          }
         });
         _.each(reports, function (report) {
           report = _.extend(report, {

@@ -1,3 +1,5 @@
+getCollections = => @collections
+
 AutoForm.addHooks(
   'ranavirus-report', {
     formToDoc: (doc)->
@@ -15,3 +17,15 @@ AutoForm.addHooks(
       toastr.success(operation + " successful!")
   }
 )
+Template.form.reportDoc = ->
+  report = getCollections().Reports.findOne(@data?.reportId) or {}
+  return _.extend({
+    institutionAddress:
+      name: Meteor.user().profile?.organization
+      street: Meteor.user().profile?.organizationStreet
+      street2: Meteor.user().profile?.organizationStreet2
+      city: Meteor.user().profile?.organizationCity
+      stateOrProvince: Meteor.user().profile?.organizationStateOrProvince
+      country: Meteor.user().profile?.organizationCountry
+      postalCode: Meteor.user().profile?.organizationPostalCode
+  }, report)
