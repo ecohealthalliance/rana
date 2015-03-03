@@ -8,6 +8,15 @@
 
   var _ = Package["underscore"]._;
 
+  var getAppDirectory = function () {
+    var outPath = process.cwd();
+    while(path.basename(outPath) !== ".meteor") {
+      assert(outPath.length > 1);
+      outPath = path.join(outPath, '..');
+    }
+    return path.join(outPath, '..');
+  };
+
   module.exports = function () {
 
     var helper = this;
@@ -133,30 +142,59 @@
     function(callback){
       helper.world.browser
       .selectByValue(
-        'select[data-schema-key="pathologyReports.0.permission"]',
+        'select[file-input="pathologyReports.0.permission"]',
         "Permission Not Granted"
       )
       .call(callback);
     });
     
     this.When('I choose a non-PDF publication to upload', function(callback){
-      function getMeteorDir(){
-        var outPath = process.cwd();
-        while(path.basename(outPath) !== ".meteor") {
-          assert(outPath.length > 1);
-          outPath = path.join(outPath, '..');
-        }
-        return outPath;
-      }
       helper.world.browser
       .chooseFile(
-        'input[data-schema-key="publicationInfo.pdf"]', 
-        getMeteorDir() + '/' + "packages",
+        'input[file-input="publicationInfo.pdf"]', 
+        path.join(getAppDirectory(), "README.md"),
         function(err){
-          // This is throwing an "Invalid Command Method" error
-          // and I think the issue might be with phantomJS.
-          // Possibly related:
-          // https://github.com/ariya/phantomjs/issues/12575
+          console.log(err);
+          // For errors see:
+          // https://github.com/ecohealthalliance/rana/issues/61
+          assert.equal(err, null);
+        }
+      )
+      .call(callback);
+    });
+    
+    this.When("I add a pathology report", function(callback){
+      helper.world.browser
+      .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
+      .waitForExist('input[data-schema-key="pathologyReports.0.report"]')
+      .chooseFile(
+        'input[file-input="pathologyReports.0.report"]',
+        // This is a random pdf file that was selected because it is
+        // in the public domain.
+        // Source:
+        // http://commons.wikimedia.org/wiki/File:15_Years_ISS_-_Infographic.pdf
+        path.join(getAppDirectory(), "tests", "files", "NASA.pdf"),
+        function(err){
+          // For errors see:
+          // https://github.com/ecohealthalliance/rana/issues/61
+          assert.equal(err, null);
+        }
+      )
+      .selectByValue(
+        'select[data-schema-key="pathologyReports.0.permission"]',
+        'Yes'
+      )
+      .call(callback);
+    });
+    
+    this.When("I upload a pdf publication", function(callback){
+      helper.world.browser
+      .chooseFile(
+        'input[file-input="publicationInfo.pdf"]',
+        path.join(getAppDirectory(), "tests", "files", "NASA.pdf"),
+        function(err){
+          // For errors see:
+          // https://github.com/ecohealthalliance/rana/issues/61
           assert.equal(err, null);
         }
       )
