@@ -25,7 +25,7 @@
       }).call(callback);
     });
     
-    this.Then(/my reports without consent should(not)? be available/,
+    this.Then(/my reports without consent should( not)? be available/,
     function(shouldNot, callback){
       helper.world.browser
       .getMyReports({consent: false}, function(err, ret){
@@ -34,7 +34,7 @@
           assert(!ret.value);
         } else {
           assert(ret.value);
-          assert(ret.value.length > 1);
+          assert(ret.value.length >= 1);
         }
       }).call(callback);
     });
@@ -109,7 +109,7 @@
     this.When("I log out",
     function (callback) {
       helper.world.browser
-        .click('.at-nav-button')
+        .click('#at-nav-button')
         .pause(500)
         .call(callback);
     });

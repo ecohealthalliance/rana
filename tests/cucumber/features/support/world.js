@@ -19,6 +19,7 @@
 
         browser.addCommand("getMyReports", function(baseQuery, callback) {
           browser
+          .timeoutsAsyncScript(2000)
           .executeAsync(function(baseQuery, done){
             Meteor.subscribe("reports");
             Tracker.autorun(function(){
