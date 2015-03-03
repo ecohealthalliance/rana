@@ -10,8 +10,9 @@ Meteor.publish 'files', ->
 Meteor.publish 'reports', ->
   collections.Reports.find({
     $or : [
-      # The other option will be for the report to belong to the current user
-      # once we've linked accounts to reports.
+      {
+        "createdBy.userId": @userId
+      }
       {
         dataUsePermissions: "Share full record",
         consent: true

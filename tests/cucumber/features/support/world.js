@@ -19,11 +19,12 @@
 
         browser.addCommand("getMyReports", function(baseQuery, callback) {
           browser
+          .timeoutsAsyncScript(2000)
           .executeAsync(function(baseQuery, done){
             Meteor.subscribe("reports");
             Tracker.autorun(function(){
               var query = _.extend(baseQuery, {
-                userId: Meteor.userId()
+                'createdBy.userId': Meteor.userId()
               });
               var reports = collections.Reports.find(query);
               if(reports.count() > 0) done(reports.fetch());
@@ -34,7 +35,7 @@
         browser.call(next);
       });
 
-    };
+    }; 
 
   };
 
