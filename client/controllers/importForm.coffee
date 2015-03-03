@@ -94,28 +94,27 @@ Template.importForm.helpers
     headerMatches().unmatched.join ', '
 
 AutoForm.hooks
-    importForm:
-      after:
-        insert: (err, res, template) ->
+  importForm:
+    after:
+      insert: (err, res, template) ->
 
-          clearImportReports()
+        clearImportReports()
 
-          study = getCollections().Studies.findOne({_id: res})
+        study = getCollections().Studies.findOne({_id: res})
 
-          Meteor.call 'getCSVData', study.csvFile, (err, data) =>
-            reportSchema = getCollections().Reports.simpleSchema()._schema
-            reportFields = Object.keys reportSchema
+        Meteor.call 'getCSVData', study.csvFile, (err, data) =>
+          reportSchema = getCollections().Reports.simpleSchema()._schema
+          reportFields = Object.keys reportSchema
+          studyData = {}
+          for studyField in Object.keys study
+            if studyField != '_id' and studyField in reportFields
+              studyData[studyField] = _.clone study[studyField]
 
-            studyData = {}
-            for studyField in Object.keys study
-              if studyField != '_id' and studyField in reportFields
-                studyData[studyField] = _.clone study[studyField]
-
-            for row in data
-              report = {}
-              for key of studyData
-                report[key] = _.clone studyData[key]
-              for reportField in reportFields
-                if reportField of row and reportField[row]
-                  report[reportField] = row[reportField]
-              getCollections().Reports.insert report
+          for row in data
+            report = {}
+            for key of studyData
+              report[key] = _.clone studyData[key]
+            for reportField in reportFields
+              if reportField of row and row[reportField]
+                report[reportField] = row[reportField]
+            getCollections().Reports.insert report
