@@ -25,7 +25,11 @@ Router.route('/form/:reportId',
       Meteor.subscribe("reports")
     ]
   data: ->
-    type: "update"
+    currentReport = getCollections().Reports.findOne(@params.reportId)
+    if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
+      type: "update"
+    else
+      type: "readonly"
 )
 
 Router.route('/table',
