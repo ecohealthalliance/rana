@@ -1,7 +1,5 @@
 getCollections = () -> @collections
 
-ImportReports = new Mongo.Collection null
-ImportReports.attachSchema @reportSchema
 
 fileUploaded = () ->
 
@@ -17,10 +15,11 @@ fileUploaded = () ->
   setTimeout getData, 1000
 
 clearImportReports = () ->
-  ImportReports.remove({})
+  @collections.ImportReports.remove({})
 
 updateImportReports = () ->
 
+  importReports = @collections.ImportReports
   clearImportReports()
   matches = headerMatches().matched
 
@@ -33,7 +32,7 @@ updateImportReports = () ->
       rowdata = { 'contact': {'name': 'fake', 'email': 'a@b.com', 'phone': '1234567890'} }
       for field in matches
         rowdata[field] = row[field]
-      ImportReports.insert rowdata
+      importReports.insert rowdata
 
 getHeaders = () ->
   csvData = Session.get 'csvData'
@@ -76,7 +75,7 @@ Template.importForm.helpers
       null
 
   importReports: () ->
-    ImportReports.find()
+    getCollections().ImportReports.find()
 
   importFields: () ->
     csvData = Session.get 'csvData'
