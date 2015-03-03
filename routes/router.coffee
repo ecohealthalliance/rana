@@ -7,11 +7,7 @@ Router.route('/', ()-> @redirect('/group/rana'))
 
 Router.route('/form',
   where: 'client'
-  onBeforeAction: ()->
-    if Meteor.userId()
-      @next()
-    else
-      @render('mustSignIn')
+  onBeforeAction: AccountsTemplates.ensureSignedIn
 )
 
 Router.route('/form/:reportId',

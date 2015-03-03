@@ -4,9 +4,8 @@ Feature: A form for reporting Ranavirus outbreaks
   So I can submit the data for analysis
 
   Scenario: Filling out a form without logging in
-    Given I have logged in
+    Given I have not logged in
     And I am on the "form" page
-    And I have not logged in
     Then I will see a message that requires me to log in
   
   Scenario: Filling in institution information

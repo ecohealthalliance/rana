@@ -132,13 +132,13 @@
     this.Then("I will see a message that requires me to log in",
     function(callback) {
       helper.world.browser
-      .waitForExist(".container", function(err, exists){
+      .waitForExist(".at-error", function(err, exists){
         assert(!err);
         assert(exists, "Could not find container element");
       })
-      .getText(".container", function(err, text){
+      .getText(".at-error", function(err, text){
         assert(!err);
-        var regexString = "must sign in"
+        var regexString = "must be logged in"
           .split(" ")
           .join("\\s+");
         assert(RegExp(regexString, "i").test(text), "No login message");
