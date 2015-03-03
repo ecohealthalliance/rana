@@ -1,18 +1,22 @@
 getCollections = () -> @collections
 
-
 fileUploaded = () ->
-
-  # This is ugly... we have to wait until the full record is generated and
-  # stored.
-  getData = () ->
+  checkUploaded = () ->
     fileId = Session.get 'fileUpload[csvFile]'
+    isUploaded = false
     if fileId
-      Meteor.call 'getCSVData', fileId, (err, data) =>
-        Session.set 'csvData', data
-        updateImportReports()
+      record = @collections.CSVFiles.findOne { _id: fileId }
+      if record and record.isUploaded()
+        return Meteor.call 'getCSVData', fileId, (err, data) =>
+          Session.set 'csvData', data
+          if data
+            updateImportReports data
+          else
+            setTimeout checkUploaded, 10
 
-  setTimeout getData, 1000
+    setTimeout checkUploaded, 10
+
+  checkUploaded()
 
 clearImportReports = () ->
   @collections.ImportReports.remove({})
@@ -61,6 +65,7 @@ Template.importForm.events
     if $(e.currentTarget).attr('file-input') is 'csvFile'
       clearImportReports()
       Session.set 'csvData', []
+      Session.set 'fileUpload[csvFile]', false
 
 Template.importForm.helpers
 
