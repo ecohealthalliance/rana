@@ -1,7 +1,9 @@
 getCollections = () -> @collections
 
-ImportReports = new Mongo.Collection null
-ImportReports.attachSchema @reportSchema
+ImportReports = null
+Meteor.startup () ->
+  ImportReports = new Mongo.Collection null
+  ImportReports.attachSchema @reportSchema
 
 fileUploaded = () ->
   checkUploaded = () ->
