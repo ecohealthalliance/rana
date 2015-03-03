@@ -7,7 +7,6 @@ Router.route('/', ()-> @redirect('/group/rana'))
 
 Router.route('/form',
   where: 'client'
-  onBeforeAction: AccountsTemplates.ensureSignedIn
 )
 
 Router.route('/form/:reportId',
@@ -26,3 +25,5 @@ Router.route('/map',
 Router.route('/info',
   where: 'client'
 )
+
+Router.plugin 'ensureSignedIn', {only: ['form']}

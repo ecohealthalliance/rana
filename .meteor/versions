@@ -112,7 +112,7 @@ velocity:shim@0.1.0
 velocity:test-proxy@0.0.4
 webapp@1.1.6
 webapp-hashing@1.0.2
-xolvio:cucumber@0.4.0
+xolvio:cucumber@0.5.0
 xolvio:webdriver@0.3.0
 yogiben:autoform-file@0.2.0
 yogiben:autoform-map@0.0.3

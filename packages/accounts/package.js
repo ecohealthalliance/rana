@@ -28,7 +28,5 @@ Package.onUse(function(api) {
   
   api.addFiles('accounts_config.coffee', ['client', 'server']);
   api.addFiles('profile_routes.coffee', ['client', 'server']);
-  
-  api.export("AccountsTemplates", ['client']);
 });
 
