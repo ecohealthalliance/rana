@@ -4,16 +4,16 @@ head
 template(name="layout")
   body
 
-    .navbar.navbar-inverse.navbar-fixed.top
-        .container
-            .navbar-header
-              a.navbar-brand Ranavirus Reporting System
-            ul.nav.navbar-nav
-              li
-                a(href="/form") Report Form
-              li
-                a(href="/map") Map of Reports
-              li
-                a(href="/info") Ranavirus Information
+  .navbar.navbar-inverse.navbar-fixed.top
     .container
-        +yield
+      .navbar-header
+        a.navbar-brand Ranavirus Reporting System
+      ul.nav.navbar-nav
+        li
+          a(href="/form") Report Form
+        li
+          a(href="/map") Map of Reports
+        li
+          a(href="/info") Ranavirus Information
+  .container
+      +yield
