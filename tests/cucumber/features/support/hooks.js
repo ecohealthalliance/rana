@@ -27,8 +27,9 @@
       });
     });
 
-    this.Before(function() {
+    this.Before(function(scenario) {
       var world = helper.world;
+      world.scenario = scenario;
       var next = arguments[arguments.length - 1];
       world.browser.
         init().

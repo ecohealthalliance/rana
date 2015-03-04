@@ -2,7 +2,18 @@
 
 @collections.Files = new FS.Collection("files",
   stores: [new FS.Store.GridFS("files", {})]
+  
+  
 )
+
+@collections.PDFs = new FS.Collection("pdfs", {
+  stores: [
+    new FS.Store.GridFS("pdfs")
+  ]
+  filter:
+    allow:
+      contentTypes: ["application/pdf"]
+})
 
 populationTypes =
   wild:	"""
@@ -371,6 +382,7 @@ AddressSchema = new SimpleSchema(
       afFieldInput:
         type: 'fileUpload'
         collection: 'files'
+        
   'pathologyReports.$.permission':
     label: "Do you have permission to upload this report?"
     type: String
@@ -446,31 +458,34 @@ AddressSchema = new SimpleSchema(
     optional: true
     autoform:
       rows: 5
-  publicationInfo:
-    type: Object
-    optional: true
-  'publicationInfo.dataPublished':
+  dataPublished:
     type: Boolean
     label: 'Publication Status of the Data'
+    optional: true
     autoform:
       type: 'boolean-radios'
       trueLabel: 'Published'
       falseLabel: 'Unpublished'
+  publicationInfo:
+    type: Object
+    optional: true
+    custom: ->
+      if @field('dataPublished').value
+        if not(@value?.pdf and @value?.reference)
+          return "required"
   'publicationInfo.pdf':
     type: String
     label: """
     If the data has been published please provide a PDF.
     """
     # For some reason the optional value on the parent obj doesn't apply to this
-    optional: true
     autoform:
       afFieldInput:
         type: 'fileUpload'
-        collection: 'files'
+        collection: 'pdfs'
   'publicationInfo.reference':
     type: String
     label: """If the data has been published please provide a full reference"""
-    optional: true
     autoform:
       rows: 3
   creationDate:

@@ -62,7 +62,10 @@ template(name="form")
   
       +afQuickField name='additionalNotes' id='additionalNotes'
   
-      +afQuickField name='publicationInfo' id='publicationInfo'
+      +afQuickField name='dataPublished' id='dataPublished'
+      
+      if afFieldValueIs name='dataPublished' value=true
+        +afQuickField name='publicationInfo' id='publicationInfo'
   
       .form-group
         button(type='submit' class='btn btn-primary') Submit

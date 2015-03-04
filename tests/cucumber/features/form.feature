@@ -29,17 +29,16 @@ Feature: A form for reporting Ranavirus outbreaks
     And I am on the "form" page
     When I fill out the form with the eventDate "08/dd/1990"
     And I click submit
-    Then the website should display the question "No date specified. Would you like to submit anyways?"
+    Then the webpage should display the question "No date specified. Would you like to submit anyways?"
 
   Scenario: Submitting a file without permission
     Given I have logged in
     And I am on the "form" page
     When I fill out the form
     And I add a pathology report
-    And I select "Permission Not Granted"
-    And I choose a file to upload
+    And I choose "Permission Not Granted" for the pathologyReports.0.permission field
     And I click submit
-    Then the website should display a validation error
+    Then the webpage should display a validation error
     And the database should not have a report containing the uploaded file
 
   Scenario: Submitting a non-PDF publication
@@ -47,7 +46,7 @@ Feature: A form for reporting Ranavirus outbreaks
     And I am on the "form" page
     When I fill out the form
     And I choose a non-PDF publication to upload
-    When I click submit
+    And I click submit
     Then the webpage should display a validation error
 
   Scenario: Submitting a publication without a reference
@@ -56,5 +55,9 @@ Feature: A form for reporting Ranavirus outbreaks
     When I fill out the form
     And I upload a pdf publication
     But I do not provide text for the reference field
-    When I click submit
+    And I click submit
     Then the webpage should display a validation error
+    When I fill out the publicationInfo.reference field with "the journal Nature"
+    And I click submit
+    Then the webpage should not display a validation error
+    And I should see a "insert successful" toast
