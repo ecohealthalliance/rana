@@ -1,11 +1,11 @@
 UserProfileSchema = @UserProfileSchema
 
 Router.route 'profile', 
-
-  onBeforeAction: AccountsTemplates.ensureSignedIn
   
   action: () ->
     @redirect "/profile/#{Meteor.userId()}"
+    
+Router.plugin "ensureSignedIn", {only: ["profile"]}
 
 
 Router.route '/profile/:_id',
@@ -20,3 +20,5 @@ Router.route '/profile/:_id',
     
   waitOn: () ->
     Meteor.subscribe "userInfo", @params._id
+
+    
