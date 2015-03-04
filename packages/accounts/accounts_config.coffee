@@ -1,21 +1,15 @@
+UserProfileSchema = @UserProfileSchema
+
 AccountsTemplates.configureRoute "signIn"
 
-AccountsTemplates.addField
-  _id: 'name'
-  type: 'text'
-  displayName: 'Name'
-  required: true
+schema = UserProfileSchema.schema()
+for key in _.keys schema
+  field = schema[key]
 
-AccountsTemplates.addField
-  _id: 'organization'
-  type: 'text'
-  displayName: 'Organization'
-  required: false
-
-AccountsTemplates.addField
-  _id: 'phone'
-  type: 'tel'
-  displayName: 'Phone'
-  required: false
+  AccountsTemplates.addField
+    _id: key
+    type: 'text'
+    #displayName: field.label
+    required: if field.optional then false else true
 
   

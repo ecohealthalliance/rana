@@ -9,6 +9,7 @@ Package.onUse(function(api) {
   
   api.use('templating');
   api.use('coffeescript');
+  api.use('underscore');
   api.use('mquandalle:jade@0.4.1');
   api.use('iron:router@1.0.7');
   api.use('aldeed:collection2@2.3.2');
@@ -18,7 +19,7 @@ Package.onUse(function(api) {
   
   api.addFiles('user_publication.coffee', 'server');
   
-  api.addFiles('profile_schema.coffee', 'client');
+  api.addFiles('profile_schema.coffee', ['client', 'server']);
   
   api.addFiles('header_buttons.jade', 'client');
   api.addFiles('profile.jade', 'client');

@@ -5,7 +5,6 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 coffeescript
 stylus
 mquandalle:jade
@@ -20,6 +19,13 @@ cfs:standard-packages
 cfs:gridfs
 fuatsengul:leaflet
 perak:markdown
+xolvio:webdriver
+eha:autoform-fixtures
+accounts-password
+accounts-ui
+xolvio:cucumber
+velocity:html-reporter
 rana:accounts
 rana:groups
 useraccounts:bootstrap
+chrismbeckett:toastr
