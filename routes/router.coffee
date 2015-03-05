@@ -16,8 +16,6 @@ Router.route('/form/:reportId',
     [
       Meteor.subscribe("reports")
     ]
-  data: ->
-    reportId: @params.reportId
 )
 
 Router.route('/table',

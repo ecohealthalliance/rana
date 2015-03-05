@@ -19,8 +19,9 @@ AutoForm.addHooks(
 )
 
 Template.form.reportDoc = ->
-  if @data?.reportId
-    return getCollections().Reports.findOne(@data?.reportId) or {}
+  params = Iron.controller().getParams()
+  if params?.reportId
+    return getCollections().Reports.findOne(params.reportId) or {}
   else
     return {
       institutionAddress:
@@ -34,9 +35,10 @@ Template.form.reportDoc = ->
     }
 
 Template.form.type = ->
-  if not @data?.reportId
+  params = Iron.controller().getParams()
+  if not params?.reportId
     return "insert"
-  currentReport = getCollections().Reports.findOne(@params.reportId)
+  currentReport = getCollections().Reports.findOne(params.reportId)
   if not currentReport
     return "insert"
   if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId

@@ -1,3 +1,9 @@
+getCollection = (name)=>
+  if name of @collections
+    @collections[name]
+  else
+    throw new Error("Invalid collection name: " + name)
+
 Template.table.isEmpty = =>
   not @collections.Reports.findOne()
 
@@ -41,9 +47,23 @@ Template.table.settings = =>
         label: ""
         hideToggle: true
         fn: (val, obj)->
-          new Spacebars.SafeString("""
-            <a class="btn btn-primary" href="/form/#{obj._id}">Edit</a>
-          """)
+          if obj.createdBy.userId == Meteor.userId()
+            new Spacebars.SafeString("""
+              <a class="btn btn-primary" href="/form/#{obj._id}">Edit</a>
+              <a class="btn btn-danger remove-form" data-id="#{obj._id}">Remove</a>
+            """)
+          else
+            new Spacebars.SafeString("""
+              <a class="btn btn-primary" href="/form/#{obj._id}">View</a>
+            """)
       }
     ])
   }
+  
+Template.table.events(
+  'click .remove-form': (evt)->
+    reportId = $(evt.target).data("id")
+    reply = prompt('Type "delete" to confirm that this report should be removed.')
+    if reply == "delete"
+      getCollection("Reports").remove(reportId)
+)
