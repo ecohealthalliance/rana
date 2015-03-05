@@ -9,18 +9,13 @@ Router.route('/form',
   where: 'client'
 )
 
+Router.route('/form/:reportId',
+  template: 'form'
+  where: 'client'
+)
+
 Router.route('/map',
   where: 'client'
-  data: ->
-    getCollections().Reports.find({
-      eventLocation: { $ne : null },
-      dataUsePermissions: "Share full record",
-      consent: true
-    })
-    .map((report)-> {
-      location: report.eventLocation.split(',').map(parseFloat)
-      popupHTML: """<a href="">#{report.name}</a>"""
-    })
   waitOn: ->
     [
       Meteor.subscribe("reports")
@@ -30,3 +25,5 @@ Router.route('/map',
 Router.route('/info',
   where: 'client'
 )
+
+Router.plugin 'ensureSignedIn', {only: ['form']}

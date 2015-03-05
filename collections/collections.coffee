@@ -131,6 +131,8 @@ sampleTypes =
 AddressSchema = new SimpleSchema(
   'name':
     type: String
+    # This makes the address required, even if there is no org
+    # defaultValue: -> Meteor.user().profile.organization or ""
   'street':
     type: String
   'street2':
@@ -149,28 +151,6 @@ AddressSchema = new SimpleSchema(
 
 @collections.Reports = new Mongo.Collection('reports')
 @collections.Reports.attachSchema(new SimpleSchema(
-  name:
-    label: """
-    Enter the name of the person who is reporting the case.
-    They must be willing to communicate about the case if so requested.
-    """
-    type: String
-  email:
-    label: """
-    Enter the most current email address or permanent email address of the person reporting the case.
-    """
-    type: String
-    regEx: SimpleSchema.RegEx.Email
-    autoform:
-      type: 'email'
-  phone:
-    label: """
-    Enter the institutional telephone number of the individual who is reporting the case:
-    (This must include the country code.)
-    """
-    type: String
-    autoform:
-      type: 'tel'
   institutionAddress:
     label: """
     Enter the name and full address of the institution,
@@ -493,4 +473,26 @@ AddressSchema = new SimpleSchema(
     optional: true
     autoform:
       rows: 3
+  creationDate:
+    type: Date
+    autoform:
+      omit: true
+    autoValue: ->
+      new Date()
+  createdBy:
+    type: Object
+    autoform:
+      omit: true
+  'createdBy.userId':
+    type: String
+    autoform:
+      omit: true
+  # User name is included to avoid querying the user collection for
+  # every report.
+  # autoValue is not used here because trying to get the user data server-side
+  # causes problems, so a hook is used instead.
+  'createdBy.name':
+    type: String
+    autoform:
+      omit: true
 ))
