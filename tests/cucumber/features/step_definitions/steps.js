@@ -116,21 +116,12 @@
     this.Then("I should not see a checkbox for the edit column",
     function (callback) {
       helper.world.browser
-        .waitForVisible('.leaflet-popup-content')
-        .waitForVisible('.leaflet-popup-content', function(err, visible){
+        .getTextWhenVisible('.reactive-table-columns-dropdown li:last-child label',
+        function(err, text){
           assert(!err);
-          assert(value);
-        }).call(callback);
-    });
-    
-    this.Then("I should not see a checkbox for the edit column",
-    function (callback) {
-      helper.world.browser
-        .waitForVisible('.reactive-table-columns-dropdown .controls',
-        function(err, visible){
-          assert(!err);
-          assert(!visible, "Controls column has visible checkbox.");
-        }).call(callback);
+          assert.notEqual(text.trim(), "Controls column has visible checkbox.");
+        })
+        .call(callback);
     });
     
     this.Then('I should see the text "$text"',

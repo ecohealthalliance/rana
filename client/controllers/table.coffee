@@ -33,12 +33,13 @@ Template.table.settings = =>
       }
     ).concat([
       {
-        key: "name"
+        key: "createdBy.name"
         label: "Submitted by"
       }
       {
         key: "controls"
         label: ""
+        hideToggle: true
         fn: (val, obj)->
           new Spacebars.SafeString("""
             <a class="btn btn-primary" href="/form/#{obj._id}">Edit</a>

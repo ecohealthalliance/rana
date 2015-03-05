@@ -2,6 +2,8 @@
 
   'use strict';
 
+  var assert = require('assert');
+
   module.exports = function () {
 
     var helper = this;
@@ -32,6 +34,16 @@
             window.setTimeout(done, 2000);
           }, baseQuery, _.once(callback));
         });
+        
+        browser.addCommand("getTextWhenVisible", function(selector, callback) {
+          browser
+          .waitForText(selector, function(err, exists){
+            assert.equal(err, null);
+            assert(exists, "Text does not exist");
+          })
+          .getText(selector, callback);
+        });
+        
         browser.call(next);
       });
 
