@@ -16,9 +16,9 @@
         done("Timeout");
       }, 1000);
       var connection = DDP.connect(helper.world.cucumber.mirror.host);
-      connection.call('/fixtures/resetDB', reports, function(err) {
+      connection.call('/fixtures/resetDB', reports, function(err, res) {
         if (err) {
-          console.log(err);
+          console.log("DDP Error", err);
           done('Error in /fixtures/resetDB DDP call to ' + helper.world.cucumber.mirror.host);
         } else {
           done();
@@ -36,6 +36,7 @@
           width: 1280,
           height: 1024
         }).
+        url(helper.world.cucumber.mirror.rootUrl).
         call(function(){
           helper.resetTestDB([], next);
         });
@@ -61,6 +62,22 @@
       var world = helper.world;
       var next = arguments[arguments.length - 1];
       world.browser.
+        //Somehow, past logins are being persisted
+        //so I make sure they are signed out here.
+        executeAsync(function(done){
+          if("Meteor" in window) {
+            Meteor.logout(function(err){
+              done(err);
+            });
+          } else {
+            done("No Meteor");
+          }
+        }, function(err, err2){
+          if(err) {
+            console.log("Scenario cleanup error:", err);
+            throw new Error(err);
+          }
+        }).
         end().
         call(next);
     });
