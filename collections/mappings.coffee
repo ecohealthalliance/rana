@@ -55,7 +55,5 @@ MappingsScehma = new SimpleSchema
   test:
     type: String
 
-@collections = {}
 @collections.Mappings = new Mongo.Collection 'mappings'
 @collections.Mappings.attachSchema MappingsScehma
-
