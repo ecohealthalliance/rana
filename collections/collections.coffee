@@ -73,9 +73,9 @@ AddressSchema = new SimpleSchema(
     type: String
     optional: true
     autoform:
-      type: 'map'
+      type: 'leaflet'
       afFieldInput:
-        type: 'map'
+        type: 'leaflet'
         geolocation: true
         searchBox: true
         autolocate: true
