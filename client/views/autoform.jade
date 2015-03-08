@@ -1,0 +1,125 @@
+template(name="autoform")
+
+  +autoForm id="ranavirus-report" collection="collections.Reports" type="insert" doc=reportDoc
+
+    .container-fluid.report-form
+      form
+        .panel.panel-default.form-input-block
+          .panel-heading
+            h2.panel-title Contact person info
+          .panel-body
+            .row
+              .col-lg-4
+                +afQuickField name='name'
+              .col-lg-4
+                +afQuickField name='email' placeholder='name@domain.com'
+              .col-lg-4
+                +afQuickField name='phone' minor='(Must include the country code)'
+
+        .panel.panel-default.form-input-block
+          .panel-heading
+            h2.panel-title Reporting institution, diagnostic lab or government agency info
+              +tooltip name='institutionAddress'
+          .panel-body
+            .row
+              .col-lg-5
+                +afQuickField name="institutionAddress.name"
+            .row
+              .col-lg-5
+                +afQuickField name="institutionAddress.street"
+              .col-lg-5
+                +afQuickField name="institutionAddress.street2"
+            .row
+              .col-lg-4
+                +afQuickField name="institutionAddress.city"
+              .col-lg-4
+                +afQuickField name="institutionAddress.stateOrProvince"
+              .col-lg-2
+                +afQuickField name="institutionAddress.postalCode"
+            .row
+              .col-lg-4
+                +afQuickField name="institutionAddress.country"
+
+        .panel.panel-default.form-input-block
+          .panel-heading
+            h2.panel-title Event Date and Location
+          .panel-body
+            .row
+              .col-lg-4
+                +afQuickField name="eventDate"
+                +afQuickField name="coordinatesAvailable"
+              .col-lg-6
+                +afQuickField name="eventLocation"
+
+        .row.form-input-block
+          .col-lg-4
+            +afQuickField name="populationType"
+          .col-lg-4
+            +afQuickField name="screeningReason"
+          .col-lg-4
+            +afQuickField name="vertebrateClasses"
+
+        .panel.panel-default.form-input-block
+          .panel-heading
+            h2.panel-title Species Information
+          .panel-body
+            .row
+              .col-lg-6
+                +afQuickField name="speciesGenus"
+                +afQuickField name="speciesName"
+                +afQuickField name="numInvolved"
+              .col-lg-6
+                +afQuickField name="speciesNotes"
+
+        .row.form-input-block
+          .col-lg-3
+            +afQuickField name='ageClasses'
+          .col-lg-4
+            +afQuickField name='ranavirusConfirmMethods'
+            if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+              +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+          .col-lg-4
+            +afQuickField name='sampleType'
+            if afFieldValueContains name='sampleType' value='other'
+              +afQuickField name='specifyOtherRanavirusSampleTypes'
+
+        .row.form-input-block
+          .col-lg-4
+            +afQuickField name='totalAnimalsTested'
+          .col-lg-4
+            +afQuickField name='totalAnimalsConfirmedInfected'
+          .col-lg-4
+            +afQuickField name='totalAnimalsConfirmedDiseased'
+
+        .row.form-input-block
+          .col-lg-4
+            +afQuickField name='pathologyReports' id='pathologyReports'
+          .col-lg-4
+            +afQuickField name='images' id='images'
+          .col-lg-4
+            +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+
+      .row.form-input-block
+        .col-lg-6
+          +afQuickField name='dataUsePermissions'
+        .col-lg-6
+          +afQuickField name='consent'
+      .row.form-input-block
+        .col-lg-8
+          +afQuickField name='additionalNotes'
+
+      .panel.panel-default.form-input-block
+        .panel-heading
+          h3.panel-title Publication info
+        .panel-body
+          .row
+            .col-lg-5
+              +afQuickField name='publicationInfo.dataPublished'
+              +afQuickField name='publicationInfo.pdf'
+            .col-lg-7
+              +afQuickField name='publicationInfo.reference'
+
+      .row
+        .col-lg-4
+          .form-group
+            button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit

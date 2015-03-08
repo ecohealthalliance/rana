@@ -9,6 +9,10 @@ Router.route('/form',
   where: 'client'
 )
 
+Router.route('/autoform',
+  where: 'client'
+)
+
 Router.route('/map',
   where: 'client'
   data: ->
