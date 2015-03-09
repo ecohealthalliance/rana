@@ -148,8 +148,8 @@
       helper.world.browser
       .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
       .mustExist('[data-schema-key="pathologyReports.0.report"]')
-      .uploadFileByPath(
-        '[file-input="pathologyReports.0.report"]',
+      .chooseFile(
+        'input[file-input="pathologyReports.0.report"]',
         // This is a random pdf file that was selected because it is
         // in the public domain.
         // Source:
@@ -159,9 +159,8 @@
           assert.equal(err, null);
         }
       )
-      .selectByValue(
-        'select[data-schema-key="pathologyReports.0.permission"]',
-        'Yes'
+      .click(
+        'div[data-schema-key="pathologyReports.0.permission"] input[value="Yes"]'
       )
       .call(callback);
     });
@@ -176,8 +175,8 @@
       helper.world.browser
       .click('div[data-schema-key="dataPublished"] input[value=true]')
       .mustExist('[data-schema-key="publicationInfo.pdf"]')
-      .uploadFileByPath(
-        '[file-input="publicationInfo.pdf"]',
+      .chooseFile(
+        'input[file-input="publicationInfo.pdf"]',
         filepath,
         function(err){
           assert.equal(err, null);
