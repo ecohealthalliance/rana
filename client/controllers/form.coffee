@@ -45,3 +45,16 @@ Template.form.type = ->
   if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
     return "update"
   return "readonly"
+
+Template.form.rendered = ->
+  AutoCompletion.init("input#speciesGenus")
+
+Template.form.events = {
+  'keyup input#speciesGenus': _.throttle(()->
+    AutoCompletion.autocomplete
+      element: 'input#speciesGenus'
+      collection: getCollections().Genera
+      field: 'value'
+      limit: 5
+  , 500)
+}

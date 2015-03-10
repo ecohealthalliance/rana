@@ -7,6 +7,10 @@ Router.route('/', ()-> @redirect('/group/rana'))
 
 Router.route('/form',
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe("genera")
+    ]
 )
 
 Router.route('/form/:reportId',
@@ -14,6 +18,7 @@ Router.route('/form/:reportId',
   where: 'client'
   waitOn: ->
     [
+      Meteor.subscribe("genera")
       Meteor.subscribe("reports")
     ]
 )

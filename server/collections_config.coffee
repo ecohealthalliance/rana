@@ -7,6 +7,9 @@ Meteor.publish 'files', ->
   download: (userId)->
     true
 
+Meteor.publish 'genera', ->
+  collections.Genera.find()
+
 Meteor.publish 'reports', ->
   collections.Reports.find({
     $or : [
