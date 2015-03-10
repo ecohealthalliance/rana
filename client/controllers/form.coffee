@@ -1,3 +1,5 @@
+getCollections = => @collections
+
 AutoForm.addHooks(
   'ranavirus-report', {
     formToDoc: (doc)->
@@ -16,3 +18,31 @@ AutoForm.addHooks(
       window.scrollTo(0, 0)
   }
 )
+
+Template.form.reportDoc = ->
+  params = Iron.controller().getParams()
+  if params?.reportId
+    return getCollections().Reports.findOne(params.reportId) or {}
+  else
+    return {
+      institutionAddress:
+        name: Meteor.user().profile?.organization
+        street: Meteor.user().profile?.organizationStreet
+        street2: Meteor.user().profile?.organizationStreet2
+        city: Meteor.user().profile?.organizationCity
+        stateOrProvince: Meteor.user().profile?.organizationStateOrProvince
+        country: Meteor.user().profile?.organizationCountry
+        postalCode: Meteor.user().profile?.organizationPostalCode
+    }
+
+Template.form.type = ->
+  params = Iron.controller().getParams()
+  if not params?.reportId
+    return "insert"
+  currentReport = getCollections().Reports.findOne(params.reportId)
+  if not currentReport
+    # This will trigger an error message
+    return null
+  if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
+    return "update"
+  return "readonly"
