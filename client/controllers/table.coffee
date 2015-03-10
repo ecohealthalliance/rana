@@ -34,8 +34,16 @@ Template.table.settings = =>
     
           # put empty values at the end
           if output is '' then sort = 2 else sort = 1
-    
-          new Spacebars.SafeString("<span sort=#{sort}>#{output}</span>")
+          
+          # use option labels instead of values
+          if schema[key]?.autoform?.afFieldInput?.options
+            option = _.findWhere(
+              schema[key].autoform.afFieldInput.options,
+              value: output
+            )
+            new Spacebars.SafeString("<span sort=#{sort}>#{option?.label}</span>")
+          else
+            new Spacebars.SafeString("<span sort=#{sort}>#{output}</span>")
       }
     ).concat([
       {
