@@ -60,14 +60,6 @@ AddressSchema = new SimpleSchema(
     label: 'Event date'
     type: Date
     optional: true
-  coordinatesAvailable:
-    type: Boolean
-    label: "Do you have the coordinates where the carcasses were collected?"
-    optional: true
-    autoform:
-       type: 'boolean-radios'
-       trueLabel: 'Yes'
-       falseLabel: 'No'
   eventLocation:
     label: 'Event Location'
     type: String
