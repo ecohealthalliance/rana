@@ -40,7 +40,8 @@ Template.form.type = ->
     return "insert"
   currentReport = getCollections().Reports.findOne(params.reportId)
   if not currentReport
-    return "insert"
+    # This will trigger an error message
+    return null
   if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
     return "update"
   return "readonly"
