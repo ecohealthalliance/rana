@@ -145,7 +145,9 @@
     });
     
     this.When("I add a pathology report", function(callback){
+      
       helper.world.browser
+      .click('div[data-schema-key="pathologyReportPermission"] input[value="Yes"]')
       .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
       .mustExist('[data-schema-key="pathologyReports.0.report"]')
       .chooseFile(
@@ -158,9 +160,6 @@
         function(err){
           assert.equal(err, null);
         }
-      )
-      .click(
-        'div[data-schema-key="pathologyReports.0.permission"] input[value="Yes"]'
       )
       .call(callback);
     });
@@ -189,6 +188,22 @@
       helper.world.browser
       .setValue('[data-schema-key="publicationInfo.reference"]', '')
       .call(callback);
+    });
+    
+    this.Then(/^the webpage should( not)? display the (field) field$/,
+    function(shouldNot, field, callback){
+      var reverse = !!shouldNot;
+      helper.world.browser
+      // custom errors on groups don't create a has-error class
+      .waitForExist('[data-schema-key="' + field + '"]', 2000, reverse,
+      function(err, result){
+        assert.equal(err, null);
+        if(shouldNot) {
+          assert(result, "Field is incorrectly displayed");
+        } else {
+          assert(result, "Missing field");
+        }
+      }).call(callback);
     });
     
     this.Then(/^the webpage should( not)? display a validation error$/,
