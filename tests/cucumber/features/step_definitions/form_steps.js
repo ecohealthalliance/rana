@@ -138,7 +138,7 @@
     });
     
     this.When('I choose "$value" for the $field field',
-    function(field, value, callback){
+    function(value, field, callback){
       helper.world.browser
       .click('div[data-schema-key="' + field + '"] input[value="' + value + '"]')
       .call(callback);
