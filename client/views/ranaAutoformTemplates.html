@@ -1,19 +1,4 @@
-<template name="quickForm_rana">
-  {{#autoForm this.qfAutoFormContext}}
-    {{> afQuickFields id-prefix=idPrefix}}
-    {{#if qfShouldRenderButton}}
-    <div class="form-group">
-      <button type="submit" {{submitButtonAtts}}>
-      {{#with ../atts.buttonContent}}
-      {{this}}
-      {{else}}
-      Submit
-      {{/with}}
-      </button>
-    </div>
-    {{/if}}
-  {{/autoForm}}
-</template>
+<!-- https://github.com/aldeed/meteor-autoform/blob/dc10a1366a69bf734eab736dd9748f8007ded7db/templates/bootstrap3/bootstrap3.html -->
 
 <template name="afFormGroup_rana">
   <div class="form-group{{#if afFieldIsInvalid name=this.atts.name}} has-error{{/if}}">
@@ -75,15 +60,6 @@
   </div>
 </template>
 
-<template name="afCheckbox_rana">
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" value="true" {{atts}} />
-      {{afFieldLabelText name=this.name}}
-    </label>
-  </div>
-</template>
-
 <template name="afCheckboxGroup_rana">
   <div class="af-checkbox-group" {{dsk}}>
     {{#each this.items}}
@@ -97,26 +73,6 @@
   </div>
 </template>
 
-<template name="afCheckboxGroupInline_rana">
-  <div class="af-checkbox-group" {{dsk}}>
-    {{#each this.items}}
-      <label class="checkbox-inline">
-        <input type="checkbox" value="{{this.value}}" {{atts}} />
-        {{this.label}}
-      </label>
-    {{/each}}
-  </div>
-</template>
-
-<template name="afRadio_rana">
-  <div class="radio">
-    <label name="{{this.name}}">
-      <input type="radio" value="{{this.value}}" {{atts}} />
-      <span {{tooltipAtts}}>{{afFieldLabelText name=this.name}}</span>
-    </label>
-  </div>
-</template>
-
 <template name="afRadioGroup_rana">
   <div class="af-radio-group" {{dsk}}>
     {{#each this.items}}
@@ -126,17 +82,6 @@
           <span {{tooltipAtts }}>{{this.label}}</span>
         </label>
       </div>
-    {{/each}}
-  </div>
-</template>
-
-<template name="afRadioGroupInline_rana">
-  <div class="af-radio-group" {{dsk}}>
-    {{#each this.items}}
-      <label class="radio-inline">
-        <input type="radio" value="{{this.value}}" {{atts}} />
-        {{this.label}}
-      </label>
     {{/each}}
   </div>
 </template>
@@ -168,102 +113,26 @@
   </select>
 </template>
 
-<template name="afBooleanSelect_rana">
-  <select {{atts}}>
-    {{#each this.items}}
-      <option {{optionAtts}}>{{this.label}}</option>
-    {{/each}}
-  </select>
-</template>
-
-<template name="afSelectMultiple_rana">
-  <select {{atts}} multiple>
-    {{#each this.items}}
-      {{#if this.optgroup}}
-        <optgroup label="{{this.optgroup}}">
-        {{#each this.items}}
-        <option {{optionAtts}}>{{this.label}}</option>
-        {{/each}}
-        </optgroup>
-      {{else}}
-        <option {{optionAtts}}>{{this.label}}</option>
-      {{/if}}
-    {{/each}}
-  </select>
-</template>
-
 <template name="afTextarea_rana">
   <textarea {{atts}}>{{this.value}}</textarea>
 </template>
 
 <template name="afInputText_rana">
-  <input type="text" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputPassword_rana">
-  <input type="password" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputButton_rana">
-  <input type="button" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputSubmit_rana">
-  <input type="submit" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputReset_rana">
-  <input type="reset" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputDateTime_rana">
-  <input type="datetime" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputDateTimeLocal_rana">
-  <input type="datetime-local" value="{{this.value}}" {{atts}}/>
+  <input type="text" value="{{this.value}}" {{atts}} {{fakeAtts}}/>
 </template>
 
 <template name="afInputDate_rana">
   <input type="date" value="{{this.value}}" {{atts}}/>
 </template>
 
-<template name="afInputMonth_rana">
-  <input type="month" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputTime_rana">
-  <input type="time" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputWeek_rana">
-  <input type="week" value="{{this.value}}" {{atts}}/>
-</template>
-
 <template name="afInputNumber_rana">
   <input type="number" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputRange_rana">
-  <input type="range" value="{{this.value}}" {{this.atts}}/>
 </template>
 
 <template name="afInputEmail_rana">
   <input type="email" value="{{this.value}}" {{atts}}/>
 </template>
 
-<template name="afInputUrl_rana">
-  <input type="url" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputSearch_rana">
-  <input type="search" value="{{this.value}}" {{atts}}/>
-</template>
-
 <template name="afInputTel_rana">
   <input type="tel" value="{{this.value}}" {{atts}}/>
-</template>
-
-<template name="afInputColor_rana">
-  <input type="color" value="{{this.value}}" {{atts}}/>
 </template>

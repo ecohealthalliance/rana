@@ -1,22 +1,7 @@
 /*
+ * Original: https://github.com/aldeed/meteor-autoform/blob/d35d1d8ddb6b6a5e212875fc3b9ba4c464401aa3/templates/bootstrap3/bootstrap3.js
  * Template helpers for "rana" template
  */
-
-Template['quickForm_rana'].helpers({
-  idPrefix: function () {
-    return this.atts["id-prefix"];
-  },
-  submitButtonAtts: function bsQuickFormSubmitButtonAtts() {
-    var qfAtts = this.atts;
-    var atts = {};
-    if (typeof qfAtts.buttonClasses === "string") {
-      atts['class'] = qfAtts.buttonClasses;
-    } else {
-      atts['class'] = 'btn btn-primary';
-    }
-    return atts;
-  }
-});
 
 Template['afFormGroup_rana'].helpers({
   skipLabel: function bsFormGroupSkipLabel() {
@@ -35,27 +20,19 @@ Template['afFormGroup_rana'].helpers({
 
 _.each([
     "afSelect_rana",
-    "afBooleanSelect_rana",
-    "afSelectMultiple_rana",
     "afTextarea_rana",
     "afInputText_rana",
-    "afInputPassword_rana",
-    "afInputDateTime_rana",
-    "afInputDateTimeLocal_rana",
     "afInputDate_rana",
-    "afInputMonth_rana",
-    "afInputTime_rana",
-    "afInputWeek_rana",
     "afInputNumber_rana",
     "afInputEmail_rana",
-    "afInputUrl_rana",
-    "afInputSearch_rana",
-    "afInputTel_rana",
-    "afInputColor_rana"
+    "afInputTel_rana"
   ], function (tmplName) {
+  console.log('templateName', tmplName);
+  // console.log('Template[tmplName]', Template[tmplName]);
   Template[tmplName].helpers({
     atts: function addFormControlAtts() {
       var atts = _.clone(this.atts);
+      console.log('adding atts', atts)
       // Add bootstrap class
       atts = AutoForm.Utility.addClass(atts, "form-control");
       return atts;
@@ -64,35 +41,8 @@ _.each([
 });
 
 _.each([
-    "afInputButton_rana",
-    "afInputSubmit_rana",
-    "afInputReset_rana",
-  ], function (tmplName) {
-  Template[tmplName].helpers({
-    atts: function addFormControlAtts() {
-      var atts = _.clone(this.atts);
-      // Add bootstrap class
-      atts = AutoForm.Utility.addClass(atts, "btn");
-      return atts;
-    }
-  });
-});
-
-Template["afRadio_rana"].helpers({
-  atts: function selectedAttsAdjust() {
-    var atts = _.clone(this.atts);
-    if (this.selected) {
-      atts.checked = "";
-    }
-    return atts;
-  }
-});
-
-_.each([
     "afCheckboxGroup_rana",
-    "afRadioGroup_rana",
-    "afCheckboxGroupInline_rana",
-    "afRadioGroupInline_rana"
+    "afRadioGroup_rana"
   ], function (tmplName) {
   Template[tmplName].helpers({
     atts: function selectedAttsAdjust() {
@@ -126,8 +76,6 @@ var selectHelpers = {
   }
 };
 Template["afSelect_rana"].helpers(selectHelpers);
-Template["afSelectMultiple_rana"].helpers(selectHelpers);
-Template["afBooleanSelect_rana"].helpers(selectHelpers);
 
 Template["afBooleanRadioGroup_rana"].helpers({
   falseAtts: function falseAtts() {
