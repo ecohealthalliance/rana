@@ -12,6 +12,20 @@ Router.route('/form',
 Router.route('/form/:reportId',
   template: 'form'
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe("reports")
+    ]
+)
+
+Router.route('/table',
+  where: 'client'
+  data: ->
+    collection: collections.Reports
+  waitOn: ->
+    [
+      Meteor.subscribe("reports")
+    ]
 )
 
 Router.route('/map',

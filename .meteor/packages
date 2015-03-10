@@ -25,6 +25,7 @@ accounts-password
 accounts-ui
 xolvio:cucumber
 velocity:html-reporter
+aslagle:reactive-table
 rana:accounts
 rana:groups
 useraccounts:bootstrap
