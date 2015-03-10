@@ -13,5 +13,6 @@ AutoForm.addHooks(
         "timeOut": "10000"
       }
       toastr.success(operation + " successful!")
+      window.scrollTo(0, 0)
   }
 )
