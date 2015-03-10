@@ -224,7 +224,6 @@ AddressSchema = new SimpleSchema(
         { value: 'internal_organ_tissues', label: 'Internal Organ Tissues'}
         { value: 'tail_toe_clips', label: 'Tail/Toe Clips'}
         { value: 'blood', label: 'Blood'}
-        { value: 'internal_swabs', label: 'Internal Swabs'}
         { value: 'other', label: 'Other'}
       ]
       afFieldInput:
