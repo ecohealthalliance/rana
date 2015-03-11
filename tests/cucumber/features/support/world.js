@@ -26,7 +26,15 @@
 
       helper.world.cucumber = Package['xolvio:cucumber'].cucumber;
       
-      Package['xolvio:webdriver'].wdio.getChromeDriver(function (browser) {
+      var options = {
+        host: 'localhost',
+        port: 4444,
+        desiredCapabilities: {
+          browserName: 'chrome'
+        }
+      };
+      
+      Package['xolvio:webdriver'].wdio.getChromeDriverRemote(options, function (browser) {
         helper.world.browser = browser;
 
         browser.addCommand("mustExist", function(selector, callback){
