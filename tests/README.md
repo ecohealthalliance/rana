@@ -20,7 +20,7 @@ The same goes for port 4444 which selenium uses.
 
 #### On a Mac:
 * Download [the selenium standalone server](https://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar)
-* Download [chromedriver](http://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip)
+* Download and unzip [chromedriver](http://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip)
 * Put those in the same directory and start the selenium server: 
 ```
 java -jar selenium-server-standalone-2.43.1.jar -Dwebdriver.chrome.driver=chromedriver
