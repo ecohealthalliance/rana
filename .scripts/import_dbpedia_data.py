@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 This imports genus names into a mongo collection using the dbpedia sparql endpoint.
 There is a query testing interface here: http://dbpedia.org/sparql
@@ -40,12 +42,16 @@ if __name__ == '__main__':
       'format' : 'application/sparql-results+json',
       'timeout' : 60000
     })
+
+  formatPatt = re.compile(ur"""(^['"† ])|(['"† ]$)|(\(.*\))""", re.UNICODE)
+
   def removeStrangeFormatting(s):
-    return re.sub("""(^['"])|(['"]$)||(\(.*\))""", "", s)
-    
+    return formatPatt.sub("", s)
+
   result_set = set([
       removeStrangeFormatting(result['g']['value'])
       for result in r.json()['results']['bindings']
     ])
   for result in result_set:
-    collection.insert({'value':result})
+    if len(result) > 0:
+      collection.insert({'value':result})
