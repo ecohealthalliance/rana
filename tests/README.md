@@ -15,7 +15,7 @@ To run meteor without running tests, stop the selenium server (you'll get errors
 
 
 The tests run using a remote selenium server, which must be started separately.
-Make sure you aren't runing anything on port 5000 as the mirror app that is used for testing will not work.
+Make sure you aren't running anything on port 5000 as the mirror app that is used for testing will not work.
 The same goes for port 4444 which selenium uses.
 
 #### On a Mac:
