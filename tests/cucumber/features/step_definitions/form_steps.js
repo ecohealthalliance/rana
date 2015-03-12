@@ -190,7 +190,7 @@
       .call(callback);
     });
     
-    this.Then(/^the webpage should( not)? display the (field) field$/,
+    this.Then(/^the webpage should( not)? display the (.+) field$/,
     function(shouldNot, field, callback){
       var reverse = !!shouldNot;
       helper.world.browser
