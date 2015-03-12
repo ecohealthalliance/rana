@@ -39,6 +39,12 @@
 
     this.When(/^I click submit$/, function (callback) {
       helper.world.browser
+        .saveScreenshot(
+          helper.getAppDirectory() +
+          "/tests/screenshots/submit - " +
+          helper.world.scenario.getName() +
+          ".png"
+        )
         .click('[type=submit]')
         .call(callback);
     });

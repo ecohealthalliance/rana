@@ -129,49 +129,95 @@
       helper.fillInForm(customValues, callback);
     });
     
-    this.When('I select "Permission Not Granted"',
-    function(callback){
+    this.When('I fill out the $field field with "$value"',
+    function(field, value, callback){
       helper.world.browser
-      .selectByValue(
-        'select[data-schema-key="pathologyReports.0.permission"]',
-        "Permission Not Granted"
-      )
+      .setValue('[data-schema-key="' + field + '"]', value)
+      .pause(500)
       .call(callback);
     });
     
-    this.When('I choose a non-PDF publication to upload', function(callback){
-      function getMeteorDir(){
-        var outPath = process.cwd();
-        while(path.basename(outPath) !== ".meteor") {
-          assert(outPath.length > 1);
-          outPath = path.join(outPath, '..');
-        }
-        return outPath;
-      }
+    this.When('I choose "$value" for the $field field',
+    function(value, field, callback){
       helper.world.browser
+      .click('div[data-schema-key="' + field + '"] input[value="' + value + '"]')
+      .call(callback);
+    });
+    
+    this.When("I add a pathology report", function(callback){
+      
+      helper.world.browser
+      .click('div[data-schema-key="pathologyReportPermission"] input[value="Yes"]')
+      .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
+      .mustExist('[data-schema-key="pathologyReports.0.report"]')
       .chooseFile(
-        'input[data-schema-key="publicationInfo.pdf"]', 
-        getMeteorDir() + '/' + "packages",
+        'input[file-input="pathologyReports.0.report"]',
+        // This is a random pdf file that was selected because it is
+        // in the public domain.
+        // Source:
+        // http://commons.wikimedia.org/wiki/File:15_Years_ISS_-_Infographic.pdf
+        path.join(helper.getAppDirectory(), "tests", "files", "NASA.pdf"),
         function(err){
-          // This is throwing an "Invalid Command Method" error
-          // and I think the issue might be with phantomJS.
-          // Possibly related:
-          // https://github.com/ariya/phantomjs/issues/12575
           assert.equal(err, null);
         }
       )
       .call(callback);
     });
     
-    this.Then(/^the webpage should( not)? display a validation error$/,
-    function(shouldNot, callback){
+    this.When(/I upload a (non-)?pdf publication/, function(nonPdf, callback){
+      var filepath;
+      if(nonPdf) {
+        filepath = path.join(helper.getAppDirectory(), "README.md");
+      } else {
+        filepath = path.join(helper.getAppDirectory(), "tests", "files", "NASA.pdf");
+      }
       helper.world.browser
-      .waitForExist('.has-error', function(err, exists){
+      .click('div[data-schema-key="dataPublished"] input[value=true]')
+      .mustExist('[data-schema-key="publicationInfo.pdf"]')
+      .chooseFile(
+        'input[file-input="publicationInfo.pdf"]',
+        filepath,
+        function(err){
+          assert.equal(err, null);
+        }
+      )
+      .call(callback);
+    });
+    
+    this.When("I do not provide text for the reference field", function(callback){
+      helper.world.browser
+      .setValue('[data-schema-key="publicationInfo.reference"]', '')
+      .call(callback);
+    });
+    
+    this.Then(/^the webpage should( not)? display the (.+) field$/,
+    function(shouldNot, field, callback){
+      var reverse = !!shouldNot;
+      helper.world.browser
+      // custom errors on groups don't create a has-error class
+      .waitForExist('[data-schema-key="' + field + '"]', 2000, reverse,
+      function(err, result){
         assert.equal(err, null);
         if(shouldNot) {
-          assert(!exists, "Validation error");
+          assert(result, "Field is incorrectly displayed");
         } else {
-          assert(exists, "Missing validation error");
+          assert(result, "Missing field");
+        }
+      }).call(callback);
+    });
+    
+    this.Then(/^the webpage should( not)? display a validation error$/,
+    function(shouldNot, callback){
+      var reverse = !!shouldNot;
+      helper.world.browser
+      // custom errors on groups don't create a has-error class
+      .waitForExist('.has-error, .help-block:not(:empty)', 2000, reverse,
+      function(err, result){
+        assert.equal(err, null);
+        if(shouldNot) {
+          assert(result, "Validation error");
+        } else {
+          assert(result, "Missing validation error");
         }
       }).call(callback);
     });
@@ -182,10 +228,7 @@
       .waitForVisible(".toast-success", function (err) {
         assert(!err);
       })
-      .waitForText(".toast-success", function(err, exists){
-        assert(!err);
-        assert(exists, "Could not find toast element");
-      })
+      .mustExist(".toast-success")
       .getText(".toast-success", function(err, text){
         assert(!err);
         var regexString = message

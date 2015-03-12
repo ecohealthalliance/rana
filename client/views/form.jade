@@ -51,7 +51,10 @@ template(name="form")
   
       +afQuickField name='totalAnimalsConfirmedDiseased' id='totalAnimalsConfirmedDiseased'
   
-      +afQuickField name='pathologyReports' id='pathologyReports'
+      +afQuickField name='pathologyReportPermission' id='pathologyReportPermission'
+      
+      if afFieldValueIs name='pathologyReportPermission' value="Yes"
+        +afQuickField name='pathologyReports' id='pathologyReports'
   
       +afQuickField name='images' id='images'
   
@@ -63,7 +66,10 @@ template(name="form")
   
       +afQuickField name='additionalNotes' id='additionalNotes'
   
-      +afQuickField name='publicationInfo' id='publicationInfo'
+      +afQuickField name='dataPublished' id='dataPublished'
+      
+      if afFieldValueIs name='dataPublished' value=true
+        +afQuickField name='publicationInfo' id='publicationInfo'
   
       .form-group
         button(type='submit' class='btn btn-primary') Submit

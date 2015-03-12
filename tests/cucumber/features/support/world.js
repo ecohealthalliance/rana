@@ -9,6 +9,16 @@
     var helper = this;
 
     var _ = Package["underscore"]._;
+    var path = require('path');
+
+    this.getAppDirectory = function () {
+      var outPath = process.cwd();
+      while(path.basename(outPath) !== ".meteor") {
+        assert(outPath.length > 1);
+        outPath = path.join(outPath, '..');
+      }
+      return path.join(outPath, '..');
+    };
 
     this.World = function (next) {
 
@@ -16,8 +26,23 @@
 
       helper.world.cucumber = Package['xolvio:cucumber'].cucumber;
       
-      Package['xolvio:webdriver'].wdio.getGhostDriver(function (browser) {
+      var options = {
+        host: 'localhost',
+        port: 4444,
+        desiredCapabilities: {
+          browserName: 'chrome'
+        }
+      };
+      
+      Package['xolvio:webdriver'].wdio.getChromeDriverRemote(options, function (browser) {
         helper.world.browser = browser;
+
+        browser.addCommand("mustExist", function(selector, callback){
+          browser.waitForExist(selector, function(err, exists){
+            assert.equal(err, null);
+            assert(exists, "Could not find " + selector);
+          }).call(callback);
+        });
 
         browser.addCommand("getMyReports", function(baseQuery, callback) {
           browser
