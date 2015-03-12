@@ -1,0 +1,106 @@
+//- Original templates: https://github.com/aldeed/meteor-autoform/blob/dc10a1366a69bf734eab736dd9748f8007ded7db/templates/bootstrap3/bootstrap3.html
+
+template(name="afFormGroup_rana")
+  .form-group(class="form-group{{#if afFieldIsInvalid name=this.atts.name}} has-error{{/if}}")
+    unless skipLabel
+      label($dyn=tooltipAtts)
+        if this.label
+          | this.label
+        else
+          {{afFieldLabelText name=this.atts.name}}
+      if minorLabelBlockText this.atts.name
+        span.minor-label.block {{minorLabelBlockText this.atts.name}}
+    +afFieldInput this.afFieldInputAtts
+    span.help-block {{afFieldMessage name=this.atts.name}}
+
+template(name="afObjectField_rana")
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title {{afFieldLabelText name=this.atts.name}}
+    .panel-body
+      if afFieldIsInvalid name=this.atts.name
+        .help-block {{afFieldMessage name=this.atts.name}}
+      +afQuickFields name=this.atts.name
+
+template(name="afArrayField_rana")
+  .panel.panel-default
+    .panel-heading
+      h3 {{afFieldLabelText name=this.atts.name}}
+        +tooltip name=this.atts.name
+    if afFieldIsInvalid name=this.atts.name
+     .panel-body.has-error
+        .help-block {{afFieldMessage name=this.atts.name}}
+    ul.list-group
+      +afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
+        li.list-group-item.autoform-array-item
+          .media
+            if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount
+              button.btn.btn-primary.autoform-remove-item.pull-left(type="button")
+                span.glyphicon.glyphicon-minus
+            .media-body
+              +afQuickField name=this.name label=false options="auto"
+      if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
+        .li.list-group-item
+          button.btn.btn-primary.autoform-add-item(type="button", data-autoform-field="{{this.atts.name}}", data-autoform-minCount="{{this.atts.minCount}}", data-autoform-maxCount="{{this.atts.maxCount}}")
+            span.glyphicon.glyphicon-plus
+
+template(name="afCheckboxGroup_rana")
+  .af-checkbox-group($dyn=dsk)
+    each this.items
+      .checkbox
+        label
+          input(type="checkbox", value="{{this.value}}", $dyn=atts)
+          span($dyn=tooltipAtts) #{this.label}
+
+template(name="afRadioGroup_rana")
+  .af-radio-group($dyn=dsk)
+    each this.items
+      .radio
+        label
+          input(type="radio", value="{{this.value}}", $dyn=atts)
+          span($dyn=tooltipAtts) #{this.label}
+
+template(name="afBooleanRadioGroup_rana")
+  div($dyn=dsk)
+    .radio
+      label
+        input(type="radio", value="false", name="{{this.name}}", $dyn=falseAtts)
+        with this.atts.falseLabel
+          | #{this}
+        else
+          | False
+    .radio
+      label
+        input(type="radio", value="true", name="{{this.name}}", $dyn=trueAtts)
+        with this.atts.trueLabel
+          | #{this}
+        else
+          | True
+
+template(name="afSelect_rana")
+  select($dyn=atts)
+    each this.items
+      if this.optgroup
+        optgroup(label="{{this.optgroup}}")
+        each this.items
+          option($dyn=optionAtts) #{this.label}
+      else
+        option($dyn=optionAtts) #{this.label}
+
+template(name='afInputText_rana')
+  input(type='text', value='#{this.value}', $dyn=atts)
+
+template(name='afInputDate_rana')
+  input(type='date', value='#{this.value}', $dyn=atts)
+
+template(name='afInputNumber_rana')
+  input(type='number' value='#{this.value}', $dyn=atts)
+
+template(name='afInputEmail_rana')
+  input(type='email' value='#{this.value}', $dyn=atts)
+
+template(name='afTextarea_rana')
+  textarea($dyn=atts) #{this.value}
+
+template(name='afInputTel_rana')
+  input(type='tel', value='#{this.value}', $dyn=atts)
