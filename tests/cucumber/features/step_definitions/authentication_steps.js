@@ -68,15 +68,17 @@
       .call(callback);
     });
   
-    this.When(/I log in/, function(callback){
+    this.When(/I log in( as admin)?/, function(admin, callback){
+      var email = admin ? "admin@admin.com" : "test@test.com";
+      var password = admin ? "adminuser" : "testuser";
       helper.world.browser
       .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
       .waitForExist(".form-control", function(err, exists){
         assert(!err);
         assert(exists);
       })
-      .setValue('#at-field-email', "test@test.com")
-      .setValue('#at-field-password', "testuser")
+      .setValue('#at-field-email', email)
+      .setValue('#at-field-password', password)
       .submitForm('#at-field-email', function(err){
         assert(!err);
       })

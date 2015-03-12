@@ -119,6 +119,13 @@
       helper.resetTestDB([], callback);
     });
 
+    this.When("I delete the report", function(callback){
+      helper.world.browser
+        .clickWhenVisible(".remove-form")
+        .alertText("delete", assert.ifError)
+        .call(callback);
+    });
+
     this.Then("I should not see a checkbox for the edit column",
     function (callback) {
       helper.world.browser

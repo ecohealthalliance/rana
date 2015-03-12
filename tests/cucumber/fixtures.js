@@ -21,6 +21,18 @@
           });
           collections.Reports.insert(report);
         });
+        var adminUserId = Accounts.createUser({
+          email: "admin@admin.com",
+          password: "adminuser"
+        });
+        // Currently doesn't work:
+        // Groups.remove({});
+        // var groupId = Groups.insert({
+        //   name: "testgroup",
+        //   path: "testgroup",
+        //   description: "testgroup"
+        // });
+        // Roles.addUsersToRoles(adminUserId, ['admin', 'user'], "test")
         return reports;
       }
     });
