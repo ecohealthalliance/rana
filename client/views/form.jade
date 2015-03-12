@@ -1,10 +1,11 @@
 template(name="form")
-  unless currentUser
-    h2 You must
-      a(href="/sign-in") sign in
-      | to submit a report.
-  else
-    +autoForm id="ranavirus-report" collection="collections.Reports" type="insert" doc=reportDoc
+  if type
+    +autoForm(
+      id="ranavirus-report"
+      collection="collections.Reports"
+      type=type
+      doc=reportDoc
+    )
   
       +afQuickField name='institutionAddress' id='institutionAddress'
   
@@ -72,3 +73,6 @@ template(name="form")
   
       .form-group
         button(type='submit' class='btn btn-primary') Submit
+        
+  else
+    h3 Invalid form id
