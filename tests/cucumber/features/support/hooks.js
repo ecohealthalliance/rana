@@ -37,6 +37,7 @@
           width: 1280,
           height: 1024
         }).
+        timeoutsAsyncScript(2000).
         url(helper.world.cucumber.mirror.rootUrl).
         call(function(){
           helper.resetTestDB([], next);

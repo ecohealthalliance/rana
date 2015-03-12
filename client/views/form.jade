@@ -50,7 +50,10 @@ template(name="form")
   
       +afQuickField name='totalAnimalsConfirmedDiseased' id='totalAnimalsConfirmedDiseased'
   
-      +afQuickField name='pathologyReports' id='pathologyReports'
+      +afQuickField name='pathologyReportPermission' id='pathologyReportPermission'
+      
+      if afFieldValueIs name='pathologyReportPermission' value="Yes"
+        +afQuickField name='pathologyReports' id='pathologyReports'
   
       +afQuickField name='images' id='images'
   

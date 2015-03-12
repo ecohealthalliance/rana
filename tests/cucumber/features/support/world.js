@@ -26,7 +26,15 @@
 
       helper.world.cucumber = Package['xolvio:cucumber'].cucumber;
       
-      Package['xolvio:webdriver'].wdio.getGhostDriver(function (browser) {
+      var options = {
+        host: 'localhost',
+        port: 4444,
+        desiredCapabilities: {
+          browserName: 'chrome'
+        }
+      };
+      
+      Package['xolvio:webdriver'].wdio.getChromeDriverRemote(options, function (browser) {
         helper.world.browser = browser;
 
         browser.addCommand("mustExist", function(selector, callback){
@@ -34,22 +42,6 @@
             assert.equal(err, null);
             assert(exists, "Could not find " + selector);
           }).call(callback);
-        });
-
-        // see:
-        // https://github.com/ecohealthalliance/rana/issues/61
-        browser.addCommand("uploadFileByPath", function(selector, filepath, callback){
-          browser.requestHandler.create(
-            '/session/:sessionId/file',
-            {
-              selector: selector,
-              filepath: filepath
-            },
-            function(err, res) {
-              console.log(err, res);
-              browser.pause(2000).call(callback);
-            }
-          );
         });
 
         browser.addCommand("getMyReports", function(baseQuery, callback) {

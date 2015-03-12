@@ -138,18 +138,20 @@
     });
     
     this.When('I choose "$value" for the $field field',
-    function(field, value, callback){
+    function(value, field, callback){
       helper.world.browser
       .click('div[data-schema-key="' + field + '"] input[value="' + value + '"]')
       .call(callback);
     });
     
     this.When("I add a pathology report", function(callback){
+      
       helper.world.browser
+      .click('div[data-schema-key="pathologyReportPermission"] input[value="Yes"]')
       .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
       .mustExist('[data-schema-key="pathologyReports.0.report"]')
-      .uploadFileByPath(
-        '[file-input="pathologyReports.0.report"]',
+      .chooseFile(
+        'input[file-input="pathologyReports.0.report"]',
         // This is a random pdf file that was selected because it is
         // in the public domain.
         // Source:
@@ -158,10 +160,6 @@
         function(err){
           assert.equal(err, null);
         }
-      )
-      .selectByValue(
-        'select[data-schema-key="pathologyReports.0.permission"]',
-        'Yes'
       )
       .call(callback);
     });
@@ -176,8 +174,8 @@
       helper.world.browser
       .click('div[data-schema-key="dataPublished"] input[value=true]')
       .mustExist('[data-schema-key="publicationInfo.pdf"]')
-      .uploadFileByPath(
-        '[file-input="publicationInfo.pdf"]',
+      .chooseFile(
+        'input[file-input="publicationInfo.pdf"]',
         filepath,
         function(err){
           assert.equal(err, null);
@@ -190,6 +188,22 @@
       helper.world.browser
       .setValue('[data-schema-key="publicationInfo.reference"]', '')
       .call(callback);
+    });
+    
+    this.Then(/^the webpage should( not)? display the (.+) field$/,
+    function(shouldNot, field, callback){
+      var reverse = !!shouldNot;
+      helper.world.browser
+      // custom errors on groups don't create a has-error class
+      .waitForExist('[data-schema-key="' + field + '"]', 2000, reverse,
+      function(err, result){
+        assert.equal(err, null);
+        if(shouldNot) {
+          assert(result, "Field is incorrectly displayed");
+        } else {
+          assert(result, "Missing field");
+        }
+      }).call(callback);
     });
     
     this.Then(/^the webpage should( not)? display a validation error$/,

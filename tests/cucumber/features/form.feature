@@ -24,28 +24,20 @@ Feature: A form for reporting Ranavirus outbreaks
     And I should see a "insert successful" toast
     And the database should have a report linked to my account
 
-  Scenario: Submitting an invalid date
-    Given I have logged in
-    And I am on the "form" page
-    When I fill out the form with the eventDate "08/dd/1990"
-    And I click submit
-    Then the webpage should display the question "No date specified. Would you like to submit anyways?"
-
-  Scenario: Submitting a file without permission
+  Scenario: Submitting without pathology report permission
     Given I have logged in
     And I am on the "form" page
     When I fill out the form
-    And I add a pathology report
-    And I choose "Permission Not Granted" for the pathologyReports.0.permission field
-    And I click submit
-    Then the webpage should display a validation error
-    And the database should not have a report containing the uploaded file
+    When I choose "Permission Not Granted" for the pathologyReportPermission field
+    Then the webpage should not display the pathologyReports.0.report field
+    When I click submit
+    Then the webpage should not display a validation error
 
-  Scenario: Submitting a non-PDF publication
+  Scenario: Submitting a non-pdf publication
     Given I have logged in
     And I am on the "form" page
     When I fill out the form
-    And I choose a non-PDF publication to upload
+    And I upload a non-pdf publication
     And I click submit
     Then the webpage should display a validation error
 

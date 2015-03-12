@@ -364,6 +364,22 @@ AddressSchema = new SimpleSchema(
     """
     type: Number
     optional: true
+  pathologyReportPermission:
+    type: String
+    label: """
+    Do you have permission to upload a pathology report?
+    Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents.
+    If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
+    """
+    optional: true
+    autoform:
+      options: _.map([
+        "Yes", "Permission Not Granted", "Not Available or Applicable"
+      ], (value) ->
+        {label: value, value: value}
+      )
+      afFieldInput:
+        noselect: true
   pathologyReports:
     type: Array
     optional: true
@@ -374,22 +390,12 @@ AddressSchema = new SimpleSchema(
     type: String
     label: """
     You can upload (MS Word or PDF) copies of pathology reports for other users to view.
-    Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents.
-    If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
     """
     optional: true
     autoform:
       afFieldInput:
         type: 'fileUpload'
         collection: 'files'
-        
-  'pathologyReports.$.permission':
-    label: "Do you have permission to upload this report?"
-    type: String
-    allowedValues: ["Yes", "Permission Not Granted", "Not Available or Applicable"]
-    autoform:
-      afFieldInput:
-        noselect: true
   # We are skipping the N/A tick boxes
   # because the user can leave the sections blank instead.
   images:
