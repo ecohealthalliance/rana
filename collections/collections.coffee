@@ -377,7 +377,7 @@ AddressSchema = new SimpleSchema(
         "Yes", "Permission Not Granted", "Not Available or Applicable"
       ], (value) ->
         {label: value, value: value}
-      );
+      )
       afFieldInput:
         noselect: true
   pathologyReports:
