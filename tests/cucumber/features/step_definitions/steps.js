@@ -119,6 +119,31 @@
       helper.resetTestDB([], callback);
     });
 
+    this.Then("I should not see a checkbox for the edit column",
+    function (callback) {
+      helper.world.browser
+        .getTextWhenVisible('.reactive-table-columns-dropdown li:last-child label',
+        function(err, text){
+          assert(!err);
+          assert.notEqual(text.trim(), "Controls column has visible checkbox.");
+        })
+        .call(callback);
+    });
+    
+    this.Then('I should see the text "$text"',
+    function (text, callback) {
+      helper.world.browser
+        .waitForText('body')
+        .getText('body', function(err, bodyText){
+          console.log(bodyText);
+          assert(!err);
+          assert(
+            new RegExp(text, "i").test(bodyText),
+            '"' + text + '" not in "' + bodyText + '"'
+          );
+        }).call(callback);
+    });
+    
   };
 
 })();
