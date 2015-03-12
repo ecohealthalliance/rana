@@ -12,6 +12,8 @@ Router.route('/form',
 Router.route('/form/:reportId',
   template: 'form'
   where: 'client'
+  data: ->
+    reportId: @params.reportId
 )
 
 Router.route('/map',

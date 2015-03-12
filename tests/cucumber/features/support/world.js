@@ -1,6 +1,8 @@
 (function () {
 
   'use strict';
+  
+  var assert = require('assert');
 
   var assert = require('assert');
 
@@ -59,6 +61,16 @@
             window.setTimeout(done, 2000);
           }, baseQuery, _.once(callback));
         });
+        
+        browser.addCommand("checkValue", function(query, expectedValue, callback) {
+          browser
+          .getValue(query, function(err, value){
+            assert(!err);
+            assert.equal(value, expectedValue);
+          })
+          .call(callback);
+        });
+        
         browser.call(next);
       });
 
