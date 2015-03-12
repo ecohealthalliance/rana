@@ -5,7 +5,7 @@ Template.map.rendered = ->
     maxZoom: 18
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
-  
+
   @data.forEach((mapItem)->
     L.marker(mapItem.location).addTo(map)
       .bindPopup(mapItem.popupHTML)
