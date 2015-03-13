@@ -1,58 +1,62 @@
 template(name="reportForm")
 
   +autoForm id="ranavirus-report" collection="collections.Reports" type="insert" doc=reportDoc
-
-    .container-fluid.report-form
+    .report-form
       form
-
         .panel.panel-default.form-input-block
           .panel-heading
             h2.panel-title Event Date and Location
           .panel-body
             .row
-              .col-lg-12
+              .col-sm-12
                 +afQuickField name="eventDate"
                 +afQuickField name="eventLocation"
 
         .row.form-input-block
-          .col-lg-4
-            +afQuickField name="populationType"
-          .col-lg-4
-            +afQuickField name="screeningReason"
-          .col-lg-4
-            +afQuickField name="vertebrateClasses"
+          .col-sm-4
+            .padded-block.short-block
+              +afQuickField name="populationType"
+          .col-sm-4
+            .padded-block.short-block
+              +afQuickField name="screeningReason"
+          .col-sm-4
+            .padded-block.short-block
+              +afQuickField name="vertebrateClasses"
 
         .panel.panel-default.form-input-block
           .panel-heading
             h2.panel-title Species Information
           .panel-body
             .row
-              .col-lg-6
+              .col-lg-5
                 +afQuickField name="speciesGenus"
                 +afQuickField name="speciesName"
                 +afQuickField name="numInvolved"
-              .col-lg-6
+              .col-lg-7
                 +afQuickField name="speciesNotes"
 
         .row.form-input-block
-          .col-lg-3
-            +afQuickField name='ageClasses'
           .col-lg-4
-            +afQuickField name='ranavirusConfirmMethods'
-            if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-              +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+            .padded-block.tall-block
+              +afQuickField name='ageClasses'
           .col-lg-4
-            +afQuickField name='sampleType'
-            if afFieldValueContains name='sampleType' value='other'
-              +afQuickField name='specifyOtherRanavirusSampleTypes'
+            .padded-block.tall-block
+              +afQuickField name='ranavirusConfirmMethods'
+              if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+                +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+          .col-lg-4
+            .padded-block.tall-block
+              +afQuickField name='sampleType'
+              if afFieldValueContains name='sampleType' value='other'
+                +afQuickField name='specifyOtherRanavirusSampleTypes'
 
-        .row.form-input-block
-          .col-lg-4
-            +afQuickField name='totalAnimalsTested'
-          .col-lg-4
-            +afQuickField name='totalAnimalsConfirmedInfected'
-          .col-lg-4
-            +afQuickField name='totalAnimalsConfirmedDiseased'
+        .row.form-input-block.padded-block
+            .col-lg-4
+              +afQuickField name='totalAnimalsTested'
+            .col-lg-4
+              +afQuickField name='totalAnimalsConfirmedInfected'
+            .col-lg-4
+              +afQuickField name='totalAnimalsConfirmedDiseased'
 
         .row.form-input-block
           .col-lg-4

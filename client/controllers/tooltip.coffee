@@ -104,8 +104,7 @@ Template.registerHelper 'tooltipAtts', () ->
 
   if name of tooltipTexts
     'data-toggle': "tooltip"
-    'viewport' : 'body'
-    'data-placement': "right auto"
+    'data-placement': "right"
     'title': tooltipTexts[name]
     'class': 'tooltipped'
   else
