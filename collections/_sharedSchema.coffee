@@ -86,19 +86,8 @@
     autoform:
       afFieldInput:
         options: [
-          {
-            value: 'native'
-            label: """
-            Native: A species that is found inhabiting its accepted, natural species range.
-            """
-          }
-          {
-            value: 'introduced'
-            label: """
-            Introduced: A species that is present in a geographical area outside of its accepted,
-            natural species range. This category would include farmed animals not native to the area.
-            """
-          }
+          { value: 'native', label: 'Native' }
+          { value: 'introduced', label: 'Introduced' }
         ]
         noselect: true
   ranavirusConfirmMethods:

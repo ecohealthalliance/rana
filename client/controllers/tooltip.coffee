@@ -86,6 +86,9 @@ tooltipTexts =
     diagnosed presence of other pathogens, observations of gross pathological signs)."""
   'publicationInfo.pdf':  'If the data has been published please provide a PDF.'
   'publicationInfo.reference': 'If the data has been published please provide a full reference'
+  'speciesAffectedType.native': 'A species that is found inhabiting its accepted, natural species range.'
+  'speciesAffectedType.introduced': """A species that is present in a geographical area outside of its accepted,
+    natural species range. This category would include farmed animals not native to the area."""
 
 Template.reportForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
