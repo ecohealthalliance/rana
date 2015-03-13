@@ -87,7 +87,7 @@ tooltipTexts =
   'publicationInfo.pdf':  'If the data has been published please provide a PDF.'
   'publicationInfo.reference': 'If the data has been published please provide a full reference'
 
-Template.autoform.rendered = () ->
+Template.reportForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
 
 Template.registerHelper 'tooltipAtts', () ->
