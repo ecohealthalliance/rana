@@ -148,3 +148,11 @@ Template["afBooleanRadioGroup_rana"].helpers({
     return {'data-schema-key': this.atts['data-schema-key']};
   }
 });
+
+Template.afArrayField_rana.helpers({
+  addSharing: function(name){
+    name = name.hash.name.arrayFieldName;
+    if (name === "pathologyReports")
+      return true
+  }
+})

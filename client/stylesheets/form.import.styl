@@ -13,8 +13,13 @@ blue = #337AB7
   @extend .minor-label
   display block
 
-.row, form-group
+.row
   margin-bottom 20px
+  
+.form-group
+  margin-bottom 0
+  label
+    width auto
   
 h2.panel-title
   font-size 24px
@@ -59,9 +64,32 @@ textarea
     border-left 0
     border-right 0
     border-bottom 0
-    
+
+.panel > .list-group
+  margin-bottom 20px
+
 .content-block
-  padding:15px
+  padding 15px 15px 0 15px
+  .list-group-item
+    position relative
+  fieldset
+    > div:first-child
+      margin-bottom 20px
+      label
+        display none
+      .form-group label
+        display block
+    legend
+      display none
+      
+  .autoform-remove-item
+    position absolute
+    top 15px
+    right 0
+  .form-group.file-upload .btn,
+  .form-control
+    max-width 80%
+  
   
 .add-content
   display block
@@ -71,6 +99,8 @@ textarea
   padding 8px
   width 100%
   color white
+  &:focus
+    outline 0
 
 .tooltipped
   border-bottom: 1px #ddd dotted

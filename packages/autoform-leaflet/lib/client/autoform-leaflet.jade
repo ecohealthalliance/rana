@@ -1,34 +1,34 @@
 template(name='leaflet')
   div(data-schema-key=schemaKey)
+    .row
+      .col-md-6
+        input.locationSource(type='hidden', name='source', class='source')
+        .form-group
+          h4.form-group-header Degrees Decimal
+          .row
+            .col-md-6.form-group
+              label(for='lon') Longitude
+              input.form-control(name='lon' class='lon')
+            .col-md-6.form-group
+              label(for='lat') Latitude
+              input.form-control(name='lat' class='lat')
 
-    input.locationSource(type='hidden', name='source', class='source')
+          h4.form-group-header Universal Transverse Mercator
+          .row
+            .col-md-4.form-group
+              label(for='easting') Easting
+              input.form-control(name='easting' class='easting')
+            .col-md-4.form-group
+              label(for='norting') Northing
+              input.form-control(name='northing' class='northing')
+            .col-md-4.form-group
+              label(for='zone') Zone
+              input.form-control(name='zone' class='zone')
 
-    .col-md-6
-      .form-group
-
-        h4.form-group-header Degrees Decimal
-        .col-md-6
-          label(for='lon') Longitude
-          input(name='lon' class='lon')
-        .col-md-6
-          label(for='lat') Latitude
-          input(name='lat' class='lat')
-
-        h4.form-group-header Universal Transverse Mercator
-        .col-md-4
-          label(for='easting') Easting
-          input(name='easting' class='easting')
-        .col-md-4
-          label(for='norting') Northing
-          input(name='northing' class='northing')
-        .col-md-4
-          label(for='zone') Zone
-          input(name='zone' class='zone')
-
-    .col-md-6
-      div
-        //- input.leaflet-search.map-controls(type='text')
-        div.leaflet-canvas
-        .btn-group
-          button.leaflet-locate.btn.btn-default My location
-          button.leaflet-clear.btn.btn-default Clear
+      .col-md-6
+        div
+          //- input.leaflet-search.map-controls(type='text')
+          div.leaflet-canvas
+          .btn-group
+            button.leaflet-locate.btn.btn-default My location
+            button.leaflet-clear.btn.btn-default Clear
