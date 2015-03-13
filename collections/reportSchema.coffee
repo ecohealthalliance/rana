@@ -51,7 +51,7 @@
     optional: true
   'pathologyReports.$.report':
     type: String
-    label: 'Pathology Reports'
+    label: ''
     optional: true
     autoform:
       afFieldInput:
@@ -69,7 +69,7 @@
   images:
     type: Array
     optional: true
-    label: 'Images'
+    label: ''
   'images.$':
     type: Object
     autoform:
@@ -83,7 +83,7 @@
   genBankAccessionNumbers:
     type: Array
     optional: true
-    label: 'GenBack Accession Numbers'
+    label: ''
   'genBankAccessionNumbers.$':
     type: Object
     autoform:
