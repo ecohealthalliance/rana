@@ -90,6 +90,9 @@ tooltipTexts =
 Template.reportForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
 
+Template.importForm.rendered = () ->
+  @$('[data-toggle="tooltip"]').tooltip()
+
 Template.registerHelper 'tooltipAtts', () ->
   if 'value' of this
     name = @atts.name + '.' + @value
