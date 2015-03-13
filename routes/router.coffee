@@ -5,11 +5,13 @@ Router.configure
 
 Router.route('/', ()-> @redirect('/group/rana'))
 
-Router.route('/form',
+Router.route('/reportForm',
+  path: '/report'
   where: 'client'
 )
 
 Router.route('/importForm',
+  path: 'import'
   where: 'client'
 )
 
