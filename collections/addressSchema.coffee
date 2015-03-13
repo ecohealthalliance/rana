@@ -1,4 +1,6 @@
 @addressSchema = new SimpleSchema
+  name:
+    type: String
   street:
     type: String
   street2:

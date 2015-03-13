@@ -2,55 +2,97 @@ template(name="importForm")
 
   +autoForm collection="collections.Studies" type="insert" id="importForm"
 
-    .form-group.csv-file
-      .panel.panel-default
+    .container-fluid.report-form
+        form
+      .form-group.csv-file
+        .panel.panel-default
+          .panel-heading
+            h3.panel-title CSV file upload
+          .panel-body
+            if importReports.count
+              b File: &nbsp;
+              tt #{csvFileName}
+              | &nbsp;
+              b Id: &nbsp;
+              tt #{csvFileId}
+            +afQuickField name='csvFile' id='csvFile'
+
+            if importReports.count
+              +reactiveTable collection=importReports fields=importFields
+
+              if unmatchedHeadersString
+                h4 Unused fields in your data
+                tt #{unmatchedHeadersString}
+
+      p Please fill out any of the following fields that apply to all reports in this study.
+
+      .panel.panel-default.form-input-block
         .panel-heading
-          h3.panel-title CSV file upload
+          h2.panel-title Contact person info
         .panel-body
-          if importReports.count
-            b File: &nbsp;
-            tt #{csvFileName}
-            | &nbsp;
-            b Id: &nbsp;
-            tt #{csvFileId}
-          +afQuickField name='csvFile' id='csvFile'
+          .row
+            .col-lg-4
+              +afQuickField name='contact.name'
+            .col-lg-4
+              +afQuickField name='contact.email' placeholder='name@domain.com'
+            .col-lg-4
+              +afQuickField name='contact.phone' minor='(Must include the country code)'
 
-          if importReports.count
-            +reactiveTable collection=importReports fields=importFields
+        .panel.panel-default.form-input-block
+          .panel-heading
+            h2.panel-title Reporting institution, diagnostic lab or government agency info
+              +tooltip name='contact.institutionAddress'
+          .panel-body
+            .row
+              .col-lg-5
+                +afQuickField name="contact.institutionAddress.name"
+            .row
+              .col-lg-5
+                +afQuickField name="contact.institutionAddress.street"
+              .col-lg-5
+                +afQuickField name="contact.institutionAddress.street2"
+            .row
+              .col-lg-4
+                +afQuickField name="contact.institutionAddress.city"
+              .col-lg-4
+                +afQuickField name="contact.institutionAddress.stateOrProvince"
+              .col-lg-2
+                +afQuickField name="contact.institutionAddress.postalCode"
+            .row
+              .col-lg-4
+                +afQuickField name="contact.institutionAddress.country"
 
-            if unmatchedHeadersString
-              h4 Unused fields in your data
-              tt #{unmatchedHeadersString}
+      .row.form-input-block
+        .col-lg-4
+          +afQuickField name="populationType"
+        .col-lg-4
+          +afQuickField name="screeningReason"
+        .col-lg-4
+          +afQuickField name="vertebrateClasses"
 
-    p Please fill out any of the following fields that apply to all reports in this study.
+      .panel.panel-default.form-input-block
+        .panel-heading
+          h2.panel-title Species Information
+        .panel-body
+          .row
+            .col-lg-6
+              +afQuickField name="speciesGenus"
+              +afQuickField name="speciesName"
+              +afQuickField name='speciesAffectedType' id='speciesAffectedType'
+            .col-lg-6
+              +afQuickField name="speciesNotes"
 
-    +afQuickField name='contact' id='contact'
-
-    +afQuickField name='populationType' id='populationType'
-
-    +afQuickField name='screeningReason' id='screeningReason'
-
-    +afQuickField name='vertebrateClasses' id='vertebrateClasses'
-
-    +afQuickField name='speciesGenus' id='speciesGenus'
-
-    +afQuickField name='speciesName' id='speciesName'
-
-    +afQuickField name='speciesAffectedType' id='speciesAffectedType'
-
-    +afQuickField name='speciesNotes' id='speciesNotes'
-
-    +afQuickField name='ageClasses' id='ageClasses'
-
-    +afQuickField name='ranavirusConfirmMethods' id='ranavirusConfirmMethods'
-
-    if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-      +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-
-    +afQuickField name='sampleType' id='sampleType'
-
-    if afFieldValueContains name='sampleType' value='other'
-      +afQuickField name='specifyOtherRanavirusSampleTypes'
+      .row.form-input-block
+        .col-lg-3
+          +afQuickField name='ageClasses'
+        .col-lg-4
+          +afQuickField name='ranavirusConfirmMethods'
+          if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+            +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+        .col-lg-4
+          +afQuickField name='sampleType'
+          if afFieldValueContains name='sampleType' value='other'
+            +afQuickField name='specifyOtherRanavirusSampleTypes'
 
     +afQuickField name='dataUsePermissions' id='dataUsePermissions'
 

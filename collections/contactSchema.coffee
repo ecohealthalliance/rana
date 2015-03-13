@@ -1,23 +1,14 @@
 @contactSchema = new SimpleSchema
   name:
-    label: """
-    Enter the name of the person who is reporting the case.
-    They must be willing to communicate about the case if so requested.
-    """
+    label: "Name"
     type: String
   email:
-    label: """
-    Enter the most current email address or permanent email address of the person reporting the case.
-    """
     type: String
     regEx: SimpleSchema.RegEx.Email
     autoform:
       type: 'email'
   phone:
-    label: """
-    Enter the institutional telephone number of the individual who is reporting the case:
-    (This must include the country code.)
-    """
+    label: "Phone Number"
     type: String
     autoform:
       type: 'tel'
