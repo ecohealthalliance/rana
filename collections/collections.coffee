@@ -60,14 +60,6 @@ AddressSchema = new SimpleSchema(
     label: 'Event date'
     type: Date
     optional: true
-  coordinatesAvailable:
-    type: Boolean
-    label: "Do you have the coordinates where the carcasses were collected?"
-    optional: true
-    autoform:
-       type: 'boolean-radios'
-       trueLabel: 'Yes'
-       falseLabel: 'No'
   eventLocation:
     label: 'Event Location'
     type: String
@@ -224,7 +216,6 @@ AddressSchema = new SimpleSchema(
         { value: 'internal_organ_tissues', label: 'Internal Organ Tissues'}
         { value: 'tail_toe_clips', label: 'Tail/Toe Clips'}
         { value: 'blood', label: 'Blood'}
-        { value: 'internal_swabs', label: 'Internal Swabs'}
         { value: 'other', label: 'Other'}
       ]
       afFieldInput:
@@ -257,7 +248,7 @@ AddressSchema = new SimpleSchema(
     optional: true
   'pathologyReports.$.report':
     type: String
-    label: 'Pathology Reports'
+    label: ''
     optional: true
     autoform:
       afFieldInput:
@@ -275,7 +266,7 @@ AddressSchema = new SimpleSchema(
   images:
     type: Array
     optional: true
-    label: 'Images'
+    label: ''
   'images.$':
     type: Object
     autoform:
@@ -289,7 +280,7 @@ AddressSchema = new SimpleSchema(
   genBankAccessionNumbers:
     type: Array
     optional: true
-    label: 'GenBack Accession Numbers'
+    label: ''
   'genBankAccessionNumbers.$':
     type: Object
     autoform:

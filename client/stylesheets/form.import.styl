@@ -57,6 +57,9 @@ textarea
 .panel-intro
   padding 15px
 
+.panel-heading
+  border-bottom 2px #DDD solid
+
 .content-panel
   @extend .no-padding
   .list-group-item
@@ -66,12 +69,14 @@ textarea
     border-bottom 0
 
 .panel > .list-group
-  margin-bottom 20px
+  margin-bottom 0px
 
 .content-block
   padding 15px 15px 0 15px
   .list-group-item
     position relative
+    &:first-child
+      border-top 0
   fieldset
     > div:first-child
       margin-bottom 20px
@@ -81,17 +86,22 @@ textarea
         display block
     legend
       display none
-      
+    div:last-child  
+      > label
+        margin-bottom 0
+          
   .autoform-remove-item
     position absolute
     top 15px
-    right 0
+    right 0px
   .form-group.file-upload .btn,
   .form-control
-    max-width 80%
-  
+    width 80%
+  .file-upload-clear
+    margin-top 10px
   
 .add-content
+  margin-bottom 15px
   display block
   background blue
   border 0
