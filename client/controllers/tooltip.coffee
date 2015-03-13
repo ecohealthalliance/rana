@@ -75,7 +75,7 @@ tooltipTexts =
   images: """Images from mortality events or of lesions on individual animals from
     the mortality event being reported can be shared here.
     Please do not share images that you do not want other users to see and/or potentially use."""
-  genBankAccessionNumbers: Spacebars.SafeString """Please provide the
+  genBankAccessionNumbers: """Please provide the
     GenBank Accession numbers of the sequences associated with the current event being
     reported if they are available."""
   dataUsePermissions: "Please select the information that can be shared with other users."
