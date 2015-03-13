@@ -40,20 +40,3 @@ LocationSchema = new SimpleSchema
           return "needsLatLong" unless @value.length is 2
           return 'lonOutOfRange' unless -180 < @value[0] <= 180
           return 'latOutOfRange' unless -90 <= @value[1] <= 90
-
-MappingsScehma = new SimpleSchema
-  locationGoogle:
-    optional: true
-    type: LocationSchema
-    autoform:
-      type: 'gmap'
-  locationLeaflet:
-    optional: true
-    type: LocationSchema
-    autoform:
-      type: 'leaflet'
-  test:
-    type: String
-
-@collections.Mappings = new Mongo.Collection 'mappings'
-@collections.Mappings.attachSchema MappingsScehma
