@@ -8,42 +8,20 @@
       label: false
   contact:
     type: @contactSchema
-  eventDate:
-    label: """
-    Enter the date when the ranavirus event being reported occurred or was discovered.
-    This may be the date that carcasses were collected.
-    If this date is unavailable or unknown, then the date that the diagnostic tests were performed can be used.
-    """
+   eventDate:
+    label: 'Event date'
     type: Date
     optional: true
-  coordinatesAvailable:
-    type: Boolean
-    label: """
-    Do you have the coordinates where the carcasses were collected?
-    """
-    optional: true
-    autoform:
-       type: 'boolean-radios'
-       trueLabel: 'Yes'
-       falseLabel: 'No'
   eventLocation:
-    label: """
-    Where were the carcasses actually collected or animals sampled?
-    Please provide the highest resolution data possible using (UTM or DD coordinates).
-    """
+    label: 'Event Location'
     type: String
     optional: true
     autoform:
-      type: 'map'
+      type: 'leaflet'
       afFieldInput:
-        type: 'map'
-        geolocation: true
-        searchBox: true
-        autolocate: true
+        type: 'leaflet'
   eventCountry:
-    label: """
-    Please provide the country where the event occurred.
-    """
+    label: 'Event Country'
     type: String
     optional: true
   numInvolved:
@@ -54,29 +32,15 @@
       afFieldInput:
         options: _.map(@numInvolvedOptions, (definition, option)-> {label:definition, value: option})
   totalAnimalsTested:
-    label: """
-    Total Number of Animals Tested:
-    The total number of animals tested for the presence of the ranavirus
-    for the event being reported. Please note that this is per species.
-    """
+    label: 'Total Number of Animals Tested'
     type: Number
     optional: true
   totalAnimalsConfirmedInfected:
-    label: """
-    Total Number of Animals Confirmed Infected:
-    The total number of animals confirmed to be infected
-    with the ranavirus through diagnostic tests with positive results for the event
-    and species currently being reported.
-    """
+    label: 'Total Number of Animals Confirmed Infected'
     type: Number
     optional: true
   totalAnimalsConfirmedDiseased:
-    label: """
-    Total Number of Animals Confirmed Diseased:
-    The total number of animals having signs of disease consistent
-    with ranavirus infection by a certified pathologist AND the individual
-    has tested positively for the pathogen during specific diagnostic testing.
-    """
+    label: 'Total Number of Animals Confirmed Diseased'
     type: Number
     optional: true
   pathologyReports:
@@ -87,11 +51,7 @@
     optional: true
   'pathologyReports.$.report':
     type: String
-    label: """
-    You can upload (MS Word or PDF) copies of pathology reports for other users to view.
-    Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents.
-    If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
-    """
+    label: 'Pathology Reports'
     optional: true
     autoform:
       afFieldInput:
@@ -109,11 +69,7 @@
   images:
     type: Array
     optional: true
-    label: """
-    Images from mortality events or of lesions on individual animals from
-    the mortality event being reported can be shared here.
-    Please do not share images that you do not want other users to see and/or potentially use.
-    """
+    label: 'Images'
   'images.$':
     type: Object
     autoform:
@@ -127,12 +83,7 @@
   genBankAccessionNumbers:
     type: Array
     optional: true
-    label: () -> Spacebars.SafeString """
-    Please provide the
-    <a href="http://www.ncbi.nlm.nih.gov/genbank/" target="_blank">GenBank</a>
-    Accession numbers of the sequences associated with the current event being
-    reported if they are available.
-    """
+    label: 'GenBack Accession Numbers'
   'genBankAccessionNumbers.$':
     type: Object
     autoform:

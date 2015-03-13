@@ -1,29 +1,45 @@
 @sharedSchema =
   populationType:
-    label: """Type of Population:"""
+    label: """
+    Type of Population:
+    """
     type: String
     optional: true
     autoform:
       afFieldInput:
-        options: _.map(@populationTypes, (definition, option)-> {label:definition, value: option})
+        options: [
+          { value: 'wild', label: 'Wild' }
+          { value: 'zoological', label: 'Zoological' }
+          { value: 'production', label: 'Production'}
+        ]
         noselect: true
-  screeningReason:
-    label: """Reason for Screening:"""
+   screeningReason:
+    label: """
+    Reason for Screening:
+    """
     type: String
     optional: true
     autoform:
       afFieldInput:
-        options: _.map(@screeningReasons, (definition, option)-> {label:definition, value: option})
+        options: [
+          { value: 'mortality', label: 'Mortality' }
+          { value: 'routine', label: 'Routine' }
+        ]
         noselect: true
   vertebrateClasses:
     type: Array
     optional: true
     autoform:
-      options: _.map(@vertebrateClassesChoices, (definition, option)-> {label:definition, value: option})
-      afFieldInput:
-        noselect: true
+      options: [
+        { value: 'fish', label: 'Fish' }
+        { value: 'amphibian', label: 'Amphibian' }
+        { value: 'reptile', label: 'Reptile' }
+      ]
+      noselect: true
   'vertebrateClasses.$':
-    label: """Vertebrate Class(es) Involved"""
+    label: """
+    Vertebrate Class(es) Involved
+    """
     type: String
     optional: true
     autoform:
@@ -33,7 +49,12 @@
     type: Array
     optional: true
     autoform:
-      options: _.map(@ageClasses, (definition, option)-> {label:definition, value: option})
+      options: [
+        { value: 'egg', label: 'Egg' }
+        { value: 'larvae', label: 'Larvae/Hatchling' }
+        { value: 'juvenile', label: 'Juvenile' }
+        { value: 'adult', label: 'Adult' }
+      ]
       afFieldInput:
         noselect: true
   'ageClasses.$':
@@ -45,7 +66,6 @@
     autoform:
       afFieldInput:
         noselect: true
-
   speciesGenus:
     label: 'Species Affected Genus'
     type: String
@@ -85,7 +105,16 @@
     type: Array
     optional: true
     autoform:
-      options: _.map(@ranavirusConfirmMethodsChoices, (definition, option)-> {label:definition, value: option})
+      options: [
+        { value: 'traditional_pcr', 'label': 'Traditional PCR' }
+        { value: 'qrt_pcr', 'label': 'Quantitative Real Time PCR' }
+        { value: 'virus_isolation', 'label': 'Virus Isolation' }
+        { value: 'sequencing', 'label': 'Sequencing' }
+        { value: 'electron_microscopy', 'label': 'Electron Microscopy' }
+        { value: 'in_situ_hybridization', 'label': 'In Situ Hybridization' }
+        { value: 'immunohistochemistry', 'label': 'Immunohistochemistry' }
+        { value: 'other', 'label': 'Other' }
+      ]
       afFieldInput:
         noselect: true
   'ranavirusConfirmMethods.$':
@@ -107,7 +136,14 @@
     label: 'Type of Sample Used for Ranavirus Confirmation'
     optional: true
     autoform:
-      options: _.map(@sampleTypes, (definition, option)-> {label:definition, value: option})
+      options: [
+        { value: 'internal_swabs', label: 'Internal Swabs'}
+        { value: 'external_swabs', label: 'External Swabs'}
+        { value: 'internal_organ_tissues', label: 'Internal Organ Tissues'}
+        { value: 'tail_toe_clips', label: 'Tail/Toe Clips'}
+        { value: 'blood', label: 'Blood'}
+        { value: 'other', label: 'Other'}
+      ]
       afFieldInput:
         noselect: true
   specifyOtherRanavirusSampleTypes:
@@ -119,11 +155,7 @@
         name: 'sampleType'
         value: 'other'
   additionalNotes:
-    label: """
-      List additional information (not previously provided) that describes
-      unique features of case (e.g., observations of habitat or husbandry conditions,
-      diagnosed presence of other pathogens, observations of gross pathological signs).
-      """
+    label: 'Additional Notes'
     type: String
     optional: true
     autoform:
