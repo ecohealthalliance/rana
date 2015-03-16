@@ -1,76 +1,84 @@
 template(name="reportForm")
 
   +autoForm id="ranavirus-report" collection="collections.Reports" type="insert" doc=reportDoc
-    .report-form
-      form
-        .panel.panel-default.form-input-block
-          .panel-heading
-            h2.panel-title Event Date and Location
-          .panel-body
-            .row
-              .col-sm-12
-                +afQuickField name="eventDate"
-                +afQuickField name="eventLocation"
 
-        .row.form-input-block
-          .col-sm-4
-            .padded-block.short-block
-              +afQuickField name="populationType"
-          .col-sm-4
-            .padded-block.short-block
-              +afQuickField name="screeningReason"
-          .col-sm-4
-            .padded-block.short-block
-              +afQuickField name="vertebrateClasses"
+    form.report-form
+      section.date-location
+        .title
+          .container
+            h2.section-title Event Date and Location
+        .container
+          .row.form-input-block
+            .col-sm-12
+              .row
+                .col-sm-4
+                  +afQuickField name="eventDate"
+              .row
+                .col-sm-12
+                  +afQuickField name="eventLocation"
 
-        .panel.panel-default.form-input-block
-          .panel-heading
-            h2.panel-title Species Information
-          .panel-body
-            .row
-              .col-lg-5
-                +afQuickField name="speciesGenus"
-                +afQuickField name="speciesName"
-                +afQuickField name="numInvolved"
-              .col-lg-7
-                +afQuickField name="speciesNotes"
+      section.yellow
+        .container
+          .row.form-input-block
+            .col-sm-4.col-xs-6.input-block
+                +afQuickField name="populationType"
+            .col-sm-4.col-xs-6.input-block
+                +afQuickField name="screeningReason"
+            .clearfix.visible-xs-block
+            .col-sm-4.col-xs-6.input-block
+                +afQuickField name="vertebrateClasses"
 
-        .row.form-input-block
+      section        
+        .title
+          .container
+            h2.section-title Species Information
+        .container
+          .row.form-input-block
+            .col-lg-5
+              +afQuickField name="speciesGenus"
+              +afQuickField name="speciesName"
+              +afQuickField name="numInvolved"
+            .col-lg-7
+              +afQuickField name="speciesNotes"
+
+      section.yellow
+        .container
+          .row.form-input-block
+            .col-sm-8.input-block
+              .row
+                .col-sm-3.input-block
+                    +afQuickField name='ageClasses'
+                .col-sm-5.input-block
+                    +afQuickField name='ranavirusConfirmMethods'
+                    if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+                      +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+                .col-sm-4.input-block
+                    +afQuickField name='sampleType'
+                    if afFieldValueContains name='sampleType' value='other'
+                      +afQuickField name='specifyOtherRanavirusSampleTypes'
+            .col-sm-4
+                +afQuickField name='totalAnimalsTested'
+                +afQuickField name='totalAnimalsConfirmedInfected'
+                +afQuickField name='totalAnimalsConfirmedDiseased'
+
+      section
+        .container
+          .row.form-input-block
+            .col-md-4.col-sm-6
+              +afQuickField name='pathologyReports' id='pathologyReports'
+            .col-md-4.col-sm-6
+              +afQuickField name='images' id='images'
+            .col-md-4.col-sm-6
+              +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+
+      section.short-padding
+        .container
+          .row.form-input-block
+            .col-lg-8
+              +afQuickField name='additionalNotes'
+
+      .container
+        .row
           .col-lg-4
-            .padded-block.tall-block
-              +afQuickField name='ageClasses'
-          .col-lg-4
-            .padded-block.tall-block
-              +afQuickField name='ranavirusConfirmMethods'
-              if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-                +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-          .col-lg-4
-            .padded-block.tall-block
-              +afQuickField name='sampleType'
-              if afFieldValueContains name='sampleType' value='other'
-                +afQuickField name='specifyOtherRanavirusSampleTypes'
-
-        .row.form-input-block.padded-block
-            .col-lg-4
-              +afQuickField name='totalAnimalsTested'
-            .col-lg-4
-              +afQuickField name='totalAnimalsConfirmedInfected'
-            .col-lg-4
-              +afQuickField name='totalAnimalsConfirmedDiseased'
-
-        .row.form-input-block
-          .col-lg-4
-            +afQuickField name='pathologyReports' id='pathologyReports'
-          .col-lg-4
-            +afQuickField name='images' id='images'
-          .col-lg-4
-            +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
-
-      .row.form-input-block
-        .col-lg-8
-          +afQuickField name='additionalNotes'
-
-      .row
-        .col-lg-4
-          .form-group
-            button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
+            .form-group
+              button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit

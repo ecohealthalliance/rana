@@ -1,6 +1,14 @@
+s-blue = #E9F0F8
+s-red = #FCE6E8
+s-green = #E7F6F2
+s-yellow = #FFF8E7
+
 .report-form
-  .form-input-block
-    margin-bottom 50px
+  padding-bottom 50px
+
+.date-location
+  .panel-body
+    overflow  hidden
 
 .minor-label
   font-size 90%
@@ -12,19 +20,40 @@
   display block
 
 .row
-  margin-bottom 20px
-  
+  margin-bottom 0
+
 .form-group
   margin-bottom 0
   label
     width auto
-  
-h2.panel-title
-  font-size 24px
+
+section
+  padding 40px 0
+  &.yellow
+    background s-yellow
+  &.red
+    background s-red
+  &:first-child
+    padding-top 20px
+  &.short-padding
+    padding 30px 0
+
+h2.section-title
+  font-size 40px
+  margin-top 0
+  margin-bottom 20px
 
 h2 a.more-info
-  size 12px
+  font-size 12px
   color btn-default
+
+.form-control,
+textarea
+  margin-top 5px
+  margin-bottom 15px
+
+.panel
+  margin-bottom 0
 
 .block
   display block
@@ -56,7 +85,6 @@ textarea
   padding 15px
 
 .location-info
-  margin-top 20px
   .form-group-header
     margin-bottom 12px
     font-size 14px
@@ -66,6 +94,9 @@ textarea
   label
     color #666
     font-size 13px
+  .row:last-child,
+  .form-group:last-child
+      margin-bottom 0
 
 .content-panel
   @extend .no-padding
@@ -103,19 +134,15 @@ textarea
     position absolute
     top 20px
     right 0px
+    makeButton(#ebebeb, l-gray, true)
   .form-group.file-upload .btn,
   .form-control
     width 80%
-    background btn-default
+    margin 0
+    makeButton(btn-default)
     color white
     font-weight 300
     letter-spacing .03em
-    border darken(btn-default, 10%)
-    &:hover,
-    &:focus
-      background darken(btn-default, 10%)
-    &:active
-      background darken(btn-default, 20%)
   input[type=text].form-control
     background white
     color body-text
@@ -126,24 +153,18 @@ textarea
     padding-left 5px
   
 .add-content
+  makeButton(#ebebeb, l-gray, true, true)
+  @extend .light-shadow
   margin-bottom 15px
   display block
-  background #ebebeb
-  border 0
-  border-top 1px solid #DDD
-  border-bottom 1px solid #DDD
   text-align center
   padding 8px
   width 100%
-  color dd-gray
-  @extend .light-shadow
-  transition()
-  &:focus
-    outline 0
-  &:hover
-    transition()
-    background darken(#ebebeb, 5%)
-
+  border 0
+  border-top 1px solid #DDD
+  border-bottom 1px solid #DDD
+    
+  
 .tooltipped
   border-bottom 1px #ddd dotted
   cursor pointer
@@ -151,19 +172,37 @@ textarea
 .padded-block
   padding 15px
   background #f9f9f9
-  border-radius 3px
-  border 1px solid #DDD
   margin-left 0
   margin-right 0
+  &:last-child
+    border 0
 
 .tall-block
   min-height 300px
 .short-block
   min-height 150px
-  
+
+.af-checkbox-group
+  .checkbox
+    &:last-child
+      margin-bottom 0
+
+@media (max-width: 992px)
+  .panel
+    margin-bottom 30px
+    &:last-child
+      margin-bottom 0
+    .btn,
+    button,
+      padding 15px
+    input
+      min-height 55px
+  .input-block
+    margin-bottom 25px
+    &:last-child
+      margin-bottom 0
+      
 @media (max-width: 765px)
-  .padded-block
-    margin-bottom 20px
   .tall-block
     min-height 0
   .short-block

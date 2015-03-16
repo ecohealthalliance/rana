@@ -1,2 +1,24 @@
-transition(time = .2s, prop = '')
+transition(time = .2s, prop = )
   transition: time prop
+  
+makeButton(color, text = white, dark = false, noOutline = false)
+  if dark 
+    @extend .light-shadow
+  else 
+    @extend .dark-shadow
+  background color
+  color text
+  border 1px solid darken(color, 10%)
+  &:hover,
+  &:focus
+    background darken(color, 10%)
+    color darken(text, 20%)
+    border-color darken(color, 20%)
+  &:active
+    background darken(color, 20%)
+  &:focus
+    outline 5px auto lighten(btn-default, 20%)
+  transition()
+  if noOutline
+    &:focus
+      outline 0
