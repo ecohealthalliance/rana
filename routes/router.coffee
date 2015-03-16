@@ -36,8 +36,4 @@ Router.route('/map',
     ]
 )
 
-Router.route('/info',
-  where: 'client'
-)
-
 Router.plugin 'ensureSignedIn', {only: ['form']}

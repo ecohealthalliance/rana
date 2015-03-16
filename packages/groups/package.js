@@ -17,6 +17,7 @@ Package.onUse(function(api) {
   api.use('alanning:roles@1.2.11');
   api.use('matb33:collection-hooks@0.7.11');
   api.use('useraccounts:core@1.7.0');
+  api.use('perak:markdown@1.0.4');
   
   api.use('rana:accounts@0.0.1');
   
@@ -27,10 +28,12 @@ Package.onUse(function(api) {
   api.addFiles('group_home.jade', 'client');
   api.addFiles('new_group.jade', 'client');
   api.addFiles('join.jade', 'client');
+  api.addFiles('info.jade', 'client');
   
   api.addFiles('invite.coffee', ['client', 'server']);
   api.addFiles('new_group.coffee', 'client');
   api.addFiles('join.coffee', 'client');
+  api.addFiles('info.coffee', 'client');
   
   api.addFiles('routes.coffee', ['client', 'server']);
   

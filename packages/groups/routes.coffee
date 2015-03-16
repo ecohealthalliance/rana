@@ -37,4 +37,13 @@ Router.route "/join/:inviteId", {
     Meteor.subscribe "invite", @params.inviteId
 }
 
+Router.route('/group/:groupPath/info',
+  where: 'client'
+  template: 'groupInfo'
+  data: ->
+    group: Groups.findOne {path: @params.groupPath}
+  waitOn: ->
+    Meteor.subscribe "groupByPath", @params.groupPath
+)
+
 Router.plugin "ensureSignedIn", {only: ["newGroup", "join"]}
