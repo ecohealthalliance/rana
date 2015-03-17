@@ -1,8 +1,4 @@
-getCollection = (name)=>
-  if name of @collections
-    @collections[name]
-  else
-    throw new Error("Invalid collection name: " + name)
+getCollections = => @collections
 
 Template.table.isEmpty = =>
   not @collections.Reports.findOne()
@@ -73,5 +69,5 @@ Template.table.events(
     reportId = $(evt.target).data("id")
     reply = prompt('Type "delete" to confirm that this report should be removed.')
     if reply == "delete"
-      getCollection("Reports").remove(reportId)
+      getCollections().Reports.remove(reportId)
 )

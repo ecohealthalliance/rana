@@ -10,6 +10,15 @@ Meteor.publish 'files', ->
 Meteor.publish 'genera', ->
   collections.Genera.find()
 
+Meteor.publish 'pdfs', ->
+  collections.PDFs.find()
+
+@collections.PDFs.allow
+  insert: (userId, doc) ->
+    true
+  download: (userId)->
+    true
+
 Meteor.publish 'reports', ->
   collections.Reports.find({
     $or : [

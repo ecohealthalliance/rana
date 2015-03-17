@@ -27,8 +27,9 @@
       });
     });
 
-    this.Before(function() {
+    this.Before(function(scenario) {
       var world = helper.world;
+      world.scenario = scenario;
       var next = arguments[arguments.length - 1];
       world.browser.
         init().
@@ -36,6 +37,7 @@
           width: 1280,
           height: 1024
         }).
+        timeoutsAsyncScript(2000).
         url(helper.world.cucumber.mirror.rootUrl).
         call(function(){
           helper.resetTestDB([], next);
