@@ -1,6 +1,3 @@
-Meteor.publish 'files', ->
-  collections.Files.find()
-
 @collections.Files.allow
   insert: (userId, doc) ->
     true
