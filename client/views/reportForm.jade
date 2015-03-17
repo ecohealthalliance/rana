@@ -7,92 +7,76 @@ template(name="reportForm")
       type=type
       doc=reportDoc
     )
-    form.report-form
-      section.date-location
-        .container
-          .row.form-input-block
-            .col-sm-12
-              .row
-                .col-sm-4
-                  +afQuickField name="eventDate"
-              .row
-                .col-sm-12
-                  +afQuickField name="eventLocation"
-      section.yellow
-        .container
-          .row.form-input-block
-            .col-sm-4.col-xs-6.input-block
-                +afQuickField name="populationType"
-            .col-sm-4.col-xs-6.input-block
-                +afQuickField name="screeningReason"
-            .clearfix.visible-xs-block
-            .col-sm-4.col-xs-6.input-block
-                +afQuickField name="vertebrateClasses"
-      section
-        .container
-          .row.form-input-block
-            .col-lg-5
-              +afQuickField name="speciesGenus"
-              +afQuickField name="speciesName"
-              +afQuickField name="numInvolved"
-            .col-lg-7
-              +afQuickField name="speciesNotes"
+      form.report-form
+        section.date-location
+          .container
+            .row.form-input-block
+              .col-sm-12
+                .row
+                  .col-sm-4
+                    +afQuickField name="eventDate"
+                .row
+                  .col-sm-12
+                    +afQuickField name="eventLocation"
+        section.yellow
+          .container
+            .row.form-input-block
+              .col-sm-4.col-xs-6.input-block
+                  +afQuickField name="populationType"
+              .col-sm-4.col-xs-6.input-block
+                  +afQuickField name="screeningReason"
+              .clearfix.visible-xs-block
+              .col-sm-4.col-xs-6.input-block
+                  +afQuickField name="vertebrateClasses"
+        section
+          .container
+            .row.form-input-block
+              .col-lg-5
+                +afQuickField name="speciesGenus"
+                +afQuickField name="speciesName"
+                +afQuickField name="numInvolved"
+              .col-lg-7
+                +afQuickField name="speciesNotes"
 
-      section.yellow
+        section.yellow
+          .container
+            .row.form-input-block
+              .col-sm-8.input-block
+                .row
+                  .col-sm-3.input-block
+                      +afQuickField name='ageClasses'
+                  .col-sm-5.input-block
+                      +afQuickField name='ranavirusConfirmMethods'
+                      if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+                        +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+                  .col-sm-4.input-block
+                      +afQuickField name='sampleType'
+                      if afFieldValueContains name='sampleType' value='other'
+                        +afQuickField name='specifyOtherRanavirusSampleTypes'
+              .col-sm-4
+                  +afQuickField name='totalAnimalsTested'
+                  +afQuickField name='totalAnimalsConfirmedInfected'
+                  +afQuickField name='totalAnimalsConfirmedDiseased'
+
+        section
+          .container
+            .row.form-input-block
+              .col-md-4.col-sm-6
+                +afQuickField name='pathologyReports' id='pathologyReports'
+              .col-md-4.col-sm-6
+                +afQuickField name='images' id='images'
+              .col-md-4.col-sm-6
+                +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+
+        section.rm-pad-top
+          .container
+            .row.form-input-block
+              .col-lg-8
+                +afQuickField name='additionalNotes'
         .container
-          .row.form-input-block
-            .col-sm-8.input-block
-              .row
-                .col-sm-3.input-block
-                    +afQuickField name='ageClasses'
-                .col-sm-5.input-block
-                    +afQuickField name='ranavirusConfirmMethods'
-                    if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-                      +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-                .col-sm-4.input-block
-                    +afQuickField name='sampleType'
-                    if afFieldValueContains name='sampleType' value='other'
-                      +afQuickField name='specifyOtherRanavirusSampleTypes'
-            .col-sm-4
-                +afQuickField name='totalAnimalsTested'
-                +afQuickField name='totalAnimalsConfirmedInfected'
-                +afQuickField name='totalAnimalsConfirmedDiseased'
-
-      section
-        .container
-          .row.form-input-block
-            .col-md-4.col-sm-6
-              +afQuickField name='pathologyReports' id='pathologyReports'
-            .col-md-4.col-sm-6
-              +afQuickField name='images' id='images'
-            .col-md-4.col-sm-6
-              +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
-
-      section.rm-pad-top
-        .container
-          .row.form-input-block
-            .col-lg-8
-              +afQuickField name='additionalNotes'
-
-      .container
-        .row
-          .col-lg-4
-<<<<<<< HEAD
-            .form-group
-              button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
-=======
-            +afQuickField name='images' id='images'
-          .col-lg-4
-            +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
-
-      .row.form-input-block
-        .col-lg-8
-          +afQuickField name='additionalNotes'
-
-      .row
-        .col-lg-4
-          .form-group
-            button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
+          .row
+            .col-lg-4
+              .form-group
+                button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
   else
     h3 Invalid form id
->>>>>>> import
