@@ -10,22 +10,30 @@
 
     var helper = this;
 
-    this.resetTestDB = Meteor.bindEnvironment(function(reports, next) {
+    this.DDPCall = Meteor.bindEnvironment(function(route, parameter, next) {
       var done = _.once(next);
       setTimeout(function(){
         done("Timeout");
       }, 1000);
       var connection = DDP.connect(helper.world.cucumber.mirror.host);
-      connection.call('/fixtures/resetDB', reports, function(err, res) {
+      connection.call(route, parameter, function(err, res) {
         if (err) {
           console.log("DDP Error", err);
-          done('Error in /fixtures/resetDB DDP call to ' + helper.world.cucumber.mirror.host);
+          done('Error in ' + route + ' DDP call to ' + helper.world.cucumber.mirror.host);
         } else {
           done();
         }
         connection.disconnect();
       });
     });
+
+    this.resetTestDB = function(reports, next) {
+      this.DDPCall('/fixtures/resetDB', reports, next);
+    };
+
+    this.addReports = function(reports, next) {
+      this.DDPCall('/fixtures/addReports', reports, next);
+    };
 
     this.Before(function(scenario) {
       var world = helper.world;

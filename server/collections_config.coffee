@@ -17,6 +17,9 @@ Meteor.publish 'pdfs', ->
     true
 
 Meteor.publish 'reports', ->
+  # Uncomment this if the admin should be allowed to see unpublished reports.
+  #if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
+    #return collections.Reports.find({})
   collections.Reports.find({
     $or : [
       {
@@ -30,6 +33,18 @@ Meteor.publish 'reports', ->
   })
 
 @collections.Reports.allow
-  insert: -> true
-  update: -> true
-  remove: -> true
+  insert: (userId, doc) ->
+    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+      return true
+    else
+      return doc.createdBy.userId == userId
+  update: (userId, doc) ->
+    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+      return true
+    else
+      return doc.createdBy.userId == userId
+  remove: (userId, doc) ->
+    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+      return true
+    else
+      return doc.createdBy.userId == userId
