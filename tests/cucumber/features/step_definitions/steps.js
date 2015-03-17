@@ -33,7 +33,15 @@
       helper.world.browser
       .pause(2000)
       .url(function (err, result) {
-        assert(!err);
+        assert.ifError(err);
+        if(result.value.slice(-path.length) !== path) {
+          helper.world.browser.saveScreenshot(
+            helper.getAppDirectory() +
+            "/tests/screenshots/redirect failure - " +
+            helper.world.scenario.getName() +
+            ".png"
+          );
+        }
         assert.equal(result.value.slice(-path.length), path);
       }).call(callback);
     });
@@ -86,7 +94,7 @@
         });
         window.setTimeout(done, 2000);
       }, query, _.once(function(err, ret){
-        assert(!err);
+        assert.ifError(err);
         if(shouldNot) {
           assert(!ret.value, 'Report found');
         } else {
@@ -95,32 +103,53 @@
       })).call(callback);
     });
 
-    this.Given(/^there is a report( with a geopoint)? in the database$/,
-    function(withGeo, callback) {
-      helper.resetTestDB([{
+    this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,
+    function(withGeo, someoneElse, callback) {
+      var report = {
         consent: true,
-        dataUsePermissions: "Share full record",
-        eventLocation: "25.046919772516173,121.55189514218364"
-      }], function(err){
-        if(err) {
-          console.log(err);
-        }
-        assert(!err);
+        dataUsePermissions: "Share full record"
+      };
+      if(withGeo) {
+        report['eventLocation'] = "25.046919772516173,121.55189514218364";
+      }
+      if(someoneElse) {
+        report['createdBy'] = {
+          userId: "fakeId",
+          name: "Someone Else"
+        };
+      }
+      helper.addReports([report], function(err){
+        assert.ifError(err);
         helper.world.browser
-        .executeAsync(function(done){
+        .executeAsync(function(expectedReport, done){
+          delete expectedReport['createdBy'];
           Tracker.autorun(function(){
-            var report = collections.Reports.findOne({
-              eventLocation: {$exists: true}
-            });
+            var report = collections.Reports.findOne(expectedReport);
             if(report) done(report);
           });
           window.setTimeout(done, 2000);
-        }, _.once(function(err, ret){
+        }, report, _.once(function(err, ret){
           assert(!err);
           assert(ret.value, "No reports in the database");
           callback();
         }));
       });
+    });
+    
+    this.Then("there should be no delete button for the report by someone else",
+    function(callback){
+      helper.world.browser
+        .getTextWhenVisible('.reactive-table tr', function(err, text) {
+          assert.ifError(err);
+          String(text).split(/Remove|View/).forEach(function(match){
+            match = match.trim();
+            assert(
+              !(new RegExp("Someone Else.*Edit", "i").test(match)),
+              "There appears to be a Remove button on a report created by someone else. Table text: " + text
+            );
+          });
+        })
+        .call(callback);
     });
     
     this.Given(/^there are no reports in the database$/,
@@ -132,6 +161,7 @@
       helper.world.browser
         .clickWhenVisible(".remove-form")
         .alertText("delete", assert.ifError)
+        .alertAccept(assert.ifError)
         .call(callback);
     });
 
@@ -146,12 +176,11 @@
         .call(callback);
     });
     
-    this.Then(/^I should( not)? see the text \"(text)\"/,
+    this.Then(/^I should( not)? see the text "(.+)"/,
     function (shouldNot, text, callback) {
       helper.world.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
-          console.log(bodyText);
           assert(!err);
           if (shouldNot) {
             assert(

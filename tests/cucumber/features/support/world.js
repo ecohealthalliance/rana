@@ -73,6 +73,14 @@
           browser
           .waitForExist(selector, 1000, function(err, exists){
             assert.ifError(err);
+            if(!exists) {
+              browser.saveScreenshot(
+                helper.getAppDirectory() +
+                "/tests/screenshots/missing selector - " +
+                helper.world.scenario.getName() +
+                ".png"
+              );
+            }
             assert(exists, selector + " does not exist");
           })
           .click(selector, callback);

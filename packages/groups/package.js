@@ -38,5 +38,6 @@ Package.onUse(function(api) {
   api.addFiles('routes.coffee', ['client', 'server']);
   
   api.export('Groups', 'server');
+  api.export('Roles', ['client', 'server']);
 });
 

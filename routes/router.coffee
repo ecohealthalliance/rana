@@ -25,6 +25,7 @@ Router.route('/table',
   waitOn: ->
     [
       Meteor.subscribe("reports")
+      Meteor.subscribe("groupByPath", "rana")
     ]
 )
 
