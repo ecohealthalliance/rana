@@ -96,7 +96,7 @@ Template.reportForm.rendered = () ->
 Template.importForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
 
-Template.registerHelper 'tooltipAtts', (className) ->
+Template.registerHelper 'tooltipAtts', () ->
   if 'value' of this
     name = @atts.name + '.' + @value
   else
@@ -106,7 +106,7 @@ Template.registerHelper 'tooltipAtts', (className) ->
     'data-toggle': "tooltip"
     'data-placement': "right"
     'title': tooltipTexts[name]
-    'class': 'tooltipped '+className
+    'class': 'tooltipped'
   else
     {}
 
