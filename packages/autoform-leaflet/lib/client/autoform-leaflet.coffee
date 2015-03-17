@@ -30,6 +30,15 @@ Template.leaflet.helpers
 
 Template.leaflet.rendered = ->
 
+  @data.toggleLoader = (e) =>
+    details = $('.location-details')
+    if(e)
+      $(e.target).attr('disabled', true).addClass('btn-loading')
+      details.addClass('loading')
+    else 
+      $('.leaflet-locate').attr('disabled', false).removeClass('btn-loading')
+      details.removeClass('loading')
+
   @data.setMarker = (location, zoom=0) =>
     @data.clearMarker()
     @data.marker = L.marker(location).addTo(@data.map)
@@ -121,7 +130,7 @@ Template.leaflet.rendered = ->
     $(@$('.lon')[0]).val e.latlng.lng
     @data.updateUTMFromLonLat()
     @data.map.setView @data.marker.getLatLng(), @data.map.getZoom()
-
+    @data.toggleLoader()
 
   @$('.leaflet-canvas').closest('form').on 'reset', =>
     @data.reset()
@@ -131,6 +140,7 @@ Template.leaflet.events
   'click .leaflet-locate': (e, t) ->
     e.preventDefault()
     unless navigator.geolocation then return false
+    t.data.toggleLoader(e)
     t.data.map.locate()
 
   'click .leaflet-clear': (e, t) ->

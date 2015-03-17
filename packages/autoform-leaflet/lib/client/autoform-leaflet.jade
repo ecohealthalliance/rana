@@ -8,26 +8,27 @@ template(name='leaflet')
               button.leaflet-locate.btn.btn-default.btn-block Current location
             .col-md-3.col-sm-4.col-xs-4
               button.leaflet-clear.btn.btn-default.btn-block Clear
-        .form-group
-          h5.form-group-header Degrees Decimal
-          .row
-            .col-md-6
-              label(for='lon') Longitude
-              input.lon.form-control(name='lon')
-            .col-md-6
-              label(for='lat') Latitude
-              input.lat.form-control(name='lat')
-        .form-group
-          h5.form-group-header Universal Transverse Mercator
-          .row
-            .col-md-4
-              label(for='easting') Easting
-              input.easting.form-control(name='easting')
-            .col-md-4
-              label(for='norting') Northing
-              input.northing.form-control(name='northing')
-            .col-md-4
-              label(for='zone') Zone
-              input.zone.form-control(name='zone')
+        .location-details
+          .form-group
+            h5.form-group-header Degrees Decimal
+            .row
+              .col-md-6
+                label(for='lon') Longitude
+                input.lon.form-control(name='lon')
+              .col-md-6
+                label(for='lat') Latitude
+                input.lat.form-control(name='lat')
+          .form-group
+            h5.form-group-header Universal Transverse Mercator
+            .row
+              .col-md-4
+                label(for='easting') Easting
+                input.easting.form-control(name='easting')
+              .col-md-4
+                label(for='norting') Northing
+                input.northing.form-control(name='northing')
+              .col-md-4
+                label(for='zone') Zone
+                input.zone.form-control(name='zone')
       .col-md-6
         div.leaflet-canvas
