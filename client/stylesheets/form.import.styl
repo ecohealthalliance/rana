@@ -4,7 +4,8 @@ s-green = #E7F6F2
 s-yellow = #FFF8E7
 s-gray = ll-gray
 
-.report-form
+.report-form,
+.import-form
   padding-bottom 50px
 
 .date-location
@@ -40,6 +41,11 @@ section
     padding-top 20px
   &.short-padding
     padding 30px 0
+
+h2
+  font-size 26px
+h3
+  font-size 18px
 
 h2.section-title
   font-size 40px
@@ -197,6 +203,27 @@ textarea
   .checkbox
     &:last-child
       margin-bottom 0
+
+.input-form
+  h2
+    margin-bottom 40px
+
+.publication,
+.form-grp-container
+  .form-group
+    margin-bottom 30px
+.publication
+  > .form-group
+    float left
+    width 33%
+    &:last-child
+      float none
+      width 50%
+
+.file-upload 
+  .btn
+    makeButton(btn-default, white, false, true)
+    width 100%
 
 @media (max-width: 992px)
   .panel

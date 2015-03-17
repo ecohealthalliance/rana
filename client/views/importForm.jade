@@ -1,106 +1,109 @@
 template(name="importForm")
 
   +autoForm collection="collections.Studies" type="insert" id="importForm"
+    form.input-form
+      section
+        .container
+          h3 CSV file upload
+          if importReports.count
+            b File: &nbsp;
+            tt #{csvFileName}
+            | &nbsp;
+            b Id: &nbsp;
+            tt #{csvFileId}
+          +afQuickField name='csvFile' id='csvFile'
 
-    .container-fluid.report-form
-        form
-      .form-group.csv-file
-        .panel.panel-default
-          .panel-heading
-            h3.panel-title CSV file upload
-          .panel-body
-            if importReports.count
-              b File: &nbsp;
-              tt #{csvFileName}
-              | &nbsp;
-              b Id: &nbsp;
-              tt #{csvFileId}
-            +afQuickField name='csvFile' id='csvFile'
+          if importReports.count
+            +reactiveTable collection=importReports fields=importFields
 
-            if importReports.count
-              +reactiveTable collection=importReports fields=importFields
+            if unmatchedHeadersString
+              h4 Unused fields in your data
+              tt #{unmatchedHeadersString}
 
-              if unmatchedHeadersString
-                h4 Unused fields in your data
-                tt #{unmatchedHeadersString}
+      .container
+        h2 Please fill out any of the following fields that apply to all reports in this study.  
 
-      p Please fill out any of the following fields that apply to all reports in this study.
-
-      .panel.panel-default.form-input-block
-        .panel-heading
-          h2.panel-title Contact person info
-        .panel-body
+      section.odd
+        .container
           .row
-            .col-lg-4
+            .col-sm-3
+              h3 Contact person info
               +afQuickField name='contact.name'
-            .col-lg-4
               +afQuickField name='contact.email' placeholder='name@domain.com'
-            .col-lg-4
               +afQuickField name='contact.phone' minor='(Must include the country code)'
+        
+            .col-sm-8.col-sm-offset-1
+              h3 Reporting institution, diagnostic lab or government agency info
+                +tooltip name='contact.institutionAddress'              
+              .row
+                .col-sm-6
+                  +afQuickField name="contact.institutionAddress.name"
+              .row
+                .col-sm-6
+                  +afQuickField name="contact.institutionAddress.street"
+                .col-sm-6
+                  +afQuickField name="contact.institutionAddress.street2"
+              .row
+                .col-sm-4
+                  +afQuickField name="contact.institutionAddress.city"
+                .col-sm-4
+                  +afQuickField name="contact.institutionAddress.stateOrProvince"
+                .col-sm-2
+                  +afQuickField name="contact.institutionAddress.postalCode"
+              .row
+                .col-sm-4
+                  +afQuickField name="contact.institutionAddress.country"
 
-        .panel.panel-default.form-input-block
-          .panel-heading
-            h2.panel-title Reporting institution, diagnostic lab or government agency info
-              +tooltip name='contact.institutionAddress'
-          .panel-body
-            .row
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.name"
-            .row
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.street"
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.street2"
-            .row
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.city"
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.stateOrProvince"
-              .col-lg-2
-                +afQuickField name="contact.institutionAddress.postalCode"
-            .row
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.country"
+      section
+        .container
+          .row.form-input-block
+            .col-sm-4.col-xs-6.input-block
+                +afQuickField name="populationType"
+            .col-sm-4.col-xs-6.input-block
+                +afQuickField name="screeningReason"
+            .clearfix.visible-xs-block
+            .col-sm-4.col-xs-6.input-block
+                +afQuickField name="vertebrateClasses"
 
-      .row.form-input-block
-        .col-lg-4
-          +afQuickField name="populationType"
-        .col-lg-4
-          +afQuickField name="screeningReason"
-        .col-lg-4
-          +afQuickField name="vertebrateClasses"
-
-      .panel.panel-default.form-input-block
-        .panel-heading
-          h2.panel-title Species Information
-        .panel-body
-          .row
-            .col-lg-6
+      section.odd
+        .container
+          .row.form-input-block
+            .col-sm-5
               +afQuickField name="speciesGenus"
               +afQuickField name="speciesName"
-              +afQuickField name='speciesAffectedType' id='speciesAffectedType'
-            .col-lg-6
+              +afQuickField name="numInvolved"
+            .col-sm-7
               +afQuickField name="speciesNotes"
 
-      .row.form-input-block
-        .col-lg-3
-          +afQuickField name='ageClasses'
-        .col-lg-4
-          +afQuickField name='ranavirusConfirmMethods'
-          if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-            +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-        .col-lg-4
-          +afQuickField name='sampleType'
-          if afFieldValueContains name='sampleType' value='other'
-            +afQuickField name='specifyOtherRanavirusSampleTypes'
+      section
+        .container
+          .row.form-input-block
+            .col-sm-12.input-block
+              .row
+                .col-sm-4.input-block
+                    +afQuickField name='ageClasses'
+                .col-sm-4.input-block
+                    +afQuickField name='ranavirusConfirmMethods'
+                    if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+                      +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+                .col-sm-4.input-block
+                    +afQuickField name='sampleType'
+                    if afFieldValueContains name='sampleType' value='other'
+                      +afQuickField name='specifyOtherRanavirusSampleTypes'
+      section.form-grp-container
+        .container
+          .row.form-input-block
+            .col-sm-6.input-block
+              +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+              +afQuickField name='consent' id='consent'
+            .col-sm-6.input-block
+              +afQuickField name='additionalNotes' id='additionalNotes'
+      section.rm-pad-top.form-grp-container.publication
+        .container
+          +afQuickField name='publicationInfo' id='publicationInfo'
 
-    +afQuickField name='dataUsePermissions' id='dataUsePermissions'
-
-    +afQuickField name='consent' id='consent'
-
-    +afQuickField name='additionalNotes' id='additionalNotes'
-
-    +afQuickField name='publicationInfo' id='publicationInfo'
-
-    .form-group
-      button(type='submit' class='btn btn-primary') Submit
+      .container
+        .row
+          .col-sm-4
+            .form-group
+              button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit

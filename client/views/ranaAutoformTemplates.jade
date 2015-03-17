@@ -14,13 +14,10 @@ template(name="afFormGroup_rana")
     span.help-block {{afFieldMessage name=this.atts.name}}
 
 template(name="afObjectField_rana")
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title {{afFieldLabelText name=this.atts.name}}
-    .panel-body
-      if afFieldIsInvalid name=this.atts.name
-        .help-block {{afFieldMessage name=this.atts.name}}
-      +afQuickFields name=this.atts.name
+  h3 {{afFieldLabelText name=this.atts.name}}
+  if afFieldIsInvalid name=this.atts.name
+    .help-block {{afFieldMessage name=this.atts.name}}
+  +afQuickFields name=this.atts.name
 
 template(name="afArrayField_rana")
   .panel.panel-default.content-panel
