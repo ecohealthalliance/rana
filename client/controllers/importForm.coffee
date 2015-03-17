@@ -36,7 +36,14 @@ updateImportReports = () ->
 
     for row in csvData
       # Fake contact data to satisfy requirement
-      rowdata = { 'contact': {'name': 'fake', 'email': 'a@b.com', 'phone': '1234567890'} }
+      rowdata =
+        contact:
+          name: 'fake'
+          email: 'a@b.com'
+          phone: '1234567890'
+        createdBy:
+          userId: Meteor.user()._id
+          name: Meteor.user().profile.name
       for field in matches
         rowdata[field] = row[field]
       ImportReports.insert rowdata
@@ -102,13 +109,29 @@ Template.importForm.helpers
     headerMatches().unmatched.join ', '
 
 AutoForm.hooks
-  importForm:
+  'ranavirus-import':
+
+    formToDoc: (doc) ->
+      doc.createdBy =
+        userId: Meteor.userId()
+        name: Meteor.user().profile?.name or "None"
+      doc
+
+    onSuccess: (operation, result, template) ->
+      toastr.options =
+        closeButton: true
+        positionClass: "toast-top-center"
+        timeOut: "10000"
+      toastr.success operation + " successful!"
+      clearImportReports()
+      window.scrollTo 0, 0
+
     after:
       insert: (err, res, template) ->
 
         clearImportReports()
 
-        study = getCollections().Studies.findOne({_id: res})
+        study = getCollections().Studies.findOne { _id: res }
 
         Meteor.call 'getCSVData', study.csvFile, (err, data) =>
           reportSchema = getCollections().Reports.simpleSchema()._schema
@@ -125,4 +148,7 @@ AutoForm.hooks
             for reportField in reportFields
               if reportField of row and row[reportField]
                 report[reportField] = row[reportField]
+            report.createdBy =
+              userId: Meteor.user()._id
+              name: Meteor.user().profile.name
             getCollections().Reports.insert report

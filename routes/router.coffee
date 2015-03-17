@@ -24,6 +24,11 @@ Router.route('editReport',
 Router.route('importForm',
   path: '/import'
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe("csvfiles"),
+      Meteor.subscribe("studies")
+    ]
 )
 
 Router.route('/table',
