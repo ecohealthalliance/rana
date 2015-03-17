@@ -26,6 +26,13 @@ GroupSchema = new SimpleSchema {
     type: String
     label: "Short description of the group"
     max: 200
+  },
+  info: {
+    type: String
+    label: "Information about the group"
+    optional: true
+    autoform:
+      rows: 20
   }
 }
 
@@ -37,7 +44,8 @@ Groups.before.insert (userId, doc) ->
   doc.path = doc.name.toLowerCase().replace /[^a-z0-9]+/g, '-'
 
 Groups.after.insert (userId, doc) ->
-  Roles.addUsersToRoles userId, ['admin', 'user'], @._id
+  if userId
+    Roles.addUsersToRoles userId, ['admin', 'user'], @._id
                       
 Groups.attachSchema GroupSchema
 
