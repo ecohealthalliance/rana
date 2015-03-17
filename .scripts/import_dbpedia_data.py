@@ -12,10 +12,10 @@ import re
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument(
-      "--mongo_url", default='localhost'
+      "--mongo_url", default='localhost:3001'
   )
   parser.add_argument(
-      "--db_name", default='local'
+      "--db_name", default='meteor'
   )
   args = parser.parse_args()
   db = pymongo.Connection(args.mongo_url)[args.db_name]
@@ -43,15 +43,17 @@ if __name__ == '__main__':
       'timeout' : 60000
     })
 
-  formatPatt = re.compile(ur"""(^['"† ])|(['"† ]$)|(\(.*\))""", re.UNICODE)
+  formatPatt = re.compile(ur"""(^['"])|(['"]$)|(\(.*\))""", re.UNICODE)
 
   def removeStrangeFormatting(s):
-    return formatPatt.sub("", s)
+    return formatPatt.sub("", s).strip()
 
   result_set = set([
       removeStrangeFormatting(result['g']['value'])
       for result in r.json()['results']['bindings']
     ])
   for result in result_set:
+    # Skip extinct genera
+    if u"†" in result: continue
     if len(result) > 0:
       collection.insert({'value':result})
