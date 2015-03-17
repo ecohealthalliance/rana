@@ -9,6 +9,15 @@
     new FS.Store.FileSystem "fs_csvfiles", { path: "/tmp/workspace/csvfiles/" }
   ]
 
+@collections.PDFs = new FS.Collection "pdfs",
+  stores: [
+    new FS.Store.GridFS("pdfs")
+  ]
+  filter:
+    allow:
+      contentTypes: ["application/pdf"]
+
+
 @collections.Reports = new Mongo.Collection 'reports'
 @collections.Reports.attachSchema @reportSchema
 

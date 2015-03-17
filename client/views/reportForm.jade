@@ -1,7 +1,12 @@
 template(name="reportForm")
 
-  +autoForm id="ranavirus-report" collection="collections.Reports" type="insert" doc=reportDoc
-
+  if type
+    +autoForm(
+      id="ranavirus-report"
+      collection="collections.Reports"
+      type=type
+      doc=reportDoc
+    )
     form.report-form
       section.date-location
         .container
@@ -13,7 +18,6 @@ template(name="reportForm")
               .row
                 .col-sm-12
                   +afQuickField name="eventLocation"
-
       section.yellow
         .container
           .row.form-input-block
@@ -24,7 +28,6 @@ template(name="reportForm")
             .clearfix.visible-xs-block
             .col-sm-4.col-xs-6.input-block
                 +afQuickField name="vertebrateClasses"
-
       section
         .container
           .row.form-input-block
@@ -74,5 +77,22 @@ template(name="reportForm")
       .container
         .row
           .col-lg-4
+<<<<<<< HEAD
             .form-group
               button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
+=======
+            +afQuickField name='images' id='images'
+          .col-lg-4
+            +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+
+      .row.form-input-block
+        .col-lg-8
+          +afQuickField name='additionalNotes'
+
+      .row
+        .col-lg-4
+          .form-group
+            button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
+  else
+    h3 Invalid form id
+>>>>>>> import

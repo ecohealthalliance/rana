@@ -149,3 +149,25 @@
     optional: true
     autoform:
       rows: 5
+  creationDate:
+    type: Date
+    autoform:
+      omit: true
+    autoValue: ->
+      new Date()
+  createdBy:
+    type: Object
+    autoform:
+      omit: true
+  'createdBy.userId':
+    type: String
+    autoform:
+      omit: true
+  # User name is included to avoid querying the user collection for
+  # every report.
+  # autoValue is not used here because trying to get the user data server-side
+  # causes problems, so a hook is used instead.
+  'createdBy.name':
+    type: String
+    autoform:
+      omit: true
