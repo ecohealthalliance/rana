@@ -5,28 +5,39 @@ Router.configure
 
 Router.route('/', ()-> @redirect('/group/rana'))
 
-Router.route('/reportForm',
+Router.route('newReport',
   path: '/report'
+  template: 'reportForm'
   where: 'client'
 )
 
-Router.route('/importForm',
-  path: 'import'
+Router.route('editReport',
+  path: '/report/:reportId'
+  template: 'reportForm'
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe("reports")
+    ]
+)
+
+Router.route('importForm',
+  path: '/import'
+  where: 'client'
+)
+
+Router.route('/table',
+  where: 'client'
+  data: ->
+    collection: collections.Reports
+  waitOn: ->
+    [
+      Meteor.subscribe("reports")
+    ]
 )
 
 Router.route('/map',
   where: 'client'
-  data: ->
-    getCollections().Reports.find({
-      eventLocation: { $ne : null },
-      dataUsePermissions: "Share full record",
-      consent: true
-    })
-    .map((report)-> {
-      location: report.eventLocation.split(',').map(parseFloat)
-      popupHTML: """<a href="">#{report.name}</a>"""
-    })
   waitOn: ->
     [
       Meteor.subscribe("reports")
@@ -36,3 +47,5 @@ Router.route('/map',
 Router.route('/info',
   where: 'client'
 )
+
+Router.plugin 'ensureSignedIn', {only: ['reportForm']}

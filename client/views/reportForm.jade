@@ -1,10 +1,14 @@
 template(name="reportForm")
 
-  +autoForm id="ranavirus-report" collection="collections.Reports" type="insert" doc=reportDoc
+  if type
+    +autoForm(
+      id="ranavirus-report"
+      collection="collections.Reports"
+      type=type
+      doc=reportDoc
+    )
 
-    .container-fluid.report-form
-      form
-
+      .container-fluid.report-form
         .panel.panel-default.form-input-block
           .panel-heading
             h2.panel-title Event Date and Location
@@ -70,3 +74,5 @@ template(name="reportForm")
         .col-lg-4
           .form-group
             button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
+  else
+    h3 Invalid form id

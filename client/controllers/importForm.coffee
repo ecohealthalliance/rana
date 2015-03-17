@@ -18,7 +18,6 @@ fileUploaded = () ->
             updateImportReports data
           else
             setTimeout checkUploaded, 10
-
     setTimeout checkUploaded, 10
 
   checkUploaded()
@@ -28,7 +27,6 @@ clearImportReports = () ->
 
 updateImportReports = () ->
 
-  ImportReports
   clearImportReports()
   matches = headerMatches().matched
 
@@ -37,7 +35,7 @@ updateImportReports = () ->
   if csvData and csvData.length > 0
 
     for row in csvData
-      # Fake contact datato satisfy requirement
+      # Fake contact data to satisfy requirement
       rowdata = { 'contact': {'name': 'fake', 'email': 'a@b.com', 'phone': '1234567890'} }
       for field in matches
         rowdata[field] = row[field]
