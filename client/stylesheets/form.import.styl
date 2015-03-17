@@ -249,7 +249,7 @@ textarea
       width 100%
 
 .file-upload
-  .btn
+  .btn,
   label.btn
     makeButton(btn-default, white, false, true)
     font-weight normal
@@ -261,14 +261,41 @@ textarea
     button,
       padding 12px
     input
-      min-height 55px
+      min-height 47px
   .input-block
-    margin-bottom 25px
+    margin-bottom 45px
     &:last-child
       margin-bottom 0
       
 @media (max-width: 765px)
+  .input-block
+    .panel
+      margin-left -15px
+      margin-right -15px
+      border-right 0
+      border-left 0
+      border-bottom 0
+      border-radius 0
+      .panel-heading
+        background #ebebeb
+  // .form-input-block
+  //   .input-block
+  //     &:last-child
+  //       margin-bottom 0
   .tall-block
     min-height 0
   .short-block
     min-height 0
+  .publication
+    .form-group
+      float none
+      width 100%
+      &:last-child
+        width 100%
+  .file-upload
+    .btn,
+    label.btn
+      width 100%
+      padding 12px
+  h3
+    margin-top
