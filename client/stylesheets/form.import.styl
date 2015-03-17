@@ -44,13 +44,18 @@ section
 
 h2
   font-size 26px
+  color secondary
+  margin-bottom 40px
+  
 h3
-  font-size 18px
+  font-size 20px
+  margin-top 0
+  margin-bottom 15px
+  color primary
 
 h2.section-title
   font-size 40px
   margin-top 0
-  margin-bottom 20px
 
 h2 a.more-info
   font-size 12px
@@ -81,6 +86,7 @@ textarea
   display block
   min-width 100%
   min-height 200px
+  margin-top 5px
   
 .add-subtract
   padding 5px
@@ -122,6 +128,8 @@ textarea
 
   .panel-heading
     background white
+    label
+      margin-bottom 0
 
 .panel > .list-group
   margin-bottom 0px
@@ -165,10 +173,11 @@ textarea
     background white
     color body-text
     border 1px solid #ccc
-  .file-upload-clear
-    display inline-block
-    margin-top 5px
-    padding-left 5px
+    
+.file-upload-clear
+  display inline-block
+  margin-top 5px
+  padding-left 5px
   
 .add-content
   makeButton(#f9f9f9, l-gray, true, true)
@@ -204,26 +213,47 @@ textarea
     &:last-child
       margin-bottom 0
 
-.input-form
+.import-form
+  section
+    &:first-child
+      padding 50px 0
+      margin-bottom 30px
+      background s-yellow
+      h3
+        margin-top 0
   h2
     margin-bottom 40px
+  .form-group
+    > label
+      color #333
+      font-weight 600
+      font-size 15px
+  .file-upload
+    margin-top 10px
+  
 
 .publication,
 .form-grp-container
   .form-group
     margin-bottom 30px
 .publication
-  > .form-group
+  .form-group
     float left
     width 33%
     &:last-child
+      clear both
       float none
-      width 50%
+      width 75%
+      margin-bottom 0
+    .form-group
+      width 100%
 
-.file-upload 
+.file-upload
   .btn
+  label.btn
     makeButton(btn-default, white, false, true)
-    width 100%
+    font-weight normal
+    width 50%
 
 @media (max-width: 992px)
   .panel

@@ -22,7 +22,7 @@ template(name="afObjectField_rana")
 template(name="afArrayField_rana")
   .panel.panel-default.content-panel
     .panel-heading
-      h3.panel-title($dyn=tooltipAtts) {{afFieldLabelText name=this.atts.name}}
+      label($dyn=tooltipAtts) {{afFieldLabelText name=this.atts.name}}
     if afFieldIsInvalid name=this.atts.name
      .panel-body.has-error
         .help-block {{afFieldMessage name=this.atts.name}}
