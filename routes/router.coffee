@@ -64,4 +64,4 @@ Router.route('/info',
   where: 'client'
 )
 
-Router.plugin 'ensureSignedIn', {only: ['reportForm']}
+Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'importForm']}
