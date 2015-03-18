@@ -89,7 +89,9 @@
     this.Given(/^there is a report( with a geopoint)? in the database$/,
     function(withGeo, callback) {
       helper.resetTestDB([{
+        studyId: 'fakeid',
         consent: true,
+        contact: {name: 'Text User', 'email': 'test@foo.com'},
         dataUsePermissions: "Share full record",
         eventLocation: "25.046919772516173,121.55189514218364"
       }], function(err){
