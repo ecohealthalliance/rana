@@ -10,6 +10,7 @@ Feature: A form for reporting Ranavirus outbreaks
   
   Scenario: Filling in institution information
     Given I register an account
+    And I have logged in
     And I am on the "form" page
     Then the information for the institution fields should be prepopulated
 

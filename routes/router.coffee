@@ -15,6 +15,8 @@ Router.route('editReport',
   path: '/report/:reportId'
   template: 'reportForm'
   where: 'client'
+  data: ->
+    reportId: @params.reportId
   waitOn: ->
     [
       Meteor.subscribe("reports")

@@ -4,6 +4,8 @@
 
   var assert = require('assert');
 
+  var assert = require('assert');
+
   module.exports = function () {
 
     var helper = this;
@@ -25,7 +27,7 @@
       helper.world = this;
 
       helper.world.cucumber = Package['xolvio:cucumber'].cucumber;
-      
+
       var options = {
         host: 'localhost',
         port: 4444,
@@ -33,7 +35,7 @@
           browserName: 'chrome'
         }
       };
-      
+
       Package['xolvio:webdriver'].wdio.getChromeDriverRemote(options, function (browser) {
         helper.world.browser = browser;
 
@@ -59,7 +61,7 @@
             window.setTimeout(done, 2000);
           }, baseQuery, _.once(callback));
         });
-        
+
         browser.addCommand("getTextWhenVisible", function(selector, callback) {
           browser
           .waitForText(selector, function(err, exists){
@@ -68,11 +70,20 @@
           })
           .getText(selector, callback);
         });
-        
+
+        browser.addCommand("checkValue", function(query, expectedValue, callback) {
+          browser
+          .getValue(query, function(err, value){
+            assert(!err);
+            assert.equal(value, expectedValue);
+          })
+          .call(callback);
+        });
+
         browser.call(next);
       });
 
-    }; 
+    };
 
   };
 
