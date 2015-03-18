@@ -12,10 +12,7 @@
     type: String
     autoform:
       type: 'tel'
+    optional: true
   institutionAddress:
-    label: """
-    Enter the full address of the institution,
-    diagnostic lab or government agency of the person that is reporting the current case.
-    """
     type: @addressSchema
     optional: true
