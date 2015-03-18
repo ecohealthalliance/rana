@@ -94,7 +94,7 @@ Template.leaflet.rendered = ->
   @data.map = null
   @data.marker = null
 
-  L.Icon.Default.imagePath = 'packages/fuatsengul_leaflet/images'
+  L.Icon.Default.imagePath = '/packages/fuatsengul_leaflet/images'
 
   @data.marker = null
 
