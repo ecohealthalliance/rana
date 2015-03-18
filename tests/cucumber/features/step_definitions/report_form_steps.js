@@ -56,7 +56,7 @@
             types[key] = value.type.name;
           }
         });
-        
+
         return {
           formData: AutoForm.Fixtures.getData(collections.Reports.simpleSchema()),
           schemaTypes: types
@@ -80,14 +80,14 @@
           _.extend(generatedFormData, customValues);
           var browser = helper.world.browser;
           _.each(generatedFormData, function (value, key) {
-            if (schemaTypes[key] === 'String' || 
+            if (schemaTypes[key] === 'String' ||
                 schemaTypes[key] === 'Number') {
               if (value) {
                 browser.setValue('input[data-schema-key="' + key + '"]', value);
               }
             } else if (schemaTypes[key] === 'textarea') {
               browser.setValue('textarea[data-schema-key="' + key + '"]', value);
-            } else if (schemaTypes[key] === 'Boolean') { 
+            } else if (schemaTypes[key] === 'Boolean') {
               browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
             } else if (schemaTypes[key] === 'radio') {
               browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
@@ -153,7 +153,7 @@
       helper.world.browser
       .click('div[data-schema-key="pathologyReportPermission"] input[value="Yes"]')
       .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
-      .mustExist('[data-schema-key="pathologyReports.0.report"]')
+      .mustExist('[data-schema-key="pathologyReporc ts.0.report"]')
       .chooseFile(
         'input[file-input="pathologyReports.0.report"]',
         // This is a random pdf file that was selected because it is
