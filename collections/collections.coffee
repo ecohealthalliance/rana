@@ -1,5 +1,7 @@
 @collections = {}
 
+@collections.Genera = new Mongo.Collection('genera')
+
 @collections.Files = new FS.Collection("files",
   stores: [new FS.Store.GridFS("files", {})]
   

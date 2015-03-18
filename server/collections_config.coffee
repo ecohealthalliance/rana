@@ -7,6 +7,9 @@ Meteor.publish 'files', ->
   download: (userId)->
     true
 
+Meteor.publish 'genera', ->
+  collections.Genera.find()
+
 Meteor.publish 'pdfs', ->
   collections.PDFs.find()
 
