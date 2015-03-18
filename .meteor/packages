@@ -31,3 +31,4 @@ cfs:filesystem
 csats:csv-parse
 autoform-leaflet
 chrismbeckett:toastr
+sebdah:autocompletion

@@ -12,7 +12,8 @@ Router.route('newReport',
   waitOn: ->
     [
       Meteor.subscribe("reports"),
-      Meteor.subscribe("studies")
+      Meteor.subscribe("studies"),
+      Meteor.subscribe("genera")
     ]
 )
 
@@ -25,7 +26,8 @@ Router.route('editReport',
   waitOn: ->
     [
       Meteor.subscribe("reports"),
-      Meteor.subscribe("studies")
+      Meteor.subscribe("studies"),
+      Meteor.subscribe("genera")
     ]
 )
 
@@ -35,7 +37,8 @@ Router.route('importForm',
   waitOn: ->
     [
       Meteor.subscribe("csvfiles"),
-      Meteor.subscribe("studies")
+      Meteor.subscribe("studies"),
+      Meteor.subscribe("genera")
     ]
 )
 

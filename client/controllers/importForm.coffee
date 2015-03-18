@@ -78,6 +78,8 @@ Template.importForm.events
       Session.set 'csvData', []
       Session.set 'fileUpload[csvFile]', false
 
+  "keyup input[name='speciesGenus']": @generaHandler
+
 Template.importForm.helpers
 
   importDoc: () ->

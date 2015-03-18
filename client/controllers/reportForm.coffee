@@ -1,5 +1,3 @@
-AutoForm.setDefaultTemplate 'rana'
-
 getCollections = => @collections
 
 AutoForm.addHooks(
@@ -41,3 +39,6 @@ Template.reportForm.helpers
     if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
       return "update"
     return "readonly"
+
+Template.reportForm.events =
+  "keyup input[name='speciesGenus']": @generaHandler
