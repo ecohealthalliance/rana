@@ -8,7 +8,12 @@ Router.route('/', ()-> @redirect('/group/rana'))
 Router.route('newReport',
   path: '/report'
   template: 'reportForm'
-  where: 'client'
+  where: 'client',
+  waitOn: ->
+    [
+      Meteor.subscribe("reports"),
+      Meteor.subscribe("studies")
+    ]
 )
 
 Router.route('editReport',
@@ -19,7 +24,8 @@ Router.route('editReport',
     reportId: @params.reportId
   waitOn: ->
     [
-      Meteor.subscribe("reports")
+      Meteor.subscribe("reports"),
+      Meteor.subscribe("studies")
     ]
 )
 

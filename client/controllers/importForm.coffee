@@ -37,6 +37,7 @@ updateImportReports = () ->
     for row in csvData
       # Fake contact data to satisfy requirement
       rowdata =
+        studyId: 'fakeid'
         contact:
           name: 'fake'
           email: 'a@b.com'
@@ -152,4 +153,5 @@ AutoForm.hooks
             report.createdBy =
               userId: Meteor.user()._id
               name: Meteor.user().profile.name
+            report.studyId = res
             getCollections().Reports.insert report

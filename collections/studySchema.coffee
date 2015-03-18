@@ -1,4 +1,7 @@
 @studySchema = new SimpleSchema  [ @sharedSchema, new SimpleSchema
+  name:
+    type: String
+    label: 'Study Name'
   contact:
     type: @contactSchema
   publicationInfo:

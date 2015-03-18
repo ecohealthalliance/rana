@@ -7,6 +7,12 @@ template(name="importForm")
     doc=importDoc
   )
 
+    .panel.panel-default.form-input-block
+      .panel-body
+        .row
+          .col-lg-4
+            +afQuickField name='name'
+
     .container-fluid.report-form
         form
       .form-group.csv-file

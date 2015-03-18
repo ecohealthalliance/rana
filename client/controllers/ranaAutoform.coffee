@@ -65,3 +65,9 @@ Template['afBooleanRadioGroup_rana'].helpers
 
   dsk: () ->
     { 'data-schema-key': this.atts['data-schema-key'] }
+
+Template['reportForm'].helpers
+  studyOptions: () ->
+    collections.Studies.find().map (study) ->
+      label: study.name
+      value: study._id
