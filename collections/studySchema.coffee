@@ -54,6 +54,7 @@
   csvFile:
     type: String
     label: """csvFile"""
+    optional: true
     autoform:
       label: false
       afFieldInput:

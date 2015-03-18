@@ -31,8 +31,9 @@ Router.route('editReport',
     ]
 )
 
-Router.route('importForm',
-  path: '/import'
+Router.route('newStudy',
+  path: '/study'
+  template: 'studyForm'
   where: 'client'
   waitOn: ->
     [
@@ -64,4 +65,4 @@ Router.route('/info',
   where: 'client'
 )
 
-Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'importForm']}
+Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'newStudy']}

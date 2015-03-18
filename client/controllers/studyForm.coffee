@@ -66,7 +66,7 @@ headerMatches = () ->
 
   res
 
-Template.importForm.events
+Template.studyForm.events
   'change .file-upload': (e, t) ->
 
     fileUploaded()
@@ -80,7 +80,7 @@ Template.importForm.events
 
   "keyup input[name='speciesGenus']": @generaHandler
 
-Template.importForm.helpers
+Template.studyForm.helpers
 
   importDoc: () ->
     { contact: UI._globalHelpers['contactFromUser']() }
@@ -137,23 +137,25 @@ AutoForm.hooks
 
         study = getCollections().Studies.findOne { _id: res }
 
-        Meteor.call 'getCSVData', study.csvFile, (err, data) =>
-          reportSchema = getCollections().Reports.simpleSchema()._schema
-          reportFields = Object.keys reportSchema
-          studyData = {}
-          for studyField in Object.keys study
-            if studyField != '_id' and studyField in reportFields
-              studyData[studyField] = _.clone study[studyField]
+        if study and study.csvFile
 
-          for row in data
-            report = {}
-            for key of studyData
-              report[key] = _.clone studyData[key]
-            for reportField in reportFields
-              if reportField of row and row[reportField]
-                report[reportField] = row[reportField]
-            report.createdBy =
-              userId: Meteor.user()._id
-              name: Meteor.user().profile.name
-            report.studyId = res
-            getCollections().Reports.insert report
+          Meteor.call 'getCSVData', study.csvFile, (err, data) =>
+            reportSchema = getCollections().Reports.simpleSchema()._schema
+            reportFields = Object.keys reportSchema
+            studyData = {}
+            for studyField in Object.keys study
+              if studyField != '_id' and studyField in reportFields
+                studyData[studyField] = _.clone study[studyField]
+
+            for row in data
+              report = {}
+              for key of studyData
+                report[key] = _.clone studyData[key]
+              for reportField in reportFields
+                if reportField of row and row[reportField]
+                  report[reportField] = row[reportField]
+              report.createdBy =
+                userId: Meteor.user()._id
+                name: Meteor.user().profile.name
+              report.studyId = res
+              getCollections().Reports.insert report
