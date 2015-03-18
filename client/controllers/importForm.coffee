@@ -79,6 +79,9 @@ Template.importForm.events
 
 Template.importForm.helpers
 
+  importDoc: () ->
+    { contact: UI._globalHelpers['contactFromUser']() }
+
   csvFileId: () ->
     Session.get 'fileUpload[csvFile]'
 
@@ -128,8 +131,6 @@ AutoForm.hooks
 
     after:
       insert: (err, res, template) ->
-
-        clearImportReports()
 
         study = getCollections().Studies.findOne { _id: res }
 

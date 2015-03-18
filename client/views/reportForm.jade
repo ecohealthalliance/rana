@@ -8,6 +8,42 @@ template(name="reportForm")
       doc=reportDoc
     )
 
+      .panel.panel-default.form-input-block
+        .panel-heading
+          h2.panel-title Contact person info
+        .panel-body
+          .row
+            .col-lg-4
+              +afQuickField name='contact.name'
+            .col-lg-4
+              +afQuickField name='contact.email' placeholder='name@domain.com'
+            .col-lg-4
+              +afQuickField name='contact.phone' minor='(Must include the country code)'
+
+        .panel.panel-default.form-input-block
+          .panel-heading
+            h2.panel-title Reporting institution, diagnostic lab or government agency info
+              +tooltip name='contact.institutionAddress'
+          .panel-body
+            .row
+              .col-lg-5
+                +afQuickField name="contact.institutionAddress.name"
+            .row
+              .col-lg-5
+                +afQuickField name="contact.institutionAddress.street"
+              .col-lg-5
+                +afQuickField name="contact.institutionAddress.street2"
+            .row
+              .col-lg-4
+                +afQuickField name="contact.institutionAddress.city"
+              .col-lg-4
+                +afQuickField name="contact.institutionAddress.stateOrProvince"
+              .col-lg-2
+                +afQuickField name="contact.institutionAddress.postalCode"
+            .row
+              .col-lg-4
+                +afQuickField name="contact.institutionAddress.country"
+
       .container-fluid.report-form
         .panel.panel-default.form-input-block
           .panel-heading

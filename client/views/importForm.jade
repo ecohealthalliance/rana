@@ -1,6 +1,11 @@
 template(name="importForm")
 
-  +autoForm collection="collections.Studies" type="insert" id="ranavirus-import"
+  +autoForm(
+    collection="collections.Studies"
+    type="insert"
+    id="ranavirus-import"
+    doc=importDoc
+  )
 
     .container-fluid.report-form
         form

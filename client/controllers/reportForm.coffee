@@ -28,16 +28,7 @@ Template.reportForm.helpers
     if params?.reportId
       return getCollections().Reports.findOne(params.reportId) or {}
     else
-      return {
-        institutionAddress:
-          name: Meteor.user().profile?.organization
-          street: Meteor.user().profile?.organizationStreet
-          street2: Meteor.user().profile?.organizationStreet2
-          city: Meteor.user().profile?.organizationCity
-          stateOrProvince: Meteor.user().profile?.organizationStateOrProvince
-          country: Meteor.user().profile?.organizationCountry
-          postalCode: Meteor.user().profile?.organizationPostalCode
-      }
+      { contact: UI._globalHelpers['contactFromUser']() }
 
   type: ->
     params = Iron.controller().getParams()
