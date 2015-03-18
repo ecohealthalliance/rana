@@ -32,24 +32,3 @@ Feature: A form for reporting Ranavirus outbreaks
     Then the webpage should not display the pathologyReports.0.report field
     When I click submit
     Then the webpage should not display a validation error
-
-  Scenario: Submitting a non-pdf publication
-    Given I have logged in
-    And I am on the "report" page
-    When I fill out the form
-    And I upload a non-pdf publication
-    And I click submit
-    Then the webpage should display a validation error
-
-  Scenario: Submitting a publication without a reference
-    Given I have logged in
-    And I am on the "report" page
-    When I fill out the form
-    And I upload a pdf publication
-    But I do not provide text for the reference field
-    And I click submit
-    Then the webpage should display a validation error
-    When I fill out the publicationInfo.reference field with "the journal Nature"
-    And I click submit
-    Then the webpage should not display a validation error
-    And I should see a "insert successful" toast

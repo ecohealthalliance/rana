@@ -22,11 +22,7 @@
         var schema = collections.Reports.simpleSchema()._schema;
         var types = {};
         _.each(schema, function (value, key) {
-          // studyId is designated as a select via options passed in via
-          // a helper, so it's not in the schema and can't be detected here.
-          if (key == 'studyId') {
-            types[key] = 'select';
-          }   else if (value.optional) {
+          if (value.optional) {
               types[key] = 'optional';
           } else if (value.autoform &&
               value.autoform.afFieldInput &&
@@ -56,7 +52,7 @@
             types[key] = value.type.name;
           }
         });
-        
+
         return {
           formData: AutoForm.Fixtures.getData(collections.Reports.simpleSchema()),
           schemaTypes: types
@@ -67,7 +63,8 @@
         } else {
           var schemaTypes = res.value.schemaTypes;
           var generatedFormData = res.value.formData;
-          generatedFormData['institutionAddress']['postalCode'] = '12345';
+          console.log 'generatedFormData', generatedFormData
+          generatedFormData['contact']['institutionAddress']['postalCode'] = '12345';
           generatedFormData['images'] = [];
           generatedFormData['pathologyReports'] = [];
           generatedFormData['publicationInfo']['pdf'] = null;
@@ -80,14 +77,14 @@
           _.extend(generatedFormData, customValues);
           var browser = helper.world.browser;
           _.each(generatedFormData, function (value, key) {
-            if (schemaTypes[key] === 'String' || 
+            if (schemaTypes[key] === 'String' ||
                 schemaTypes[key] === 'Number') {
               if (value) {
                 browser.setValue('input[data-schema-key="' + key + '"]', value);
               }
             } else if (schemaTypes[key] === 'textarea') {
               browser.setValue('textarea[data-schema-key="' + key + '"]', value);
-            } else if (schemaTypes[key] === 'Boolean') { 
+            } else if (schemaTypes[key] === 'Boolean') {
               browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
             } else if (schemaTypes[key] === 'radio') {
               browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
@@ -114,14 +111,14 @@
           callback();
         }});
     };
-    
+
     this.When(/^I fill out the form with the (eventDate) "([^"]*)"$/,
     function(prop, value, callback){
       var customValues = {};
       customValues[prop] = value;
       helper.fillInForm(customValues, callback);
     });
-    
+
     this.When("I fill out the form", function(callback){
       helper.fillInForm({}, callback);
     });
@@ -132,7 +129,7 @@
       customValues['consent'] = false;
       helper.fillInForm(customValues, callback);
     });
-    
+
     this.When('I fill out the $field field with "$value"',
     function(field, value, callback){
       helper.world.browser
@@ -140,16 +137,16 @@
       .pause(500)
       .call(callback);
     });
-    
+
     this.When('I choose "$value" for the $field field',
     function(value, field, callback){
       helper.world.browser
       .click('div[data-schema-key="' + field + '"] input[value="' + value + '"]')
       .call(callback);
     });
-    
+
     this.When("I add a pathology report", function(callback){
-      
+
       helper.world.browser
       .click('div[data-schema-key="pathologyReportPermission"] input[value="Yes"]')
       .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
@@ -167,7 +164,7 @@
       )
       .call(callback);
     });
-    
+
     this.When(/I upload a (non-)?pdf publication/, function(nonPdf, callback){
       var filepath;
       if(nonPdf) {
@@ -187,13 +184,13 @@
       )
       .call(callback);
     });
-    
+
     this.When("I do not provide text for the reference field", function(callback){
       helper.world.browser
       .setValue('[data-schema-key="publicationInfo.reference"]', '')
       .call(callback);
     });
-    
+
     this.Then(/^the webpage should( not)? display the (.+) field$/,
     function(shouldNot, field, callback){
       var reverse = !!shouldNot;
@@ -209,7 +206,7 @@
         }
       }).call(callback);
     });
-    
+
     this.Then(/^the webpage should( not)? display a validation error$/,
     function(shouldNot, callback){
       var reverse = !!shouldNot;
