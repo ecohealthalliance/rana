@@ -19,18 +19,18 @@ Template.table.settings = =>
         label: (if label.length > 30 then key else label)
         fn: (val) ->
           output = val or ''
-    
+
           # capitalize first letter
           if output.length > 1
             output = output.charAt(0).toUpperCase() + output.slice(1)
-    
+
           # truncate long fields
           if output.length > 100
             output = output.slice(0, 100) + '...'
-    
+
           # put empty values at the end
           if output is '' then sort = 2 else sort = 1
-          
+
           # use option labels instead of values
           if schema[key]?.autoform?.afFieldInput?.options
             option = _.findWhere(
@@ -63,7 +63,7 @@ Template.table.settings = =>
       }
     ])
   }
-  
+
 Template.table.events(
   'click .remove-form': (evt)->
     reportId = $(evt.target).data("id")
