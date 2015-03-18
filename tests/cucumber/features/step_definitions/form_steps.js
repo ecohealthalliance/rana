@@ -22,7 +22,11 @@
         var schema = collections.Reports.simpleSchema()._schema;
         var types = {};
         _.each(schema, function (value, key) {
-          if (value.optional) {
+          // studyId is designated as a select via options passed in via
+          // a helper, so it's not in the schema and can't be detected here.
+          if (key == 'studyId') {
+            types[key] = 'select';
+          }   else if (value.optional) {
               types[key] = 'optional';
           } else if (value.autoform &&
               value.autoform.afFieldInput &&
