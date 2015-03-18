@@ -24,27 +24,8 @@ makeButton(color, text = white, dark = false, noOutline = false)
       outline 0
 
 animate(speed)
-  animation spin speed infinite linear
-  -webkit-animation spin speed infinite linear
-  -moz-animation spin speed infinite linear
-  -o-animation spin speed infinite linear
-
-@keyframes spin
-  0% 
-    transform rotate(0deg)
-  100% 
-    transform rotate(360deg)
-@-webkit-keyframes spin
-  0%
-    -webkit-transform rotate(0deg)
-  100% 
-    -webkit-transform rotate(360deg)
-@-moz-keyframes spin
-  0%
-    -moz-transform rotate(0deg)
-  100% 
-    -moz-transform rotate(360deg)
-@-o-keyframes spin
-    -o-transform rotate(0deg)
-  100% 
-    -o-transform rotate(360deg)
+  animation spin speed infinite
+  -webkit-animation spin speed infinite
+  -moz-animation spin speed infinite
+  -o-animation spin speed infinite
+  
