@@ -29,6 +29,23 @@
           });
           collections.Reports.insert(report);
         });
+
+        collections.Studies.remove({});
+        collections.Studies.insert({
+          '_id': 'fakeid',
+          'name': 'Test Study',
+          'dataUsePermissions': 'Share full record',
+          'consent': true,
+          'csvFile': 'fakefile',
+          'contact': {
+            'name': 'Test User',
+            'email': 'test@test.com'
+          },
+          createdBy: {
+              userId: userId,
+              name: "Test User"
+            }
+        });
         return reports;
       }
     });
