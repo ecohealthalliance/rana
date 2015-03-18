@@ -18,7 +18,7 @@
     optional: true
   eventLocation:
     label: 'Event Location'
-    type: String
+    type: @locationSchema
     optional: true
     autoform:
       type: 'leaflet'
