@@ -22,10 +22,6 @@ Template['afFormGroup_rana'].helpers
     type = AutoForm.getInputType @afFieldInputAtts
     @skipLabel || type == 'boolean-checkbox'
 
-  bsFieldLabelAtts: () ->
-    atts = _.clone this.afFieldLabelAtts
-    AutoForm.Utility.addClass atts, 'control-label'
-
 _.each [
     'afCheckboxGroup_rana',
     'afRadioGroup_rana'
