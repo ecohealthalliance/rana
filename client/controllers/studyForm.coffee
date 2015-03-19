@@ -8,7 +8,6 @@ Meteor.startup () ->
 fileUploaded = () ->
   checkUploaded = () ->
     fileId = Session.get 'fileUpload[csvFile]'
-    isUploaded = false
     if fileId
       record = @collections.CSVFiles.findOne { _id: fileId }
       if record and record.isUploaded()
