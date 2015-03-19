@@ -15,9 +15,9 @@ Template.table.settings = =>
       if val
         String(val.geo.coordinates[0]) + ', ' + String(val.geo.coordinates[1])
       else
-        'undefined'
+        ''
 
-  for key in ["speciesGenus", "speciesName", "numInvolved"]
+  for key in ["speciesGenus", "speciesName", "screeningReason"]
     label = schema[key].label or key
     if label.length > 30
       label = key
@@ -25,7 +25,6 @@ Template.table.settings = =>
       key: key
       label: label
       fn: (val) ->
-        console.log 'in val for val: ', val
         output = val or ''
 
         # capitalize first letter
