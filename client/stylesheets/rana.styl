@@ -1,22 +1,36 @@
 h1
     color blue
 
-.vis-map
-    width 100%
-    height 500px
-
 .hidden-label
     display none
 
+sidebar-width = 300px
+top-nav-height = 52px
+
+.vis-map-container
+    position absolute
+    left 0
+    right 0
+    top top-nav-height
+    bottom 0
+    padding-left sidebar-width
+
+.vis-map
+    width 100%
+    height 100%
+
 #map-sidebar
     position absolute
-    right 20px
-    width 300px
+    left 0
+    width sidebar-width
     z-index 200
     background-color white
     border 1px solid lightgray
     padding 5px
     border-radius 5px
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 
 #login-buttons
     padding-right 100px

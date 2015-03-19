@@ -1,4 +1,10 @@
 template(name="map")
-  #map-sidebar
-    +quickForm collection=mapQueries schema=mapSidebarSchema doc=mapQuery autosave=true type="update"
-  .vis-map
+  .vis-map-container
+    +quickForm(
+      collection=mapQueries
+      doc=mapQuery
+      type="update"
+      id="map-sidebar"
+      buttonContent="Set"
+    )
+    .vis-map

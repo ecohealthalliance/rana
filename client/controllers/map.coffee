@@ -1,5 +1,35 @@
 getCollections = => @collections
 
+Template.map.created = ->
+  @filterCollection = new Meteor.Collection()
+  
+  @filterCollection.attachSchema(new SimpleSchema(
+    filters:
+      type: Array
+      optional: true
+    'filters.$':
+      type: Object
+      optional: true
+    'filters.$.property':
+      type: String
+      autoform:
+        afFieldInput:
+          options: [
+            "speciesName"
+            {label: "creator", value: "createdBy.name"}
+          ].map((item)->
+            if _.isObject(item)
+              item
+            else
+              {label: item, value: item}
+          )
+    'filters.$.value':
+      type: String
+  ))
+  @filterCollection.insert({
+    filters: []
+  })
+
 Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
   lMap = L.map(@$('.vis-map')[0]).setView([0, -0], 2)
@@ -11,8 +41,14 @@ Template.map.rendered = ->
   # initialize markers
   markers = new L.FeatureGroup()
   markers.addTo(lMap)
-  
+
   @autorun ()=>
+    filterSpec = @filterCollection.findOne()?.filters or []
+    filters = filterSpec.map (filterSpecification)->
+      filter = {}
+      filter[filterSpecification['property']] = filterSpecification['value']
+      return filter
+    console.log filters
     data = getCollections().Reports.find(
       $and: [
         {
@@ -21,7 +57,7 @@ Template.map.rendered = ->
         {
           eventLocation: { $ne : ","}
         }
-      ]
+      ].concat(filters)
     )
     .map((report)-> {
       location: report.eventLocation.split(',').map(parseFloat)
@@ -53,28 +89,8 @@ Template.map.rendered = ->
     )
     markers.addTo(lMap)
 
-Template.map.mapSidebarSchema = ->
-  new SimpleSchema(
-    filters:
-      type: Array
-      optional: true
-    'filters.$':
-      type: Object
-      optional: true
-    'filters.$.property':
-      type: String
-      autoform:
-        afFieldInput:
-          options: [
-            "number infected",
-            "species"
-          ].map((v)->{value: v, label: v})
-    'filters.$.value':
-      type: String
-  )
-
 Template.map.mapQueries = ->
-  new Meteor.Collection()
+  Template.instance().filterCollection
 
 Template.map.mapQuery = ->
-  {filters:[]}
+  Template.instance().filterCollection.findOne()
