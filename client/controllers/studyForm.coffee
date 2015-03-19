@@ -127,7 +127,9 @@ AutoForm.hooks
       toastr.options =
         closeButton: true
         positionClass: "toast-top-center"
-        timeOut: "10000"
+        timeOut: "100000"
+        # This is the timeout after a mouseover event
+        extendedTimeOut: "100000"
       toastr.success operation + " successful!"
       clearImportReports()
       window.scrollTo 0, 0

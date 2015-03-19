@@ -20,6 +20,7 @@
   reptile:  'Reptile (turtles and tortoises, crocodilians, snakes and lizards)'
 
 @numInvolvedOptions =
+  'NA': 'Not applicable'
   '1': '1'
   '2_10':   '2 to 10'
   '11_50':  '11 to 50'
