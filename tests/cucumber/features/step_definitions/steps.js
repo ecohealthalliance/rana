@@ -29,6 +29,15 @@
     this.Given('I am on the "$path" page', this.visit);
     this.When('I navigate to the "$path" page', this.visit);
     
+    this.Then('I should be redirected to the "$path" page', function (path, callback) {
+      helper.world.browser
+      .pause(2000)
+      .url(function (err, result) {
+        assert(!err);
+        assert.equal(result.value.slice(-path.length), path);
+      }).call(callback);
+    });
+    
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
         title(function (err, res) {
@@ -130,17 +139,24 @@
         .call(callback);
     });
     
-    this.Then('I should see the text "$text"',
-    function (text, callback) {
+    this.Then(/^I should( not)? see the text \"(text)\"/,
+    function (shouldNot, text, callback) {
       helper.world.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
           console.log(bodyText);
           assert(!err);
-          assert(
-            new RegExp(text, "i").test(bodyText),
-            '"' + text + '" not in "' + bodyText + '"'
-          );
+          if (shouldNot) {
+            assert(
+              !(new RegExp(text, "i").test(bodyText)),
+              '"' + text + '" in "' + bodyText + '"'
+            );
+          } else {
+            assert(
+              new RegExp(text, "i").test(bodyText),
+              '"' + text + '" not in "' + bodyText + '"'
+            );
+          }
         }).call(callback);
     });
     
