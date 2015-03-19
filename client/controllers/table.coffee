@@ -17,7 +17,7 @@ Template.table.settings = =>
       else
         ''
 
-  for key in ["speciesGenus", "speciesName", "screeningReason"]
+  for key in ["speciesGenus", "speciesName", "screeningReason", "populationType"]
     label = schema[key].label or key
     if label.length > 30
       label = key
