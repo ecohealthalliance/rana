@@ -14,9 +14,7 @@
         ]
         noselect: true
    screeningReason:
-    label: """
-    Reason for Screening:
-    """
+    label: "Reason for Screening"
     type: String
     optional: true
     autoform:
