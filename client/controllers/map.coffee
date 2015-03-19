@@ -23,8 +23,8 @@ Template.map.rendered = ->
         }
       ]
     )
-    .map((report)-> {
-      location: [report.eventLocation.geo.coordinates[0], report.eventLocation.geo.coordinates[1]]
+    .map((report)->
+      location: [report.eventLocation.geo.coordinates[1], report.eventLocation.geo.coordinates[0]]
       popupHTML: """
       <div>
       <dl>
@@ -44,7 +44,7 @@ Template.map.rendered = ->
       <a class="btn btn-primary btn-edit" href="/report/#{report._id}">Edit</a>
       </div>
       """
-    })
+    )
     lMap.removeLayer(markers)
     markers = new L.FeatureGroup()
     data.forEach((mapItem)->
