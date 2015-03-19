@@ -17,12 +17,15 @@ Template.table.settings = =>
       else
         'undefined'
 
-  for key in ["vertebrateClasses", "speciesName", "numInvolved"]
+  for key in ["speciesGenus", "speciesName", "numInvolved"]
     label = schema[key].label or key
+    if label.length > 30
+      label = key
     fields.push
       key: key
-      label: (if label.length > 30 then key else label)
+      label: label
       fn: (val) ->
+        console.log 'in val for val: ', val
         output = val or ''
 
         # capitalize first letter
@@ -36,15 +39,17 @@ Template.table.settings = =>
         # put empty values at the end
         if output is '' then sort = 2 else sort = 1
 
-        # use option labels instead of values
-        if schema[key]?.autoform?.afFieldInput?.options
-          option = _.findWhere(
-            schema[key].autoform.afFieldInput.options,
-            value: output
-          )
-          new Spacebars.SafeString("<span sort=#{sort}>#{option?.label}</span>")
-        else
-          new Spacebars.SafeString("<span sort=#{sort}>#{output}</span>")
+        # # use option labels instead of values
+        # if schema[key]?.autoform?.afFieldInput?.options
+        #   option = _.findWhere(
+        #     schema[key].autoform.afFieldInput.options,
+        #     value: output
+        #   )
+        #   new Spacebars.SafeString("<span sort=#{sort}>#{option?.label}</span>")
+        # else
+        if not output
+          output = ''
+        new Spacebars.SafeString("<span sort=#{sort}>#{output}</span>")
 
   fields.push
     key: "createdBy.name"
