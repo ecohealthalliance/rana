@@ -12,7 +12,10 @@ Template.table.settings = =>
     key: "eventLocation"
     label: "Event Location"
     fn: (val, obj) ->
-      String(val.geo.coordinates[0]) + ', ' + String(val.geo.coordinates[1])
+      if val
+        String(val.geo.coordinates[0]) + ', ' + String(val.geo.coordinates[1])
+      else
+        'undefined'
 
   for key in ["vertebrateClasses", "speciesName", "numInvolved"]
     label = schema[key].label or key
