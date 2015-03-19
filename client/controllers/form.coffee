@@ -5,6 +5,8 @@ regexEscape = (s)->
 
 getCollections = => @collections
 
+urlParams = null
+
 AutoForm.addHooks(
   'ranavirus-report', {
     formToDoc: (doc)->
@@ -20,14 +22,18 @@ AutoForm.addHooks(
         "timeOut": "10000"
       }
       toastr.success(operation + " successful!")
-      window.scrollTo(0, 0)
+      redirectOnSubmit =  urlParams?.query?.redirectOnSubmit
+      if redirectOnSubmit
+        Router.go(redirectOnSubmit)
+      else
+        window.scrollTo(0, 0)
   }
 )
 
 Template.form.reportDoc = ->
-  params = Iron.controller().getParams()
-  if params?.reportId
-    return getCollections().Reports.findOne(params.reportId) or {}
+  urlParams = Iron.controller().getParams()
+  if urlParams?.reportId
+    return getCollections().Reports.findOne(urlParams.reportId) or {}
   else
     return {
       institutionAddress:
@@ -41,10 +47,10 @@ Template.form.reportDoc = ->
     }
 
 Template.form.type = ->
-  params = Iron.controller().getParams()
-  if not params?.reportId
+  urlParams = Iron.controller().getParams()
+  if not urlParams?.reportId
     return "insert"
-  currentReport = getCollections().Reports.findOne(params.reportId)
+  currentReport = getCollections().Reports.findOne(urlParams.reportId)
   if not currentReport
     # This will trigger an error message
     return null
