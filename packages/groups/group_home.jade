@@ -1,0 +1,46 @@
+template(name="groupHome")
+  if group
+
+    h2 {{group.name}}
+    h4 {{group.description}}
+
+    if isInRole 'admin' group._id
+      +groupAdmin
+    
+  else
+    h4 No group here -
+      a(href="{{pathFor 'newGroup'}}") Create one?
+  
+template(name="groupAdmin")
+  .panel-group
+    .panel.panel-default
+      .panel-heading
+        h4.panel-title
+          a(data-toggle="collapse", href="#edit-group-panel") Edit Group Information
+      #edit-group-panel.panel-collapse.collapse
+        .panel-body
+          +quickForm collection=groups doc=group id="update-group-form" type="update"
+    .panel.panel-default
+      .panel-heading
+        h4.panel-title
+          a(data-toggle="collapse", href="#manage-users-panel") Manage users
+      #manage-users-panel.panel-collapse.collapse
+        .panel-body
+          h5 Admins
+            each groupAdmins
+              +groupUser
+          h5 Users
+            each groupUsers
+              +groupUser
+            else
+              p None
+            +invite groupId=group._id
+              
+template(name="groupUser")
+  div
+    span {{profile.name}}
+      if profile.organization
+        i {{profile.organization}}
+    each emails
+      span {{address}}
+      

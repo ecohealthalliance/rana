@@ -1,8 +1,21 @@
 @collections = {}
 
+@collections.Genera = new Mongo.Collection('genera')
+
 @collections.Files = new FS.Collection("files",
   stores: [new FS.Store.GridFS("files", {})]
+  
+  
 )
+
+@collections.PDFs = new FS.Collection("pdfs", {
+  stores: [
+    new FS.Store.GridFS("pdfs")
+  ]
+  filter:
+    allow:
+      contentTypes: ["application/pdf"]
+})
 
 populationTypes =
   wild:	"""
@@ -131,6 +144,8 @@ sampleTypes =
 AddressSchema = new SimpleSchema(
   'name':
     type: String
+    # This makes the address required, even if there is no org
+    # defaultValue: -> Meteor.user().profile.organization or ""
   'street':
     type: String
   'street2':
@@ -149,28 +164,6 @@ AddressSchema = new SimpleSchema(
 
 @collections.Reports = new Mongo.Collection('reports')
 @collections.Reports.attachSchema(new SimpleSchema(
-  name:
-    label: """
-    Enter the name of the person who is reporting the case.
-    They must be willing to communicate about the case if so requested.
-    """
-    type: String
-  email:
-    label: """
-    Enter the most current email address or permanent email address of the person reporting the case.
-    """
-    type: String
-    regEx: SimpleSchema.RegEx.Email
-    autoform:
-      type: 'email'
-  phone:
-    label: """
-    Enter the institutional telephone number of the individual who is reporting the case:
-    (This must include the country code.)
-    """
-    type: String
-    autoform:
-      type: 'tel'
   institutionAddress:
     label: """
     Enter the name and full address of the institution,
@@ -373,6 +366,22 @@ AddressSchema = new SimpleSchema(
     """
     type: Number
     optional: true
+  pathologyReportPermission:
+    type: String
+    label: """
+    Do you have permission to upload a pathology report?
+    Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents.
+    If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
+    """
+    optional: true
+    autoform:
+      options: _.map([
+        "Yes", "Permission Not Granted", "Not Available or Applicable"
+      ], (value) ->
+        {label: value, value: value}
+      )
+      afFieldInput:
+        noselect: true
   pathologyReports:
     type: Array
     optional: true
@@ -383,21 +392,12 @@ AddressSchema = new SimpleSchema(
     type: String
     label: """
     You can upload (MS Word or PDF) copies of pathology reports for other users to view.
-    Please ensure that you have the permission of the pathologist to do this BEFORE you upload any documents.
-    If no pathology report is available or permission has not been granted for the pathology report to be uploaded, please indicate this.
     """
     optional: true
     autoform:
       afFieldInput:
         type: 'fileUpload'
         collection: 'files'
-  'pathologyReports.$.permission':
-    label: "Do you have permission to upload this report?"
-    type: String
-    allowedValues: ["Yes", "Permission Not Granted", "Not Available or Applicable"]
-    autoform:
-      afFieldInput:
-        noselect: true
   # We are skipping the N/A tick boxes
   # because the user can leave the sections blank instead.
   images:
@@ -466,31 +466,56 @@ AddressSchema = new SimpleSchema(
     optional: true
     autoform:
       rows: 5
-  publicationInfo:
-    type: Object
-    optional: true
-  'publicationInfo.dataPublished':
+  dataPublished:
     type: Boolean
     label: 'Publication Status of the Data'
+    optional: true
     autoform:
       type: 'boolean-radios'
       trueLabel: 'Published'
       falseLabel: 'Unpublished'
+  publicationInfo:
+    type: Object
+    optional: true
+    custom: ->
+      if @field('dataPublished').value
+        if not(@value?.pdf and @value?.reference)
+          return "required"
   'publicationInfo.pdf':
     type: String
     label: """
     If the data has been published please provide a PDF.
     """
     # For some reason the optional value on the parent obj doesn't apply to this
-    optional: true
     autoform:
       afFieldInput:
         type: 'fileUpload'
-        collection: 'files'
+        collection: 'pdfs'
   'publicationInfo.reference':
     type: String
     label: """If the data has been published please provide a full reference"""
-    optional: true
     autoform:
       rows: 3
+  creationDate:
+    type: Date
+    autoform:
+      omit: true
+    autoValue: ->
+      new Date()
+  createdBy:
+    type: Object
+    autoform:
+      omit: true
+  'createdBy.userId':
+    type: String
+    autoform:
+      omit: true
+  # User name is included to avoid querying the user collection for
+  # every report.
+  # autoValue is not used here because trying to get the user data server-side
+  # causes problems, so a hook is used instead.
+  'createdBy.name':
+    type: String
+    autoform:
+      omit: true
 ))
