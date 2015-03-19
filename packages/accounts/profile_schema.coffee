@@ -1,4 +1,4 @@
-@UserProfileSchema = new SimpleSchema
+share.UserProfileSchema = new SimpleSchema
   name: 
     type: String
   organization:

@@ -1,4 +1,4 @@
-Groups = @Groups
+Groups = share.Groups
 
 AutoForm.hooks
   "new-group-form":

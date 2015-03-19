@@ -1,4 +1,4 @@
-UserProfileSchema = @UserProfileSchema
+UserProfileSchema = share.UserProfileSchema
 
 AccountsTemplates.configureRoute "signIn"
 
