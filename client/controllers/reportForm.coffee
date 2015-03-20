@@ -40,5 +40,5 @@ Template.reportForm.helpers
       return "update"
     return "readonly"
 
-Template.reportForm.events =
-  "keyup input[name='speciesGenus']": @generaHandler
+Template.genusAutocomplete_rana.events =
+  "keyup": @generaHandler

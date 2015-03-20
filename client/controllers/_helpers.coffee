@@ -2,6 +2,9 @@ getCollections = () -> @collections
 
 AutoForm.setDefaultTemplate 'rana'
 
+AutoForm.addInputType 'genusAutocomplete',
+  template: 'genusAutocomplete'
+
 Template.registerHelper 'contactFromUser', () ->
   user = Meteor.user()
   if user

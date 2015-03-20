@@ -9,7 +9,8 @@ _.each [
     'afInputDate_rana',
     'afInputNumber_rana',
     'afInputEmail_rana',
-    'afInputTel_rana'
+    'afInputTel_rana',
+    'genusAutocomplete_rana'
   ], (tmplName) ->
     Template[tmplName].helpers
       atts: () ->
