@@ -1,4 +1,12 @@
-//- Original templates: https://github.com/aldeed/meteor-autoform/blob/dc10a1366a69bf734eab736dd9748f8007ded7db/templates/bootstrap3/bootstrap3.html
+// Derived from the original html version here.
+// https://github.com/aldeed/meteor-autoform/blob/dc10a1366a69bf734eab736dd9748f8007ded7db/templates/bootstrap3/bootstrap3.html
+// We took the relevant templates from the bootstrap3 package, converted them to
+// Jade and customized them for the custom rana AutoForm theme.
+// If you need to implement a template for a new input type, check that .html
+// file first to see if has already been done in the bootstrap3 template.
+//
+// In the future we may want to use extension lib this:
+// https://github.com/aldeed/meteor-template-extension
 
 template(name="afFormGroup_rana")
   .form-group(class="form-group{{#if afFieldIsInvalid name=this.atts.name}} has-error{{/if}}")
