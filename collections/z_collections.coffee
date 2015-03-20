@@ -23,3 +23,5 @@
 
 @collections.Studies = new Mongo.Collection 'studies'
 @collections.Studies.attachSchema @studySchema
+
+@collections.Genera = new Mongo.Collection('genera')

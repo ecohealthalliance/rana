@@ -1,7 +1,7 @@
 defaults =
   defaultLat: 48.856614
   defaultLon: 2.3522219
-  defaultZoom: 13
+  defaultZoom: 10
 
 AutoForm.addInputType 'leaflet',
   template: 'leaflet'
@@ -103,7 +103,7 @@ Template.leaflet.rendered = ->
   @data.map = null
   @data.marker = null
 
-  L.Icon.Default.imagePath = 'packages/fuatsengul_leaflet/images'
+  L.Icon.Default.imagePath = '/packages/fuatsengul_leaflet/images'
 
   @data.marker = null
 
@@ -113,7 +113,18 @@ Template.leaflet.rendered = ->
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(@data.map)
 
-  @data.reset()
+  if @data.value
+    $(@$('.leaflet-search')[0]).val ''
+    $(@$('.lon')[0]).val @data.value.geo.coordinates[0]
+    $(@$('.lat')[0]).val @data.value.geo.coordinates[1]
+    $(@$('.northing')[0]).val @data.value.northing
+    $(@$('.easting')[0]).val @data.value.easting
+    $(@$('.zone')[0]).val @data.value.zone
+    $(@$('.source')[0]).val @data.value.source
+    @data.updateViewFromLonLat()
+    @data.map.setZoom @data.options.defaultZoom
+  else
+    @data.reset()
 
   @data.map.on 'click', (e) =>
     $(@$('.source')[0]).val 'map'
@@ -121,7 +132,6 @@ Template.leaflet.rendered = ->
     $(@$('.lat')[0]).val e.latlng.lat
     $(@$('.lon')[0]).val e.latlng.lng
     @data.updateUTMFromLonLat()
-
 
   @data.map.on 'locationfound', (e) =>
     $(@$('.source')[0]).val 'map'

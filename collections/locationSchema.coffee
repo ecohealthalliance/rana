@@ -8,7 +8,7 @@ SimpleSchema.messages
   easting: '[label] easting should be between 0 and 1,000,000'
   zone: '[label] zone should be between 1 and 60'
 
-LocationSchema = new SimpleSchema
+@locationSchema = new SimpleSchema
   source:
     type: String
     allowedValues: [ 'LonLat', 'utm', 'map' ]

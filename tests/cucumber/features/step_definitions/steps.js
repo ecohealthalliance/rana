@@ -28,7 +28,7 @@
     };
     this.Given('I am on the "$path" page', this.visit);
     this.When('I navigate to the "$path" page', this.visit);
-    
+
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
         title(function (err, res) {
@@ -89,7 +89,9 @@
     this.Given(/^there is a report( with a geopoint)? in the database$/,
     function(withGeo, callback) {
       helper.resetTestDB([{
+        studyId: 'fakeid',
         consent: true,
+        contact: {name: 'Text User', 'email': 'test@foo.com'},
         dataUsePermissions: "Share full record",
         eventLocation: "25.046919772516173,121.55189514218364"
       }], function(err){
@@ -113,7 +115,7 @@
         }));
       });
     });
-    
+
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
@@ -129,7 +131,7 @@
         })
         .call(callback);
     });
-    
+
     this.Then('I should see the text "$text"',
     function (text, callback) {
       helper.world.browser
@@ -143,7 +145,7 @@
           );
         }).call(callback);
     });
-    
+
   };
 
 })();

@@ -14,9 +14,7 @@
         ]
         noselect: true
    screeningReason:
-    label: """
-    Reason for Screening:
-    """
+    label: "Reason for Screening"
     type: String
     optional: true
     autoform:
@@ -69,6 +67,8 @@
   speciesGenus:
     label: 'Species Affected Genus'
     type: String
+    autoform:
+      type: 'genusAutocomplete'
     optional: true
   speciesName:
     label: 'Species Affected Name'

@@ -1,6 +1,18 @@
-template(name="importForm")
+template(name="studyForm")
 
-  +autoForm collection="collections.Studies" type="insert" id="importForm"
+  +autoForm(
+    collection="collections.Studies"
+    type="insert"
+    id="ranavirus-import"
+    doc=importDoc
+  )
+
+    section
+      .container
+        .row
+          .col-lg-4
+            +afQuickField name='name'
+
     form.import-form
       section
         .container

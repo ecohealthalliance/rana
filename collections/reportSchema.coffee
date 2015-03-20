@@ -1,4 +1,8 @@
 @reportSchema = new SimpleSchema [ @sharedSchema, new SimpleSchema
+  studyId:
+    type: String
+    autoform:
+      template: 'studySelect'
   sourceFile:
     label: """The id of the CSV file from which the event was imported, if any"""
     type: String
@@ -14,7 +18,7 @@
     optional: true
   eventLocation:
     label: 'Event Location'
-    type: String
+    type: @locationSchema
     optional: true
     autoform:
       type: 'leaflet'

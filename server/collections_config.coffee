@@ -1,6 +1,3 @@
-Meteor.publish 'files', ->
-  collections.Files.find()
-
 @collections.Files.allow
   insert: (userId, doc) ->
     true
@@ -29,6 +26,9 @@ Meteor.publish 'files', ->
 
 Meteor.publish 'files', ->
   collections.Files.find()
+
+Meteor.publish 'genera', ->
+  collections.Genera.find()
 
 Meteor.publish 'pdfs', ->
   collections.PDFs.find()

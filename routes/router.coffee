@@ -8,22 +8,39 @@ Router.route('/', ()-> @redirect('/group/rana'))
 Router.route('newReport',
   path: '/report'
   template: 'reportForm'
-  where: 'client'
+  where: 'client',
+  waitOn: ->
+    [
+      Meteor.subscribe("reports"),
+      Meteor.subscribe("studies"),
+      Meteor.subscribe("genera")
+    ]
 )
 
 Router.route('editReport',
   path: '/report/:reportId'
   template: 'reportForm'
   where: 'client'
+  data: ->
+    reportId: @params.reportId
   waitOn: ->
     [
-      Meteor.subscribe("reports")
+      Meteor.subscribe("reports"),
+      Meteor.subscribe("studies"),
+      Meteor.subscribe("genera")
     ]
 )
 
-Router.route('importForm',
-  path: '/import'
+Router.route('newStudy',
+  path: '/study'
+  template: 'studyForm'
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe("csvfiles"),
+      Meteor.subscribe("studies"),
+      Meteor.subscribe("genera")
+    ]
 )
 
 Router.route('/table',
@@ -48,4 +65,4 @@ Router.route('/info',
   where: 'client'
 )
 
-Router.plugin 'ensureSignedIn', {only: ['reportForm']}
+Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'newStudy']}

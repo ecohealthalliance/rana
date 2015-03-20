@@ -25,7 +25,7 @@ cfs:collection-filters@0.2.4
 cfs:data-man@0.0.6
 cfs:file@0.1.16
 cfs:filesystem@0.1.2
-cfs:gridfs@0.0.30
+cfs:gridfs@0.0.31
 cfs:http-methods@0.0.27
 cfs:http-publish@0.0.13
 cfs:power-queue@0.9.11
@@ -78,6 +78,7 @@ momentjs:moment@2.8.4
 mongo@1.0.11
 mongo-livedata@1.0.7
 mquandalle:jade@0.4.1
+mrt:jquery-ui@1.9.2
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
 ordered-dict@1.0.2
@@ -94,6 +95,7 @@ reactive-var@1.0.4
 reload@1.1.2
 retry@1.0.2
 routepolicy@1.0.4
+sebdah:autocompletion@0.2.0
 service-configuration@1.0.3
 session@1.0.5
 sha@1.0.2

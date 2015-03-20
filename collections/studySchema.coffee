@@ -1,4 +1,7 @@
 @studySchema = new SimpleSchema  [ @sharedSchema, new SimpleSchema
+  name:
+    type: String
+    label: 'Study Name'
   contact:
     type: @contactSchema
   publicationInfo:
@@ -51,6 +54,7 @@
   csvFile:
     type: String
     label: """csvFile"""
+    optional: true
     autoform:
       label: false
       afFieldInput:

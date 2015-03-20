@@ -8,7 +8,6 @@ Meteor.startup () ->
 fileUploaded = () ->
   checkUploaded = () ->
     fileId = Session.get 'fileUpload[csvFile]'
-    isUploaded = false
     if fileId
       record = @collections.CSVFiles.findOne { _id: fileId }
       if record and record.isUploaded()
@@ -36,7 +35,15 @@ updateImportReports = () ->
 
     for row in csvData
       # Fake contact data to satisfy requirement
-      rowdata = { 'contact': {'name': 'fake', 'email': 'a@b.com', 'phone': '1234567890'} }
+      rowdata =
+        studyId: 'fakeid'
+        contact:
+          name: 'fake'
+          email: 'a@b.com'
+          phone: '1234567890'
+        createdBy:
+          userId: Meteor.user()._id
+          name: Meteor.user().profile.name
       for field in matches
         rowdata[field] = row[field]
       ImportReports.insert rowdata
@@ -58,7 +65,7 @@ headerMatches = () ->
 
   res
 
-Template.importForm.events
+Template.studyForm.events
   'change .file-upload': (e, t) ->
 
     fileUploaded()
@@ -70,7 +77,12 @@ Template.importForm.events
       Session.set 'csvData', []
       Session.set 'fileUpload[csvFile]', false
 
-Template.importForm.helpers
+  "keyup input[name='speciesGenus']": @generaHandler
+
+Template.studyForm.helpers
+
+  importDoc: () ->
+    { contact: UI._globalHelpers['contactFromUser']() }
 
   csvFileId: () ->
     Session.get 'fileUpload[csvFile]'
@@ -102,27 +114,47 @@ Template.importForm.helpers
     headerMatches().unmatched.join ', '
 
 AutoForm.hooks
-  importForm:
+  'ranavirus-import':
+
+    formToDoc: (doc) ->
+      doc.createdBy =
+        userId: Meteor.userId()
+        name: Meteor.user().profile?.name or "None"
+      doc
+
+    onSuccess: (operation, result, template) ->
+      toastr.options =
+        closeButton: true
+        positionClass: "toast-top-center"
+        timeOut: "10000"
+      toastr.success operation + " successful!"
+      clearImportReports()
+      window.scrollTo 0, 0
+
     after:
       insert: (err, res, template) ->
 
-        clearImportReports()
+        study = getCollections().Studies.findOne { _id: res }
 
-        study = getCollections().Studies.findOne({_id: res})
+        if study and study.csvFile
 
-        Meteor.call 'getCSVData', study.csvFile, (err, data) =>
-          reportSchema = getCollections().Reports.simpleSchema()._schema
-          reportFields = Object.keys reportSchema
-          studyData = {}
-          for studyField in Object.keys study
-            if studyField != '_id' and studyField in reportFields
-              studyData[studyField] = _.clone study[studyField]
+          Meteor.call 'getCSVData', study.csvFile, (err, data) =>
+            reportSchema = getCollections().Reports.simpleSchema()._schema
+            reportFields = Object.keys reportSchema
+            studyData = {}
+            for studyField in Object.keys study
+              if studyField != '_id' and studyField in reportFields
+                studyData[studyField] = _.clone study[studyField]
 
-          for row in data
-            report = {}
-            for key of studyData
-              report[key] = _.clone studyData[key]
-            for reportField in reportFields
-              if reportField of row and row[reportField]
-                report[reportField] = row[reportField]
-            getCollections().Reports.insert report
+            for row in data
+              report = {}
+              for key of studyData
+                report[key] = _.clone studyData[key]
+              for reportField in reportFields
+                if reportField of row and row[reportField]
+                  report[reportField] = row[reportField]
+              report.createdBy =
+                userId: Meteor.user()._id
+                name: Meteor.user().profile.name
+              report.studyId = res
+              getCollections().Reports.insert report
