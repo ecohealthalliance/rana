@@ -30,21 +30,21 @@ Template.leaflet.helpers
 
 Template.leaflet.rendered = ->
 
-  @data.setMarker = (location, zoom=0) =>
-    @data.clearMarker()
-    @data.marker = L.marker(location).addTo(@data.map)
+  @setMarker = (location, zoom=0) =>
+    @clearMarker()
+    @marker = L.marker(location).addTo(@map)
 
-  @data.clearMarker = () =>
-    if @data.marker then @data.map.removeLayer(@data.marker)
+  @clearMarker = () =>
+    if @marker then @map.removeLayer(@marker)
 
-  @data.lon2UTMZone = (lon) ->
+  @lon2UTMZone = (lon) ->
     Math.min(Math.floor((lon + 180) / 6), 60) + 1
 
-  @data.updateUTMFromLonLat = () =>
+  @updateUTMFromLonLat = () =>
     lon = parseFloat($(@$('.lon')[0]).val())
     lat = parseFloat($(@$('.lat')[0]).val())
     if not isNaN(lon) and not isNaN(lat)
-      zone = @data.lon2UTMZone(lon)
+      zone = @lon2UTMZone(lon)
 
       utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
       lonlatProj =  proj4.Proj('WGS84')
@@ -53,7 +53,7 @@ Template.leaflet.rendered = ->
       $(@$('.northing')[0]).val utm.y
       $(@$('.zone')[0]).val zone
 
-  @data.updateLonLatFromUTM = () =>
+  @updateLonLatFromUTM = () =>
     easting = parseFloat($(@$('.easting')[0]).val())
     northing = parseFloat($(@$('.northing')[0]).val())
     zone = parseInt($(@$('.zone')[0]).val())
@@ -66,18 +66,18 @@ Template.leaflet.rendered = ->
       $(@$('.lat')[0]).val lonLat.y
       $(@$('.lon')[0]).val lonLat.x
 
-  @data.updateViewFromLonLat = () =>
+  @updateViewFromLonLat = () =>
     lon = parseFloat($(@$('.lon')[0]).val())
     lat = parseFloat($(@$('.lat')[0]).val())
     if not isNaN(lon) and not isNaN(lat)
       location = new L.LatLng $(@$('.lat')[0]).val(), $(@$('.lon')[0]).val()
-      @data.setMarker location
-      @data.map.panTo location
+      @setMarker location
+      @map.panTo location
 
-  @data.reset = () =>
-    @data.clearMarker()
-    @data.map.panTo new L.LatLng(@data.options.defaultLat, @data.options.defaultLon)
-    @data.map.setZoom @data.options.defaultZoom
+  @reset = () =>
+    @clearMarker()
+    @map.panTo new L.LatLng(@options.defaultLat, @options.defaultLon)
+    @map.setZoom @options.defaultZoom
     $(@$('.leaflet-search')[0]).val ''
     $(@$('.lon')[0]).val ''
     $(@$('.lat')[0]).val ''
@@ -86,23 +86,23 @@ Template.leaflet.rendered = ->
     $(@$('.zone')[0]).val ''
     $(@$('.source')[0]).val ''
 
-  @data.options = _.extend {}, defaults, @data.atts
+  @options = _.extend {}, defaults, @data.atts
 
-  @data.canvas = @$('.leaflet-canvas')[0]
-  @data.canvas = @data.canvas
+  @canvas = @$('.leaflet-canvas')[0]
+  @canvas = @canvas
 
-  @data.map = null
-  @data.marker = null
+  @map = null
+  @marker = null
 
   L.Icon.Default.imagePath = '/packages/fuatsengul_leaflet/images'
 
-  @data.marker = null
+  @marker = null
 
-  @data.map = L.map(@$('.leaflet-canvas')[0]).setView [0, -0], 2
+  @map = L.map(@$('.leaflet-canvas')[0]).setView [0, -0], 2
   L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(@data.map)
+  }).addTo(@map)
 
   if @data.value
     $(@$('.leaflet-search')[0]).val ''
@@ -112,47 +112,47 @@ Template.leaflet.rendered = ->
     $(@$('.easting')[0]).val @data.value.easting
     $(@$('.zone')[0]).val @data.value.zone
     $(@$('.source')[0]).val @data.value.source
-    @data.updateViewFromLonLat()
-    @data.map.setZoom @data.options.defaultZoom
+    @updateViewFromLonLat()
+    @map.setZoom @options.defaultZoom
   else
-    @data.reset()
+    @reset()
 
-  @data.map.on 'click', (e) =>
+  @map.on 'click', (e) =>
     $(@$('.source')[0]).val 'map'
-    @data.setMarker e.latlng
+    @setMarker e.latlng
     $(@$('.lat')[0]).val e.latlng.lat
     $(@$('.lon')[0]).val e.latlng.lng
-    @data.updateUTMFromLonLat()
+    @updateUTMFromLonLat()
 
-  @data.map.on 'locationfound', (e) =>
+  @map.on 'locationfound', (e) =>
     $(@$('.source')[0]).val 'map'
-    @data.setMarker e.latlng
+    @setMarker e.latlng
     $(@$('.lat')[0]).val e.latlng.lat
     $(@$('.lon')[0]).val e.latlng.lng
-    @data.updateUTMFromLonLat()
-    @data.map.setView @data.marker.getLatLng(), @data.map.getZoom()
+    @updateUTMFromLonLat()
+    @map.setView @marker.getLatLng(), @map.getZoom()
 
 
   @$('.leaflet-canvas').closest('form').on 'reset', =>
-    @data.reset()
+    @reset()
 
 Template.leaflet.events
 
   'click .leaflet-locate': (e, t) ->
     e.preventDefault()
     unless navigator.geolocation then return false
-    t.data.map.locate()
+    t.map.locate()
 
   'click .leaflet-clear': (e, t) ->
     e.preventDefault()
-    t.data.reset()
+    t.reset()
 
   'change .lat, change .lon': (e, t) ->
     t.$(t.$('.source')[0]).val 'LonLat'
-    t.data.updateUTMFromLonLat()
-    t.data.updateViewFromLonLat()
+    t.updateUTMFromLonLat()
+    t.updateViewFromLonLat()
 
   'change .northing, change .easting, change .zone': (e, t) ->
     t.$(t.$('.source')[0]).val 'utm'
-    t.data.updateLonLatFromUTM()
-    t.data.updateViewFromLonLat()
+    t.updateLonLatFromUTM()
+    t.updateViewFromLonLat()
