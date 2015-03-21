@@ -1,10 +1,5 @@
 getCollections = () -> @collections
 
-AutoForm.setDefaultTemplate 'rana'
-
-AutoForm.addInputType 'genusAutocomplete',
-  template: 'genusAutocomplete'
-
 Template.registerHelper 'contactFromUser', () ->
   profile = Meteor.user()?.profile
   if profile
