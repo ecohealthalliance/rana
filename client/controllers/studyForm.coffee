@@ -67,8 +67,6 @@ Template.studyForm.events
       clearImportReports()
       Session.set 'fileUpload[csvFile]', false
 
-  "keyup input[name='speciesGenus']": @generaHandler
-
 Template.studyForm.helpers
 
   importDoc: () ->

@@ -44,6 +44,3 @@ Template.reportForm.helpers
     collections.Studies.find().map (study) ->
       label: study.name
       value: study._id
-
-Template.genusAutocomplete_rana.events =
-  "keyup": @generaHandler
