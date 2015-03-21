@@ -12,7 +12,6 @@ fileUploaded = () ->
       record = @collections.CSVFiles.findOne { _id: fileId }
       if record and record.isUploaded()
         return Meteor.call 'getCSVData', fileId, (err, data) =>
-          Session.set 'csvData', data
           if data
             updateImportReports data
           else
@@ -23,45 +22,37 @@ fileUploaded = () ->
 
 clearImportReports = () ->
   ImportReports.remove({})
+  Session.set 'unmatchedHeaders', null
 
-updateImportReports = () ->
+updateImportReports = (data) ->
 
   clearImportReports()
-  matches = headerMatches().matched
+  matches = headerMatches(data).matched
 
-  csvData = Session.get 'csvData'
+  for row in data
+    # Fake contact data to satisfy requirement
+    rowdata =
+      studyId: 'fakeid'
+      contact:
+        name: 'fake'
+        email: 'a@b.com'
+        phone: '1234567890'
+      createdBy:
+        userId: Meteor.user()._id
+        name: Meteor.user().profile.name
+    for field in matches
+      rowdata[field] = row[field]
+    ImportReports.insert rowdata
 
-  if csvData and csvData.length > 0
-
-    for row in csvData
-      # Fake contact data to satisfy requirement
-      rowdata =
-        studyId: 'fakeid'
-        contact:
-          name: 'fake'
-          email: 'a@b.com'
-          phone: '1234567890'
-        createdBy:
-          userId: Meteor.user()._id
-          name: Meteor.user().profile.name
-      for field in matches
-        rowdata[field] = row[field]
-      ImportReports.insert rowdata
-
-getHeaders = () ->
-  csvData = Session.get 'csvData'
-  if csvData and csvData.length > 0
-    Object.keys Session.get('csvData')[0]
-  else
-    []
-
-headerMatches = () ->
-  headers = getHeaders()
+headerMatches = (data) ->
+  headers = _.keys data[0]
   fields = Object.keys @collections.Reports.simpleSchema()._schema
 
   res =
     matched: ( header for header in headers when header in fields )
     unmatched: ( header for header in headers when header not in fields )
+
+  Session.set 'unmatchedHeaders', res.unmatched
 
   res
 
@@ -74,7 +65,6 @@ Template.studyForm.events
 
     if $(e.currentTarget).attr('file-input') is 'csvFile'
       clearImportReports()
-      Session.set 'csvData', []
       Session.set 'fileUpload[csvFile]', false
 
   "keyup input[name='speciesGenus']": @generaHandler
@@ -98,20 +88,20 @@ Template.studyForm.helpers
     ImportReports.find()
 
   importFields: () ->
-    csvData = Session.get 'csvData'
-    if csvData and csvData.length > 0
+    data = ImportReports.findOne()
+    if data
       res = ( field for field in [ 'eventDate', 'coordinatesAvailable', 'eventLocation', 'eventCountry',
           'numInvolved', 'totalAnimalsTested', 'totalAnimalsConfirmedInfected',
           'totalAnimalsConfirmedDiseased', 'populationType', 'screeningReason',
           'speciesGenus', 'speciesName', 'speciesNotes', 'sampleType',
-          'additionalNotes' ] when field of csvData[0]
+          'additionalNotes' ] when field of data
       )
       res
     else
       []
 
   unmatchedHeadersString: () ->
-    headerMatches().unmatched.join ', '
+    Session.get('unmatchedHeaders').join ', '
 
 AutoForm.hooks
   'ranavirus-import':
