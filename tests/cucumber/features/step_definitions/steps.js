@@ -93,7 +93,16 @@
         consent: true,
         contact: {name: 'Text User', 'email': 'test@foo.com'},
         dataUsePermissions: "Share full record",
-        eventLocation: "25.046919772516173,121.55189514218364"
+        eventLocation: {
+          source: 'LonLat',
+          northing: 1,
+          easting: 2,
+          zone: 3,
+          geo: {
+            type: 'Point',
+            coordinates: [ 121.55189514218364, 25.046919772516173 ]
+          }
+        }
       }], function(err){
         if(err) {
           console.log(err);
