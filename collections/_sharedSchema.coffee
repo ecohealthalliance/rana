@@ -172,7 +172,6 @@
       ].map((value)-> {label:value, value: value})
       afFieldInput:
         noselect: true
-
   creationDate:
     type: Date
     autoform:
