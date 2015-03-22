@@ -192,7 +192,6 @@
       // custom errors on groups don't create a has-error class
       .waitForExist('.has-error, .help-block:not(:empty)', 2000, reverse,
       function(err, result){
-        console.log("err:", err, 'result', result);
         assert.equal(err, null);
 
         if(shouldNot) {
