@@ -52,4 +52,8 @@ if Meteor.isServer
         throw new Meteor.Error "403", "no user signed in"
   }
 
+  Meteor.publish "invite", (inviteId) ->
+    groupId = Invites.findOne({_id: inviteId})?.group
+    [Invites.find({_id: inviteId}), Groups.find({_id: groupId})]
+
 @Invites = Invites

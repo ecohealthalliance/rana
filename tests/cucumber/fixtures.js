@@ -8,6 +8,7 @@
       '/fixtures/resetDB': function (reports) {
         collections.Reports.remove({});
         Meteor.users.remove({});
+        Groups.remove({});
         var userId = Accounts.createUser({
           email: "test@test.com",
           password: "testuser",
