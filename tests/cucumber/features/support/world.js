@@ -80,6 +80,13 @@
           .call(callback);
         });
 
+        // Useful for keeping the Chrome window open so you can inspect things
+        // in the console or view the screen at a certain point.
+        browser.addCommand("holdWindowOpen", function() {
+          browser
+          .timeoutsAsyncScript(1000000);
+        });
+
         browser.call(next);
       });
 
