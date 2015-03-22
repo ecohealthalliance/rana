@@ -149,6 +149,16 @@
     optional: true
     autoform:
       rows: 5
+  consent:
+    type: Boolean
+    label: """
+    Do you consent to have this data published and made searchable on
+    the Ranavirus Reporting System website as per the data use permissions?
+    """
+    autoform:
+       type: 'boolean-radios'
+       trueLabel: 'Yes, I consent'
+       falseLabel: 'No, I do NOT consent'
   creationDate:
     type: Date
     autoform:
