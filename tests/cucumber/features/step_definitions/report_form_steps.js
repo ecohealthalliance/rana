@@ -68,7 +68,8 @@
           var schemaTypes = res.value.schemaTypes;
           var generatedFormData = res.value.formData;
           generatedFormData['studyId'] = 'fakeid';
-          generatedFormData['contact']['institutionAddress']['postalCode'] = '12345';
+          generatedFormData['contact']['name'] = 'Fake Name';
+          generatedFormData['contact']['email'] = 'foo@bar.com';
           generatedFormData['images'] = [];
           generatedFormData['pathologyReports'] = [];
           generatedFormData['eventLocation'] = null;
