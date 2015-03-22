@@ -159,6 +159,20 @@
        type: 'boolean-radios'
        trueLabel: 'Yes, I consent'
        falseLabel: 'No, I do NOT consent'
+  dataUsePermissions:
+    type: String
+    label: """
+    Please select the information that can be shared with other users.
+    """
+    autoform:
+      options: [
+        'Do not share'
+        'Share obfuscated'
+        'Share full record'
+      ].map((value)-> {label:value, value: value})
+      afFieldInput:
+        noselect: true
+
   creationDate:
     type: Date
     autoform:

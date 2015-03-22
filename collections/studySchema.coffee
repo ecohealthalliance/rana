@@ -28,19 +28,6 @@
     optional: true
     autoform:
       rows: 3
-  dataUsePermissions:
-    type: String
-    label: """
-    Please select the information that can be shared with other users.
-    """
-    autoform:
-      options: [
-        'Do not share'
-        'Share obfuscated'
-        'Share full record'
-      ].map((value)-> {label:value, value: value})
-      afFieldInput:
-        noselect: true
   csvFile:
     type: String
     label: """csvFile"""
