@@ -1,8 +1,6 @@
 @sharedSchema =
   populationType:
-    label: """
-    Type of Population:
-    """
+    label: "Type of Population"
     type: String
     optional: true
     autoform:
