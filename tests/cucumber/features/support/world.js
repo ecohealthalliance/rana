@@ -4,8 +4,6 @@
 
   var assert = require('assert');
 
-  var assert = require('assert');
-
   module.exports = function () {
 
     var helper = this;
