@@ -20,7 +20,6 @@ Router.route "/group/:groupPath", {
 
 Router.route "/newGroup", {
   data: () ->
-    console.log "newGroup data groups", Groups
     groups: Groups
 }
 
