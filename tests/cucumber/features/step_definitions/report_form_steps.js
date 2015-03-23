@@ -27,7 +27,6 @@
           return callback.fail(err);
         } else {
           var generatedFormData = res.value
-          generatedFormData['studyId'] = 'fakeid';
           generatedFormData['contact.name'] = 'Fake Name';
           generatedFormData['contact.email'] = 'foo@bar.com';
           generatedFormData['images'] = [];

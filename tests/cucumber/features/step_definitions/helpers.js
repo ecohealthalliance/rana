@@ -1,12 +1,11 @@
 var getFieldTypes = function(schema) {
   var types = {};
   _.each(schema, function (value, key) {
-    // studyId is designated as a select via options passed in via
-    // a helper, so it's not in the schema and can't be detected here.
-    if (key == 'studyId') {
-      types[key] = 'select';
-    }  else if (value.optional) {
+    if (value.optional) {
       types[key] = 'optional';
+    } else if (value.autoform &&
+               value.autoform.type === 'hidden') {
+      types[key] = 'hidden';
     } else if (value.autoform &&
         value.autoform.afFieldInput &&
         value.autoform.afFieldInput.options &&
@@ -70,7 +69,7 @@ module.exports = {
           var schemaKey = key + '.' + subKey;
           browser.setValue('input[data-schema-key="' + schemaKey + '"]', subValue);
         });
-      } else if (schemaTypes[key] === 'optional' || schemaTypes[key] === 'Object') {
+      } else if (schemaTypes[key] === 'optional' || schemaTypes[key] === 'hidden' || schemaTypes[key] === 'Object') {
         // do nothing
       } else {
         var error = 'unknown type in schema: ' + schemaTypes[key] + 'for key: ' + key;

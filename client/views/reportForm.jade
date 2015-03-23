@@ -1,6 +1,8 @@
 template(name="reportForm")
 
   if type
+    h3 {{study.name}} - Add a Report
+  
     +autoForm(
       id="ranavirus-report"
       collection="collections.Reports"
@@ -8,7 +10,7 @@ template(name="reportForm")
       doc=reportDoc
     )
 
-      +afQuickField name='studyId' options=studyOptions
+      +afQuickField name='studyId'
 
       .panel.panel-default.form-input-block
         .panel-heading

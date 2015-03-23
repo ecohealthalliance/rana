@@ -1,7 +1,7 @@
 getCollections = => @collections
 
-Template.table.isEmpty = =>
-  not @collections.Reports.findOne()
+Template.table.isEmpty = ->
+  @collection.count() < 1
 
 Template.table.settings = =>
   schema = @collections.Reports.simpleSchema().schema()

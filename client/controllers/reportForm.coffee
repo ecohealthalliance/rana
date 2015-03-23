@@ -33,7 +33,10 @@ Template.reportForm.helpers
     if urlParams?.reportId
       return getCollections().Reports.findOne(urlParams.reportId) or {}
     else
-      { contact: UI._globalHelpers['contactFromUser']() }
+      { 
+        studyId: @study._id
+        contact: UI._globalHelpers['contactFromUser']()
+      }
 
   type: ->
     urlParams = Iron.controller().getParams()
@@ -46,8 +49,3 @@ Template.reportForm.helpers
     if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
       return "update"
     return "readonly"
-
-  studyOptions: ->
-    collections.Studies.find().map (study) ->
-      label: study.name
-      value: study._id

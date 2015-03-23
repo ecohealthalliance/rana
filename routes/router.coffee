@@ -6,9 +6,11 @@ Router.configure
 Router.route('/', ()-> @redirect('/group/rana'))
 
 Router.route('newReport',
-  path: '/report'
+  path: '/study/:studyId/report'
   template: 'reportForm'
   where: 'client',
+  data: ->
+    study: getCollections().Studies.findOne(@params.studyId)
   waitOn: ->
     [
       Meteor.subscribe("reports"),
@@ -43,10 +45,34 @@ Router.route('newStudy',
     ]
 )
 
+Router.route('study',
+  path: '/study/:studyId'
+  template: 'study'
+  where: 'client'
+  data: ->
+    study: getCollections().Studies.findOne(@params.studyId)
+    reports: getCollections().Reports.find({studyId: @params.studyId})
+  waitOn: ->
+    [
+      Meteor.subscribe("studies"),
+      Meteor.subscribe("reports")
+    ]
+)
+
+Router.route('/studies',
+  where: 'client'
+  data: ->
+    studies: getCollections().Studies.find()
+  waitOn: ->
+    [
+      Meteor.subscribe('studies') 
+    ]
+)
+
 Router.route('/table',
   where: 'client'
   data: ->
-    collection: collections.Reports
+    collection: getCollections().Reports.find()
   waitOn: ->
     [
       Meteor.subscribe("reports")
