@@ -20,8 +20,8 @@ Package.onUse(function(api) {
   
   api.use('rana:accounts@0.0.1');
   
-  api.addFiles("group_publication.coffee", ['server']);
   api.addFiles('collection.coffee', ['client', 'server']);
+  api.addFiles("group_publication.coffee", ['server']);
   
   api.addFiles('invite.jade', 'client');
   api.addFiles('group_home.jade', 'client');
@@ -33,5 +33,7 @@ Package.onUse(function(api) {
   api.addFiles('join.coffee', 'client');
   
   api.addFiles('routes.coffee', ['client', 'server']);
+  
+  api.export('Groups', 'server');
 });
 

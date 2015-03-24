@@ -8,6 +8,9 @@ Meteor.methods
       filename = path + record.copies.fs_csvfiles.key
       fs = Npm.require 'fs'
       csv = fs.readFileSync filename
-      csvParseSync csv, { columns: true }
+      try
+        csvParseSync csv, { columns: true }
+      catch e
+        throw new Meteor.Error 500, 'The uploaded file could not be parsed. Please check the format and try again.'
     else
       false

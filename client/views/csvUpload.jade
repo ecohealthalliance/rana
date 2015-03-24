@@ -1,0 +1,16 @@
+template(name="csvUpload")
+  section
+    .container
+      h3 CSV file upload
+      .csv-error #{csvError}
+      if importReports.count
+        b File: &nbsp;
+        tt #{csvFileName}
+      +afQuickField name='csvFile' id='csvFile'
+
+      if importReports.count
+        +reactiveTable collection=importReports fields=importFields
+
+        if unmatchedHeadersString
+          h4 Unused fields in your data
+          tt #{unmatchedHeadersString}

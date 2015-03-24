@@ -41,7 +41,7 @@ Template.map.rendered = ->
         <dt>Reported By</dt>
         <dd>#{report.createdBy.name}</dd>
       </dl>
-      <a class="btn btn-primary btn-edit" href="/report/#{report._id}">Edit</a>
+      <a class="btn btn-primary btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">View/Edit</a>
       </div>
       """
     )

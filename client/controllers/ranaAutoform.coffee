@@ -61,7 +61,7 @@ Template['afBooleanRadioGroup_rana'].helpers
     atts
 
   trueAtts: () ->
-    atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'data-schema-key');
+    atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'data-schema-key')
     if @value is true
       atts.checked = ''
     atts
