@@ -63,13 +63,13 @@
       afFieldInput:
         noselect: true
   speciesGenus:
-    label: 'Species Affected Genus'
+    label: 'Genus'
     type: String
     autoform:
       type: 'genusAutocomplete'
     optional: true
   speciesName:
-    label: 'Species Affected Name'
+    label: 'Species'
     type: String
     optional: true
   speciesNotes:
