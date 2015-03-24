@@ -28,12 +28,12 @@ AutoForm.addHooks(
 
 Template.reportForm.helpers
 
-  reportDoc: ->
+  reportDoc: =>
     urlParams = Iron.controller().getParams()
     if urlParams?.reportId
       return getCollections().Reports.findOne(urlParams.reportId) or {}
     else
-      { contact: UI._globalHelpers['contactFromUser']() }
+      { contact: @contactFromUser() }
 
   type: ->
     urlParams = Iron.controller().getParams()

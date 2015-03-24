@@ -69,8 +69,8 @@ Template.studyForm.events
 
 Template.studyForm.helpers
 
-  importDoc: () ->
-    { contact: UI._globalHelpers['contactFromUser']() }
+  importDoc: () =>
+    { contact: @contactFromUser() }
 
   csvFileId: () ->
     Session.get 'fileUpload[csvFile]'

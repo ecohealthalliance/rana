@@ -1,6 +1,4 @@
-getCollections = () -> @collections
-
-Template.registerHelper 'contactFromUser', () ->
+@contactFromUser = () ->
   profile = Meteor.user()?.profile
   if profile
     email = Meteor.user().emails[0].address
