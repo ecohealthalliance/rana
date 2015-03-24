@@ -18,37 +18,40 @@ Template.table.settings = =>
         ''
 
   for key in ["speciesGenus", "speciesName", "screeningReason", "populationType"]
-    label = schema[key].label or key
-    if label.length > 30
-      label = key
-    fields.push
-      key: key
-      label: label
-      fn: (val) ->
-        output = val or ''
+    do (key) ->
+      label = schema[key].label or key
+      if label.length > 30
+        label = key
+      fields.push
+        key: key
+        label: label
+        fn: (val, object) ->
+          if schema[key]?.autoform?.afFieldInput?.options
+            option = _.findWhere(
+              schema[key].autoform.afFieldInput.options,
+              value: val
+            )
+            display = option?.label or ''
+            new Spacebars.SafeString("<span sort=#{sort}>#{display}</span>")
+          else
+            output = val or ''
 
-        # capitalize first letter
-        if output.length > 1
-          output = output.charAt(0).toUpperCase() + output.slice(1)
+            # capitalize first letter
+            if output.length > 1
+              output = output.charAt(0).toUpperCase() + output.slice(1)
 
-        # truncate long fields
-        if output.length > 100
-          output = output.slice(0, 100) + '...'
+            # truncate long fields
+            if output.length > 100
+              output = output.slice(0, 100) + '...'
 
-        # put empty values at the end
-        if output is '' then sort = 2 else sort = 1
+            # put empty values at the end
+            if output is '' then sort = 2 else sort = 1
 
-        # # use option labels instead of values
-        # if schema[key]?.autoform?.afFieldInput?.options
-        #   option = _.findWhere(
-        #     schema[key].autoform.afFieldInput.options,
-        #     value: output
-        #   )
-        #   new Spacebars.SafeString("<span sort=#{sort}>#{option?.label}</span>")
-        # else
-        if not output
-          output = ''
-        new Spacebars.SafeString("<span sort=#{sort}>#{output}</span>")
+            if not output
+              output = ''
+
+            # use option labels instead of values
+            new Spacebars.SafeString("<span sort=#{sort}>#{output}</span>")
 
   fields.push
     key: "createdBy.name"
@@ -61,7 +64,7 @@ Template.table.settings = =>
     fn: (val, obj) ->
       if obj.createdBy.userId == Meteor.userId()
         new Spacebars.SafeString("""
-          <a class="btn btn-primary" href="/report/#{obj._id}">Edit</a>
+          <a class="btn btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
           <a class="btn btn-danger remove-form" data-id="#{obj._id}">Remove</a>
         """)
       else

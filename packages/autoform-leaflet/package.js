@@ -30,7 +30,7 @@ Package.onUse(function(api) {
   );
 
   api.addFiles('lib/client/autoform-leaflet.jade', 'client');
-  api.addFiles('lib/client/autoform-leaflet.coffee', ['client', 'server']);
+  api.addFiles('lib/client/autoform-leaflet.coffee', 'client');
   api.addFiles('lib/client/autoform-leaflet.styl', 'client');
 
 });

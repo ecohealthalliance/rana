@@ -1,5 +1,7 @@
 getCollections = => @collections
 
+urlParams = null
+
 AutoForm.addHooks(
   'ranavirus-report', {
     formToDoc: (doc)->
@@ -18,23 +20,28 @@ AutoForm.addHooks(
       }
       toastr.success(operation + " successful!")
       window.scrollTo(0, 0)
+      redirectOnSubmit =  urlParams?.query?.redirectOnSubmit
+      if redirectOnSubmit
+        Router.go(redirectOnSubmit)
+      else
+        window.scrollTo(0, 0)
   }
 )
 
 Template.reportForm.helpers
 
-  reportDoc: ->
-    params = Iron.controller().getParams()
-    if params?.reportId
-      return getCollections().Reports.findOne(params.reportId) or {}
+  reportDoc: =>
+    urlParams = Iron.controller().getParams()
+    if urlParams?.reportId
+      return getCollections().Reports.findOne(urlParams.reportId) or {}
     else
-      { contact: UI._globalHelpers['contactFromUser']() }
+      { contact: @contactFromUser() }
 
   type: ->
-    params = Iron.controller().getParams()
-    if not params?.reportId
+    urlParams = Iron.controller().getParams()
+    if not urlParams?.reportId
       return "insert"
-    currentReport = getCollections().Reports.findOne(params.reportId)
+    currentReport = getCollections().Reports.findOne(urlParams.reportId)
     if not currentReport
       # This will trigger an error message
       return null
@@ -42,5 +49,7 @@ Template.reportForm.helpers
       return "update"
     return "readonly"
 
-Template.reportForm.events =
-  "keyup input[name='speciesGenus']": @generaHandler
+  studyOptions: ->
+    collections.Studies.find().map (study) ->
+      label: study.name
+      value: study._id

@@ -4,8 +4,6 @@
 
   var assert = require('assert');
 
-  var assert = require('assert');
-
   module.exports = function () {
 
     var helper = this;
@@ -78,6 +76,113 @@
             assert.equal(value, expectedValue);
           })
           .call(callback);
+        });
+
+        browser.addCommand("setFormFields", function(formData, schemaName, callback) {
+
+          browser
+          .waitForExist('.form-group', function (err, exists) {
+            assert(!err);
+            assert(exists);
+          })
+          .execute(function(schemaName) {
+            return AutoForm.Fixtures.getData(collections[schemaName].simpleSchema());
+          }, schemaName, function(err, res) {
+            if(err) {
+              return callback.fail(err);
+            } else {
+              var generatedValues = res.value
+              if (generatedValues.hasOwnProperty('eventDate')) {
+                generatedValues['eventDate'] = new Date(
+                  JSON.parse(generatedValues['eventDate']))
+                  .toISOString().slice(0,10);
+              }
+
+              _.extend(generatedValues, formData);
+
+              var schemaTypes = {};
+              _.each(collections[schemaName].simpleSchema()._schema, function (value, key) {
+                // studyId is designated as a select via options passed in via
+                // a helper, so it's not in the schema and can't be detected here.
+                if (key == 'studyId') {
+                  schemaTypes[key] = 'select';
+                }  else if (value.optional) {
+                  schemaTypes[key] = 'optional';
+                } else if (value.autoform &&
+                    value.autoform.afFieldInput &&
+                    value.autoform.afFieldInput.options &&
+                    value.autoform.afFieldInput.noselect) {
+                  schemaTypes[key] = 'radio';
+                } else if (value.autoform &&
+                    value.autoform.afFieldInput &&
+                    value.autoform.options &&
+                    value.autoform.afFieldInput.noselect) {
+                  schemaTypes[key] = 'radio';
+                } else if (value.autoform &&
+                    value.autoform.afFieldInput &&
+                    value.autoform.afFieldInput.options) {
+                  schemaTypes[key] = 'select';
+                } else if (value.autoform &&
+                    value.autoform.afFieldInput &&
+                    value.autoform.options) {
+                  schemaTypes[key] = 'select';
+                } else if (value.autoform &&
+                           value.autoform.rows) {
+                  schemaTypes[key] = 'textarea';
+                } else if (value.autoform &&
+                           value.autoform.afFieldValueContains) {
+                  schemaTypes[key] = 'optional';
+                } else if (value.type.name) {
+                  schemaTypes[key] = value.type.name;
+                } else {
+                  schemaTypes[key] = value.autoform.type;
+                }
+              });
+
+              _.each(generatedValues, function (value, key) {
+                if (schemaTypes[key] === 'String' ||
+                    schemaTypes[key] === 'Number') {
+                  if (value) {
+                    browser.setValue('input[data-schema-key="' + key + '"]', value);
+                  }
+                } else if (schemaTypes[key] === 'textarea') {
+                  browser.setValue('textarea[data-schema-key="' + key + '"]', value);
+                } else if (schemaTypes[key] === 'Boolean') {
+                  browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
+                } else if (schemaTypes[key] === 'radio') {
+                  browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
+                } else if (schemaTypes[key] === 'select') {
+                  browser.selectByValue('select[data-schema-key="' + key + '"]', value);
+                } else if (schemaTypes[key] === 'Array') {
+                  _.each(value, function (element) {
+                    browser.click('div[data-schema-key="' + key + '"] input[value="' + element + '"]');
+                  });
+                } else if (schemaTypes[key] === 'Date') {
+                  browser.setValue('input[data-schema-key="' + key + '"]', '');
+                } else if (schemaTypes[key] === 'Object') {
+                  _.each(value, function (subValue, subKey) {
+                    var schemaKey = key + '.' + subKey;
+                    browser.setValue('input[data-schema-key="' + schemaKey + '"]', subValue);
+                  });
+                } else if (schemaTypes[key] === 'optional' || schemaTypes[key] === 'Object') {
+                  // do nothing
+                } else {
+                  var error = 'unknown type in schema: ' + schemaTypes[key] + 'for key: ' + key;
+                  throw new Error(error);
+                }
+              });
+            }
+
+            callback();
+          });
+        });
+
+
+        // Useful for keeping the Chrome window open so you can inspect things
+        // in the console or view the screen at a certain point.
+        browser.addCommand("holdWindowOpen", function() {
+          browser
+          .timeoutsAsyncScript(1000000);
         });
 
         browser.call(next);

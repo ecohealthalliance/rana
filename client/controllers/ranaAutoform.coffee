@@ -1,6 +1,12 @@
-# Derived from the original JS version here. If you need to implement helpers for
-# further field types, check here first to make sure
+# Derived from the original JS version here.
 # https://github.com/aldeed/meteor-autoform/blob/9568b4ada1035e3b18d713f9d7c0c27083fe98a0/templates/bootstrap3/bootstrap3.js
+# We took the relevant helpers from the bootstrap3 template, converted them to
+# CoffeeScript and customized them for the custom rana AutoForm templates.
+# If you need to implement a helper for a new input type, check that .js
+# file first to see if has already been done in the bootstrap3 template.
+#
+# In the future we may want to use extension lib this:
+# https://github.com/aldeed/meteor-template-extension
 
 _.each [
     'afSelect_rana',
@@ -9,7 +15,8 @@ _.each [
     'afInputDate_rana',
     'afInputNumber_rana',
     'afInputEmail_rana',
-    'afInputTel_rana'
+    'afInputTel_rana',
+    'genusAutocomplete_rana'
   ], (tmplName) ->
     Template[tmplName].helpers
       atts: () ->
@@ -21,10 +28,6 @@ Template['afFormGroup_rana'].helpers
   skipLabel: () ->
     type = AutoForm.getInputType @afFieldInputAtts
     @skipLabel || type == 'boolean-checkbox'
-
-  bsFieldLabelAtts: () ->
-    atts = _.clone this.afFieldLabelAtts
-    AutoForm.Utility.addClass atts, 'control-label'
 
 _.each [
     'afCheckboxGroup_rana',
@@ -58,16 +61,10 @@ Template['afBooleanRadioGroup_rana'].helpers
     atts
 
   trueAtts: () ->
-    atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'data-schema-key');
+    atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'data-schema-key')
     if @value is true
       atts.checked = ''
     atts
 
   dsk: () ->
     { 'data-schema-key': this.atts['data-schema-key'] }
-
-Template['reportForm'].helpers
-  studyOptions: () ->
-    collections.Studies.find().map (study) ->
-      label: study.name
-      value: study._id

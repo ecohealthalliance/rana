@@ -1,8 +1,6 @@
 @sharedSchema =
   populationType:
-    label: """
-    Type of Population:
-    """
+    label: "Type of Population"
     type: String
     optional: true
     autoform:
@@ -67,6 +65,8 @@
   speciesGenus:
     label: 'Species Affected Genus'
     type: String
+    autoform:
+      type: 'genusAutocomplete'
     optional: true
   speciesName:
     label: 'Species Affected Name'
@@ -147,6 +147,29 @@
     optional: true
     autoform:
       rows: 5
+  consent:
+    type: Boolean
+    label: """
+    Do you consent to have this data published and made searchable on
+    the Ranavirus Reporting System website as per the data use permissions?
+    """
+    autoform:
+       type: 'boolean-radios'
+       trueLabel: 'Yes, I consent'
+       falseLabel: 'No, I do NOT consent'
+  dataUsePermissions:
+    type: String
+    label: """
+    Please select the information that can be shared with other users.
+    """
+    autoform:
+      options: [
+        'Do not share'
+        'Share obfuscated'
+        'Share full record'
+      ].map((value)-> {label:value, value: value})
+      afFieldInput:
+        noselect: true
   creationDate:
     type: Date
     autoform:

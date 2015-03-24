@@ -23,12 +23,3 @@ Feature: A form for reporting Ranavirus outbreaks
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
     And the database should have a report linked to my account
-
-  Scenario: Submitting without pathology report permission
-    Given I have logged in
-    And I am on the "report" page
-    When I fill out the form
-    When I choose "Permission Not Granted" for the pathologyReportPermission field
-    Then the webpage should not display the pathologyReports.0.report field
-    When I click submit
-    Then the webpage should not display a validation error

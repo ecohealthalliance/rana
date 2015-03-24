@@ -6,11 +6,11 @@ template(name="groupHome")
 
     if isInRole 'admin' group._id
       +groupAdmin
-    
+
   else
     h4 No group here -
       a(href="{{pathFor 'newGroup'}}") Create one?
-  
+
 template(name="groupAdmin")
   .panel-group
     .panel.panel-default
@@ -35,7 +35,7 @@ template(name="groupAdmin")
             else
               p None
             +invite groupId=group._id
-              
+
 template(name="groupUser")
   div
     span {{profile.name}}
@@ -43,4 +43,3 @@ template(name="groupUser")
         i {{profile.organization}}
     each emails
       span {{address}}
-      
