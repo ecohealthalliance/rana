@@ -4,7 +4,7 @@ Template.table.isEmpty = =>
   not @collections.Reports.findOne()
 
 Template.table.settings = =>
-  isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({})._id
+  isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
   schema = @collections.Reports.simpleSchema().schema()
 
   fields = []

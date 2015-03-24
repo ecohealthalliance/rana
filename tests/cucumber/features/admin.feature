@@ -6,7 +6,6 @@ Feature: An admin role
   Scenario: Deleting a report
     Given I am on the "table" page
     And I have logged in as admin
-    And I am logged in
     And there is a report in the database
     When I delete the report
     Then I should see the text "No reports"

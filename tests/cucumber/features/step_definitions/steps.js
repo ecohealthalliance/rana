@@ -129,18 +129,19 @@
           name: "Someone Else"
         };
       }
-      helper.resetTestDB([report], function(err){
+      helper.addReports([report], function(err){
         assert.ifError(err);
         helper.world.browser
         .executeAsync(function(expectedReport, done){
           delete expectedReport['createdBy'];
+          Meteor.subscribe('reports');
           Tracker.autorun(function(){
-            var report = collections.Reports.findOne(expectedReport);
+            var report = collections.Reports.findOne();
             if(report) done(report);
           });
           window.setTimeout(done, 2000);
         }, report, _.once(function(err, ret){
-          assert(!err);
+          assert.ifError(err);
           assert(ret.value, "No reports in the database");
           callback();
         }));
