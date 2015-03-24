@@ -12,7 +12,10 @@ fileUploaded = () ->
       record = @collections.CSVFiles.findOne { _id: fileId }
       if record and record.isUploaded()
         return Meteor.call 'getCSVData', fileId, (err, data) =>
-          if data
+          if err
+            Session.set 'csvError', err.reason
+            Session.set 'fileUpload[csvFile]', false
+          else if data
             updateImportReports data
           else
             setTimeout checkUploaded, 10
@@ -40,6 +43,8 @@ updateImportReports = (data) ->
       createdBy:
         userId: Meteor.user()._id
         name: Meteor.user().profile.name
+      consent: true
+      dataUsePermissions: 'Share obfuscated'
     for field in matches
       rowdata[field] = row[field]
     ImportReports.insert rowdata
@@ -58,7 +63,7 @@ headerMatches = (data) ->
 
 Template.studyForm.events
   'change .file-upload': (e, t) ->
-
+    Session.set 'csvError', null
     fileUploaded()
 
   'click .file-upload-clear': (e, t) ->
@@ -100,6 +105,13 @@ Template.studyForm.helpers
 
   unmatchedHeadersString: () ->
     Session.get('unmatchedHeaders').join ', '
+
+  csvError: () ->
+    error = Session.get 'csvError'
+    if error
+      error
+    else
+      ''
 
 AutoForm.hooks
   'ranavirus-import':

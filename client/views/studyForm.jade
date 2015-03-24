@@ -20,6 +20,7 @@ template(name="studyForm")
           .panel-heading
             h3.panel-title CSV file upload
           .panel-body
+            .csv-error #{csvError}
             if importReports.count
               b File: &nbsp;
               tt #{csvFileName}
