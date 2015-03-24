@@ -1,4 +1,4 @@
-Groups = @Groups
+Groups = share.Groups
 
 Invites = new Mongo.Collection 'invites'
 
@@ -56,4 +56,4 @@ if Meteor.isServer
     groupId = Invites.findOne({_id: inviteId})?.group
     [Invites.find({_id: inviteId}), Groups.find({_id: groupId})]
 
-@Invites = Invites
+share.Invites = Invites
