@@ -1,3 +1,5 @@
+getCollections = () -> @collections
+
 Template.studyForm.helpers
 
   importDoc: () =>
@@ -18,7 +20,6 @@ AutoForm.hooks
         positionClass: "toast-top-center"
         timeOut: "10000"
       toastr.success operation + " successful!"
-      clearImportReports()
       window.scrollTo 0, 0
 
     after:
