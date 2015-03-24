@@ -24,7 +24,7 @@
         }
       }).call(callback);
     });
-    
+
     this.Then(/my reports without consent should( not)? be available/,
     function(shouldNot, callback){
       helper.world.browser
@@ -38,7 +38,7 @@
         }
       }).call(callback);
     });
-    
+
     this.When("I register an account", function(callback){
       helper.world.browser
       .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
@@ -84,7 +84,7 @@
       })
       .call(callback);
     });
-  
+
     this.Given(/I have not logged in/,
     function(callback){
       helper.world.browser.execute(function () {
@@ -105,7 +105,7 @@
         assert(ret.value);
       }).call(callback);
     });
-    
+
     this.When("I log out",
     function (callback) {
       helper.world.browser
@@ -113,7 +113,7 @@
         .pause(500)
         .call(callback);
     });
-    
+
     this.Then(/I am( not)? logged in/,
     function(amNot, callback){
       helper.world.browser
@@ -128,7 +128,7 @@
         }
       }).call(callback);
     });
-    
+
     this.Then("I will see a message that requires me to log in",
     function(callback) {
       helper.world.browser
@@ -144,7 +144,7 @@
         assert(RegExp(regexString, "i").test(text), "No login message");
       }).call(callback);
     });
-    
+
   };
 
 })();

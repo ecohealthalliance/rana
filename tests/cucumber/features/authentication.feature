@@ -5,10 +5,10 @@ Feature: The ability to authenticate users
 
   Scenario: Reports are not publicly visible without consent
     Given I have not logged in
-    When I am on the "form" page
+    When I am on the "report" page
     And I log in
     Given I am logged in
-    When I navigate to the "form" page
+    When I navigate to the "report" page
     And I fill out a report without consenting to publish it
     And I click submit
     Then the webpage should not display a validation error

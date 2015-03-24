@@ -3,7 +3,7 @@
 (function () {
 
   'use strict';
-  
+
   var _ = Package["underscore"]._;
 
   module.exports = function () {

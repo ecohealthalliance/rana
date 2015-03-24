@@ -28,7 +28,7 @@
     };
     this.Given('I am on the "$path" page', this.visit);
     this.When('I navigate to the "$path" page', this.visit);
-    
+
     this.Then('I should be redirected to the "$path" page', function (path, callback) {
       helper.world.browser
       .pause(2000)
@@ -45,7 +45,7 @@
         assert.equal(result.value.slice(-path.length), path);
       }).call(callback);
     });
-    
+
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
         title(function (err, res) {
@@ -106,11 +106,22 @@
     this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,
     function(withGeo, someoneElse, callback) {
       var report = {
+        studyId: 'fakeid',
         consent: true,
-        dataUsePermissions: "Share full record"
+        contact: {name: 'Text User', 'email': 'test@foo.com'},
+        dataUsePermissions: "Share full record",
       };
       if(withGeo) {
-        report['eventLocation'] = "25.046919772516173,121.55189514218364";
+        report['eventLocation'] = {
+          source: 'LonLat',
+          northing: 1,
+          easting: 2,
+          zone: 3,
+          geo: {
+            type: 'Point',
+            coordinates: [ 121.55189514218364, 25.046919772516173 ]
+          }
+        };
       }
       if(someoneElse) {
         report['createdBy'] = {
@@ -118,7 +129,7 @@
           name: "Someone Else"
         };
       }
-      helper.addReports([report], function(err){
+      helper.resetTestDB([report], function(err){
         assert.ifError(err);
         helper.world.browser
         .executeAsync(function(expectedReport, done){
@@ -135,7 +146,7 @@
         }));
       });
     });
-    
+
     this.Then("there should be no delete button for the report by someone else",
     function(callback){
       helper.world.browser
@@ -176,8 +187,9 @@
         .call(callback);
     });
     
-    this.Then(/^I should( not)? see the text "(.+)"/,
+    this.Then(/^I should( not)? see the text \"(text)\"/,
     function (shouldNot, text, callback) {
+
       helper.world.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
@@ -195,7 +207,7 @@
           }
         }).call(callback);
     });
-    
+
   };
 
 })();

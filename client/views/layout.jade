@@ -9,7 +9,9 @@ template(name="layout")
               a.navbar-brand Ranavirus Reporting System
             ul.nav.navbar-nav
               li
-                a(href="/form") Report Form
+                a(href="/study") New Study
+              li
+                a(href="/report") New Report
               li
                 a(href="/map") Report Map
               li
@@ -18,5 +20,5 @@ template(name="layout")
                 a(href="/group/rana/info") Ranavirus Information
             .navbar-right
                 +accountsHeaderButtons
-    .container
-        +yield
+  .container
+      +yield

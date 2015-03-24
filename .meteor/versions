@@ -9,7 +9,8 @@ aldeed:simple-schema@1.3.0
 amplify@1.0.0
 anti:i18n@0.4.3
 application-configuration@1.0.4
-aslagle:reactive-table@0.6.15
+aslagle:reactive-table@0.6.13
+autoform-leaflet@0.0.1
 autoupdate@1.1.5
 base64@1.0.2
 binary-heap@1.0.2
@@ -23,7 +24,8 @@ cfs:collection@0.5.4
 cfs:collection-filters@0.2.4
 cfs:data-man@0.0.6
 cfs:file@0.1.16
-cfs:gridfs@0.0.30
+cfs:filesystem@0.1.2
+cfs:gridfs@0.0.31
 cfs:http-methods@0.0.27
 cfs:http-publish@0.0.13
 cfs:power-queue@0.9.11
@@ -37,6 +39,7 @@ cfs:worker@0.1.4
 check@1.0.4
 chrismbeckett:toastr@2.1.0
 coffeescript@1.0.5
+csats:csv-parse@1.0.1
 ddp@1.0.14
 deps@1.0.6
 eha:autoform-fixtures@1.1.4
@@ -75,13 +78,14 @@ momentjs:moment@2.8.4
 mongo@1.0.11
 mongo-livedata@1.0.7
 mquandalle:jade@0.4.1
-mrt:googlemaps@0.0.2
+mrt:jquery-ui@1.9.2
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
 ordered-dict@1.0.2
 perak:markdown@1.0.4
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3
+proj4:proj4@2.3.4-alpha
 raix:eventemitter@0.1.1
 rana:accounts@0.0.1
 rana:groups@0.0.1
@@ -91,6 +95,7 @@ reactive-var@1.0.4
 reload@1.1.2
 retry@1.0.2
 routepolicy@1.0.4
+sebdah:autocompletion@0.2.0
 service-configuration@1.0.3
 session@1.0.5
 sha@1.0.2
@@ -117,4 +122,3 @@ webapp-hashing@1.0.2
 xolvio:cucumber@0.5.3
 xolvio:webdriver@0.5.2
 yogiben:autoform-file@0.2.0
-yogiben:autoform-map@0.0.3
