@@ -8,27 +8,8 @@ template(name="reportForm")
       doc=reportDoc
     )
       form.report-form
-        section.date-location
-          .container
-            .row.form-input-block
-              .col-sm-12
-                .row
-                  .col-sm-4
-                    +afQuickField name="eventDate"
-                .row
-                  .col-sm-12
-                    +afQuickField name="eventLocation"
-        section.odd
-          .container
-            .row.form-input-block
-              .col-sm-4.col-xs-6.input-block
-                  +afQuickField name="populationType"
-              .col-sm-4.col-xs-6.input-block
-                  +afQuickField name="screeningReason"
-              .clearfix.visible-xs-block
-              .col-sm-4.col-xs-6.input-block
-                  +afQuickField name="vertebrateClasses"
-        section
+
+        section.yellow
           .container
             .row.form-input-block
               .col-lg-5
@@ -45,7 +26,7 @@ template(name="reportForm")
               .col-lg-4
                 +afQuickField name='contact.phone' minor='(Must include the country code)'
 
-        section
+        section.odd
           .container
             h2 Reporting institution, diagnostic lab or government agency info
               +tooltip name='contact.institutionAddress'
@@ -68,21 +49,28 @@ template(name="reportForm")
               .col-lg-4
                 +afQuickField name="contact.institutionAddress.country"
 
-        section
+        section.date-location
           .container
-            h2 Event Date and Location
-            .row
-              .col-lg-12
-                +afQuickField name="eventDate"
-                +afQuickField name="eventLocation"
-
+            h2 Date and Location
             .row.form-input-block
-              .col-lg-4
-                +afQuickField name="populationType"
-              .col-lg-4
-                +afQuickField name="screeningReason"
-              .col-lg-4
-                +afQuickField name="vertebrateClasses"
+              .col-sm-12
+                .row
+                  .col-sm-4
+                    +afQuickField name="eventDate"
+                .row
+                  .col-sm-12
+                    +afQuickField name="eventLocation"
+
+        section.odd
+          .container
+            .row.form-input-block
+              .col-sm-4.col-xs-6.input-block
+                  +afQuickField name="populationType"
+              .col-sm-4.col-xs-6.input-block
+                  +afQuickField name="screeningReason"
+              .clearfix.visible-xs-block
+              .col-sm-4.col-xs-6.input-block
+                  +afQuickField name="vertebrateClasses"
 
         section
           .container
