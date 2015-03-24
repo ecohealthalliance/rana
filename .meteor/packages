@@ -12,12 +12,10 @@ underscore
 iron:router
 twbs:bootstrap
 aldeed:autoform
-yogiben:autoform-map
 yogiben:autoform-file
 aldeed:collection2
 cfs:standard-packages
 cfs:gridfs
-fuatsengul:leaflet
 perak:markdown
 xolvio:webdriver
 eha:autoform-fixtures
@@ -29,5 +27,10 @@ aslagle:reactive-table
 rana:accounts
 rana:groups
 useraccounts:bootstrap
+cfs:filesystem
+csats:csv-parse
+autoform-leaflet
 chrismbeckett:toastr
 sebdah:autocompletion
+fuatsengul:leaflet
+reactive-var

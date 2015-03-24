@@ -7,11 +7,11 @@ Template.map.rendered = ->
     maxZoom: 18
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(lMap);
-  
+
   # initialize markers
   markers = new L.FeatureGroup()
   markers.addTo(lMap)
-  
+
   @autorun ()=>
     data = getCollections().Reports.find(
       $and: [
@@ -23,8 +23,8 @@ Template.map.rendered = ->
         }
       ]
     )
-    .map((report)-> {
-      location: report.eventLocation.split(',').map(parseFloat)
+    .map((report)->
+      location: [report.eventLocation.geo.coordinates[1], report.eventLocation.geo.coordinates[0]]
       popupHTML: """
       <div>
       <dl>
@@ -41,10 +41,10 @@ Template.map.rendered = ->
         <dt>Reported By</dt>
         <dd>#{report.createdBy.name}</dd>
       </dl>
-      <a class="btn btn-primary btn-edit" href="/form/#{report._id}?redirectOnSubmit=/map">View/Edit</a>
+      <a class="btn btn-primary btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">View/Edit</a>
       </div>
       """
-    })
+    )
     lMap.removeLayer(markers)
     markers = new L.FeatureGroup()
     data.forEach((mapItem)->

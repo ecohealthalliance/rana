@@ -2,12 +2,12 @@ Groups = @Groups
 Invites = @Invites
 
 Router.route "/group/:groupPath", {
-  
+
   template: 'groupHome'
-  
+
   data: () ->
     group = Groups.findOne {path: @params.groupPath}
-    
+
     group: group
     groups: Groups
     groupAdmins: Roles.getUsersInRole "admin", group?._id
@@ -16,7 +16,7 @@ Router.route "/group/:groupPath", {
   waitOn: () ->
     Meteor.subscribe "groupByPath", @params.groupPath
 }
-    
+
 
 Router.route "/newGroup", {
   data: () ->
@@ -26,13 +26,13 @@ Router.route "/newGroup", {
 Router.route "/join/:inviteId", {
   name: 'join'
   template: 'join'
-  
+
   data: () ->
     invite = Invites.findOne(@params.inviteId)
-      
+
     invite: invite
     group: Groups.findOne(invite?.group)
-    
+
   waitOn: () ->
     Meteor.subscribe "invite", @params.inviteId
 }
