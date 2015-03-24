@@ -7,9 +7,6 @@ template(name="csvUpload")
       if importReports.count
         b File: &nbsp;
         tt #{csvFileName}
-        | &nbsp;
-        b Id: &nbsp;
-        tt #{csvFileId}
       +afQuickField name='csvFile' id='csvFile'
 
       if importReports.count
