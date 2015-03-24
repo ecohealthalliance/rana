@@ -41,4 +41,4 @@ Groups.after.insert (userId, doc) ->
                       
 Groups.attachSchema GroupSchema
 
-@Groups = Groups
+share.Groups = Groups
