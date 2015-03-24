@@ -108,5 +108,6 @@ Template.csvUpload.helpers
     Session.get('unmatchedHeaders').join ', '
 
 Template.csvUpload.created = ->
+  clearImportReports()
   @csvError = new ReactiveVar
   @csvError.set(null)
