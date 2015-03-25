@@ -12,11 +12,16 @@ AutoForm.addHooks(
       return doc
     onSuccess: (operation, result, template)->
       toastr.options = {
-        "closeButton": true,
-        "positionClass": "toast-top-center",
-        "timeOut": "10000"
+        closeButton: true
+        positionClass: "toast-bottom-center"
+        timeOut: "100000"
+        # This is the timeout after a mouseover event
+        extendedTimeOut: "100000"
       }
-      toastr.success(operation + " successful!")
+      toastr.success("""
+      <div>#{operation} successful!</div>
+      <a href="/report/#{result}">Edit Report</a>
+      """)
       window.scrollTo(0, 0)
       redirectOnSubmit =  urlParams?.query?.redirectOnSubmit
       if redirectOnSubmit

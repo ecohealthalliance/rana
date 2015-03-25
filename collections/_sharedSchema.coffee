@@ -63,17 +63,17 @@
       afFieldInput:
         noselect: true
   speciesGenus:
-    label: 'Species Affected Genus'
+    label: 'Genus'
     type: String
     autoform:
       type: 'genusAutocomplete'
     optional: true
   speciesName:
-    label: 'Species Affected Name'
+    label: 'Species'
     type: String
     optional: true
   speciesNotes:
-    label: 'Species Notes'
+    label: 'Extra notes or comments about the species'
     type: String
     optional: true
     autoform:
@@ -142,7 +142,7 @@
         name: 'sampleType'
         value: 'other'
   additionalNotes:
-    label: 'Additional Notes'
+    label: 'Additional Notes (these will be included in published reports)'
     type: String
     optional: true
     autoform:

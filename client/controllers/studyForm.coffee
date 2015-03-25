@@ -17,9 +17,15 @@ AutoForm.hooks
     onSuccess: (operation, result, template) ->
       toastr.options =
         closeButton: true
-        positionClass: "toast-top-center"
-        timeOut: "10000"
-      toastr.success operation + " successful!"
+        positionClass: "toast-bottom-center"
+        timeOut: "100000"
+        # This is the timeout after a mouseover event
+        extendedTimeOut: "100000"
+      toastr.success("""
+      <div>#{operation} successful!</div>
+      <a href="/study/#{result}">Edit Study</a>
+      """)
+      clearImportReports()
       window.scrollTo 0, 0
 
     after:
