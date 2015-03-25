@@ -28,6 +28,17 @@ AutoForm.addHooks(
         Router.go(redirectOnSubmit)
       else
         window.scrollTo(0, 0)
+    onError: (operation, error) ->
+      errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")
+        .parent()
+        .offset()
+        ?.top
+      window.scrollTo(0, errorLocation) if errorLocation
+      toastr.options = {
+        closeButton: true
+        positionClass: "toast-bottom-center"
+      }
+      toastr.error(error.message)
   }
 )
 
