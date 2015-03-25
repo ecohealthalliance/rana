@@ -1,5 +1,5 @@
-Groups = @Groups
-Invites = @Invites
+Groups = share.Groups
+Invites = share.Invites
 
 Router.route "/group/:groupPath", {
 

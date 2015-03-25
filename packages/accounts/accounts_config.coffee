@@ -1,4 +1,4 @@
-UserProfileSchema = @UserProfileSchema
+UserProfileSchema = share.UserProfileSchema
 
 keyToLabel = (key)->
   label = key[0].toUpperCase()

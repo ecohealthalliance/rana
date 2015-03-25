@@ -1,3 +1,5 @@
+getCollections = () -> @collections
+
 Template.studyForm.helpers
 
   importDoc: () =>
