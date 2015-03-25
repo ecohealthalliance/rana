@@ -28,30 +28,6 @@
     optional: true
     autoform:
       rows: 3
-  dataUsePermissions:
-    type: String
-    label: """
-    Data Use Permissions: Please select the information that can be shared with other users.
-    """
-    autoform:
-      options: [
-        'Do not share'
-        'Share obfuscated'
-        'Share full record'
-      ].map((value)-> {label:value, value: value.toLowerCase().replace(" ", "_")})
-      afFieldInput:
-        noselect: true
-  consent:
-    type: Boolean
-    label: """
-    Do you consent to have this data published and made searchable on
-    the Ranavirus Reporting System website as per the data use permissions
-    in the previous field?
-    """
-    autoform:
-       type: 'boolean-radios'
-       trueLabel: 'Yes, I consent'
-       falseLabel: 'No, I do NOT consent'
   csvFile:
     type: String
     label: """csvFile"""
