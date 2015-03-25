@@ -1,0 +1,4 @@
+template(name="tooltip")
+  if tooltipText name
+    a.more-info(data-toggle="tooltip" data-placement="right" title="{{tooltipText name}}")
+      span.glyphicon.glyphicon-question-sign

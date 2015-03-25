@@ -5,21 +5,44 @@ Router.configure
 
 Router.route('/', ()-> @redirect('/group/rana'))
 
-Router.route('/form',
+Router.route('newReport',
+  path: '/report'
+  template: 'reportForm'
   where: 'client'
+  onAfterAction: ->
+    Meteor.subscribe("genera")
   waitOn: ->
     [
-      Meteor.subscribe("genera")
+      Meteor.subscribe("reports"),
+      Meteor.subscribe("studies")
     ]
 )
 
-Router.route('/form/:reportId',
-  template: 'form'
+Router.route('editReport',
+  path: '/report/:reportId'
+  template: 'reportForm'
   where: 'client'
+  data: ->
+    reportId: @params.reportId
+  onAfterAction: ->
+    Meteor.subscribe("genera")
   waitOn: ->
     [
-      Meteor.subscribe("genera")
-      Meteor.subscribe("reports")
+      Meteor.subscribe("reports"),
+      Meteor.subscribe("studies")
+    ]
+)
+
+Router.route('newStudy',
+  path: '/study'
+  template: 'studyForm'
+  where: 'client'
+  onAfterAction: ->
+    Meteor.subscribe("genera")
+  waitOn: ->
+    [
+      Meteor.subscribe("csvfiles"),
+      Meteor.subscribe("studies")
     ]
 )
 
@@ -45,4 +68,4 @@ Router.route('/info',
   where: 'client'
 )
 
-Router.plugin 'ensureSignedIn', {only: ['form']}
+Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'newStudy']}

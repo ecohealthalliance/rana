@@ -1,0 +1,32 @@
+template(name='leaflet')
+  div(data-schema-key=schemaKey)
+    input.source(type='hidden')
+    .col-md-6
+      .form-group
+
+        h4.form-group-header Degrees Decimal
+        .col-md-6
+          label(for='lon') Longitude
+          input.lon.form-control(name='lon')
+        .col-md-6
+          label(for='lat') Latitude
+          input.lat.form-control(name='lat')
+
+        h4.form-group-header Universal Transverse Mercator
+        .col-md-4
+          label(for='easting') Easting
+          input.easting.form-control(name='easting')
+        .col-md-4
+          label(for='norting') Northing
+          input.northing.form-control(name='northing')
+        .col-md-4
+          label(for='zone') Zone
+          input.zone.form-control(name='zone')
+
+    .col-md-6
+      div
+        //- input.leaflet-search.map-controls(type='text')
+        div.leaflet-canvas
+        .btn-group
+          button.leaflet-locate.btn.btn-default My location
+          button.leaflet-clear.btn.btn-default Clear

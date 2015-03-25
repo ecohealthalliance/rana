@@ -18,7 +18,7 @@
         .click('.leaflet-marker-icon')
         .call(callback);
     });
-    
+
     this.Then(/^I should see a popup with information from the report$/,
     function (callback) {
       helper.world.browser

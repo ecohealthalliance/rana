@@ -1,0 +1,145 @@
+.report-form
+  .form-input-block
+    margin-bottom 50px
+
+.minor-label
+  font-size 90%
+  color #999
+  font-weight normal
+
+.minor-label-block
+  @extend .minor-label
+  display block
+
+.row
+  margin-bottom 20px
+  
+.form-group
+  margin-bottom 0
+  label
+    width auto
+  
+h2.panel-title
+  font-size 24px
+
+h2 a.more-info
+  size 12px
+  color btn-default
+
+.block
+  display block
+  
+.map
+  width 100%
+  min-height 300px
+  background lightblue
+  
+.no-margin-btm
+  margin-bottom 0
+
+a
+  cursor pointer
+
+textarea
+  display block
+  min-width 100%
+  min-height 200px
+  
+.add-subtract
+  padding 5px
+  font-size 10px
+  
+.no-padding
+  padding 0
+
+.panel-intro
+  padding 15px
+
+.panel-heading
+  border-bottom 2px #DDD solid
+
+.content-panel
+  @extend .no-padding
+  .list-group-item
+    @extend .no-padding
+    border-left 0
+    border-right 0
+    border-bottom 0
+
+.panel > .list-group
+  margin-bottom 0px
+
+.content-block
+  padding 15px 15px 0 15px
+  .list-group-item
+    position relative
+    &:first-child
+      border-top 0
+  fieldset
+    > div:first-child
+      margin-bottom 20px
+      label
+        display none
+      .form-group label
+        display block
+    legend
+      display none
+    > div:last-child
+      margin-bottom 15px
+    div:last-child
+      > label
+        margin-bottom 0
+          
+  .autoform-remove-item
+    position absolute
+    top 15px
+    right 0px
+  .form-group.file-upload .btn,
+  .form-control
+    width 80%
+    background btn-default
+    color white
+    font-weight 300
+    letter-spacing .03em
+    border darken(btn-default, 10%)
+    &:hover,
+    &:focus
+      background darken(btn-default, 10%)
+    &:active
+      background darken(btn-default, 20%)
+  input[type=text].form-control
+    background white
+    color body-text
+    border 1px solid #ccc
+  .file-upload-clear
+    display inline-block
+    margin-top 5px
+    padding-left 5px
+  
+.add-content
+  margin-bottom 15px
+  display block
+  background #DDD
+  border 0
+  text-align center
+  padding 8px
+  width 100%
+  color dd-gray
+  @extend .light-shadow
+  transition
+  &:focus
+    outline 0
+  &:hover
+    background darken(#DDD, 10%)
+
+.tooltipped
+  border-bottom 1px #ddd dotted
+  cursor pointer
+
+#toast-container > .toast
+  opacity 1.0
+  a
+    color lightblue
+  a:hover
+    color lightblue
+    text-decoration underline

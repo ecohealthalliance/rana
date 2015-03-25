@@ -28,7 +28,7 @@
     };
     this.Given('I am on the "$path" page', this.visit);
     this.When('I navigate to the "$path" page', this.visit);
-    
+
     this.Then('I should be redirected to the "$path" page', function (path, callback) {
       helper.world.browser
       .pause(2000)
@@ -37,7 +37,7 @@
         assert.equal(result.value.slice(-path.length), path);
       }).call(callback);
     });
-    
+
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
         title(function (err, res) {
@@ -98,9 +98,20 @@
     this.Given(/^there is a report( with a geopoint)? in the database$/,
     function(withGeo, callback) {
       helper.resetTestDB([{
+        studyId: 'fakeid',
         consent: true,
+        contact: {name: 'Text User', 'email': 'test@foo.com'},
         dataUsePermissions: "Share full record",
-        eventLocation: "25.046919772516173,121.55189514218364"
+        eventLocation: {
+          source: 'LonLat',
+          northing: 1,
+          easting: 2,
+          zone: 3,
+          geo: {
+            type: 'Point',
+            coordinates: [ 121.55189514218364, 25.046919772516173 ]
+          }
+        }
       }], function(err){
         if(err) {
           console.log(err);
@@ -122,7 +133,7 @@
         }));
       });
     });
-    
+
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
@@ -138,9 +149,10 @@
         })
         .call(callback);
     });
-    
+
     this.Then(/^I should( not)? see the text \"(text)\"/,
     function (shouldNot, text, callback) {
+
       helper.world.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
@@ -159,7 +171,7 @@
           }
         }).call(callback);
     });
-    
+
   };
 
 })();
