@@ -1,3 +1,11 @@
+numInvolvedOptions =
+  '1': '1'
+  '2_10':   '2 to 10'
+  '11_50':  '11 to 50'
+  '51_100': '51 to 100'
+  '101_500':    '101 to 500'
+  '500_':   'more than 500'
+
 @reportSchema = new SimpleSchema [ @sharedSchema, new SimpleSchema
   studyId:
     type: String
@@ -34,7 +42,7 @@
     optional: true
     autoform:
       afFieldInput:
-        options: _.map(@numInvolvedOptions, (definition, option)-> {label:definition, value: option})
+        options: _.map(numInvolvedOptions, (definition, option)-> {label:definition, value: option})
   totalAnimalsTested:
     label: 'Total Number of Animals Tested'
     type: Number

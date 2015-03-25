@@ -7,33 +7,15 @@ template(name="studyForm")
     doc=importDoc
   )
 
-    .panel.panel-default.form-input-block
-      .panel-body
-        .row
-          .col-lg-4
-            +afQuickField name='name'
-
     .container-fluid.report-form
-        form
-      .form-group.csv-file
-        .panel.panel-default
-          .panel-heading
-            h3.panel-title CSV file upload
-          .panel-body
-            if importReports.count
-              b File: &nbsp;
-              tt #{csvFileName}
-              | &nbsp;
-              b Id: &nbsp;
-              tt #{csvFileId}
-            +afQuickField name='csvFile' id='csvFile'
 
-            if importReports.count
-              +reactiveTable collection=importReports fields=importFields
+      .panel.panel-default.form-input-block
+        .panel-body
+          .row
+            .col-lg-4
+              +afQuickField name='name'
 
-              if unmatchedHeadersString
-                h4 Unused fields in your data
-                tt #{unmatchedHeadersString}
+      +csvUpload
 
       p Please fill out any of the following fields that apply to all reports in this study.
 
@@ -105,13 +87,13 @@ template(name="studyForm")
           if afFieldValueContains name='sampleType' value='other'
             +afQuickField name='specifyOtherRanavirusSampleTypes'
 
-    +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+      +afQuickField name='dataUsePermissions' id='dataUsePermissions'
 
-    +afQuickField name='consent' id='consent'
+      +afQuickField name='consent' id='consent'
 
-    +afQuickField name='additionalNotes' id='additionalNotes'
+      +afQuickField name='additionalNotes' id='additionalNotes'
 
-    +afQuickField name='publicationInfo' id='publicationInfo'
+      +afQuickField name='publicationInfo' id='publicationInfo'
 
-    .form-group
-      button(type='submit' class='btn btn-primary') Submit
+      .form-group
+        button(type='submit' class='btn btn-primary') Submit
