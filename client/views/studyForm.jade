@@ -6,7 +6,7 @@ template(name="studyForm")
     id="ranavirus-import"
     doc=importDoc
   )
-    .report-form
+    .report-form.study
       section
         .container
           .row
@@ -86,6 +86,13 @@ template(name="studyForm")
                     +afQuickField name='sampleType'
                     if afFieldValueContains name='sampleType' value='other'
                       +afQuickField name='specifyOtherRanavirusSampleTypes'
+
+      section.rm-pad-top
+        .container
+          .row
+            .col-sm-9
+              +afQuickField name='additionalNotes' id='additionalNotes'
+              
       section
         .container
           h3 Permissions and Consent
@@ -94,11 +101,6 @@ template(name="studyForm")
               +afQuickField name='dataUsePermissions' id='dataUsePermissions'
             .col-sm-6.input-block
               +afQuickField name='consent' id='consent'
-      section.rm-pad-top
-        .container
-          .row
-            .col-sm-9
-              +afQuickField name='additionalNotes' id='additionalNotes'
 
       section.rm-pad-top.form-grp-container.publication
         .container

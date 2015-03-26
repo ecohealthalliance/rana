@@ -17,7 +17,7 @@ template(name="reportForm")
 
         section
           .container
-            h2 Contact person info
+            h3 Contact person info
             .row
               .col-lg-4
                 +afQuickField name='contact.name'
@@ -28,7 +28,7 @@ template(name="reportForm")
 
         section.odd
           .container
-            h2 Reporting institution, diagnostic lab or government agency info
+            h3 Reporting institution, diagnostic lab or government agency info
               +tooltip name='contact.institutionAddress'
             .row
               .col-lg-5
@@ -51,7 +51,7 @@ template(name="reportForm")
 
         section.date-location
           .container
-            h2 Date and Location
+            h3 Date and Location
             .row.form-input-block
               .col-sm-12
                 .row
@@ -74,68 +74,68 @@ template(name="reportForm")
 
         section
           .container
-            h2 Species Information
-            .row
-              .col-lg-6
+            h3 Species Information
+            .row.form-input-block
+              .col-sm-5
                 +afQuickField name="speciesGenus"
                 +afQuickField name="speciesName"
                 +afQuickField name="numInvolved"
-              .col-lg-7
+              .col-sm-7
                 +afQuickField name="speciesNotes"
 
-        section.odd
-          .container
-            .row.form-input-block
-              .col-sm-8.input-block
-                .row
-                  .col-sm-3.input-block
-                      +afQuickField name='ageClasses'
-                  .col-sm-5.input-block
-                      +afQuickField name='ranavirusConfirmMethods'
-                      if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-                        +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-                  .col-sm-4.input-block
-                      +afQuickField name='sampleType'
-                      if afFieldValueContains name='sampleType' value='other'
-                        +afQuickField name='specifyOtherRanavirusSampleTypes'
-              .col-sm-4
-                  +afQuickField name='totalAnimalsTested'
-                  +afQuickField name='totalAnimalsConfirmedInfected'
-                  +afQuickField name='totalAnimalsConfirmedDiseased'
+          section.odd
+            .container
+              .row.form-input-block
+                .col-sm-8.input-block
+                  .row
+                    .col-sm-3.input-block
+                        +afQuickField name='ageClasses'
+                    .col-sm-5.input-block
+                        +afQuickField name='ranavirusConfirmMethods'
+                        if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+                          +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+                    .col-sm-4.input-block
+                        +afQuickField name='sampleType'
+                        if afFieldValueContains name='sampleType' value='other'
+                          +afQuickField name='specifyOtherRanavirusSampleTypes'
+                .col-sm-4
+                    +afQuickField name='totalAnimalsTested'
+                    +afQuickField name='totalAnimalsConfirmedInfected'
+                    +afQuickField name='totalAnimalsConfirmedDiseased'
 
-        section
-          .container
-            .row.form-input-block
-              .col-md-4.col-sm-6.input-block
-                +afQuickField name='pathologyReports' id='pathologyReports'
-              .col-md-4.col-sm-6.input-block
-                +afQuickField name='images' id='images'
-              .col-md-4.col-sm-6.input-block
-                +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+          section
+            .container
+              .row.form-input-block
+                .col-md-4.col-sm-6.input-block
+                  +afQuickField name='pathologyReports' id='pathologyReports'
+                .col-md-4.col-sm-6.input-block
+                  +afQuickField name='images' id='images'
+                .col-md-4.col-sm-6.input-block
+                  +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
 
-        section.rm-pad-top
+          section
+            .container
+              .row
+                .col-sm-9
+                  +afQuickField name='additionalNotes' id='additionalNotes'
+
+          section
+            .container
+              h2 Permissions and Consent
+              .row.form-input-block
+                .col-sm-6.input-block
+                  +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+                .col-sm-6.input-block
+                  +afQuickField name='consent' id='consent'
+
+          section.rm-pad-top.form-grp-container.publication
+            .container
+              +afQuickField name='publicationInfo' id='publicationInfo'
+
           .container
             .row
-              .col-sm-9
-                +afQuickField name='additionalNotes' id='additionalNotes'
-
-        section
-          .container
-            h3 Permissions and Consent
-            .row.form-input-block
-              .col-sm-6.input-block
-                +afQuickField name='dataUsePermissions' id='dataUsePermissions'
-              .col-sm-6.input-block
-                +afQuickField name='consent' id='consent'
-
-        section.rm-pad-top.form-grp-container.publication
-          .container
-            +afQuickField name='publicationInfo' id='publicationInfo'
-
-        .container
-          .row
-            .col-lg-4
-              .form-group
-                button.btn-lg.btn.btn-success.btn-block(type='submit') Submit
+              .col-lg-4
+                .form-group
+                  button.btn-lg.btn.btn-success.btn-block(type='submit') Submit
   else
     h3 Invalid form id

@@ -40,24 +40,22 @@ textarea
     display inline-block
     margin-right 10px
     font-size 12px
+
+.jumbotron
+  margin-top 60px
+  background #FFF
     
 .loading
-  &::before
-    @extend .icon
-    animate(1.5s)
-    opacity 1
-    font-size 60px
-    position absolute
-    top 50%
-    left 45%
-    transform translate(-50%, -50%)
-    z-index 100
-    content '\e031'
-    display block
-  div
-    opacity .7
-    transition .2s
+  loading(true)
 
 @media (max-width: 768px)
   .space-btm
     margin-bottom 30px
+
+input[type=text],
+input[type=date],
+input[type=number],
+input[type=tel],
+input[type=email],
+textarea
+  border 2px solid m-gray
