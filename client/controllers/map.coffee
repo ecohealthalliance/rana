@@ -1,5 +1,29 @@
 getCollections = => @collections
 
+keyToLabel = (key)->
+  label = key[0].toUpperCase()
+  for c in key.substr(1)
+    if c == c.toUpperCase()
+      label += " " + c.toLowerCase()
+    else
+      label += c
+  return label
+
+resolvePath = (path, obj) ->
+  if _.isString(path)
+    return resolvePath(path.split('.'), obj)
+  if path.length == 0
+    return [obj]
+  results = []
+  component = path[0]
+  if _.isArray(obj[component])
+    return _.chain(obj[component])
+      .map (subObj)-> resolvePath(path.slice(1), subObj)
+      .flatten()
+      .value()
+  else
+    return resolvePath(path.slice(1), obj[component])
+
 Template.map.created = ->
   @filterCollection = new Meteor.Collection(null)
   
@@ -16,15 +40,32 @@ Template.map.created = ->
         afFieldInput:
           options: [
             "speciesName"
+            "populationType"
+            "vertebrateClasses"
+            "ageClasses"
+            "eventDate"
+            "totalAnimalsConfirmedInfected"
+            "totalAnimalsConfirmedDiseased"
             {label: "creator", value: "createdBy.name"}
           ].map((item)->
             if _.isObject(item)
               item
             else
-              {label: item, value: item}
+              {label: keyToLabel(item), value: item}
           )
+    'filters.$.predicate':
+      type: String
+      autoform:
+        afFieldInput:
+          value: "="
+          options: [
+            {label: "is", value: "="}
+            {label: "is greater than", value: ">"}
+            {label: "is less than", value: "<"}
+          ]
     'filters.$.value':
       type: String
+      optional: true
   ))
   @filterCollection.insert({
     filters: []
@@ -42,11 +83,29 @@ Template.map.rendered = ->
   markers = new L.FeatureGroup()
   markers.addTo(lMap)
 
+  reportSchema = collections.Reports.simpleSchema().schema()
   @autorun ()=>
     filterSpec = @filterCollection.findOne()?.filters or []
     filters = filterSpec.map (filterSpecification)->
       filter = {}
-      filter[filterSpecification['property']] = filterSpecification['value']
+      value = filterSpecification['value']
+      property = filterSpecification['property']
+      if value and reportSchema[property].type == Number
+        value = parseFloat(value)
+      if not value
+        filter[property] = {
+          $exists: true
+        }
+      else if filterSpecification['predicate'] == '>'
+        filter[property] = {
+          $gt: value
+        }
+      else if filterSpecification['predicate'] == '<'
+        filter[property] = {
+          $lt: value
+        }
+      else
+        filter[property] = value
       return filter
     data = getCollections().Reports.find(
       $and: [
@@ -100,3 +159,24 @@ Template.map.events
     @._af.collection.insert({
       filters: []
     })
+  'keyup input[data-schema-key]': _.throttle (e) ->
+    schemaKey = $(e.target).data('schema-key')
+    schemaKeyComponents = schemaKey.split('.')
+    schemaKeyType = schemaKeyComponents.slice(-1)[0]
+    schemaKeyIdx = schemaKeyComponents.slice(-2)[0]
+    if schemaKeyType == "value"
+      filterSpecification = AutoForm.getFormValues("filter-panel").insertDoc.filters[schemaKeyIdx]
+      query = {}
+      query[filterSpecification.property] = {
+        $regex: "^" + RegExp.escape($(e.target).val())
+        $options: "i"
+      }
+      values = getCollections().Reports
+        .find(query, {
+          limit: 5
+        })
+        .map((result)->
+          resolvePath(filterSpecification.property, result)
+        )
+      $("input[name='#{schemaKey}']").autocomplete
+        source: _.flatten(values)

@@ -39,6 +39,69 @@
         }).call(callback);
     });
 
+    this.Given(/^there is a report with "([^"]*)" "([^"]*)" in the database$/,
+    function (property, value, callback) {
+      var report = {
+        eventLocation: {
+          source: 'LonLat',
+          northing: 1,
+          easting: 2,
+          zone: 3,
+          geo: {
+            type: 'Point',
+            coordinates: [ 121.55189514218364, 25.046919772516173 ]
+          }
+        }
+      };
+      report[property] = value;
+      helper.addReports([report], function(err){
+        assert.ifError(err);
+        helper.world.browser
+        .executeAsync(function(expectedReport, done){
+          delete expectedReport['createdBy'];
+          Meteor.subscribe('reports');
+          Tracker.autorun(function(){
+            var report = collections.Reports.findOne();
+            if(report) done(report);
+          });
+          window.setTimeout(done, 2000);
+        }, report, _.once(function(err, ret){
+          assert.ifError(err);
+          assert(ret.value, "No reports in the database");
+          callback();
+        }));
+      });
+    });
+    
+    this.When(/^I add a filter for the property "([^"]*)" and value "([^"]*)"$/,
+    function (property, value, callback) {
+      var propKey = "filters.0.property";
+      var valKey = "filters.0.value";
+      helper.world.browser
+      .click(".autoform-add-item")
+      .pause(200)
+      .selectByValue('select[data-schema-key="' + propKey + '"]', property)
+      .setValue('input[data-schema-key="' + valKey + '"]', value)
+      .click('button[type="submit"]')
+      .call(callback);
+    });
+    
+    this.Then(/^I should see (\d+) reports?$/, function (number, callback) {
+      helper.world.browser
+      .waitForExist(".leaflet-marker-icon")
+      .elements(".leaflet-marker-icon", function(err, resp){
+        assert.ifError(err);
+        assert.equal(resp.value.length, number);
+      })
+      .call(callback);
+    });
+    
+    this.When(/^I remove the filters$/, function (callback) {
+      // Write code here that turns the phrase above into concrete actions
+      helper.world.browser
+      .click(".reset")
+      .call(callback);
+    });
   };
 
 })();

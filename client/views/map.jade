@@ -7,7 +7,10 @@ template(name="map")
       id="filter-panel"
       template="bootstrap3"
     )
-      +afQuickFields(id-prefix=idPrefix)
+      +afQuickFields(
+        id-prefix=idPrefix
+        template="bootstrap3"
+      )
       .form-group
         button.btn.btn-primary(type="submit") Apply filters
         button.btn.btn-primary.reset(type="reset") Reset filters
