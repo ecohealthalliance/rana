@@ -1,7 +1,7 @@
 getCollections = => @collections
 
 Template.map.created = ->
-  @filterCollection = new Meteor.Collection()
+  @filterCollection = new Meteor.Collection(null)
   
   @filterCollection.attachSchema(new SimpleSchema(
     filters:
@@ -48,7 +48,6 @@ Template.map.rendered = ->
       filter = {}
       filter[filterSpecification['property']] = filterSpecification['value']
       return filter
-    console.log filters
     data = getCollections().Reports.find(
       $and: [
         {
@@ -94,3 +93,10 @@ Template.map.mapQueries = ->
 
 Template.map.mapQuery = ->
   Template.instance().filterCollection.findOne()
+
+Template.map.events
+  'click .reset': ()->
+    @._af.collection.remove(@._af.doc._id)
+    @._af.collection.insert({
+      filters: []
+    })
