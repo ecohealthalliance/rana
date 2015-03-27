@@ -1,12 +1,14 @@
 template(name="csvUpload")
-  section
+  section.rm-pad-top
     .container
       h3 CSV file upload
       .csv-error #{csvError}
       if importReports.count
         b File: &nbsp;
         tt #{csvFileName}
-      +afQuickField name='csvFile' id='csvFile'
+      .row
+        .col-md-4
+          +afQuickField name='csvFile' id='csvFile'
 
       if importReports.count
         +reactiveTable collection=importReports fields=importFields

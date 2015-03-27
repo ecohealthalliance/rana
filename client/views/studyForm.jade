@@ -14,9 +14,10 @@ template(name="studyForm")
               +afQuickField name='name'
 
       +csvUpload
-
-      .container
-        h2 Please fill out any of the following fields that apply to all reports in this study.  
+      
+      section
+        .container
+          h2 Please fill out any of the following fields that apply to all reports in this study.  
 
       section.rm-pad-top
         .container
@@ -87,13 +88,13 @@ template(name="studyForm")
                     if afFieldValueContains name='sampleType' value='other'
                       +afQuickField name='specifyOtherRanavirusSampleTypes'
 
-      section.rm-pad-top
+      section
         .container
           .row
             .col-sm-9
               +afQuickField name='additionalNotes' id='additionalNotes'
               
-      section
+      section.rm-pad-top
         .container
           h3 Permissions and Consent
           .row.form-input-block
