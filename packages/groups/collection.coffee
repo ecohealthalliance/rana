@@ -37,7 +37,7 @@ GroupSchema = new SimpleSchema {
 }
 
 GroupSchema.messages {
-  "notUnique path": "The group name is too similar to an existing group." 
+  "notUnique path": "The group name is too similar to an existing group."
 }
 
 Groups.before.insert (userId, doc) ->
@@ -55,9 +55,7 @@ Groups.after.insert (userId, doc) ->
       Roles.addUsersToRoles userId, ['admin', 'user'], groupId
       handle.stop()
     handle = Accounts.onLogin createAdminUser
-      
-      
-                      
+
 Groups.attachSchema GroupSchema
 
 share.Groups = Groups
