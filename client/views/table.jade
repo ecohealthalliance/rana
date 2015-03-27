@@ -1,5 +1,7 @@
 template(name="table")
-  if isEmpty
-    h2 No Reports Found
-  else
-    +reactiveTable collection=collection settings=settings
+  section
+    .container
+      if isEmpty
+        h2 No Reports Found
+      else
+        +reactiveTable collection=collection settings=settings
