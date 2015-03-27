@@ -187,8 +187,8 @@
         })
         .call(callback);
     });
-    
-    this.Then(/^I should( not)? see the text \"(text)\"/,
+
+    this.Then(/^I should( not)? see the text "([^"]*)"/,
     function (shouldNot, text, callback) {
 
       helper.world.browser

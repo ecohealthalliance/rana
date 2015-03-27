@@ -19,10 +19,10 @@
           Groups.findOne({path:"rana"})._id
         );
         var userId = Accounts.createUser({
-          name: "Test User",
           email: "test@test.com",
           password: "testuser",
           profile: {
+            name: "Test User",
             organization : "EHA",
             organizationStreet : "460 West 34th Street – 17th floor",
             organizationCity: "New York",
