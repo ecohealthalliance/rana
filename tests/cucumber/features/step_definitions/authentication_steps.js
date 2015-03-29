@@ -11,17 +11,13 @@
 
     var helper = this;
 
-    this.Then(/the database should( not)? have a report linked to my account/,
-    function (shouldNot, callback) {
+    this.Then(/the database should have (\d+) reports linked to my account/,
+    function (number, callback) {
       helper.world.browser
       .getMyReports({}, function(err, ret){
-        assert(!err);
+        assert.ifError(err);
         assert(ret.value);
-        if(shouldNot) {
-          assert(!ret.value, 'Report found');
-        } else {
-          assert.equal(ret.value.length, 1, 'Incorrect number of reports');
-        }
+        assert.equal(ret.value.length, parseInt(number), 'Incorrect number of reports');
       }).call(callback);
     });
 
