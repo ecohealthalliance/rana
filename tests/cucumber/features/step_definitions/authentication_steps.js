@@ -57,7 +57,7 @@
       .submitForm('#at-field-email', function(err){
         assert(!err);
       })
-      .waitForExist(".form-control", 500, true, function(err, dne){
+      .waitForExist(".form-control", 1000, true, function(err, dne){
         assert(!err);
         assert(dne);
       })
