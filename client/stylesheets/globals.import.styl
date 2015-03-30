@@ -23,9 +23,15 @@ textarea
   -o-transition border-color ease-in-out .15s, box-shadow ease-in-out .15s
   transition border-color ease-in-out .15s, box-shadow ease-in-out .15s
 
+.rm-pad
+  padding 0
+
 .rm-pad-top
   padding-top 0
   
+.rm-pad-btm
+  padding-bottom 0
+
 .button-default[disabled]
 .btn[disabled]
   background ll-gray
@@ -59,3 +65,13 @@ input[type=tel],
 input[type=email],
 textarea
   border 2px solid m-gray
+
+input,
+textarea,
+.form-control
+  &:focus
+    outline 0
+    box-shadow none
+    webkit-box-shadow none
+    border-color secondary
+  

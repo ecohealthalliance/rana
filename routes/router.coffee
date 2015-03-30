@@ -9,12 +9,13 @@ Router.route('/', ()-> @redirect('/group/rana'))
 Router.route('newReport',
   path: '/report'
   template: 'reportForm'
-  where: 'client',
+  where: 'client'
+  onAfterAction: ->
+    Meteor.subscribe("genera")
   waitOn: ->
     [
       Meteor.subscribe("reports"),
-      Meteor.subscribe("studies"),
-      Meteor.subscribe("genera")
+      Meteor.subscribe("studies")
     ]
 )
 
@@ -24,11 +25,12 @@ Router.route('editReport',
   where: 'client'
   data: ->
     reportId: @params.reportId
+  onAfterAction: ->
+    Meteor.subscribe("genera")
   waitOn: ->
     [
       Meteor.subscribe("reports"),
-      Meteor.subscribe("studies"),
-      Meteor.subscribe("genera")
+      Meteor.subscribe("studies")
     ]
 )
 
@@ -36,11 +38,12 @@ Router.route('newStudy',
   path: '/study'
   template: 'studyForm'
   where: 'client'
+  onAfterAction: ->
+    Meteor.subscribe("genera")
   waitOn: ->
     [
       Meteor.subscribe("csvfiles"),
-      Meteor.subscribe("studies"),
-      Meteor.subscribe("genera")
+      Meteor.subscribe("studies")
     ]
 )
 

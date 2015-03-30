@@ -1,5 +1,5 @@
 template(name="csvUpload")
-  section.rm-pad-top
+  section.rm-pad
     .container
       h3 CSV file upload
       .csv-error #{csvError}
@@ -10,7 +10,9 @@ template(name="csvUpload")
         .col-md-4
           +afQuickField name='csvFile' id='csvFile'
 
-      if importReports.count
+  if importReports.count
+    section.rm-pad-top.import-table
+      .container
         +reactiveTable collection=importReports fields=importFields
 
         if unmatchedHeadersString

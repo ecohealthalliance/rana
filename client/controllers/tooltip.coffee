@@ -89,6 +89,7 @@ tooltipTexts =
   'speciesAffectedType.native': 'A species that is found inhabiting its accepted, natural species range.'
   'speciesAffectedType.introduced': """A species that is present in a geographical area outside of its accepted,
     natural species range. This category would include farmed animals not native to the area."""
+  'dataUsePermissions.share_obfuscated': "only the report country and the reporter's contact information will be released"
 
 Template.reportForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
