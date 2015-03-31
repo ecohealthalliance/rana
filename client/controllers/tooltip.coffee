@@ -93,11 +93,9 @@ tooltipTexts =
 
 Template.reportForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
-  @$('[required]').closest('.form-group').find('label').addClass('required')
 
 Template.studyForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
-  @$('[required]').closest('.form-group').find('label').addClass('required')
 
 Template.registerHelper 'tooltipAtts', () ->
   if 'value' of this
