@@ -2,6 +2,8 @@ Template.registerHelper 'dynamicAttrs', () ->
   if !AutoForm.find().ss._schema[@atts.name].optional
     required = 'required'
 
+  console.log @tooltipTexts
+
   if 'value' of this
     name = @atts.name + '.' + @value
   else

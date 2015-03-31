@@ -98,8 +98,8 @@ Template.studyForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
 
 Template.registerHelper 'tooltipText', (name) ->
-  if name of tooltipTexts
-    tooltipTexts[name]
+  if name of @tooltipTexts
+    @tooltipTexts[name]
   else
     false
 
