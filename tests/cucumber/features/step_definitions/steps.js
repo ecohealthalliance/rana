@@ -97,12 +97,14 @@
 
     this.Given(/^there is a report( with a geopoint)? in the database$/,
     function(withGeo, callback) {
-      helper.resetTestDB([{
+      var report = {
         studyId: 'fakeid',
         consent: true,
         contact: {name: 'Text User', 'email': 'test@foo.com'},
-        dataUsePermissions: "Share full record",
-        eventLocation: {
+        dataUsePermissions: "Share full record"
+      };
+      if(withGeo) {
+        report["eventLocation"] = {
           source: 'LonLat',
           northing: 1,
           easting: 2,
@@ -111,26 +113,13 @@
             type: 'Point',
             coordinates: [ 121.55189514218364, 25.046919772516173 ]
           }
-        }
-      }], function(err){
-        if(err) {
-          console.log(err);
-        }
-        assert(!err);
+        };
+      }
+      helper.resetTestDB([report], function(err){
+        assert.ifError(err);
         helper.world.browser
-        .executeAsync(function(done){
-          Tracker.autorun(function(){
-            var report = collections.Reports.findOne({
-              eventLocation: {$exists: true}
-            });
-            if(report) done(report);
-          });
-          window.setTimeout(done, 2000);
-        }, _.once(function(err, ret){
-          assert(!err);
-          assert(ret.value, "No reports in the database");
-          callback();
-        }));
+        .waitForReport(report)
+        .call(callback);
       });
     });
 

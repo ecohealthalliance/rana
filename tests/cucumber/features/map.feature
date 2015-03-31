@@ -13,9 +13,9 @@ Feature: A map that plots ranavirus reports
     Given I am on the "map" page
     And there is a report with "populationType" "zoological" in the database
     And there is a report with "populationType" "wild" in the database
-    When I add a filter for the property "populationType" and value "wild"
+    When I add a filter where "populationType" is "wild"
     Then I should see 1 report
     When I remove the filters
     Then I should see 2 reports
-    When I add a filter for the property "populationType" and value "production"
+    When I add a filter where "populationType" is "production"
     Then I should see 0 reports

@@ -4,7 +4,7 @@ generaHandler = _.throttle (e) ->
   generaValues = getCollections().Genera
     .find({
       value:
-        $regex: "^" + RegExp.escape($(e.target).val())
+        $regex: "^" + utils.regexEscape($(e.target).val())
         $options: "i"
     }, {
       limit: 5

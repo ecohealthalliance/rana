@@ -1,14 +1,5 @@
 getCollections = => @collections
 
-keyToLabel = (key)->
-  label = key[0].toUpperCase()
-  for c in key.substr(1)
-    if c == c.toUpperCase()
-      label += " " + c.toLowerCase()
-    else
-      label += c
-  return label
-
 resolvePath = (path, obj) ->
   if _.isString(path)
     return resolvePath(path.split('.'), obj)
@@ -51,17 +42,21 @@ Template.map.created = ->
             if _.isObject(item)
               item
             else
-              {label: keyToLabel(item), value: item}
+              {
+                label: getCollections().Reports.simpleSchema().label(item),
+                value: item
+              }
           )
     'filters.$.predicate':
       type: String
       autoform:
         afFieldInput:
-          value: "="
           options: [
             {label: "is", value: "="}
             {label: "is greater than", value: ">"}
             {label: "is less than", value: "<"}
+            {label: "is defined", value: "defined"}
+            {label: "is not defined", value: "undefined"}
           ]
     'filters.$.value':
       type: String
@@ -92,10 +87,16 @@ Template.map.rendered = ->
       property = filterSpecification['property']
       if value and reportSchema[property].type == Number
         value = parseFloat(value)
-      if not value
+      if filterSpecification['predicate'] == 'defined'
         filter[property] = {
           $exists: true
         }
+      else if filterSpecification['predicate'] == 'undefined'
+        filter[property] = {
+          $exists: false
+        }
+      else if not value
+        return {}
       else if filterSpecification['predicate'] == '>'
         filter[property] = {
           $gt: value
@@ -168,7 +169,7 @@ Template.map.events
       filterSpecification = AutoForm.getFormValues("filter-panel").insertDoc.filters[schemaKeyIdx]
       query = {}
       query[filterSpecification.property] = {
-        $regex: "^" + RegExp.escape($(e.target).val())
+        $regex: "^" + utils.regexEscape($(e.target).val())
         $options: "i"
       }
       values = getCollections().Reports
