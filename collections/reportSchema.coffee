@@ -1,10 +1,10 @@
 numInvolvedOptions =
   '1': '1'
-  '2_10':   '2 to 10'
-  '11_50':  '11 to 50'
+  '2_10': '2 to 10'
+  '11_50': '11 to 50'
   '51_100': '51 to 100'
-  '101_500':    '101 to 500'
-  '500_':   'more than 500'
+  '101_500': '101 to 500'
+  '500_': 'more than 500'
 
 @reportSchema = new SimpleSchema [ @sharedSchema, new SimpleSchema
   studyId:
