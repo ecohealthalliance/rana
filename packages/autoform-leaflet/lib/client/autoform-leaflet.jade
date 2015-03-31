@@ -1,32 +1,34 @@
 template(name='leaflet')
-  div(data-schema-key=schemaKey)
-    input.source(type='hidden')
-    .col-md-6
-      .form-group
-
-        h4.form-group-header Degrees Decimal
-        .col-md-6
-          label(for='lon') Longitude
-          input.lon.form-control(name='lon')
-        .col-md-6
-          label(for='lat') Latitude
-          input.lat.form-control(name='lat')
-
-        h4.form-group-header Universal Transverse Mercator
-        .col-md-4
-          label(for='easting') Easting
-          input.easting.form-control(name='easting')
-        .col-md-4
-          label(for='norting') Northing
-          input.northing.form-control(name='northing')
-        .col-md-4
-          label(for='zone') Zone
-          input.zone.form-control(name='zone')
-
-    .col-md-6
-      div
-        //- input.leaflet-search.map-controls(type='text')
+  div.location-info(data-schema-key=schemaKey)
+    .row
+      .col-md-6
+        .location-btns
+          .row
+            .col-md-6.col-sm-8.col-xs-8
+              button.leaflet-locate.btn.btn-default.btn-block Current location
+            .col-md-3.col-sm-4.col-xs-4
+              button.leaflet-clear.btn.btn-default.btn-block Clear
+        .location-details
+          .form-group
+            h5.form-group-header Degrees Decimal
+            .row
+              .col-md-6
+                label(for='lon') Longitude
+                input.lon.form-control(name='lon')
+              .col-md-6
+                label(for='lat') Latitude
+                input.lat.form-control(name='lat')
+          .form-group
+            h5.form-group-header Universal Transverse Mercator
+            .row
+              .col-md-4
+                label(for='easting') Easting
+                input.easting.form-control(name='easting')
+              .col-md-4
+                label(for='norting') Northing
+                input.northing.form-control(name='northing')
+              .col-md-4
+                label(for='zone') Zone
+                input.zone.form-control(name='zone')
+      .col-md-6
         div.leaflet-canvas
-        .btn-group
-          button.leaflet-locate.btn.btn-default My location
-          button.leaflet-clear.btn.btn-default Clear

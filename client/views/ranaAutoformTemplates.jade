@@ -22,19 +22,15 @@ template(name="afFormGroup_rana")
     span.help-block {{afFieldMessage name=this.atts.name}}
 
 template(name="afObjectField_rana")
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title {{afFieldLabelText name=this.atts.name}}
-    .panel-body
-      if afFieldIsInvalid name=this.atts.name
-        .help-block {{afFieldMessage name=this.atts.name}}
-      +afQuickFields name=this.atts.name
+  h3 {{afFieldLabelText name=this.atts.name}}
+  if afFieldIsInvalid name=this.atts.name
+    .help-block {{afFieldMessage name=this.atts.name}}
+  +afQuickFields name=this.atts.name
 
 template(name="afArrayField_rana")
   .panel.panel-default.content-panel
     .panel-heading
-      h3.panel-title {{afFieldLabelText name=this.atts.name}}
-        +tooltip name=this.atts.name
+      label($dyn=tooltipAtts) {{afFieldLabelText name=this.atts.name}}
     if afFieldIsInvalid name=this.atts.name
      .panel-body.has-error
         .help-block {{afFieldMessage name=this.atts.name}}
@@ -47,9 +43,8 @@ template(name="afArrayField_rana")
                 span.glyphicon.glyphicon-minus
             +afQuickField name=this.name label=false options="auto" template="plain"
     if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
-      button.add-content.autoform-add-item(type="button", data-autoform-field="{{this.atts.name}}", data-autoform-minCount="{{this.atts.minCount}}", data-autoform-maxCount="{{this.atts.maxCount}}")
+      button.add-content.autoform-add-item(type="button", data-autoform-field="{{this.atts.name}}", data-autoform-minCount="{{this.atts.minCount}}", data-autoform-maxCount="{{this.atts.maxCount}}" title="Add another")
         span.glyphicon.glyphicon-plus
-        span Add another
 
 template(name="afCheckboxGroup_rana")
   .af-checkbox-group($dyn=dsk)
@@ -94,23 +89,26 @@ template(name="afSelect_rana")
       else
         option($dyn=optionAtts) #{this.label}
 
+template(name="quickform_custom")
+  p test
+
 template(name='afInputText_rana')
-  input(type='text', value='#{this.value}', $dyn=atts)
+  input.form-control(type='text', value='#{this.value}', $dyn=atts)
 
 template(name='afInputDate_rana')
-  input(type='date', value='#{this.value}', $dyn=atts)
+  input.form-control(type='date', value='#{this.value}', $dyn=atts)
 
 template(name='afInputNumber_rana')
-  input(type='number' value='#{this.value}', $dyn=atts)
+  input.form-control(type='number' value='#{this.value}', $dyn=atts)
 
 template(name='afInputEmail_rana')
-  input(type='email' value='#{this.value}', $dyn=atts)
+  input.form-control(type='email' value='#{this.value}', $dyn=atts)
 
 template(name='afTextarea_rana')
-  textarea($dyn=atts) #{this.value}
+  textarea.form-control($dyn=atts) #{this.value}
 
 template(name='afInputTel_rana')
-  input(type='tel', value='#{this.value}', $dyn=atts)
+  input.form-control(type='tel', value='#{this.value}', $dyn=atts)
 
 template(name='genusAutocomplete_rana')
-  input(type='text', value='#{this.value}', $dyn=atts)
+  input.form-control(type='text', value='#{this.value}', $dyn=atts)

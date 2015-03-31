@@ -2,7 +2,8 @@ getCollections = => @collections
 
 Router.configure
   layoutTemplate: "layout"
-
+  loadingTemplate: "loading"
+  
 Router.route('/', ()-> @redirect('/group/rana'))
 
 Router.route('newReport',

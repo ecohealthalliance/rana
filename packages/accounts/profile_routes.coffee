@@ -1,4 +1,4 @@
-UserProfileSchema = @UserProfileSchema
+UserProfileSchema = share.UserProfileSchema
 
 Router.route 'profile', 
   

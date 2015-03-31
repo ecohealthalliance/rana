@@ -61,6 +61,15 @@
       .click('div[data-schema-key="' + field + '"] input[value="' + value + '"]')
       .call(callback);
     });
+    
+    this.Then('the $field field should have the value "$value"',
+    function(field, value, callback){
+      helper.world.browser
+      .mustExist('[data-schema-key="' + field + '"]')
+      .checkValue('[data-schema-key="' + field + '"]', value)
+      .call(callback);
+    });
+
 
     this.When("I add a pathology report", function(callback){
 

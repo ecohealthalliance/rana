@@ -1,2 +1,71 @@
-transition(time = .2s, prop = '')
+transition(time = .2s, prop = )
   transition: time prop
+  
+makeButton(color, text = white, dark = false, noOutline = false)
+  if dark 
+    @extend .light-shadow
+  else 
+    @extend .dark-shadow
+  background color
+  color text
+  border 1px solid darken(color, 10%)
+  &:hover,
+  &:focus
+    background darken(color, 10%)
+    color darken(text, 20%)
+    border-color darken(color, 20%)
+  &:active
+    background darken(color, 20%)
+  &:focus
+    outline 5px auto lighten(btn-default, 20%)
+  transition()
+  if noOutline
+    &:focus
+      outline 0
+
+loading(positioned=false)
+  &::before
+    @extend .icon
+    animate(1.5s)
+    if position
+      position absolute
+      top 50%
+      left 45%
+      transform translate(-50%, -50%)
+      z-index 100
+    opacity 1
+    font-size 60px
+    content '\e031'
+  div
+    opacity .7
+    transition .2s
+
+animate(speed)
+  animation spin speed infinite linear
+  -webkit-animation spin speed infinite linear
+  -moz-animation spin speed infinite linear
+  -o-animation spin speed infinite linear
+
+@keyframes spin
+  from 
+    transform rotate(0deg)
+  to 
+    transform rotate(360deg)
+    
+@-webkit-keyframes spin
+  from
+    -webkit-transform rotate(0deg)
+  to 
+    -webkit-transform rotate(360deg)
+    
+@-moz-keyframes spin
+  from
+    -moz-transform rotate(0deg)
+  to 
+    -moz-transform rotate(360deg)
+    
+@-o-keyframes spin
+  from
+    -o-transform rotate(0deg)
+  to 
+    -o-transform rotate(360deg)
