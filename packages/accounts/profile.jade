@@ -3,7 +3,7 @@ template(name="profile")
     
   if isCurrentUser
     p Edit Your Profile
-    +quickForm schema=profileSchema doc=user.profile id="update-user-profile-form"
+    +quickForm schema=profileSchema doc=user.profile id="update-user-profile-form" template="bootstrap3"
 
   else
     h4 
