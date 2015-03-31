@@ -11,7 +11,7 @@
 template(name="afFormGroup_rana")
   .form-group(class="form-group{{#if afFieldIsInvalid name=this.atts.name}} has-error{{/if}}")
     unless skipLabel
-      label($dyn=tooltipAtts)
+      label($dyn=dynamicAttrs class="{{required}}")
         if this.label
           | this.label
         else
@@ -30,7 +30,7 @@ template(name="afObjectField_rana")
 template(name="afArrayField_rana")
   .panel.panel-default.content-panel
     .panel-heading
-      label($dyn=tooltipAtts) {{afFieldLabelText name=this.atts.name}}
+      label($dyn=dynamicAttrs) {{afFieldLabelText name=this.atts.name}}
     if afFieldIsInvalid name=this.atts.name
      .panel-body.has-error
         .help-block {{afFieldMessage name=this.atts.name}}
@@ -52,7 +52,7 @@ template(name="afCheckboxGroup_rana")
       .checkbox
         label
           input(type="checkbox", value="{{this.value}}", $dyn=atts)
-          span($dyn=tooltipAtts) #{this.label}
+          span($dyn=dynamicAttrs) #{this.label}
 
 template(name="afRadioGroup_rana")
   .af-radio-group($dyn=dsk)
@@ -60,7 +60,7 @@ template(name="afRadioGroup_rana")
       .radio
         label
           input(type="radio", value="{{this.value}}", $dyn=atts)
-          span($dyn=tooltipAtts) #{this.label}
+          span($dyn=dynamicAttrs) #{this.label}
 
 template(name="afBooleanRadioGroup_rana")
   div($dyn=dsk)

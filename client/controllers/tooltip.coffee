@@ -1,4 +1,4 @@
-tooltipTexts =
+@tooltipTexts =
   name: 'They must be willing to communicate about the case if so requested.'
   email: 'Enter the most current email address or permanent email address of the person reporting the case.'
   phone: 'Enter the institutional telephone number of the individual who is reporting the case, including the country code.'
@@ -96,20 +96,6 @@ Template.reportForm.rendered = () ->
 
 Template.studyForm.rendered = () ->
   @$('[data-toggle="tooltip"]').tooltip()
-
-Template.registerHelper 'tooltipAtts', () ->
-  if 'value' of this
-    name = @atts.name + '.' + @value
-  else
-    name = @atts.name
-
-  if name of tooltipTexts
-    'data-toggle': "tooltip"
-    'data-placement': "right"
-    'title': tooltipTexts[name]
-    'class': 'tooltipped'
-  else
-    {}
 
 Template.registerHelper 'tooltipText', (name) ->
   if name of tooltipTexts
