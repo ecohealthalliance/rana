@@ -37,7 +37,7 @@ numInvolvedOptions =
     type: String
     optional: true
   numInvolved:
-    label: """Estimated Number of Individuals Involved in the Mortality Event"""
+    label: 'Number Involved'
     type: String
     optional: true
     autoform:
