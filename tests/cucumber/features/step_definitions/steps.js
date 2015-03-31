@@ -31,7 +31,7 @@
 
     this.Then('I should be redirected to the "$path" page', function (path, callback) {
       helper.world.browser
-      .pause(2000)
+      .pause(4000)
       .url(function (err, result) {
         assert(!err);
         assert.equal(result.value.slice(-path.length), path);
@@ -170,6 +170,13 @@
             );
           }
         }).call(callback);
+    });
+
+    this.When('I click on the edit button',
+    function(callback){
+      helper.world.browser
+      .click('.reactive-table .btn-primary')
+      .call(callback);
     });
 
   };

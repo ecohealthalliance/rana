@@ -177,6 +177,52 @@
           });
         });
 
+        browser.addCommand("checkFormFields", function(formId, expectedValues, callback) {
+          browser
+          .waitForExist('.form-group', function (err, exists) {
+            assert(!err);
+            assert(exists)
+          }).
+          execute(function(formId) {
+            var values = AutoForm.getFormValues(formId).insertDoc;
+            if (values.eventDate) {
+              values.eventDate = String(values.eventDate);
+            }
+            return values;
+          }, formId, function(err, res) {
+            var formValues = res.value;
+            _.each(expectedValues, function(fieldValuePair){
+                var field = fieldValuePair[0];
+                var value = fieldValuePair[1];
+                if (field === 'eventDate') {
+                  assert.equal(Date(formValues[field]), Date(value));
+                } else {
+                  assert.equal(formValues[field], value);
+                }
+            });
+            browser.call(callback);
+          });
+        });
+
+        browser.addCommand("checkTableCells", function(expectedValues, callback) {
+          browser
+          .waitForExist('.reactive-table', function (err, exists) {
+            assert(!err);
+            assert(exists);
+            _.each(expectedValues, function(fieldValuePair){
+              var field = fieldValuePair[0];
+              var value = fieldValuePair[1];
+              browser.getText('.' + field, function(err, text){
+                if (field === 'eventDate') {
+                  assert.equal(Date(text[1]), Date(value));
+                } else {
+                  assert.equal(text[1], String(value));
+                }
+              });
+            });
+            browser.call(callback);
+          })
+        });
 
         // Useful for keeping the Chrome window open so you can inspect things
         // in the console or view the screen at a certain point.
