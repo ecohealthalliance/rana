@@ -31,6 +31,7 @@ Template.map.created = ->
         afFieldInput:
           options: [
             "speciesName"
+            "speciesGenus"
             "populationType"
             "vertebrateClasses"
             "ageClasses"
@@ -87,6 +88,11 @@ Template.map.rendered = ->
       property = filterSpecification['property']
       if value and reportSchema[property].type == Number
         value = parseFloat(value)
+      if value and reportSchema[property].type == Date
+        value = new Date(value)
+        if ("" + value) == "Invalid Date"
+          alert("Invalid Date Format")
+          return {}
       if filterSpecification['predicate'] == 'defined'
         filter[property] = {
           $exists: true
