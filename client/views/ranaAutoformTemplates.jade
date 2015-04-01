@@ -8,14 +8,19 @@
 // In the future we may want to use extension lib this:
 // https://github.com/aldeed/meteor-template-extension
 
+template(name="infoIcon")
+  span.infoIcon i    
+
 template(name="afFormGroup_rana")
   .form-group(class="form-group{{#if afFieldIsInvalid name=this.atts.name}} has-error{{/if}}")
     unless skipLabel
-      label($dyn=dynamicAttrs class="{{required}}")
+      label($dyn=dynamicAttrs)
         if this.label
           | this.label
         else
           | {{afFieldLabelText name=this.atts.name}}
+        if dynamicAttrs.title
+          +infoIcon
       if minorLabelBlockText this.atts.name
         span.minor-label.block {{minorLabelBlockText this.atts.name}}
     +afFieldInput this.afFieldInputAtts
@@ -31,6 +36,8 @@ template(name="afArrayField_rana")
   .panel.panel-default.content-panel
     .panel-heading
       label($dyn=dynamicAttrs) {{afFieldLabelText name=this.atts.name}}
+        if dynamicAttrs.title
+          +infoIcon
     if afFieldIsInvalid name=this.atts.name
      .panel-body.has-error
         .help-block {{afFieldMessage name=this.atts.name}}
@@ -53,6 +60,8 @@ template(name="afCheckboxGroup_rana")
         label
           input(type="checkbox", value="{{this.value}}", $dyn=atts)
           span($dyn=dynamicAttrs) #{this.label}
+            if dynamicAttrs.title
+              +infoIcon
 
 template(name="afRadioGroup_rana")
   .af-radio-group($dyn=dsk)
@@ -61,6 +70,8 @@ template(name="afRadioGroup_rana")
         label
           input(type="radio", value="{{this.value}}", $dyn=atts)
           span($dyn=dynamicAttrs) #{this.label}
+            if dynamicAttrs.title
+              +infoIcon
 
 template(name="afBooleanRadioGroup_rana")
   div($dyn=dsk)

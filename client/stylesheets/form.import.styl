@@ -204,10 +204,10 @@ textarea
   border-bottom 1px solid #DDD
     
 .tooltipped
-  &::after
-    @extend .icons
-    content "i"
-    display inline-block
+  cursor pointer
+  &:hover
+    .infoIcon
+      color strong-primary
 
 .padded-block
   padding 15px
@@ -250,7 +250,7 @@ textarea
 .publication
   .form-group
     float left
-    width 33%
+    width 40%
     &:last-child
       clear both
       float none

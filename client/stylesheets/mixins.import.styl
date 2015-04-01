@@ -1,10 +1,10 @@
 addFont(fontTitle, allTypes = true, type = '')
   @font-face
     if allTypes
-      src url('/fonts/#{fontTitle}.eot')
-      src url('/fonts/#{fontTitle}.eot?#iefix') format('embedded-opentype'), url('/fonts/#{fontTitle}.woff') format('woff'), url('/fonts/#{fontTitle}.ttf') format('truetype'), url('/fonts/#{fontTitle}.svg') format('svg')
+      src url('/fonts/' + fontTitle + '.eot')
+      src url('/fonts/' + fontTitle + '.eot?#iefix') format('embedded-opentype'), url('/fonts/' + fontTitle + '.woff') format('woff'), url('/fonts/{fontTitle}.ttf') format('truetype'), url('/fonts/' + fontTitle + '.svg') format('svg')
     else 
-      src url('/fonts/#{fontTitle}.#{type}')
+      src url('/fonts/' + fontTitle + '.'+type)
     font-family fontTitle
 
 transition(time = .2s, prop = )
