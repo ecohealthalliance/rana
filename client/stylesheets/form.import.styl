@@ -41,6 +41,18 @@ section
     padding-top 20px
   &.short-padding
     padding 30px 0
+  &.instructions
+    padding-top 30px
+    margin-top 30px
+    border-top 2px solid l-gray
+    h2
+      margin-bottom 5px
+    p
+      color d-gray
+      span
+        color strong-primary
+        font-weight bold
+        font-size 15px
 
 h2
   font-size 26px
@@ -268,6 +280,8 @@ textarea
   &::after
     content '*'
     display inline-block
+    color strong-primary
+    padding-left 2px
 
 @media (max-width: 992px)
   .panel
@@ -292,10 +306,6 @@ textarea
       border-radius 0
       .panel-heading
         background #ebebeb
-  // .form-input-block
-  //   .input-block
-  //     &:last-child
-  //       margin-bottom 0
   .tall-block
     min-height 0
   .short-block
