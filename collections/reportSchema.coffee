@@ -20,7 +20,7 @@ numInvolvedOptions =
       label: false
   contact:
     type: @contactSchema
-   eventDate:
+  eventDate:
     label: 'Event date'
     type: Date
     optional: true
