@@ -14,17 +14,14 @@ Feature: A form for setting up a ranavirus study
     And I am on the "study" page
     When I fill out the study form
     And I upload a non-pdf publication
-    And I click submit
-    Then the webpage should display a validation error
+    Then the publication should not appear
 
   Scenario: Submitting a publication without a reference
     Given I have logged in
     And I am on the "study" page
     When I fill out the study form
     And I upload a pdf publication
-    But I do not provide text for the reference field
-    And I click submit
-    Then the webpage should display a validation error
+    Then the publication should appear
     When I fill out the publicationInfo.reference field with "the journal Nature"
     And I click submit
     Then the webpage should not display a validation error

@@ -1,6 +1,8 @@
 @collections.Files.allow
   insert: (userId, doc) ->
     true
+  update: (userId, doc) ->
+    true
   download: (userId)->
     true
 
@@ -12,23 +14,33 @@
   download: (userId)->
     true
 
-Meteor.publish 'files', ->
-  collections.Files.find()
+# This makes it so it isn't possible to retrieve all the records in the system.
+# It is necessairy to know their id, which should make it necessairy to have
+# access to the record they are attached to.
+onlyById = (collection)->
+  (id)->
+    if _.isArray id
+      ids = id
+    else
+      ids = [id]
+    collection.find({_id: {$in: ids}})
+
+Meteor.publish 'files', onlyById(collections.Files)
 
 Meteor.publish 'genera', ->
   collections.Genera.find()
 
-Meteor.publish 'pdfs', ->
-  collections.PDFs.find()
+Meteor.publish 'pdfs', onlyById(collections.PDFs)
 
 @collections.PDFs.allow
   insert: (userId, doc) ->
     true
+  update: (userId, doc) ->
+    true
   download: (userId)->
     true
 
-Meteor.publish 'csvfiles', ->
-  collections.CSVFiles.find()
+Meteor.publish 'csvfiles', onlyById(collections.CSVFiles)
 
 Meteor.publish 'studies', ->
   collections.Studies.find()

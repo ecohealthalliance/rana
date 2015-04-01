@@ -49,6 +49,23 @@
       .call(callback);
     });
 
+    this.Then(/^the publication should( not)? appear/, function(shouldNot, callback){
+      helper.world.browser
+      .waitForExist('.file-upload-clear[file-input="publicationInfo.pdf"]', 1000, Boolean(shouldNot), function(err, indicator){
+        assert.ifError(err);
+        assert(indicator, "The publication should " + (shouldNot ? "not" : "" ) + " appear");
+      })
+      .call(callback);
+    });
+
+    this.Then("I remove the publication", function(callback){
+      helper.world.browser
+      .pause(500)
+      .clickWhenVisible('.file-upload-clear[file-input="publicationInfo.pdf"]')
+      .pause(500)
+      .call(callback);
+    });
+
     this.When("I do not provide text for the reference field", function(callback){
       helper.world.browser
       .setValue('[data-schema-key="publicationInfo.reference"]', '')

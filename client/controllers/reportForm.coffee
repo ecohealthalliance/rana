@@ -4,6 +4,15 @@ urlParams = null
 
 AutoForm.addHooks(
   'ranavirus-report', {
+    docToForm: (doc, ss)->
+      if doc
+        Meteor.subscribe(
+          "files",
+          (doc.pathologyReports or []).map((rObj)-> rObj.report).concat(
+            (doc.images or []).map((iObj)-> iObj.image)
+          )
+        )
+      return doc
     formToDoc: (doc)->
       doc.createdBy = {
         userId: Meteor.userId()

@@ -8,6 +8,14 @@ Template.studyForm.helpers
 AutoForm.hooks
   'ranavirus-import':
 
+    docToForm: (doc, ss)->
+      if doc
+        Meteor.subscribe(
+          "pdfs",
+          doc.publicationInfo?.pdf
+        )
+      return doc
+
     formToDoc: (doc) ->
       doc.createdBy =
         userId: Meteor.userId()
