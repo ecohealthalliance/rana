@@ -55,9 +55,9 @@
       .setValue('#at-field-email', 'test' + Math.floor(Math.random()*100) + '@user.com')
       .setValue('#at-field-password', 'testuser')
       .setValue('#at-field-password_again', 'testuser')
-      .setValue('#at-field-name', 'Test User')
+      .setValue('#at-field-name', 'Registration Test User')
       .submitForm('#at-field-email', assert.ifError)
-      .waitForExist(".form-control", 500, true, function(err, dne){
+      .waitForExist(".form-control", 1000, true, function(err, dne){
         assert.ifError(err);
         assert(dne);
       })
