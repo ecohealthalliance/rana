@@ -19,7 +19,7 @@ template(name="afFormGroup_rana")
           | this.label
         else
           | {{afFieldLabelText name=this.atts.name}}
-        if dynamicAttrs.title
+        if dynamicAttrs.tooltip
           +infoIcon
       if minorLabelBlockText this.atts.name
         span.minor-label.block {{minorLabelBlockText this.atts.name}}
@@ -36,7 +36,7 @@ template(name="afArrayField_rana")
   .panel.panel-default.content-panel
     .panel-heading
       label($dyn=dynamicAttrs) {{afFieldLabelText name=this.atts.name}}
-        if dynamicAttrs.title
+        if dynamicAttrs.tooltip
           +infoIcon
     if afFieldIsInvalid name=this.atts.name
      .panel-body.has-error
@@ -60,7 +60,7 @@ template(name="afCheckboxGroup_rana")
         label
           input(type="checkbox", value="{{this.value}}", $dyn=atts)
           span($dyn=dynamicAttrs) #{this.label}
-            if dynamicAttrs.title
+            if dynamicAttrs.tooltip
               +infoIcon
 
 template(name="afRadioGroup_rana")
@@ -70,7 +70,7 @@ template(name="afRadioGroup_rana")
         label
           input(type="radio", value="{{this.value}}", $dyn=atts)
           span($dyn=dynamicAttrs) #{this.label}
-            if dynamicAttrs.title
+            if dynamicAttrs.tooltip
               +infoIcon
 
 template(name="afBooleanRadioGroup_rana")

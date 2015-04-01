@@ -92,10 +92,10 @@
   'dataUsePermissions.share_obfuscated': "only the report country and the reporter's contact information will be released"
 
 Template.reportForm.rendered = () ->
-  @$('[data-toggle="tooltip"]').tooltip()
+  @$('[data-toggle="tooltip"]').popover({trigger: 'hover'})
 
 Template.studyForm.rendered = () ->
-  @$('[data-toggle="tooltip"]').tooltip()
+  @$('[data-toggle="tooltip"]').popover({trigger: 'hover'})
 
 that = @
 Template.registerHelper 'checkTooltip', (name) ->

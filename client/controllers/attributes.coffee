@@ -10,8 +10,8 @@ Template.registerHelper 'dynamicAttrs', () ->
 
   if name of that.tooltipTexts
     'data-toggle': "tooltip"
-    'data-placement': "right"
-    'title': that.tooltipTexts[name]
+    'data-content': that.tooltipTexts[name]
+    'tooltip': true
     'class': 'tooltipped '+required
   else if required
     'class': required
