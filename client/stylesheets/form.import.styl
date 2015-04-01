@@ -204,8 +204,10 @@ textarea
   border-bottom 1px solid #DDD
     
 .tooltipped
-  border-bottom 1px #ddd dotted
-  cursor pointer
+  &::after
+    @extend .icons
+    content "i"
+    display inline-block
 
 .padded-block
   padding 15px
