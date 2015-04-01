@@ -28,26 +28,7 @@ template(name="reportForm")
 
         section.odd
           .container
-            h3 Reporting institution, diagnostic lab or government agency info
-              +tooltip name='contact.institutionAddress'
-            .row
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.name"
-            .row
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.street"
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.street2"
-            .row
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.city"
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.stateOrProvince"
-              .col-lg-2
-                +afQuickField name="contact.institutionAddress.postalCode"
-            .row
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.country"
+            +address
 
         section.date-location
           .container
@@ -61,27 +42,9 @@ template(name="reportForm")
                   .col-sm-12
                     +afQuickField name="eventLocation"
 
-        section.odd
-          .container
-            .row.form-input-block
-              .col-sm-4.col-xs-6.input-block
-                  +afQuickField name="populationType"
-              .col-sm-4.col-xs-6.input-block
-                  +afQuickField name="screeningReason"
-              .clearfix.visible-xs-block
-              .col-sm-4.col-xs-6.input-block
-                  +afQuickField name="vertebrateClasses"
+        +populationInfo
 
-        section
-          .container
-            h3 Affected Species
-            .row.form-input-block
-              .col-sm-4
-                +afQuickField name="speciesGenus"
-                +afQuickField name="speciesName"
-                +afQuickField name="numInvolved"
-              .col-sm-7.col-sm-offset-1
-                +afQuickField name="speciesNotes"
+        +species
 
         section.odd
           .container
@@ -113,25 +76,11 @@ template(name="reportForm")
               .col-md-4.col-sm-6.input-block
                 +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
 
-        section
-          .container
-            .row
-              .col-sm-9
-                +afQuickField name='additionalNotes' id='additionalNotes'
+        +notes
 
-        section
-          .container
-            h2 Permissions and Consent
-            .row.form-input-block
-              .col-sm-6.input-block
-                +afQuickField name='dataUsePermissions' id='dataUsePermissions'
-              .col-sm-6.input-block
-                +afQuickField name='consent' id='consent'
+        +permissions
 
-        .container
-          .row
-            .col-lg-4
-              .form-group
-                button.btn-lg.btn.btn-success.btn-block(type='submit') Submit
+        +submit
+        
   else
     h3 Invalid form id

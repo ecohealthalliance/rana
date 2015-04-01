@@ -1,0 +1,70 @@
+template(name="address")
+  h3 Reporting institution, diagnostic lab or government agency info
+    +tooltip name='contact.institutionAddress'
+  .row
+    .col-sm-6
+      +afQuickField name="contact.institutionAddress.name"
+  .row
+    .col-sm-6
+      +afQuickField name="contact.institutionAddress.street"
+    .col-sm-6
+      +afQuickField name="contact.institutionAddress.street2"
+  .row
+    .col-sm-4
+      +afQuickField name="contact.institutionAddress.city"
+    .col-sm-4
+      +afQuickField name="contact.institutionAddress.stateOrProvince"
+    .col-sm-2
+      +afQuickField name="contact.institutionAddress.postalCode"
+  .row
+    .col-sm-6
+      +afQuickField name="contact.institutionAddress.country"
+
+template(name="populationInfo")
+  section.odd
+    .container
+      .row.form-input-block
+        .col-sm-4.col-xs-6.input-block
+            +afQuickField name="populationType"
+        .col-sm-4.col-xs-6.input-block
+            +afQuickField name="screeningReason"
+        .clearfix.visible-xs-block
+        .col-sm-4.col-xs-6.input-block
+            +afQuickField name="vertebrateClasses"
+
+template(name="species")
+  section
+    .container
+      h3 Affected Species
+      .row.form-input-block
+        .col-sm-4
+          +afQuickField name="speciesGenus"
+          +afQuickField name="speciesName"
+          if type
+            +afQuickField name="numInvolved"
+        .col-sm-7.col-sm-offset-1
+          +afQuickField name="speciesNotes"
+
+template(name="notes")
+  section
+    .container
+      .row
+        .col-sm-9
+          +afQuickField name='additionalNotes' id='additionalNotes'
+
+template(name="permissions")
+  section.rm-pad-top
+    .container
+      h3 Permissions and Consent
+      .row.form-input-block
+        .col-sm-6.input-block
+          +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+        .col-sm-6.input-block
+          +afQuickField name='consent' id='consent'
+
+template(name="submit")
+  .container
+    .row
+      .col-lg-4
+        .form-group
+          button.btn-lg.btn.btn-success.btn-block(type='submit') Submit

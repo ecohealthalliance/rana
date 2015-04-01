@@ -29,47 +29,11 @@ template(name="studyForm")
               +afQuickField name='contact.phone' minor='(Must include the country code)'
 
             .col-sm-8.col-sm-offset-1
-              h3 Reporting institution, diagnostic lab or government agency info
-                +tooltip name='contact.institutionAddress'
-              .row
-                .col-sm-6
-                  +afQuickField name="contact.institutionAddress.name"
-              .row
-                .col-sm-6
-                  +afQuickField name="contact.institutionAddress.street"
-                .col-sm-6
-                  +afQuickField name="contact.institutionAddress.street2"
-              .row
-                .col-sm-4
-                  +afQuickField name="contact.institutionAddress.city"
-                .col-sm-4
-                  +afQuickField name="contact.institutionAddress.stateOrProvince"
-                .col-sm-2
-                  +afQuickField name="contact.institutionAddress.postalCode"
-              .row
-                .col-sm-6
-                  +afQuickField name="contact.institutionAddress.country"
+              +address
 
-      section.odd
-        .container
-          .row.form-input-block
-            .col-sm-4.col-xs-6.input-block
-                +afQuickField name="populationType"
-            .col-sm-4.col-xs-6.input-block
-                +afQuickField name="screeningReason"
-            .clearfix.visible-xs-block
-            .col-sm-4.col-xs-6.input-block
-                +afQuickField name="vertebrateClasses"
+      +populationInfo
 
-      section
-        .container
-          h3 Affected Species
-          .row.form-input-block
-            .col-sm-5
-              +afQuickField name="speciesGenus"
-              +afQuickField name="speciesName"
-            .col-sm-7
-              +afQuickField name="speciesNotes"
+      +species
 
       section.odd
         .container
@@ -87,27 +51,12 @@ template(name="studyForm")
                     if afFieldValueContains name='sampleType' value='other'
                       +afQuickField name='specifyOtherRanavirusSampleTypes'
 
-      section
-        .container
-          .row
-            .col-sm-9
-              +afQuickField name='additionalNotes' id='additionalNotes'
+      +notes
 
-      section.rm-pad-top
-        .container
-          h3 Permissions and Consent
-          .row.form-input-block
-            .col-sm-6.input-block
-              +afQuickField name='dataUsePermissions' id='dataUsePermissions'
-            .col-sm-6.input-block
-              +afQuickField name='consent' id='consent'
+      +permissions
 
       section.rm-pad-top.form-grp-container.publication
         .container
           +afQuickField name='publicationInfo' id='publicationInfo'
 
-      .container
-        .row
-          .col-sm-4
-            .form-group
-              button.btn-lg.btn.btn-success.btn-block(type='submit') Submit
+      +submit
