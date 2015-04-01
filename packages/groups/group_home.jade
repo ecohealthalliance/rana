@@ -1,15 +1,16 @@
 template(name="groupHome")
-  if group
+  .container
+    if group
 
-    h2 {{group.name}}
-    h4 {{group.description}}
+      h2 {{group.name}}
+      h4 {{group.description}}
 
-    if isInRole 'admin' group._id
-      +groupAdmin
+      if isInRole 'admin' group._id
+        +groupAdmin
 
-  else
-    h4 No group here -
-      a(href="{{pathFor 'newGroup'}}") Create one?
+    else
+      h4 No group here -
+        a(href="{{pathFor 'newGroup'}}") Create one?
 
 template(name="groupAdmin")
   .panel-group
