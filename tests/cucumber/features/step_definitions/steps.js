@@ -109,10 +109,10 @@
         studyId: 'fakeid',
         consent: true,
         contact: {name: 'Text User', 'email': 'test@foo.com'},
-        dataUsePermissions: "Share full record",
+        dataUsePermissions: "Share full record"
       };
       if(withGeo) {
-        report['eventLocation'] = {
+        report["eventLocation"] = {
           source: 'LonLat',
           northing: 1,
           easting: 2,
@@ -132,19 +132,8 @@
       helper.addReports([report], function(err){
         assert.ifError(err);
         helper.world.browser
-        .executeAsync(function(expectedReport, done){
-          delete expectedReport['createdBy'];
-          Meteor.subscribe('reports');
-          Tracker.autorun(function(){
-            var report = collections.Reports.findOne();
-            if(report) done(report);
-          });
-          window.setTimeout(done, 2000);
-        }, report, _.once(function(err, ret){
-          assert.ifError(err);
-          assert(ret.value, "No reports in the database");
-          callback();
-        }));
+        .waitForReport(report)
+        .call(callback);
       });
     });
 

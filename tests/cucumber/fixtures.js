@@ -42,33 +42,53 @@
         });
         return reports;
       },
+      // '/fixtures/addReports': function (reports) {
+      //   var userId = Meteor.users.findOne({"emails.address": "test@test.com"})._id;
+      //   _.each(reports, function (report) {
+      //     report = _.extend({
+      //       createdBy: {
+      //         userId: userId,
+      //         name: "Test User"
+      //       }
+      //     }, report);
+      //     collections.Reports.insert(report);
+      //   });
+
+      //   collections.Studies.remove({});
+      //   collections.Studies.insert({
+      //     '_id': 'fakeid',
+      //     'name': 'Test Study',
+      //     'dataUsePermissions': 'Share full record',
+      //     'consent': true,
+      //     'csvFile': 'fakefile',
+      //     'contact': {
+      //       'name': 'Test User',
+      //       'email': 'test@test.com'
+      //     },
+      //     createdBy: {
+      //         userId: userId,
+      //         name: "Test User"
+      //       }
+      //   });
+      //   return reports;
+      // },
       '/fixtures/addReports': function (reports) {
         var userId = Meteor.users.findOne({"emails.address": "test@test.com"})._id;
         _.each(reports, function (report) {
           report = _.extend({
+            dataUsePermissions: 'Share full record',
+            consent: true,
             createdBy: {
               userId: userId,
               name: "Test User"
+            },
+            studyId: "fakeid",
+            'contact': {
+              'name': 'Test User',
+              'email': 'test@test.com'
             }
           }, report);
           collections.Reports.insert(report);
-        });
-
-        collections.Studies.remove({});
-        collections.Studies.insert({
-          '_id': 'fakeid',
-          'name': 'Test Study',
-          'dataUsePermissions': 'Share full record',
-          'consent': true,
-          'csvFile': 'fakefile',
-          'contact': {
-            'name': 'Test User',
-            'email': 'test@test.com'
-          },
-          createdBy: {
-              userId: userId,
-              name: "Test User"
-            }
         });
         return reports;
       }
