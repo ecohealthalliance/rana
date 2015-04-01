@@ -49,36 +49,18 @@ Meteor.publish 'reports', ->
     ]
   })
 
+allowCreatorAndAdmin = (userId, doc) ->
+  if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+    return true
+  else
+    return doc.createdBy.userId == userId
+
 @collections.Reports.allow
-  insert: (userId, doc) ->
-    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
-      return true
-    else
-      return doc.createdBy.userId == userId
-  update: (userId, doc) ->
-    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
-      return true
-    else
-      return doc.createdBy.userId == userId
-  remove: (userId, doc) ->
-    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
-      return true
-    else
-      return doc.createdBy.userId == userId
+  insert: allowCreatorAndAdmin
+  update: allowCreatorAndAdmin
+  remove: allowCreatorAndAdmin
 
 @collections.Studies.allow
-  insert: (userId, doc) ->
-    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
-      return true
-    else
-      return doc.createdBy.userId == userId
-  update: (userId, doc) ->
-    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
-      return true
-    else
-      return doc.createdBy.userId == userId
-  remove: (userId, doc) ->
-    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
-      return true
-    else
-      return doc.createdBy.userId == userId
+  insert: allowCreatorAndAdmin
+  update: allowCreatorAndAdmin
+  remove: allowCreatorAndAdmin
