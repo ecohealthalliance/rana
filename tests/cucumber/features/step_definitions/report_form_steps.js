@@ -72,7 +72,6 @@
 
 
     this.When("I add a pathology report", function(callback){
-
       helper.world.browser
       .click('div[data-schema-key="pathologyReports.0.Permission"] input[value="Yes"]')
       .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
