@@ -13,5 +13,5 @@ Template.registerHelper 'dynamicAttrs', () ->
     'data-placement': "right"
     'title': that.tooltipTexts[name]
     'class': 'tooltipped '+required
-  else
+  else if required
     'class': required
