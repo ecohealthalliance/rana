@@ -108,7 +108,7 @@
       var report = {
         studyId: 'fakeid',
         consent: true,
-        contact: {name: 'Text User', 'email': 'test@foo.com'},
+        contact: {name: 'Test User', email: 'test@foo.com'},
         dataUsePermissions: "Share full record"
       };
       if(withGeo) {
