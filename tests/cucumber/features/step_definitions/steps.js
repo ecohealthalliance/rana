@@ -140,15 +140,27 @@
     this.Then("there should be no delete button for the report by someone else",
     function(callback){
       helper.world.browser
-        .getTextWhenVisible('.reactive-table tr', function(err, text) {
-          assert.ifError(err);
-          String(text).split(/Remove|View/).forEach(function(match){
-            match = match.trim();
-            assert(
-              !(new RegExp("Someone Else.*Edit", "i").test(match)),
-              "There appears to be a Remove button on a report created by someone else. Table text: " + text
+        .mustExist('.reactive-table tr')
+        .execute(function() {
+          return $('.reactive-table tr').map(function(idx, element){
+            var $el = $(element);
+            var someoneElse = /Someone Else/.test(
+              $el.find('td[class="createdBy.name"]').text()
             );
+            var hasDelete = Boolean($el.find(".remove-form").length);
+            if(someoneElse && hasDelete) {
+              return $el.find('td').map(function(idx, item){
+                return item.textContent;
+              }).toArray().join(", ");
+            }
+            return false;
           });
+        }, function(err, result){
+          assert.ifError(err);
+          var badRows = result.value.filter(function(item){
+            return item;
+          });
+          assert.equal(badRows.length, 0, "Delete buttin found in rows:\n" + badRows.join("\n"));
         })
         .call(callback);
     });
