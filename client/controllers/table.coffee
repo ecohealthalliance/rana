@@ -69,7 +69,7 @@ Template.table.settings = =>
         """)
       else
         new Spacebars.SafeString("""
-          <a class="btn btn-primary" href="/form/#{obj._id}">View</a>
+          <a class="btn btn-primary" href="/report/#{obj._id}">View</a>
         """)
 
   showColumnToggles: true
