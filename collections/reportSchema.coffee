@@ -20,7 +20,7 @@ numInvolvedOptions =
       label: false
   contact:
     type: @contactSchema
-   eventDate:
+  eventDate:
     label: 'Event date'
     type: Date
     optional: true
@@ -69,10 +69,10 @@ numInvolvedOptions =
       afFieldInput:
         type: 'fileUpload'
         collection: 'files'
-  'pathologyReports.$.permission':
-    label: "Do you have permission to upload this report?"
+  'pathologyReports.$.notified':
+    label: "Has the pathologist or laboratory that authored the report been notified that it is being uploaded?"
     type: String
-    allowedValues: ["Yes", "Permission Not Granted", "Not Available or Applicable"]
+    allowedValues: ["Yes", "No"]
     autoform:
       afFieldInput:
         noselect: true

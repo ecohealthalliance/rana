@@ -1,2 +1,17 @@
 template(name="map")
-  .vis-map
+  .vis-map-container
+    +autoForm(
+      collection=mapQueries
+      doc=mapQuery
+      type="update"
+      id="filter-panel"
+      template="bootstrap3"
+    )
+      +afQuickFields(
+        id-prefix=idPrefix
+        template="bootstrap3"
+      )
+      .form-group
+        button.btn.btn-primary(type="submit") Apply filters
+        button.btn.btn-primary.reset(type="reset") Reset filters
+    .vis-map
