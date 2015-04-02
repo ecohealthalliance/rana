@@ -146,6 +146,7 @@
     type: String
     optional: true
     autoform:
+      type: "textarea"
       rows: 5
   consent:
     type: Boolean
