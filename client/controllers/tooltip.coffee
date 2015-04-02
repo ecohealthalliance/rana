@@ -97,12 +97,6 @@ Template.reportForm.rendered = () ->
 Template.studyForm.rendered = () ->
   @$('[data-toggle="tooltip"]').popover({trigger: 'hover'})
 
-that = @
-Template.registerHelper 'checkTooltip', (name) ->
-  console.log(name)
-  if that.tooltipTexts[name]
-    console.log("true")
-
 Template.registerHelper 'tooltipText', (name) ->
   if name of @tooltipTexts
     @tooltipTexts[name]
