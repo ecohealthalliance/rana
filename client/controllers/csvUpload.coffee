@@ -42,13 +42,25 @@ updateImportReports = (data) ->
         email: 'a@b.com'
         phone: '1234567890'
       createdBy:
+
+@loadCSVData = (csvFile, study, studyId) ->
+  Meteor.call 'getCSVData', csvFile, (err, data) =>
+    reportSchema = getCollections().Reports.simpleSchema()._schema
+    reportFields = Object.keys reportSchema
+    report = {}
+    for studyField in Object.keys study
+      if studyField != '_id' and studyField in reportFields
+        report[studyField] = _.clone study[studyField]
+
+    for importData in data
+      importReport = buildReportFromImportData importData, report
+      _.extend report, importReport
+      report.createdBy =
         userId: Meteor.user()._id
         name: Meteor.user().profile.name
-      consent: true
-      dataUsePermissions: 'Share obfuscated'
-    for field in matches
-      rowdata[field] = row[field]
-    ImportReports.insert rowdata
+      report.studyId = studyId
+      getCollections().Reports.insert report
+
 
 headerMatches = (data) ->
   headers = _.keys data[0]
