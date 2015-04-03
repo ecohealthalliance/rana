@@ -4,6 +4,12 @@
 
   var assert = require('assert');
 
+  var nestedStringKey = function(key, obj) {
+    return _(key.split('.')).reduce((function(obj, key) {
+      return obj[key];
+    }), obj);
+  };
+
   module.exports = function () {
 
     var helper = this;
@@ -192,12 +198,33 @@
           }, formId, function(err, res) {
             var formValues = res.value;
             _.each(expectedValues, function(fieldValuePair){
+
                 var field = fieldValuePair[0];
                 var value = fieldValuePair[1];
-                if (field === 'eventDate') {
-                  assert.equal(Date(formValues[field]), Date(value));
+                var formValue = nestedStringKey(field, formValues);
+                if (field == 'eventLocation') {
+                  // Need to check individually so we can forgive minor floating point errors in coords
+                  assert.equal(formValue.source, value.source);
+                  assert.equal(formValue.zone, value.zone);
+                  assert.equal(formValue.country, value.country);
+                  assert.equal(formValue.geo.type, value.geo.type);
+                  assert.equal(Math.round(formValue.easting * 100000),
+                               Math.round(value.easting * 100000));
+                  assert.equal(Math.round(formValue.northing * 100000),
+                               Math.round(value.northing * 100000));
+                  assert.equal(Math.round(formValue.geo.coordinates[0] * 100000),
+                               Math.round(value.geo.coordinates[0] * 100000));
+                  assert.equal(Math.round(formValue.geo.coordinates[1] * 100000),
+                               Math.round(value.geo.coordinates[1] * 100000));
+                } else if (typeof(value) == 'object' || typeof(value) == 'array') {
+                  assert(_.isEqual(formValue, value));
+                } else if (typeof(value) == 'number') {
+                  // avoid floating point errors
+                  assert(_.isEqual(Math.round(formValue * 100000), Math.round(value * 100000)));
+                } else if (field === 'eventDate') {
+                  assert.equal(Date(formValue), Date(value));
                 } else {
-                  assert.equal(formValues[field], value);
+                  assert.equal(formValue, value);
                 }
             });
             browser.call(callback);
@@ -214,7 +241,7 @@
               var value = fieldValuePair[1];
               browser.getText('.' + field, function(err, text){
                 if (field === 'eventDate') {
-                  assert.equal(Date(text[1]), Date(value));
+                  assert.equal(Date.parse(text[1]), Date.parse(value));
                 } else {
                   assert.equal(text[1], String(value));
                 }
