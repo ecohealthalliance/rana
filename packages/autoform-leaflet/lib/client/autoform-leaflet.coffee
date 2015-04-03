@@ -112,6 +112,7 @@ Template.leaflet.rendered = ->
     $(@$('.easting')[0]).val @data.value.easting
     $(@$('.zone')[0]).val @data.value.zone
     $(@$('.source')[0]).val @data.value.source
+    $(@$('.country')[0]).val @data.value.country
     @updateViewFromLonLat()
     @map.setZoom @options.defaultZoom
   else

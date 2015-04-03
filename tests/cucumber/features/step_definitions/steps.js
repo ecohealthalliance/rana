@@ -107,6 +107,7 @@
           northing: 1,
           easting: 2,
           zone: 3,
+          country: 'USA',
           geo: {
             type: 'Point',
             coordinates: [ 121.55189514218364, 25.046919772516173 ]
