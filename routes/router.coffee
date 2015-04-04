@@ -46,6 +46,23 @@ Router.route('newStudy',
     ]
 )
 
+Router.route('editStudy',
+  path: '/study/:studyId'
+  template: 'studyForm'
+  where: 'client'
+  data: ->
+    console.log @params.studyId
+    studyId: @params.studyId
+  onAfterAction: ->
+    Meteor.subscribe("genera")
+  waitOn: ->
+    [
+      Meteor.subscribe("csvfiles"),
+      Meteor.subscribe("reports"),
+      Meteor.subscribe("studies")
+    ]
+)
+
 Router.route('/table',
   where: 'client'
   data: ->

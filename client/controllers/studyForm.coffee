@@ -1,12 +1,34 @@
 getCollections = () -> @collections
 
+
+
 Template.studyForm.helpers
 
-  importDoc: () =>
-    { contact: @contactFromUser() }
+  studyDoc: =>
+    urlParams = Iron.controller().getParams()
+    if urlParams?.studyId
+      return getCollections().Studies.findOne(urlParams.studyId) or {}
+    else
+      { contact: @contactFromUser() }
+
+  type: ->
+    urlParams = Iron.controller().getParams()
+    if not urlParams?.studyId
+      return "insert"
+    currentStudy = getCollections().Studies.findOne(urlParams.studyId)
+    if not currentStudy
+      # This will trigger an error message
+      return null
+    if Meteor.userId() and Meteor.userId() == currentStudy.createdBy.userId
+      return "update"
+    return "readonly"
+
+  showCSV: ->
+    not Iron.controller().getParams()?.studyId
+
 
 AutoForm.hooks
-  'ranavirus-import':
+  'ranavirus-study':
 
     formToDoc: (doc) ->
       doc.createdBy =
@@ -21,10 +43,11 @@ AutoForm.hooks
         timeOut: "100000"
         # This is the timeout after a mouseover event
         extendedTimeOut: "100000"
-      toastr.success("""
-      <div>#{operation} successful!</div>
-      <a href="/study/#{result}">Edit Study</a>
-      """)
+      message = """<div>#{operation} successful!</div>"""
+      # don't show link to update if we have just updated
+      if operation is 'insert'
+        message += """<a href="/study/#{result}">Edit Study</a>"""
+      toastr.success message
       window.scrollTo 0, 0
 
     onError: (operation, error) ->
