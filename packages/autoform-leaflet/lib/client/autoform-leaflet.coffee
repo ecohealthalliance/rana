@@ -8,8 +8,6 @@ defaults =
   utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
   lonlatProj =  proj4.Proj('WGS84')
   utm = proj4.transform(lonlatProj, utmProj, [lon, lat])
-  console.log 'lon', lon, 'lat', lat, 'zone', zone
-  console.log 'utm', utm
   { easting: utm.x, northing: utm.y, zone: zone }
 utmFromLonLat = @utmFromLonLat
 
