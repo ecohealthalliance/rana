@@ -47,6 +47,12 @@
           northing: 1,
           easting: 2,
           zone: 3,
+          degreesLon: -170,
+          minutesLon: 30,
+          secondsLon: 40.58647497889751,
+          degreesLat: 0,
+          minutesLat: 0,
+          secondsLat: 0.032469748221482304,
           geo: {
             type: 'Point',
             coordinates: [ 121.55189514218364, 25.046919772516173 ]
@@ -61,7 +67,7 @@
         .call(callback);
       });
     });
-    
+
     this.When(/^I add a filter where "([^"]*)" is "([^"]*)"$/,
     function (property, value, callback) {
       helper.world.browser
@@ -82,7 +88,7 @@
       });
 
     });
-    
+
     this.Then(/^I should see (\d+) reports?$/, function (number, callback) {
       helper.world.browser
       .waitForExist(".leaflet-marker-icon")
@@ -92,7 +98,7 @@
       })
       .call(callback);
     });
-    
+
     this.When(/^I remove the filters$/, function (callback) {
       helper.world.browser
       .click(".reset")
