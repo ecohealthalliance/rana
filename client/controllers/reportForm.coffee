@@ -47,7 +47,9 @@ Template.reportForm.helpers
   reportDoc: =>
     urlParams = Iron.controller().getParams()
     if urlParams?.reportId
-      return getCollections().Reports.findOne(urlParams.reportId) or {}
+      getCollections().Reports.findOne(urlParams.reportId) or {}
+    else if Session.get 'studyId'
+      getCollections().Studies.findOne Session.get('studyId')
     else
       { contact: @contactFromUser() }
 
@@ -67,3 +69,9 @@ Template.reportForm.helpers
     collections.Studies.find().map (study) ->
       label: study.name
       value: study._id
+
+Template.reportForm.events
+
+  'change select[name="studyId"]': (e, t) ->
+    Session.set  'studyId', AutoForm.getFieldValue('ranavirus-report', 'studyId')
+
