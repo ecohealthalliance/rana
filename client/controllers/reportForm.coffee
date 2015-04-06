@@ -53,6 +53,9 @@ Template.reportForm.helpers
     else
       { contact: @contactFromUser() }
 
+  studySelected: ->
+    Session.get 'studyId'
+
   type: ->
     urlParams = Iron.controller().getParams()
     if not urlParams?.reportId
