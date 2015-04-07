@@ -7,12 +7,12 @@ SimpleSchema.messages
   northing: '[label] northing should be between 0 and 10,000,000'
   easting: '[label] easting should be between 0 and 1,000,000'
   zone: '[label] zone should be between 1 and 60'
-  degressLonOutOfRange: '[label] longitude should be between -180 and 180'
-  minutesLonOutOfRange: '[label] latitude should be between 1 and 60'
-  secondsLonOutOfRange: '[label] latitude should be between 1 and 60'
-  degreesLatOutOfRange: '[label] latitude should be between -90 and 90'
-  minutesLatOutOfRange: '[label] latitude should be between 1 and 60'
-  secondsLatOutOfRange: '[label] latitude should be between 1 and 60'
+  degressLonOutOfRange: '[label] longitude degrees should be between -180 and 180'
+  minutesLonOutOfRange: '[label] latitude minutes should be between 1 and 60'
+  secondsLonOutOfRange: '[label] latitude seconds should be between 1 and 60'
+  degreesLatOutOfRange: '[label] latitude degrees should be between -90 and 90'
+  minutesLatOutOfRange: '[label] latitude minutes should be between 1 and 60'
+  secondsLatOutOfRange: '[label] latitude seconds should be between 1 and 60'
 
 @locationSchema = new SimpleSchema
   source:
