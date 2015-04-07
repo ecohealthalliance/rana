@@ -30,3 +30,14 @@ Feature: A form for setting up a ranavirus study
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
 
+  Scenario: Updating a study
+    Given I have logged in
+    And I am on the "study" page
+    When I fill out the study form
+    And I click submit
+    Then the webpage should not display a validation error
+    And I should see a "insert successful" toast
+    And I click on the edit link in the toast
+    And I fill out the study form differently
+    And I click submit
+    Then the form should contain the different values I entered
