@@ -66,6 +66,7 @@ Template.map.created = ->
   @filterCollection.insert({
     filters: []
   })
+  @groupBy = new ReactiveVar()
 
 Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
@@ -124,9 +125,38 @@ Template.map.rendered = ->
         }
       ].concat(filters)
     )
-    .map((report)->
-      location: [report.eventLocation.geo.coordinates[1], report.eventLocation.geo.coordinates[0]]
-      popupHTML: """
+    lMap.removeLayer(markers)
+    markers = new L.FeatureGroup()
+    curGroupBy = @groupBy.get()
+    groups = _.uniq(data.map((report)->report[curGroupBy]))
+    colors = [
+      'red', 'darkred', 'orange',
+      'green', 'darkgreen',
+      'blue', 'lightblue',
+      'purple', 'darkpuple'
+    ]
+    if groups.length > colors.length
+      alert("This field has too many values to group")
+      curGroupBy = null
+    data.forEach((report)->
+      if curGroupBy
+        groupValue = report[curGroupBy]
+        color = colors[groups.indexOf(groupValue)]
+      else
+        color = colors[0]
+      L.marker(report.eventLocation.geo.coordinates.reverse(), {
+        icon: L.divIcon({
+          className: 'map-marker-container'
+          iconSize:null
+          html:"""
+          <div class="map-marker" style="background-color:#{color};">
+            <div class="arrow" style="border-top-color:#{color};"></div>
+          </div>
+          """
+        })
+      })
+      .addTo(markers)
+      .bindPopup("""
       <div>
       <dl>
         <dt>Date</dt>
@@ -142,15 +172,11 @@ Template.map.rendered = ->
         <dt>Reported By</dt>
         <dd>#{report.createdBy.name}</dd>
       </dl>
-      <a class="btn btn-primary btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">View/Edit</a>
+      <a class="btn btn-primary btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">
+        View/Edit
+      </a>
       </div>
-      """
-    )
-    lMap.removeLayer(markers)
-    markers = new L.FeatureGroup()
-    data.forEach((mapItem)->
-      L.marker(mapItem.location).addTo(markers)
-        .bindPopup(mapItem.popupHTML)
+      """)
     )
     markers.addTo(lMap)
 
@@ -159,6 +185,23 @@ Template.map.mapQueries = ->
 
 Template.map.mapQuery = ->
   Template.instance().filterCollection.findOne()
+
+Template.map.groups = ->
+  [
+    ""
+    "speciesName"
+    "speciesGenus"
+    "populationType"
+    "vertebrateClasses"
+    "ageClasses"
+    "createdBy.name"
+  ].map((item)->
+      {
+        label: getCollections().Reports.simpleSchema().label(item),
+        value: item
+        selected: item == (Template.instance().groupBy?.get() or "")
+      }
+  )
 
 Template.map.events
   'click .reset': ()->
@@ -187,3 +230,5 @@ Template.map.events
         )
       $("input[name='#{schemaKey}']").autocomplete
         source: _.flatten(values)
+  'change #group-by' : (event, template) ->
+    Template.instance().groupBy.set($(event.target).val())

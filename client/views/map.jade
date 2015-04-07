@@ -14,4 +14,15 @@ template(name="map")
       .form-group
         button.btn.btn-primary(type="submit") Apply filters
         button.btn.btn-primary.reset(type="reset") Reset filters
+      hr
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title Group By:
+        .panel-body
+          select#group-by.form-control
+            each groups
+              if selected
+                option(value=value selected) {{label}}
+              else
+                option(value=value) {{label}}
     .vis-map
