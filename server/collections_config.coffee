@@ -23,6 +23,11 @@ onlyById = (collection)->
       ids = id
     else
       ids = [id]
+    # It doesn't seem to be possible to pass in RegExps
+    # but we still check for them just incase it becomes possible in
+    # future versions of Meteor.
+    if ids.some(_.isRegExp)
+      return null
     collection.find({_id: {$in: ids}})
 
 Meteor.publish 'files', onlyById(collections.Files)
