@@ -28,6 +28,9 @@
       helper.fillInStudyForm({}, callback);
     });
 
+    this.When("I fill out the study form with some default report values", function(callback){
+      helper.fillInStudyForm({'speciesGenus': 'SomeGenus'}, callback);
+    });
   };
 
 })();

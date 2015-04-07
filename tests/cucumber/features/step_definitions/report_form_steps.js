@@ -61,7 +61,14 @@
       .click('div[data-schema-key="' + field + '"] input[value="' + value + '"]')
       .call(callback);
     });
-    
+
+    this.When('I select the #(\d+) study',
+    function(studyIndex, callback){
+      helper.world.browser
+      .selectByIndex('select[data-schema-key="studyId"]', parseInt(studyIndex))
+      .call(callback);
+    });
+
     this.Then('the $field field should have the value "$value"',
     function(field, value, callback){
       helper.world.browser
@@ -150,6 +157,14 @@
       .checkValue('[data-schema-key="contact.institutionAddress.stateOrProvince"]', "NY")
       .checkValue('[data-schema-key="contact.institutionAddress.country"]', "USA")
       .checkValue('[data-schema-key="contact.institutionAddress.postalCode"]', "10001")
+      .call(callback);
+    });
+
+    this.Then("the information from the study should be prepopulated",
+    function(callback){
+      helper.world.browser
+      .pause(2000)
+      .checkValue('[data-schema-key="speciesGenus"]', "SomeGenus")
       .call(callback);
     });
   };

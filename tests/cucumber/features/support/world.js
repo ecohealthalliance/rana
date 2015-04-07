@@ -123,7 +123,7 @@
                 // a helper, so it's not in the schema and can't be detected here.
                 if (key == 'studyId') {
                   schemaTypes[key] = 'select';
-                }  else if (value.optional) {
+                }  else if (value.optional && !formData[key]) {
                   schemaTypes[key] = 'optional';
                 } else if (value.autoform &&
                     value.autoform.afFieldInput &&
