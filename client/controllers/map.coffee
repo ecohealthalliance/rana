@@ -71,9 +71,14 @@ Template.map.created = ->
 Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
   lMap = L.map(@$('.vis-map')[0]).setView([0, -0], 2)
-  L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  L.tileLayer('//otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png', {
+    attribution: """
+    Map Data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors,
+    Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>
+    <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />
+    """
+    subdomains: '1234'
+		type: 'osm'
   }).addTo(lMap);
 
   # initialize markers
