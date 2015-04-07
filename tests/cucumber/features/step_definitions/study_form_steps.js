@@ -17,6 +17,9 @@
       var defaultValues = {};
       defaultValues['contact.name'] = 'Fake Name';
       defaultValues['contact.email'] = 'foo@bar.com';
+      defaultValues['consent'] = true;
+      defaultValues['dataUsePermissions'] = "Share full record";
+      defaultValues['name'] = "Study";
 
       _.extend(defaultValues, customValues);
 

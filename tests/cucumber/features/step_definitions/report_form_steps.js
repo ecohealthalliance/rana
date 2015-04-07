@@ -20,9 +20,24 @@
       defaultValues['images'] = [];
       defaultValues['pathologyReports'] = [];
       defaultValues['consent'] = true;
-      defaultValues['eventLocation'] = null;
+      defaultValues['dataUsePermissions'] = "Share full record";
       helper.world.browser.generateFormData("Reports", function(generatedValues){
         defaultValues = _.extend(generatedValues, defaultValues);
+        // These fields are deleted because setFormFields does not support them.
+        var badKeys = [
+          'specifyOtherRanavirusSampleTypes',
+          'specifyOtherRanavirusConfirmationMethods',
+          'sampleType',
+          'ranavirusConfirmationMethods',
+          'eventDate',
+          'genBankAccessionNumbers',
+          'eventLocation',
+          'sourceFile'
+        ];
+        defaultValues = _.omit(defaultValues, badKeys);
+        if(!_.isEmpty(_.pick(customValues, badKeys))) {
+          throw Error("Bad keys: " + _.pick(customValues, badKeys));
+        }
         var formData = _.extend(defaultValues, customValues);
         helper.lastFormData = formData;
         helper.world.browser.setFormFields(formData, 'Reports', callback);
@@ -123,6 +138,15 @@
       function(err, result){
         assert.ifError(err);
         if(shouldNot) {
+          if(!result) {
+            helper.world.browser
+            .saveScreenshot(
+              helper.getAppDirectory() +
+              "/tests/screenshots/validation error - " +
+              helper.world.scenario.getName() +
+              ".png"
+            );
+          }
           assert(result, "Validation error");
         } else {
           assert(result, "Missing validation error");

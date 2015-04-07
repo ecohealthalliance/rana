@@ -69,7 +69,11 @@
             var returnVal = {};
             Object.keys(obj).forEach(function(key){
               var value = obj[key];
-              if(!_.isArray(value) && _.isObject(value)) {
+              if(_.isArray(value)) {
+                if(value.length > 0) {
+                  returnVal[prefix.concat(key).join('.')] = { $all: value };
+                }
+              } else if(_.isObject(value)) {
                 _.extend(returnVal, objectToQuery(value, prefix.concat([key])));
               } else {
                 returnVal[prefix.concat(key).join('.')] = value;
@@ -85,9 +89,17 @@
               var report = collections.Reports.findOne(query);
               if(report) done(report);
             });
+            setTimeout(function(){
+              done({
+                error: "Query:\n" +
+                  JSON.stringify(query, 2,2) +
+                  "Reports in the DB:\n" +
+                  JSON.stringify(collections.Reports.find().fetch(), 2,2)
+              });
+            }, 2000);
           }, objectToQuery(report), _.once(function(err, ret){
             assert.ifError(err);
-            assert(ret.value, "No reports in the database");
+            assert.ifError(ret.value.error, "Report not found");
             callback();
           }));
         });
@@ -139,77 +151,77 @@
         });
         
         browser.addCommand("setFormFields", function(formData, schemaName, callback) {
+          function flattenObjectToSchema(obj, prefix){
+            if(!prefix) prefix = [];
+            var returnVal = {};
+            Object.keys(obj).forEach(function(key){
+              var value = obj[key];
+              if(_.isArray(value)) {
+                returnVal[prefix.concat(key).join('.')] = value;
+              } else if(_.isObject(value)) {
+                _.extend(returnVal, flattenObjectToSchema(value, prefix.concat([key])));
+              } else {
+                returnVal[prefix.concat(key).join('.')] = value;
+              }
+            });
+            return returnVal;
+          }
+          formData = flattenObjectToSchema(formData);
           browser
           .mustExist('.form-group')
           .call(function(){
-            var schemaTypes = {};
-            _.each(collections[schemaName].simpleSchema()._schema, function (value, key) {
-              // studyId is designated as a select via options passed in via
-              // a helper, so it's not in the schema and can't be detected here.
-              if (key == 'studyId') {
-                schemaTypes[key] = 'select';
-              }  else if (value.optional) {
-                schemaTypes[key] = 'optional';
-              } else if (value.autoform &&
-                  value.autoform.afFieldInput &&
-                  value.autoform.afFieldInput.options &&
-                  value.autoform.afFieldInput.noselect) {
-                schemaTypes[key] = 'radio';
-              } else if (value.autoform &&
-                  value.autoform.afFieldInput &&
-                  value.autoform.options &&
-                  value.autoform.afFieldInput.noselect) {
-                schemaTypes[key] = 'radio';
-              } else if (value.autoform &&
-                  value.autoform.afFieldInput &&
-                  value.autoform.afFieldInput.options) {
-                schemaTypes[key] = 'select';
-              } else if (value.autoform &&
-                  value.autoform.afFieldInput &&
-                  value.autoform.options) {
-                schemaTypes[key] = 'select';
-              } else if (value.autoform &&
-                         value.autoform.rows) {
-                schemaTypes[key] = 'textarea';
-              } else if (value.autoform &&
-                         value.autoform.afFieldValueContains) {
-                schemaTypes[key] = 'optional';
-              } else if (value.type.name) {
-                schemaTypes[key] = value.type.name;
-              } else {
-                schemaTypes[key] = value.autoform.type;
-              }
-            });
-
+            var schema = collections[schemaName].simpleSchema().schema();
             _.each(formData, function (value, key) {
-              if (schemaTypes[key] === 'String' ||
-                  schemaTypes[key] === 'Number') {
-                if (value) {
-                  browser.setValue('input[data-schema-key="' + key + '"]', value);
-                }
-              } else if (schemaTypes[key] === 'textarea') {
-                browser.setValue('textarea[data-schema-key="' + key + '"]', value);
-              } else if (schemaTypes[key] === 'Boolean') {
-                browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
-              } else if (schemaTypes[key] === 'radio') {
-                browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
-              } else if (schemaTypes[key] === 'select') {
+              if(key === "specifyOtherRanavirusSampleTypes") return;
+              if(!schema[key]) {
+                console.log("Bad key: "+ key);
+                return;
+              }
+              if (key === 'studyId') {
+                // studyId is designated as a select via options passed in via
+                // a helper, so it's not in the schema and can't be detected here.
                 browser.selectByValue('select[data-schema-key="' + key + '"]', value);
-              } else if (schemaTypes[key] === 'Array') {
+              } else if (schema[key].autoform && schema[key].autoform.rows) { //textarea
+                browser.setValue('textarea[data-schema-key="' + key + '"]', value);
+              } else if (schema[key].type === Boolean) {
+                browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
+              } else if (schema[key].type === Array) {
                 _.each(value, function (element) {
+                  if(!_.isString(element)) {
+                    console.log("WARNING: Type is not supported for key: " + key);
+                    return;
+                  }
                   browser.click('div[data-schema-key="' + key + '"] input[value="' + element + '"]');
                 });
-              } else if (schemaTypes[key] === 'Date') {
-                browser.setValue('input[data-schema-key="' + key + '"]', '');
-              } else if (schemaTypes[key] === 'Object') {
+              } else if (
+                schema[key].autoform &&
+                schema[key].autoform.afFieldInput &&
+                (schema[key].autoform.options || schema[key].autoform.afFieldInput.options) &&
+                schema[key].autoform.afFieldInput.noselect
+              ) { // radio
+                browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
+              } else if (
+                schema[key].autoform &&
+                schema[key].autoform.afFieldInput &&
+                (schema[key].autoform.options || schema[key].autoform.afFieldInput.options)
+              ) { //select
+                browser.selectByValue('select[data-schema-key="' + key + '"]', value);
+              } else if (
+                  schema[key].type === String ||
+                  schema[key].type === Number
+              ) {
+                browser.setValue('input[data-schema-key="' + key + '"]', value);
+              } else if (schema[key].type === Date) {
+                // This doesn't work
+                // https://github.com/watir/watir-webdriver/issues/295
+                // browser.addValue('input[data-schema-key="' + key + '"]', value.split("T")[0].split("-").reverse().join("/"));
+              } else if (schema[key].type === Object) {
                 _.each(value, function (subValue, subKey) {
                   var schemaKey = key + '.' + subKey;
                   browser.setValue('input[data-schema-key="' + schemaKey + '"]', subValue);
                 });
-              } else if (schemaTypes[key] === 'optional' || schemaTypes[key] === 'Object') {
-                // do nothing
               } else {
-                var error = 'unknown type in schema: ' + schemaTypes[key] + 'for key: ' + key;
+                var error = 'unknown type in schema: ' + schema[key] + ' for key: ' + key;
                 throw new Error(error);
               }
             });
@@ -217,7 +229,6 @@
             callback();
           });
         });
-
 
         // Useful for keeping the Chrome window open so you can inspect things
         // in the console or view the screen at a certain point.
