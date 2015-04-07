@@ -33,7 +33,15 @@
       helper.world.browser
       .pause(2000)
       .url(function (err, result) {
-        assert(!err);
+        assert.ifError(err);
+        if(result.value.slice(-path.length) !== path) {
+          helper.world.browser.saveScreenshot(
+            helper.getAppDirectory() +
+            "/tests/screenshots/redirect failure - " +
+            helper.world.scenario.getName() +
+            ".png"
+          );
+        }
         assert.equal(result.value.slice(-path.length), path);
       }).call(callback);
     });
@@ -86,7 +94,7 @@
         });
         window.setTimeout(done, 2000);
       }, query, _.once(function(err, ret){
-        assert(!err);
+        assert.ifError(err);
         if(shouldNot) {
           assert(!ret.value, 'Report found');
         } else {
@@ -95,8 +103,8 @@
       })).call(callback);
     });
 
-    this.Given(/^there is a report( with a geopoint)? in the database$/,
-    function(withGeo, callback) {
+    this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,
+    function(withGeo, someoneElse, callback) {
       var report = {
         studyId: 'fakeid',
         consent: true,
@@ -115,7 +123,13 @@
           }
         };
       }
-      helper.resetTestDB([report], function(err){
+      if(someoneElse) {
+        report['createdBy'] = {
+          userId: "fakeId",
+          name: "Someone Else"
+        };
+      }
+      helper.addReports([report], function(err){
         assert.ifError(err);
         helper.world.browser
         .waitForReport(report)
@@ -123,9 +137,33 @@
       });
     });
 
+    this.Then("there should be no delete button for the report by someone else",
+    function(callback){
+      helper.world.browser
+        .getTextWhenVisible('.reactive-table tr', function(err, text) {
+          assert.ifError(err);
+          String(text).split(/Remove|View/).forEach(function(match){
+            match = match.trim();
+            assert(
+              !(new RegExp("Someone Else.*Edit", "i").test(match)),
+              "There appears to be a Remove button on a report created by someone else. Table text: " + text
+            );
+          });
+        })
+        .call(callback);
+    });
+    
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
+    });
+
+    this.When("I delete the report", function(callback){
+      helper.world.browser
+        .clickWhenVisible(".remove-form")
+        .alertText("delete", assert.ifError)
+        .alertAccept(assert.ifError)
+        .call(callback);
     });
 
     this.Then("I should not see a checkbox for the edit column",
@@ -145,7 +183,6 @@
       helper.world.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
-          console.log(bodyText);
           assert(!err);
           if (shouldNot) {
             assert(

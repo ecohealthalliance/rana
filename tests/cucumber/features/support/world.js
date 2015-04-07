@@ -39,7 +39,7 @@
 
         browser.addCommand("mustExist", function(selector, callback){
           browser.waitForExist(selector, function(err, exists){
-            assert.equal(err, null);
+            assert.ifError(err);
             assert(exists, "Could not find " + selector);
           }).call(callback);
         });
@@ -80,10 +80,27 @@
         browser.addCommand("getTextWhenVisible", function(selector, callback) {
           browser
           .waitForText(selector, function(err, exists){
-            assert.equal(err, null);
+            assert.ifError(err);
             assert(exists, "Text does not exist");
           })
           .getText(selector, callback);
+        });
+        
+        browser.addCommand("clickWhenVisible", function(selector, callback) {
+          browser
+          .waitForExist(selector, 1000, function(err, exists){
+            assert.ifError(err);
+            if(!exists) {
+              browser.saveScreenshot(
+                helper.getAppDirectory() +
+                "/tests/screenshots/missing selector - " +
+                helper.world.scenario.getName() +
+                ".png"
+              );
+            }
+            assert(exists, selector + " does not exist");
+          })
+          .click(selector, callback);
         });
 
         browser.addCommand("checkValue", function(query, expectedValue, callback) {

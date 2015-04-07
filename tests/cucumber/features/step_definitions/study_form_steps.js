@@ -22,10 +22,37 @@
 
       helper.world.browser.setFormFields(defaultValues, 'Studies', callback);
 
-    }
+    };
 
     this.When("I fill out the study form", function(callback){
       helper.fillInStudyForm({}, callback);
+    });
+
+
+    this.When(/I upload a (non-)?pdf publication/, function(nonPdf, callback){
+      var filepath;
+      if(nonPdf) {
+        filepath = path.join(helper.getAppDirectory(), "README.md");
+      } else {
+        filepath = path.join(helper.getAppDirectory(), "tests", "files", "NASA.pdf");
+      }
+      helper.world.browser
+      .click('div[data-schema-key="publicationInfo.dataPublished"] input[value=true]')
+      .mustExist('[data-schema-key="publicationInfo.pdf"]')
+      .chooseFile(
+        'input[file-input="publicationInfo.pdf"]',
+        filepath,
+        function(err){
+          assert.equal(err, null);
+        }
+      )
+      .call(callback);
+    });
+
+    this.When("I do not provide text for the reference field", function(callback){
+      helper.world.browser
+      .setValue('[data-schema-key="publicationInfo.reference"]', '')
+      .call(callback);
     });
 
   };

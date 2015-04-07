@@ -12,18 +12,6 @@
   download: (userId)->
     true
 
-@collections.Reports.allow
-  insert: (userId, doc) ->
-    true
-  update: (userId, doc) ->
-    true
-
-@collections.Studies.allow
-  insert: (userId, doc) ->
-    true
-  update: (userId, doc) ->
-    true
-
 Meteor.publish 'files', ->
   collections.Files.find()
 
@@ -46,6 +34,9 @@ Meteor.publish 'studies', ->
   collections.Studies.find()
 
 Meteor.publish 'reports', ->
+  # Uncomment this if the admin should be allowed to see unpublished reports.
+  #if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
+    #return collections.Reports.find({})
   collections.Reports.find({
     $or : [
       {
@@ -58,8 +49,18 @@ Meteor.publish 'reports', ->
     ]
   })
 
-@collections.Reports.allow
-  insert: -> true
-  update: -> true
-  remove: -> true
+allowCreatorAndAdmin = (userId, doc) ->
+  if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+    return true
+  else
+    return doc.createdBy.userId == userId
 
+@collections.Reports.allow
+  insert: allowCreatorAndAdmin
+  update: allowCreatorAndAdmin
+  remove: allowCreatorAndAdmin
+
+@collections.Studies.allow
+  insert: allowCreatorAndAdmin
+  update: allowCreatorAndAdmin
+  remove: allowCreatorAndAdmin

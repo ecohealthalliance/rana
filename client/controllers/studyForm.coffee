@@ -65,4 +65,4 @@ AutoForm.hooks
                 userId: Meteor.user()._id
                 name: Meteor.user().profile.name
               report.studyId = res
-              getCollections().Reports.insert report
+              @collections.Reports.insert report
