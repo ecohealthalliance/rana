@@ -5,26 +5,28 @@ getCollections = () -> @collections
 Template.studyForm.helpers
 
   studyDoc: =>
-    urlParams = Iron.controller().getParams()
-    if urlParams?.studyId
-      return getCollections().Studies.findOne(urlParams.studyId) or {}
+    studyId = Template.currentData()?.studyId
+    if studyId
+      return getCollections().Studies.findOne(studyId) or {}
     else
       { contact: @contactFromUser() }
 
   type: ->
-    urlParams = Iron.controller().getParams()
-    if not urlParams?.studyId
-      return "insert"
-    currentStudy = getCollections().Studies.findOne(urlParams.studyId)
-    if not currentStudy
-      # This will trigger an error message
-      return null
-    if Meteor.userId() and Meteor.userId() == currentStudy.createdBy.userId
-      return "update"
-    return "readonly"
+    studyId = Template.currentData()?.studyId
+    if not studyId
+      "insert"
+    else
+      currentStudy = getCollections().Studies.findOne studyId
+      if not currentStudy
+        # This will trigger an error message
+        null
+      else if Meteor.userId() and Meteor.userId() == currentStudy.createdBy.userId
+        "update"
+      else
+        "readonly"
 
   showCSV: ->
-    not Iron.controller().getParams()?.studyId
+    not Template.currentData().studyId
 
 
 AutoForm.hooks

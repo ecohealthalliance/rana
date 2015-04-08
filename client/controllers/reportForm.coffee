@@ -46,23 +46,25 @@ AutoForm.addHooks(
 Template.reportForm.helpers
 
   reportDoc: =>
-    urlParams = Iron.controller().getParams()
-    if urlParams?.reportId
-      return getCollections().Reports.findOne(urlParams.reportId) or {}
+    reportId = Template.currentData()?.reportId
+    if reportId
+      getCollections().Reports.findOne(reportId) or {}
     else
       { contact: @contactFromUser() }
 
   type: ->
-    urlParams = Iron.controller().getParams()
-    if not urlParams?.reportId
-      return "insert"
-    currentReport = getCollections().Reports.findOne(urlParams.reportId)
-    if not currentReport
-      # This will trigger an error message
-      return null
-    if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
-      return "update"
-    return "readonly"
+    reportId = Template.currentData()?.reportId
+    if not reportId
+      "insert"
+    else
+      currentReport = getCollections().Reports.findOne reportId
+      if not currentReport
+        # This will trigger an error message
+        null
+      else if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
+        "update"
+      else
+        "readonly"
 
   studyOptions: ->
     collections.Studies.find().map (study) ->
