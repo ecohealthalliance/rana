@@ -1,7 +1,10 @@
 getCollections = => @collections
 
-Template.table.isEmpty = =>
-  not @collections.Reports.findOne()
+Template.table.isEmpty = ->
+  @reports.count() is 0
+
+Template.table.collection = ->
+  @reports
 
 Template.table.settings = =>
   isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
@@ -74,6 +77,7 @@ Template.table.settings = =>
         """)
 
   showColumnToggles: true
+  showFilter: false
   fields: fields
 
 Template.table.events(

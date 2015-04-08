@@ -73,7 +73,7 @@ Template.filteredView.filterCollection = ->
 Template.filteredView.filter = ->
   Template.instance().filterCollection.findOne()
 
-Template.filteredView.filteredData = ->
+Template.filteredView.filteredReports = ->
   reportSchema = collections.Reports.simpleSchema().schema()
   filterSpec = Template.instance().filterCollection.findOne()?.filters or []
   filters = filterSpec.map (filterSpecification)->
@@ -108,7 +108,7 @@ Template.filteredView.filteredData = ->
     else
       filter[property] = value
     return filter
-  getCollections().Reports.find(
+  reports: getCollections().Reports.find(
     $and: [
       {
         eventLocation: { $ne : null }

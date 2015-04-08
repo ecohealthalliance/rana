@@ -13,7 +13,7 @@ Template.map.rendered = ->
   markers.addTo(lMap)
 
   @autorun ()=>
-    data = Template.currentData()
+    data = Template.currentData().reports
 
     data = data?.map((report)->
       location: [report.eventLocation.geo.coordinates[1], report.eventLocation.geo.coordinates[0]]
