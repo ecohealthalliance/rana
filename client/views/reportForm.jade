@@ -51,13 +51,13 @@ template(name="reportForm")
             .row.form-input-block
               .col-sm-8.input-block
                 .row
-                  .col-sm-3.input-block
+                  .col-sm-3.input-block.check-list
                       +afQuickField name='ageClasses'
-                  .col-sm-5.input-block
+                  .col-sm-5.input-block.check-list
                       +afQuickField name='ranavirusConfirmMethods'
                       if afFieldValueContains name='ranavirusConfirmMethods' value='other'
                         +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-                  .col-sm-4.input-block
+                  .col-sm-4.input-block.check-list
                       +afQuickField name='sampleType'
                       if afFieldValueContains name='sampleType' value='other'
                         +afQuickField name='specifyOtherRanavirusSampleTypes'
