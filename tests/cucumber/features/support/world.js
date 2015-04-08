@@ -71,6 +71,11 @@
               var value = obj[key];
               if(_.isArray(value)) {
                 if(value.length > 0) {
+                  if(value.some(function(item){
+                    return _.isObject(item);
+                  })) {
+                    throw new Error("waitForReport does not support reports with object arrays.");
+                  }
                   returnVal[prefix.concat(key).join('.')] = { $all: value };
                 }
               } else if(_.isObject(value)) {

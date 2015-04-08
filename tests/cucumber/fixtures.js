@@ -58,7 +58,6 @@
               email: 'test@test.com'
             }
           }, report);
-          //throw new Meteor.Error("Report", JSON.stringify(report.contact));
           collections.Reports.insert(report);
         });
         return reports;
