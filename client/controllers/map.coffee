@@ -78,7 +78,8 @@ Template.map.rendered = ->
     <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />
     """
     subdomains: '1234'
-		type: 'osm'
+    type: 'osm'
+    maxZoom: 18
   }).addTo(lMap);
 
   # initialize markers
