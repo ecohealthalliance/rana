@@ -1,3 +1,16 @@
+
+template(name="contactInfo")
+  .container
+    .row
+      .col-md-3.space-btm
+        h3 Contact person info
+        +afQuickField name='contact.name'
+        +afQuickField name='contact.email' placeholder='name@domain.com'
+        +afQuickField name='contact.phone' minor='(Must include the country code)'
+
+      .col-md-8.col-md-offset-1
+        +address
+
 template(name="address")
   h3 Reporting institution, diagnostic lab or government agency info
     +tooltip name='contact.institutionAddress'
@@ -65,6 +78,46 @@ template(name="permissions")
 template(name="submit")
   .container
     .row
-      .col-lg-4
+      .col-sm-4
         .form-group
           button.btn-lg.btn.btn-success.btn-block(type='submit') Submit
+
+template(name="classesMethods")
+  section.odd
+    .container
+      .row.form-input-block
+        if extra
+          .col-sm-8.input-block
+            +classesMethodsInputs
+          .col-sm-4
+              +afQuickField name='totalAnimalsTested'
+              +afQuickField name='totalAnimalsConfirmedInfected'
+              +afQuickField name='totalAnimalsConfirmedDiseased'
+        else
+          .col-sm-12.input-block
+            +classesMethodsInputs
+
+template(name="classesMethodsInputs")
+    .row
+      if extra 
+        .col-sm-3.input-block.check-list
+          +afQuickField name='ageClasses'
+      else
+        .col-sm-4.input-block.check-list
+          +afQuickField name='ageClasses'
+      if extra 
+        .col-sm-5.input-block.check-list
+          +confirmMethods
+      else 
+        .col-sm-4.input-block.check-list
+          +confirmMethods
+
+      .col-sm-4.input-block.check-list
+          +afQuickField name='sampleType'
+          if afFieldValueContains name='sampleType' value='other'
+            +afQuickField name='specifyOtherRanavirusSampleTypes'
+
+template(name="confirmMethods")
+  +afQuickField name='ranavirusConfirmMethods'
+  if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+    +afQuickField name='specifyOtherRanavirusConfirmationMethods'

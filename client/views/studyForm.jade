@@ -21,36 +21,13 @@ template(name="studyForm")
           p <span>*</span> Indicates required field
 
       section.rm-pad-top
-        .container
-          .row
-            .col-md-3.space-btm
-              h3 Contact person info
-              +afQuickField name='contact.name'
-              +afQuickField name='contact.email' placeholder='name@domain.com'
-              +afQuickField name='contact.phone' minor='(Must include the country code)'
-
-            .col-md-8.col-md-offset-1
-              +address
+        +contactInfo
 
       +populationInfo
 
       +species
 
-      section.odd
-        .container
-          .row.form-input-block
-            .col-sm-12.input-block
-              .row
-                .col-sm-4.input-block
-                    +afQuickField name='ageClasses'
-                .col-sm-4.input-block
-                    +afQuickField name='ranavirusConfirmMethods'
-                    if afFieldValueContains name='ranavirusConfirmMethods' value='other'
-                      +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-                .col-sm-4.input-block
-                    +afQuickField name='sampleType'
-                    if afFieldValueContains name='sampleType' value='other'
-                      +afQuickField name='specifyOtherRanavirusSampleTypes'
+      +classesMethods
 
       +notes
 
