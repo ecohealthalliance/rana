@@ -160,7 +160,7 @@
           var badRows = result.value.filter(function(item){
             return item;
           });
-          assert.equal(badRows.length, 0, "Delete buttin found in rows:\n" + badRows.join("\n"));
+          assert.equal(badRows.length, 0, "Delete button found in rows:\n" + badRows.join("\n"));
         })
         .call(callback);
     });
