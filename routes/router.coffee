@@ -59,6 +59,9 @@ Router.route('/table',
 
 Router.route('/map',
   where: 'client'
+  template: 'filteredView'
+  data: () ->
+    view: 'map'
   waitOn: ->
     [
       Meteor.subscribe("reports")
