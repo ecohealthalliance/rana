@@ -28,7 +28,7 @@ AutoForm.hooks
         extendedTimeOut: "100000"
       toastr.success("""
       <div>#{operation} successful!</div>
-      <a href="/study/#{result}">Edit Study</a>
+      <a href="/study/#{@docId}">Edit Study</a>
       """)
       window.scrollTo 0, 0
 

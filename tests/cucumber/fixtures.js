@@ -53,9 +53,9 @@
               name: "Test User"
             },
             studyId: "fakeid",
-            'contact': {
-              'name': 'Test User',
-              'email': 'test@test.com'
+            contact: {
+              name: 'Test User',
+              email: 'test@test.com'
             }
           }, report);
           collections.Reports.insert(report);

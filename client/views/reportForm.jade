@@ -70,18 +70,18 @@ template(name="reportForm")
           .panel-body
             .row
               .col-lg-6
+                +afQuickField name="speciesAffectedType"
                 +afQuickField name="speciesGenus"
                 +afQuickField name="speciesName"
                 +afQuickField name="numInvolved"
               .col-lg-6
                 +afQuickField name="speciesNotes"
-
         .row.form-input-block
           .col-lg-3
             +afQuickField name='ageClasses'
           .col-lg-4
-            +afQuickField name='ranavirusConfirmMethods'
-            if afFieldValueContains name='ranavirusConfirmMethods' value='other'
+            +afQuickField name='ranavirusConfirmationMethods'
+            if afFieldValueContains name='ranavirusConfirmationMethods' value='other'
               +afQuickField name='specifyOtherRanavirusConfirmationMethods'
           .col-lg-4
             +afQuickField name='sampleType'
