@@ -9,6 +9,7 @@ Package.onUse(function(api) {
   
   api.use('templating');
   api.use('coffeescript');
+  api.use('stylus');
   api.use('mquandalle:jade@0.4.1');
   api.use('email');
   api.use('iron:router@1.0.7');
@@ -34,6 +35,8 @@ Package.onUse(function(api) {
   
   api.addFiles('routes.coffee', ['client', 'server']);
   
+  api.addFiles('_main.styl', ['client']);
+
   api.export('Groups', 'server');
 });
 

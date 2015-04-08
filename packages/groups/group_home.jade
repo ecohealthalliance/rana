@@ -1,41 +1,45 @@
 template(name="groupHome")
   .container
-    if group
+    section
+      if group
 
-      h2 {{group.name}}
-      h4 {{group.description}}
+        h2 {{group.name}}
+        p {{group.description}}
 
-      if isInRole 'admin' group._id
-        +groupAdmin
+        if isInRole 'admin' group._id
+          +groupAdmin
 
-    else
-      h4 No group here -
-        a(href="{{pathFor 'newGroup'}}") Create one?
+      else
+        h4 No group here -
+          a(href="{{pathFor 'newGroup'}}") Create one?
 
 template(name="groupAdmin")
-  .panel-group
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title
-          a(data-toggle="collapse", href="#edit-group-panel") Edit Group Information
-      #edit-group-panel.panel-collapse.collapse
-        .panel-body
-          +quickForm collection=groups doc=group id="update-group-form" type="update" template="bootstrap3"
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title
-          a(data-toggle="collapse", href="#manage-users-panel") Manage users
-      #manage-users-panel.panel-collapse.collapse
-        .panel-body
-          h5 Admins
-            each groupAdmins
-              +groupUser
-          h5 Users
-            each groupUsers
-              +groupUser
-            else
-              p None
-            +invite groupId=group._id
+  .row
+    .panel-group
+      .col-sm-6
+        .panel.panel-default
+          .panel-heading
+            h4.panel-title
+              a(data-toggle="collapse", href="#edit-group-panel") Edit Group Information
+          #edit-group-panel
+            .panel-body
+              +quickForm collection=groups doc=group id="update-group-form" type="update" template="bootstrap3"
+      .col-sm-6
+        .panel.panel-default
+          .panel-heading
+            h4.panel-title
+              a(data-toggle="collapse", href="#manage-users-panel") Manage users
+          #manage-users-panel
+            .panel-body
+              h5 Admins
+                each groupAdmins
+                  +groupUser
+              h5 Users
+                each groupUsers
+                  +groupUser
+                else
+                  p None
+                +invite groupId=group._id
 
 template(name="groupUser")
   div

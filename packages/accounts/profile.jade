@@ -1,14 +1,15 @@
 template(name="profile")
 
   .container
-    h3 #{user.profile.name}
+    section
+      h3 #{user.profile.name}
 
-    if isCurrentUser
-      p Edit Your Profile
-      +quickForm schema=profileSchema doc=user.profile id="update-user-profile-form"
-    else
-      h4
-        span
-          i Organization
-        span
-          b #{user.profile.organization}
+      if isCurrentUser
+        p Edit Your Profile
+        +quickForm schema=profileSchema doc=user.profile id="update-user-profile-form"
+      else
+        h4
+          span
+            i Organization
+          span
+            b #{user.profile.organization}
