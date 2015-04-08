@@ -33,9 +33,8 @@ AutoForm.hooks
       <div>#{operation} successful!</div>
       <a href="/study/#{result}">Edit Study</a>
       """)
-      clearImportReports()
       window.scrollTo 0, 0
-    
+
     onError: (operation, error) ->
       errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")
         .parent()
@@ -47,7 +46,7 @@ AutoForm.hooks
         positionClass: "toast-bottom-center"
       }
       toastr.error(error.message)
-    
+
     after:
       insert: (err, res, template) ->
 
