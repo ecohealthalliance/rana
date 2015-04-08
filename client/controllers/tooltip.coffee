@@ -34,21 +34,21 @@ tooltipTexts =
   but are not yet sexually mature. In the case of amphibians,
   this would include individuals in which the forelimbs have emerged."""
   'ageClasses.adult': """Any sexually mature animal. It does not have to have achieved the maximum adult size."""
-  'ranavirusConfirmMethods.traditional_pcr': """Polymerase chain reaction assay where the products are quantified using gel electrophoresis."""
-  'ranavirusConfirmMethods.qrt_pcr': """Polymerase chain reaction assay where the amount of product is measured throughout the assay.
+  'ranavirusConfirmationMethods.traditional_pcr': """Polymerase chain reaction assay where the products are quantified using gel electrophoresis."""
+  'ranavirusConfirmationMethods.qrt_pcr': """Polymerase chain reaction assay where the amount of product is measured throughout the assay.
     Often referred to as TaqMan PCR."""
-  'ranavirusConfirmMethods.virus_isolation': """Ranavirus particles were isolated from infected tissue,
+  'ranavirusConfirmationMethods.virus_isolation': """Ranavirus particles were isolated from infected tissue,
     grown in tissue culture and the cytopathic effect observed in the cells.
     The cells were then subsequently harvested and the presence of
     ranavirus virions was confirmed through other methods
     (e.g. PCR or electron microscopy)."""
-  'ranavirusConfirmMethods.sequencing': """After the presence of the ranavirus is determined,
+  'ranavirusConfirmationMethods.sequencing': """After the presence of the ranavirus is determined,
     analysis of the viral sequence is performed and the sequences
     are similar to one or more ranavirus isolates available on GenBank."""
-  'ranavirusConfirmMethods.electron_microscopy': """The presence of pox-like (i.e. icosahedral virus particles)
+  'ranavirusConfirmationMethods.electron_microscopy': """The presence of pox-like (i.e. icosahedral virus particles)
     particles in tissue samples taken directly from an infected animal
     or samples of virus isolate obtained through virus isolation and culture."""
-  'ranavirusConfirmMethods.other': """Any other molecular diagnostic tests, not listed here (e.g. ELISA or LUMINEX)
+  'ranavirusConfirmationMethods.other': """Any other molecular diagnostic tests, not listed here (e.g. ELISA or LUMINEX)
   that has been shown to be a reliable method for determining the presence of live
   or preserved ranavirus particles."""
   'sampleType.internal_swabs': """A wet or dry swab taken from a body cavity, either during necropsy or during

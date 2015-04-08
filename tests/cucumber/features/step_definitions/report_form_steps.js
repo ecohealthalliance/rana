@@ -13,7 +13,6 @@
     var helper = this;
 
     this.fillInForm = function (customValues, callback) {
-
       var defaultValues = {};
       defaultValues['studyId'] = 'fakeid';
       defaultValues['contact.name'] = 'Fake Name';
@@ -21,13 +20,29 @@
       defaultValues['images'] = [];
       defaultValues['pathologyReports'] = [];
       defaultValues['consent'] = true;
-      defaultValues['eventLocation'] = null;
-
-      _.extend(defaultValues, customValues);
-
-      helper.world.browser.setFormFields(defaultValues, 'Reports', callback);
-
-    }
+      defaultValues['dataUsePermissions'] = "Share full record";
+      helper.world.browser.generateFormData("Reports", function(generatedValues){
+        defaultValues = _.extend(generatedValues, defaultValues);
+        // These fields are deleted because setFormFields does not support them.
+        var badKeys = [
+          'specifyOtherRanavirusSampleTypes',
+          'specifyOtherRanavirusConfirmationMethods',
+          'sampleType',
+          'ranavirusConfirmationMethods',
+          'eventDate',
+          'genBankAccessionNumbers',
+          'eventLocation',
+          'sourceFile'
+        ];
+        defaultValues = _.omit(defaultValues, badKeys);
+        if(!_.isEmpty(_.pick(customValues, badKeys))) {
+          throw Error("Bad keys: " + _.pick(customValues, badKeys));
+        }
+        var formData = _.extend(defaultValues, customValues);
+        helper.lastFormData = formData;
+        helper.world.browser.setFormFields(formData, 'Reports', callback);
+      });
+    };
 
     this.When(/^I fill out the form with the (eventDate) "([^"]*)"$/,
     function(prop, value, callback){
@@ -39,6 +54,14 @@
     this.When("I fill out the form", function(callback){
       helper.fillInForm({}, callback);
     });
+    
+    this.Then("the data I filled out the form with should be in the database",
+    function(callback){
+      helper.world.browser
+      .waitForReport(helper.lastFormData)
+      .call(callback);
+    });
+
 
     this.When("I fill out a report without consenting to publish it",
     function(callback){
@@ -108,19 +131,34 @@
 
     this.Then(/^the webpage should( not)? display a validation error$/,
     function(shouldNot, callback){
-      var reverse = !!shouldNot;
-      helper.world.browser
+      var reverse = Boolean(shouldNot);
+      var chain = helper.world.browser
       // custom errors on groups don't create a has-error class
       .waitForExist('.has-error, .help-block:not(:empty)', 2000, reverse,
       function(err, result){
-        assert.equal(err, null);
-
+        assert.ifError(err);
         if(shouldNot) {
+          if(!result) {
+            helper.world.browser
+            .saveScreenshot(
+              helper.getAppDirectory() +
+              "/tests/screenshots/validation error - " +
+              helper.world.scenario.getName() +
+              ".png"
+            );
+          }
           assert(result, "Validation error");
         } else {
           assert(result, "Missing validation error");
         }
-      }).call(callback);
+      });
+      if(!shouldNot) {
+        //Dismiss the toast so it doesn't get in the way of the submit button
+        chain = chain
+          .clickWhenVisible('.toast')
+          .pause(1000);
+      }
+      chain.call(callback);
     });
 
     this.Then('I should see a "$message" toast',

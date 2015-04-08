@@ -20,7 +20,7 @@ AutoForm.addHooks(
       }
       toastr.success("""
       <div>#{operation} successful!</div>
-      <a href="/report/#{result}">Edit Report</a>
+      <a href="/report/#{@docId}">Edit Report</a>
       """)
       window.scrollTo(0, 0)
       redirectOnSubmit =  urlParams?.query?.redirectOnSubmit
