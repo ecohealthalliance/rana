@@ -108,16 +108,11 @@ Template.filteredView.filteredReports = ->
     else
       filter[property] = value
     return filter
-  reports: getCollections().Reports.find(
-    $and: [
-      {
-        eventLocation: { $ne : null }
-      }
-      {
-        eventLocation: { $ne : ","}
-      }
-    ].concat(filters)
-  )
+  query = {}
+  if filters.length > 0
+    query = 
+      $and: filters
+  reports: getCollections().Reports.find(query)
 
 Template.filteredView.events
   'click .reset': ()->
