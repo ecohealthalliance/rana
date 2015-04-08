@@ -75,7 +75,7 @@
       helper.world.browser
       .click('div[data-schema-key="pathologyReports.0.notified"] input[value="Yes"]')
       .click('.autoform-add-item[data-autoform-field="pathologyReports"]')
-      .mustExist('[data-schema-key="pathologyReporc ts.0.report"]')
+      .mustExist('[data-schema-key="pathologyReports.0.report"]')
       .chooseFile(
         'input[file-input="pathologyReports.0.report"]',
         // This is a random pdf file that was selected because it is
@@ -84,9 +84,30 @@
         // http://commons.wikimedia.org/wiki/File:15_Years_ISS_-_Infographic.pdf
         path.join(helper.getAppDirectory(), "tests", "files", "NASA.pdf"),
         function(err){
-          assert.equal(err, null);
+          assert.isError(err);
         }
       )
+      .call(callback);
+    });
+
+    this.When("I upload an image", function(callback){
+      helper.world.browser
+      .click('.autoform-add-item[data-autoform-field="images"]')
+      .mustExist('input[file-input="images.0.image"]')
+      .chooseFile(
+        'input[file-input="images.0.image"]',
+        path.join(helper.getAppDirectory(), "tests", "files", "logo.png"),
+        function(err){
+          assert.ifError(err);
+        }
+      )
+      .call(callback);
+    });
+
+    this.Then("I should see an image preview", function(callback){
+      helper.world.browser
+      .pause(2000)
+      .mustExist('.img-fileUpload-thumbnail')
       .call(callback);
     });
 

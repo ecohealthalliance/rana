@@ -6,12 +6,7 @@ AutoForm.addHooks(
   'ranavirus-report', {
     docToForm: (doc, ss)->
       if doc
-        Meteor.subscribe(
-          "files",
-          (doc.pathologyReports or []).map((rObj)-> rObj.report).concat(
-            (doc.images or []).map((iObj)-> iObj.image)
-          )
-        )
+        utils.subscribeToDocFiles(doc)
       return doc
     formToDoc: (doc)->
       doc.createdBy = {
@@ -76,3 +71,16 @@ Template.reportForm.helpers
     collections.Studies.find().map (study) ->
       label: study.name
       value: study._id
+
+Template.reportForm.events
+  'change .file-upload': (evt)->
+    timeout = 10000
+    interval = window.setInterval(()->
+      # The event target will not be in the template once the file is added.
+      if not $.contains(document, evt.target) or timeout <= 0
+        currentDoc = AutoForm.getFormValues("ranavirus-report").insertDoc
+        utils.subscribeToDocFiles(currentDoc)
+        window.clearInterval(interval)
+      timeout -= 1000
+    , 1000)
+
