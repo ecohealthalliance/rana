@@ -26,4 +26,10 @@ Feature: A map that plots ranavirus reports
     And there is a report with "speciesName" "Lithobates sylvaticus" in the database
     When I add a filter where "speciesName" is "Lithobates sylvaticus"
     Then I should see 2 reports
-    
+
+  Scenario: Grouping reports
+    Given I am on the "map" page
+    And there is a report with "populationType" "zoological" in the database
+    And there is a report with "populationType" "wild" in the database
+    When I group the reports by "populationType"
+    Then I should see 2 pins with different colors
