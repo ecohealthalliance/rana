@@ -185,10 +185,7 @@
 
         browser.addCommand("checkFormFields", function(formId, expectedValues, callback) {
           browser
-          .waitForExist('.form-group', function (err, exists) {
-            assert(!err);
-            assert(exists)
-          }).
+          .mustExist('.form-group').
           execute(function(formId) {
             var values = AutoForm.getFormValues(formId).insertDoc;
             if (values.eventDate) {
