@@ -80,9 +80,10 @@ Template.map.rendered = ->
   markers.addTo(lMap)
 
   reportSchema = collections.Reports.simpleSchema().schema()
-  @autorun ()=>
+  filters = new ReactiveVar([])
+  @autorun =>
     filterSpec = @filterCollection.findOne()?.filters or []
-    filters = filterSpec.map (filterSpecification)->
+    filterPromises = filterSpec.map (filterSpecification)->
       filter = {}
       value = filterSpecification['value']
       property = filterSpecification['property']
@@ -113,7 +114,26 @@ Template.map.rendered = ->
         }
       else
         filter[property] = value
-      return filter
+        if filter?.speciesName
+          return $.Deferred ->
+            # expand species name queries
+            Meteor.call("getSpeciesBySynonym", filter["speciesName"], (err, resp)=>
+              if err
+                alert JSON.stringify(err)
+                return
+              if resp.length > 2
+                console.log "Ambiguous species"
+              if resp.length == 0
+                @resolve filter
+                return
+              filter["speciesName"] = { $in: resp[0].synonyms }
+              @resolve filter
+            )
+      return $.Deferred(-> @resolve filter)
+    $.when.apply(this, filterPromises).then ()->
+      filters.set Array.prototype.slice.call(arguments)
+    
+  @autorun =>
     data = getCollections().Reports.find(
       $and: [
         {
@@ -122,7 +142,7 @@ Template.map.rendered = ->
         {
           eventLocation: { $ne : ","}
         }
-      ].concat(filters)
+      ].concat(filters.get())
     )
     .map((report)->
       location: [report.eventLocation.geo.coordinates[1], report.eventLocation.geo.coordinates[0]]

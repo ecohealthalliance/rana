@@ -19,3 +19,11 @@ Feature: A map that plots ranavirus reports
     Then I should see 2 reports
     When I add a filter where "populationType" is "production"
     Then I should see 0 reports
+
+  Scenario: Query expansion for species name synonyms
+    Given I am on the "map" page
+    And there is a report with "speciesName" "Rana sylvatica" in the database
+    And there is a report with "speciesName" "Lithobates sylvaticus" in the database
+    When I add a filter where "speciesName" is "Lithobates sylvaticus"
+    Then I should see 2 reports
+    
