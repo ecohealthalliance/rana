@@ -33,18 +33,8 @@ getReportFieldType = (field) ->
 
   if field not of reportSchema
     null
-  else if reportSchema[field].type == String
-    'string'
-  else if reportSchema[field].type == Array
-    'array'
-  else if reportSchema[field].type == Object
-    'object'
-  else if reportSchema[field].type == Boolean
-    'boolean'
-  else if reportSchema[field].type == Date
-    'date'
   else
-    'value'
+    reportSchema[field].type
 
 updateImportReports = (data) ->
 
@@ -132,16 +122,16 @@ buildReportFromImportData = (importData, report) ->
       fieldType = getReportFieldType field
       if fieldType
         value = importData[field]
-        if fieldType is 'array'
+        if fieldType is Array
           if field is 'genBankAccessionNumbers'
             report[field] = _.map(value.split(','), (val) ->
               { genBankAccessionNumber: val }
             )
           else
             report[field] = value.split ','
-        else if fieldType is 'boolean'
+        else if fieldType is Boolean
           report[field] = value is 'true'
-        else if fieldType is 'date'
+        else if fieldType is Date
           report[field] = Date.parse(value)
         else
           report[field] = value
