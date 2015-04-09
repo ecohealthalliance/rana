@@ -1,10 +1,16 @@
 getCollections = => @collections
 
+Template.table.created = ->
+  @query = new ReactiveVar()
+
+Template.table.query = ->
+  Template.instance().query
+
 Template.table.isEmpty = ->
-  @reports.count() is 0
+  getCollections().Reports.find(Template.instance().query.get()).count() is 0
 
 Template.table.collection = ->
-  @reports
+  getCollections().Reports.find(Template.instance().query.get())
 
 Template.table.settings = =>
   isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id

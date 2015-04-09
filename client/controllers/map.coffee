@@ -1,5 +1,15 @@
 getCollections = => @collections
 
+Template.map.created = ->
+  @query = new ReactiveVar()
+  @groupBy = new ReactiveVar()
+
+Template.map.groupBy = ->
+  Template.instance().groupBy
+
+Template.map.query = ->
+  Template.instance().query
+
 Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
   lMap = L.map(@$('.vis-map')[0]).setView([0, -0], 2)
@@ -17,11 +27,11 @@ Template.map.rendered = ->
   markers = new L.FeatureGroup()
 
   @autorun ()=>
-    data = Template.currentData().reports
+    data = getCollections().Reports.find(Template.instance().query.get())
 
     lMap.removeLayer(markers)
     markers = new L.FeatureGroup()
-    curGroupBy = Template.currentData().groupBy
+    curGroupBy = Template.instance().groupBy.get()
     groups = _.uniq(data.map((report)->
       if curGroupBy
         report[curGroupBy]

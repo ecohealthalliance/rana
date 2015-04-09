@@ -48,9 +48,6 @@ Router.route('newStudy',
 
 Router.route('/table',
   where: 'client'
-  template: 'filteredView'
-  data: ->
-    view: 'table'
   waitOn: ->
     [
       Meteor.subscribe("reports")
@@ -60,9 +57,6 @@ Router.route('/table',
 
 Router.route('/map',
   where: 'client'
-  template: 'filteredView'
-  data: () ->
-    view: 'map'
   waitOn: ->
     [
       Meteor.subscribe("reports")

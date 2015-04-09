@@ -1,3 +1,7 @@
 template(name="map")
-  .vis-map
+  .vis-container
+    #control-panel
+      +groupByControls var=groupBy
+      +filterControls query=query
+    .vis-map
 
