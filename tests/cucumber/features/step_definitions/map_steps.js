@@ -49,6 +49,29 @@
       .call(callback);
     });
     
+    this.When(/^I group the reports by "([^"]*)"$/,
+    function (property, callback) {
+      helper.world.browser
+      .selectByValue('#group-by', property)
+      .call(callback);
+    });
+    
+    this.Then(/^I should see (\d+) pins with different colors?$/, function (number, callback) {
+      helper.world.browser
+      .waitForExist(".leaflet-marker-icon")
+      .execute(function(){
+        return $(".leaflet-marker-icon > :first-child")
+          .toArray()
+          .map(function(el){
+            return $(el).css("background-color");
+          });
+      }, function(err, resp){
+        assert.ifError(err);
+        var colors = _.uniq(resp.value);
+        assert.equal(colors.length, parseInt(number));
+      })
+      .call(callback);
+    });
   };
 
 })();

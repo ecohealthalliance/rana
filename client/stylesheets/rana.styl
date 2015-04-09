@@ -22,7 +22,7 @@ top-nav-height = 52px
 .vis-table
     padding 20px
 
-#filter-panel
+#control-panel
     position absolute
     left 0
     width sidebar-width
@@ -34,6 +34,34 @@ top-nav-height = 52px
     max-height 100%
     overflow-y auto
     overflow-x hidden
+
+marker-width = 22px
+marker-height = 24px
+arrow-top = (marker-height * 4 / 5)
+arrow-width = (marker-width * 3 / 4)
+arrow-height = (arrow-width / 2)
+.map-marker {
+  position relative
+  text-align center
+  background black
+  width marker-width
+  height marker-height
+  border-radius 50%
+  // Shift marker position so it points to the correct location
+  margin-top (-(arrow-top + arrow-height))
+  margin-left (-(marker-width / 2))
+  box-shadow inset 0 3px 3px white, 1px 5px 1px rgba(0,0,0,.5)
+}
+.map-marker .arrow {
+  position relative
+  border-left arrow-height solid transparent
+  border-right arrow-height solid transparent
+  border-top (marker-width / 2) solid black
+  top arrow-top
+  left ((marker-width - arrow-width) / 2)
+  width 0
+  height 0
+}
 
 .hidden-label
     display none

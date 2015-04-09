@@ -66,12 +66,30 @@ Template.filteredView.created = ->
   @filterCollection.insert({
     filters: []
   })
+  @groupBy = new ReactiveVar()
 
 Template.filteredView.filterCollection = ->
   Template.instance().filterCollection
 
 Template.filteredView.filter = ->
   Template.instance().filterCollection.findOne()
+
+Template.filteredView.groups = ->
+  [
+    ""
+    "speciesName"
+    "speciesGenus"
+    "populationType"
+    "vertebrateClasses"
+    "ageClasses"
+    "createdBy.name"
+  ].map((item)->
+      {
+        label: getCollections().Reports.simpleSchema().label(item),
+        value: item
+        selected: item == (Template.instance().groupBy?.get() or "")
+      }
+  )
 
 Template.filteredView.filteredReports = ->
   reportSchema = collections.Reports.simpleSchema().schema()
@@ -113,6 +131,7 @@ Template.filteredView.filteredReports = ->
     query = 
       $and: filters
   reports: getCollections().Reports.find(query)
+  groupBy: Template.instance().groupBy.get()
 
 Template.filteredView.events
   'click .reset': ()->
@@ -141,3 +160,5 @@ Template.filteredView.events
         )
       $("input[name='#{schemaKey}']").autocomplete
         source: _.flatten(values)
+  'change #group-by' : (event, template) ->
+    Template.instance().groupBy.set($(event.target).val())

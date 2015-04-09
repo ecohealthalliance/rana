@@ -19,3 +19,10 @@ Feature: A map that plots ranavirus reports
     Then I should see 2 reports on the map
     When I add a filter where "populationType" is "production"
     Then I should see 0 reports on the map
+
+  Scenario: Grouping reports
+    Given I am on the "map" page
+    And there is a report with "populationType" "zoological" in the database
+    And there is a report with "populationType" "wild" in the database
+    When I group the reports by "populationType"
+    Then I should see 2 pins with different colors

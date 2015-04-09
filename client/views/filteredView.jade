@@ -1,17 +1,28 @@
 template(name="filteredView")
   .vis-container
-    +autoForm(
-      collection=filterCollection
-      doc=filter
-      type="update"
-      id="filter-panel"
-      template="bootstrap3"
-    )
-      +afQuickFields(
-        id-prefix=idPrefix
+    #control-panel
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title Group By
+        .panel-body
+          select#group-by.form-control
+            each groups
+              if selected
+                option(value=value selected) {{label}}
+              else
+                option(value=value) {{label}}
+      +autoForm(
+        collection=filterCollection
+        doc=filter
+        type="update"
+        id="filter-panel"
         template="bootstrap3"
       )
-      .form-group
-        button.btn.btn-primary(type="submit") Apply filters
-        button.btn.btn-primary.reset(type="reset") Reset filters
+        +afQuickFields(
+          id-prefix=idPrefix
+          template="bootstrap3"
+        )
+        .form-group
+          button.btn.btn-primary(type="submit") Apply filters
+          button.btn.btn-primary.reset(type="reset") Reset filters
     +Template.dynamic template=view data=filteredReports

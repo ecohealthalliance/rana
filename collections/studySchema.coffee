@@ -21,7 +21,7 @@
     autoform:
       afFieldInput:
         type: 'fileUpload'
-        collection: 'files'
+        collection: 'pdfs'
   'publicationInfo.reference':
     type: String
     label: """If the data has been published please provide a full reference"""
