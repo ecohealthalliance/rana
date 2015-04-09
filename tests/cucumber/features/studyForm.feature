@@ -41,3 +41,20 @@ Feature: A form for setting up a ranavirus study
     And I fill out the study form differently
     And I click submit
     Then the form should contain the different values I entered
+
+  Scenario: Removing a study
+    Given I have logged in
+    And I am on the "study" page
+    When I fill out the study form
+    And I click submit
+    Then the webpage should not display a validation error
+    And I should see a "insert successful" toast
+    When I navigate to the "studyTable" page
+    And I click the "Remove" button
+    And I type "delete" into the prompt
+    And I accept the prompt
+    Then I should not see the text "No Studies Found"
+    When I click the "Remove" button
+    And I type "delete" into the prompt
+    And I accept the prompt
+    Then I should see the text "No Studies Found"

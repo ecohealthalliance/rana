@@ -65,7 +65,7 @@ Template.table.settings = =>
       if obj.createdBy.userId == Meteor.userId()
         new Spacebars.SafeString("""
           <a class="btn btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
-          <a class="btn btn-danger remove-form" data-id="#{obj._id}">Remove</a>
+          <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
         """)
       else
         new Spacebars.SafeString("""

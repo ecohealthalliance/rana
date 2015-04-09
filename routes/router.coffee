@@ -73,6 +73,16 @@ Router.route('/table',
     ]
 )
 
+Router.route('/studyTable',
+  where: 'client'
+  data: ->
+    collection: collections.Studies
+  waitOn: ->
+    [
+      Meteor.subscribe("studies")
+    ]
+)
+
 Router.route('/map',
   where: 'client'
   waitOn: ->
