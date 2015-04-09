@@ -19,7 +19,7 @@ utmFromLonLat = @utmFromLonLat
 lonLatFromUTM = @lonLatFromUTM
 
 @lon2UTMZone = (lon) ->
-  Math.min(Math.floor((lon + 180) / 6), 60) + 1
+  Math.floor(((lon + 180) / 6) %% 60) + 1
 lon2UTMZone = @lon2UTMZone
 
 AutoForm.addInputType 'leaflet',
