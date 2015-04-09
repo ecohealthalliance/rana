@@ -74,22 +74,8 @@ Template.filteredView.filterCollection = ->
 Template.filteredView.filter = ->
   Template.instance().filterCollection.findOne()
 
-Template.filteredView.groups = ->
-  [
-    ""
-    "speciesName"
-    "speciesGenus"
-    "populationType"
-    "vertebrateClasses"
-    "ageClasses"
-    "createdBy.name"
-  ].map((item)->
-      {
-        label: getCollections().Reports.simpleSchema().label(item),
-        value: item
-        selected: item == (Template.instance().groupBy?.get() or "")
-      }
-  )
+Template.filteredView.groupBy = ->
+  Template.instance().groupBy
 
 Template.filteredView.filteredReports = ->
   reportSchema = collections.Reports.simpleSchema().schema()
@@ -160,5 +146,3 @@ Template.filteredView.events
         )
       $("input[name='#{schemaKey}']").autocomplete
         source: _.flatten(values)
-  'change #group-by' : (event, template) ->
-    Template.instance().groupBy.set($(event.target).val())
