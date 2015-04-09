@@ -24,3 +24,9 @@ Feature: A form for reporting Ranavirus outbreaks
     And I should see a "insert successful" toast
     And the database should have a report linked to my account
     And the data I filled out the form with should be in the database
+
+  Scenario: Uploading an image
+    Given I have logged in
+    And I am on the "report" page
+    When I upload an image
+    Then I should see an image preview
