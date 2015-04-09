@@ -136,10 +136,15 @@ Template.map.rendered = ->
     curGroupBy = @groupBy.get()
     groups = _.uniq(data.map((report)->report[curGroupBy]))
     colors = [
-      'red', 'darkred', 'orange',
-      'green', 'darkgreen',
-      'blue', 'lightblue',
-      'purple', 'darkpuple'
+      '#8dd3c7'
+      '#ffffb3'
+      '#bebada'
+      '#fb8072'
+      '#80b1d3'
+      '#fdb462'
+      '#b3de69'
+      '#fccde5'
+      '#d9d9d9'
     ]
     if groups.length > colors.length
       alert("This field has too many values to group")
