@@ -2,18 +2,5 @@ template(name="filteredView")
   .vis-container
     #control-panel
       +groupByControls var=groupBy
-      +autoForm(
-        collection=filterCollection
-        doc=filter
-        type="update"
-        id="filter-panel"
-        template="bootstrap3"
-      )
-        +afQuickFields(
-          id-prefix=idPrefix
-          template="bootstrap3"
-        )
-        .form-group
-          button.btn.btn-primary(type="submit") Apply filters
-          button.btn.btn-primary.reset(type="reset") Reset filters
+      +filterControls query=query
     +Template.dynamic template=view data=filteredReports
