@@ -132,7 +132,7 @@ buildReportFromImportData = (importData, report) ->
             else
               report[field] = value.split ','
           else if fieldType is Boolean
-            report[field] = value.toLowerCase() in [ 'true', 'T', '1' ]
+            report[field] = value.toLowerCase() in [ 'true', 'T', '1', 'y', 'yes' ]
           else if fieldType is Date
             report[field] = Date.parse(value)
           else
