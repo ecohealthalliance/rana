@@ -1,26 +1,26 @@
+Mapping = {}
+
 defaults =
   defaultLat: 48.856614
   defaultLon: 2.3522219
   defaultZoom: 10
 
-@utmFromLonLat = (lon, lat) ->
-  zone = @lon2UTMZone lon
+Mapping.utmFromLonLat = (lon, lat) ->
+  zone = Mapping.lon2UTMZone lon
   utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
-  lonlatProj =  proj4.Proj('WGS84')
+  lonlatProj = proj4.Proj('WGS84')
   utm = proj4.transform(lonlatProj, utmProj, [lon, lat])
   { easting: utm.x, northing: utm.y, zone: zone }
-utmFromLonLat = @utmFromLonLat
+utmFromLonLat = Mapping.utmFromLonLat
 
-@lonLatFromUTM = (easting, northing, zone) ->
+Mapping.lonLatFromUTM = (easting, northing, zone) ->
   utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
   lonlatProj =  proj4.Proj('WGS84')
   lonLat = proj4.transform utmProj, lonlatProj, [easting, northing]
   { lon: lonLat.x, lat: lonLat.y }
-lonLatFromUTM = @lonLatFromUTM
 
-@lon2UTMZone = (lon) ->
+Mapping.lon2UTMZone = (lon) ->
   Math.floor(((lon + 180) / 6) %% 60) + 1
-lon2UTMZone = @lon2UTMZone
 
 AutoForm.addInputType 'leaflet',
   template: 'leaflet'
@@ -61,7 +61,7 @@ Template.leaflet.rendered = ->
     lon = parseFloat($(@$('.lon')[0]).val())
     lat = parseFloat($(@$('.lat')[0]).val())
     if not isNaN(lon) and not isNaN(lat)
-      utm = utmFromLonLat lon, lat
+      utm = Mapping.utmFromLonLat lon, lat
       $(@$('.easting')[0]).val utm.easting
       $(@$('.northing')[0]).val utm.northing
       $(@$('.zone')[0]).val utm.zone
@@ -71,7 +71,7 @@ Template.leaflet.rendered = ->
     northing = parseFloat($(@$('.northing')[0]).val())
     zone = parseInt($(@$('.zone')[0]).val())
     if not isNaN(easting) and not isNaN(northing) and not isNaN(zone)
-      coords = lonLatFromUTM easting, northing, zone
+      coords = Mapping.lonLatFromUTM easting, northing, zone
       $(@$('.lat')[0]).val coords.lat
       $(@$('.lon')[0]).val coords.lon
 

@@ -88,7 +88,7 @@ buildReportFromImportData = (importData, report) ->
     country = importData['eventLocation.country']
     lon = parseFloat importData['eventLocation.longitude']
     lat = parseFloat importData['eventLocation.latitude']
-    utm = @utmFromLonLat lon, lat
+    utm = Mapping.utmFromLonLat lon, lat
     report['eventLocation'] =
       source: 'LonLat'
       northing: utm.northing
@@ -105,7 +105,7 @@ buildReportFromImportData = (importData, report) ->
     easting = importData['eventLocation.easting']
     northing = importData['eventLocation.northing']
     zone = importData['eventLocation.zone']
-    coords = @lonLatFromUTM easting, northing, zone
+    coords = Mapping.lonLatFromUTM easting, northing, zone
     report['eventLocation'] =
       source: 'LonLat'
       northing: northing

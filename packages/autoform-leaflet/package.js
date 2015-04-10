@@ -33,4 +33,6 @@ Package.onUse(function(api) {
   api.addFiles('lib/client/autoform-leaflet.coffee', 'client');
   api.addFiles('lib/client/autoform-leaflet.styl', 'client');
 
+  api.export('Mapping', ['server', 'client']);
+
 });
