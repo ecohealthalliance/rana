@@ -1,26 +1,8 @@
-Mapping = {}
-
 defaults =
   defaultLat: 48.856614
   defaultLon: 2.3522219
   defaultZoom: 10
 
-Mapping.utmFromLonLat = (lon, lat) ->
-  zone = Mapping.lon2UTMZone lon
-  utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
-  lonlatProj = proj4.Proj('WGS84')
-  utm = proj4.transform(lonlatProj, utmProj, [lon, lat])
-  { easting: utm.x, northing: utm.y, zone: zone }
-utmFromLonLat = Mapping.utmFromLonLat
-
-Mapping.lonLatFromUTM = (easting, northing, zone) ->
-  utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
-  lonlatProj =  proj4.Proj('WGS84')
-  lonLat = proj4.transform utmProj, lonlatProj, [easting, northing]
-  { lon: lonLat.x, lat: lonLat.y }
-
-Mapping.lon2UTMZone = (lon) ->
-  Math.floor(((lon + 180) / 6) %% 60) + 1
 
 AutoForm.addInputType 'leaflet',
   template: 'leaflet'
@@ -141,7 +123,6 @@ Template.leaflet.rendered = ->
     $(@$('.lon')[0]).val e.latlng.lng
     @updateUTMFromLonLat()
     @map.setView @marker.getLatLng(), @map.getZoom()
-
 
   @$('.leaflet-canvas').closest('form').on 'reset', =>
     @reset()
