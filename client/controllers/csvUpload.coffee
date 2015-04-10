@@ -122,19 +122,20 @@ buildReportFromImportData = (importData, report) ->
       fieldType = getReportFieldType field
       if fieldType
         value = importData[field]
-        if fieldType is Array
-          if field is 'genBankAccessionNumbers'
-            report[field] = _.map(value.split(','), (val) ->
-              { genBankAccessionNumber: val }
-            )
+        if value
+          if fieldType is Array
+            if field is 'genBankAccessionNumbers'
+              report[field] = _.map(value.split(','), (val) ->
+                { genBankAccessionNumber: val }
+              )
+            else
+              report[field] = value.split ','
+          else if fieldType is Boolean
+            report[field] = value.toLowerCase() in [ 'true', 'T', '1' ]
+          else if fieldType is Date
+            report[field] = Date.parse(value)
           else
-            report[field] = value.split ','
-        else if fieldType is Boolean
-          report[field] = value is 'true'
-        else if fieldType is Date
-          report[field] = Date.parse(value)
-        else
-          report[field] = value
+            report[field] = value
 
   report
 
