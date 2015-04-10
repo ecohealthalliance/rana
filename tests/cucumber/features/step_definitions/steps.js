@@ -33,7 +33,15 @@
       helper.world.browser
       .pause(2000)
       .url(function (err, result) {
-        assert(!err);
+        assert.ifError(err);
+        if(result.value.slice(-path.length) !== path) {
+          helper.world.browser.saveScreenshot(
+            helper.getAppDirectory() +
+            "/tests/screenshots/redirect failure - " +
+            helper.world.scenario.getName() +
+            ".png"
+          );
+        }
         assert.equal(result.value.slice(-path.length), path);
       }).call(callback);
     });
@@ -86,7 +94,7 @@
         });
         window.setTimeout(done, 2000);
       }, query, _.once(function(err, ret){
-        assert(!err);
+        assert.ifError(err);
         if(shouldNot) {
           assert(!ret.value, 'Report found');
         } else {
@@ -95,12 +103,12 @@
       })).call(callback);
     });
 
-    this.Given(/^there is a report( with a geopoint)? in the database$/,
-    function(withGeo, callback) {
+    this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,
+    function(withGeo, someoneElse, callback) {
       var report = {
         studyId: 'fakeid',
         consent: true,
-        contact: {name: 'Text User', 'email': 'test@foo.com'},
+        contact: {name: 'Test User', email: 'test@foo.com'},
         dataUsePermissions: "Share full record"
       };
       if(withGeo) {
@@ -121,7 +129,13 @@
           }
         };
       }
-      helper.resetTestDB([report], function(err){
+      if(someoneElse) {
+        report['createdBy'] = {
+          userId: "fakeId",
+          name: "Someone Else"
+        };
+      }
+      helper.addReports([report], function(err){
         assert.ifError(err);
         helper.world.browser
         .waitForReport(report)
@@ -129,9 +143,45 @@
       });
     });
 
+    this.Then("there should be no delete button for the report by someone else",
+    function(callback){
+      helper.world.browser
+        .mustExist('.reactive-table tr')
+        .execute(function() {
+          return $('.reactive-table tr').map(function(idx, element){
+            var $el = $(element);
+            var someoneElse = /Someone Else/.test(
+              $el.find('td[class="createdBy.name"]').text()
+            );
+            var hasDelete = Boolean($el.find(".remove-form").length);
+            if(someoneElse && hasDelete) {
+              return $el.find('td').map(function(idx, item){
+                return item.textContent;
+              }).toArray().join(", ");
+            }
+            return false;
+          });
+        }, function(err, result){
+          assert.ifError(err);
+          var badRows = result.value.filter(function(item){
+            return item;
+          });
+          assert.equal(badRows.length, 0, "Delete button found in rows:\n" + badRows.join("\n"));
+        })
+        .call(callback);
+    });
+    
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
+    });
+
+    this.When("I delete the report", function(callback){
+      helper.world.browser
+        .clickWhenVisible(".remove-form")
+        .alertText("delete", assert.ifError)
+        .alertAccept(assert.ifError)
+        .call(callback);
     });
 
     this.Then("I should not see a checkbox for the edit column",
@@ -151,7 +201,6 @@
       helper.world.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
-          console.log(bodyText);
           assert(!err);
           if (shouldNot) {
             assert(

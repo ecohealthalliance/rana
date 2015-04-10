@@ -4,6 +4,7 @@ Template.table.isEmpty = =>
   not @collections.Reports.findOne()
 
 Template.table.settings = =>
+  isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
   schema = @collections.Reports.simpleSchema().schema()
 
   fields = []
@@ -62,7 +63,7 @@ Template.table.settings = =>
     label: ""
     hideToggle: true
     fn: (val, obj) ->
-      if obj.createdBy.userId == Meteor.userId()
+      if obj.createdBy.userId == Meteor.userId() or isAdmin
         new Spacebars.SafeString("""
           <a class="btn btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
           <a class="btn btn-danger remove-form" data-id="#{obj._id}">Remove</a>

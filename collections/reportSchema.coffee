@@ -32,10 +32,10 @@ numInvolvedOptions =
       type: 'leaflet'
       afFieldInput:
         type: 'leaflet'
-  eventCountry:
-    label: 'Event Country'
-    type: String
-    optional: true
+  #eventCountry:
+    #label: 'Event Country'
+    #type: String
+    #optional: true
   numInvolved:
     label: """Estimated Number of Individuals Involved in the Mortality Event"""
     type: String
