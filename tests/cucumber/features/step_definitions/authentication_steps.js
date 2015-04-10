@@ -25,7 +25,7 @@
     function(shouldNot, callback){
       helper.world.browser
       .getMyReports({consent: false}, function(err, ret){
-        assert(!err);
+        assert.ifError(err);
         if(shouldNot) {
           assert(!ret.value);
         } else {
@@ -38,46 +38,43 @@
     this.When("I register an account", function(callback){
       helper.world.browser
       .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
-      //.getHTML("body", console.log.bind(console))
       .waitForExist("#at-signUp", 3000, function(err, exists){
-        assert(!err);
+        assert.ifError(err);
         if(!exists) {
           helper.world.browser.getHTML("body", console.log.bind(console));
           assert(exists, "Register button missing");
         }
       })
-      .click("#at-signUp", function(err){
-        assert(!err);
-      })
+      .click("#at-signUp", assert.ifError)
       .waitForExist(".form-control")
       .setValue('#at-field-email', 'test' + Math.floor(Math.random()*100) + '@user.com')
       .setValue('#at-field-password', 'testuser')
       .setValue('#at-field-password_again', 'testuser')
-      .setValue('#at-field-name', 'Test User')
-      .submitForm('#at-field-email', function(err){
-        assert(!err);
-      })
+      .setValue('#at-field-name', 'Registration Test User')
+      .submitForm('#at-field-email', assert.ifError)
       .waitForExist(".form-control", 1000, true, function(err, dne){
-        assert(!err);
+        assert.ifError(err);
         assert(dne);
       })
       .call(callback);
     });
 
-    this.When(/I log in/, function(callback){
+    this.When(/I log in( as admin)?/, function(admin, callback){
+      var email = admin ? "admin@admin.com" : "test@test.com";
+      var password = admin ? "adminuser" : "testuser";
       helper.world.browser
       .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
-      .waitForExist(".form-control", function(err, exists){
-        assert(!err);
+      .waitForExist(".at-pwd-form", function(err, exists){
+        assert.ifError(err);
         assert(exists);
       })
-      .setValue('#at-field-email', "test@test.com")
-      .setValue('#at-field-password', "testuser")
+      .setValue('#at-field-email', email)
+      .setValue('#at-field-password', password)
       .submitForm('#at-field-email', function(err){
-        assert(!err);
+        assert.ifError(err);
       })
-      .waitForExist(".form-control", 500, true, function(err, dne){
-        assert(!err);
+      .waitForExist(".at-pwd-form", 1000, true, function(err, dne){
+        assert.ifError(err);
         assert(dne);
       })
       .call(callback);
@@ -90,14 +87,16 @@
       }).call(callback);
     });
 
-    this.Given(/I have logged in/, function (callback) {
-      helper.world.browser.executeAsync(function (done) {
-        Meteor.loginWithPassword("test@test.com", "testuser", function (err) {
+    this.Given(/I have logged in( as admin)?/, function (admin, callback) {
+      var email = admin ? "admin@admin.com" : "test@test.com";
+      var password = admin ? "adminuser" : "testuser";
+      helper.world.browser.executeAsync(function (email, password, done) {
+        Meteor.loginWithPassword(email, password, function (err) {
           if (err) return done();
           done(Meteor.userId());
         });
-      }, function (err, ret) {
-        assert(!err);
+      }, email, password, function (err, ret) {
+        assert.ifError(err);
         assert(ret.value);
       }).call(callback);
     });
@@ -116,7 +115,7 @@
       .execute(function(){
         return Meteor.userId();
       }, function(err, ret){
-        assert(!err);
+        assert.ifError(err);
         if(amNot) {
           assert.equal(ret.value, null, "Authenticated");
         } else {
@@ -129,11 +128,11 @@
     function(callback) {
       helper.world.browser
       .waitForExist(".at-error", function(err, exists){
-        assert(!err);
+        assert.ifError(err);
         assert(exists, "Could not find container element");
       })
       .getText(".at-error", function(err, text){
-        assert(!err);
+        assert.ifError(err);
         var regexString = "must be logged in"
           .split(" ")
           .join("\\s+");

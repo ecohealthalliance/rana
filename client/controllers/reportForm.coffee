@@ -4,6 +4,10 @@ urlParams = null
 
 AutoForm.addHooks(
   'ranavirus-report', {
+    docToForm: (doc, ss)->
+      if doc
+        utils.subscribeToDocFiles(doc)
+      return doc
     formToDoc: (doc)->
       doc.createdBy = {
         userId: Meteor.userId()
@@ -20,7 +24,7 @@ AutoForm.addHooks(
       }
       toastr.success("""
       <div>#{operation} successful!</div>
-      <a href="/report/#{result}">Edit Report</a>
+      <a href="/report/#{@docId}">Edit Report</a>
       """)
       window.scrollTo(0, 0)
       redirectOnSubmit =  urlParams?.query?.redirectOnSubmit
@@ -67,3 +71,16 @@ Template.reportForm.helpers
     collections.Studies.find().map (study) ->
       label: study.name
       value: study._id
+
+Template.reportForm.events
+  'change .file-upload': (evt)->
+    timeout = 10000
+    interval = window.setInterval(()->
+      # The event target will not be in the template once the file is added.
+      if not $.contains(document, evt.target) or timeout <= 0
+        currentDoc = AutoForm.getFormValues("ranavirus-report").insertDoc
+        utils.subscribeToDocFiles(currentDoc)
+        window.clearInterval(interval)
+      timeout -= 1000
+    , 1000)
+

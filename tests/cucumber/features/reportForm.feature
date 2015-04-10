@@ -23,3 +23,10 @@ Feature: A form for reporting Ranavirus outbreaks
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
     And the database should have 1 reports linked to my account
+    And the data I filled out the form with should be in the database
+
+  Scenario: Uploading an image
+    Given I have logged in
+    And I am on the "report" page
+    When I upload an image
+    Then I should see an image preview

@@ -8,6 +8,11 @@ Template.studyForm.helpers
 AutoForm.hooks
   'ranavirus-import':
 
+    docToForm: (doc, ss)->
+      if doc
+        utils.subscribeToDocFiles(doc)
+      return doc
+
     formToDoc: (doc) ->
       doc.createdBy =
         userId: Meteor.userId()
@@ -23,7 +28,7 @@ AutoForm.hooks
         extendedTimeOut: "100000"
       toastr.success("""
       <div>#{operation} successful!</div>
-      <a href="/study/#{result}">Edit Study</a>
+      <a href="/study/#{@docId}">Edit Study</a>
       """)
       window.scrollTo 0, 0
 

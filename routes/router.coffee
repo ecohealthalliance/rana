@@ -41,7 +41,6 @@ Router.route('newStudy',
     Meteor.subscribe("genera")
   waitOn: ->
     [
-      Meteor.subscribe("csvfiles"),
       Meteor.subscribe("studies")
     ]
 )
@@ -53,6 +52,7 @@ Router.route('/table',
   waitOn: ->
     [
       Meteor.subscribe("reports")
+      Meteor.subscribe("groupByPath", "rana")
     ]
 )
 
