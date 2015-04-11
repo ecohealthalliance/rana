@@ -19,9 +19,7 @@ AutoForm.addHooks(
         extendedTimeOut: "100000"
       }
       message = """<div>#{operation} successful!</div>"""
-      # don't show link to update if we have just updated
-      if operation is 'insert'
-        message += """<a href="/report/#{result}">Edit Study</a>"""
+      message += """<a href="/report/#{result}">Edit Study</a>"""
       toastr.success message
       window.scrollTo 0, 0
       redirectOnSubmit =  urlParams?.query?.redirectOnSubmit
