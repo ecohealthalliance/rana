@@ -165,7 +165,7 @@
         })
         .call(callback);
     });
-    
+
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
@@ -214,7 +214,7 @@
     this.When('I click on the edit button',
     function(callback){
       helper.world.browser
-      .click('.reactive-table .btn-primary')
+      .click('.reactive-table td.controls .btn-edit')
       .call(callback);
     });
 
