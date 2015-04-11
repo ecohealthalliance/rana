@@ -37,7 +37,7 @@ Feature: A form for setting up a ranavirus study
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
     And the database should have 1 reports linked to my account
-    Then I navigate to the "table" page
+    When I navigate to the "table" page
     And I click on the edit button
     Then the form should contain the values for rana_import_one.csv
 
@@ -50,6 +50,6 @@ Feature: A form for setting up a ranavirus study
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
     And the database should have 1 reports linked to my account
-    Then I navigate to the "table" page
+    When I navigate to the "table" page
     And I click on the edit button
     Then the form should contain the values for rana_import_complete.csv
