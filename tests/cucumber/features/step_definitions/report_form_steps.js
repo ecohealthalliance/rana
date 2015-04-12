@@ -14,20 +14,38 @@
 
     this.fillInForm = function (customValues, callback) {
 
-      var defaultValues = {};
-      defaultValues['studyId'] = 'fakeid';
-      defaultValues['contact.name'] = 'Fake Name';
-      defaultValues['contact.email'] = 'foo@bar.com';
-      defaultValues['images'] = [];
-      defaultValues['pathologyReports'] = [];
-      defaultValues['consent'] = true;
-      defaultValues['eventLocation'] = null;
+      helper.world.browser
+      .waitForExist('.form-group', function (err, exists) {
+        assert(!err);
+        assert(exists);
+      })
+      .execute(function(){
+        return AutoForm.Fixtures.getData(collections.Reports.simpleSchema());
+      }, function(err, res){
+        if(err) {
+          return callback.fail(err);
+        } else {
+          var generatedFormData = res.value
+          generatedFormData['contact.name'] = 'Fake Name';
+          generatedFormData['contact.email'] = 'foo@bar.com';
+          generatedFormData['images'] = [];
+          generatedFormData['pathologyReports'] = [];
+          generatedFormData['consent'] = true;
+          generatedFormData['eventLocation'] = null;
+          if (generatedFormData.hasOwnProperty('eventDate')) {
+            generatedFormData['eventDate'] = new Date(
+              JSON.parse(generatedFormData['eventDate']))
+              .toISOString().slice(0,10);
+          }
+          _.extend(generatedFormData, customValues);
 
-      _.extend(defaultValues, customValues);
-
-      helper.world.browser.setFormFields(defaultValues, 'Reports', callback);
-
-    }
+          helpers.setFormFields(collections.Reports.simpleSchema()._schema,
+                                generatedFormData,
+                                helper.world.browser);
+        }
+        callback();
+      });
+    };
 
     this.When(/^I fill out the form with the (eventDate) "([^"]*)"$/,
     function(prop, value, callback){

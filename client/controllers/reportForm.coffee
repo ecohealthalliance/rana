@@ -51,7 +51,10 @@ Template.reportForm.helpers
     else if Session.get 'studyId'
       getCollections().Studies.findOne Session.get('studyId')
     else
-      { contact: @contactFromUser() }
+      {
+        studyId: @study._id
+        contact: UI._globalHelpers['contactFromUser']()
+      }
 
   studySelected: ->
     Session.get 'studyId'
@@ -68,13 +71,7 @@ Template.reportForm.helpers
       return "update"
     return "readonly"
 
-  studyOptions: ->
-    collections.Studies.find().map (study) ->
-      label: study.name
-      value: study._id
-
 Template.reportForm.events
 
   'change select[name="studyId"]': (e, t) ->
     Session.set  'studyId', AutoForm.getFieldValue('ranavirus-report', 'studyId')
-

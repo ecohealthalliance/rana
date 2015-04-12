@@ -4,11 +4,8 @@ Feature: The ability to authenticate users
   so the public cannot view and edit my reports
 
   Scenario: Reports are not publicly visible without consent
-    Given I have not logged in
-    When I am on the "report" page
-    And I log in
-    Given I am logged in
-    When I navigate to the "report" page
+    Given I have logged in
+    When I navigate to the "study/fakeid/report" page
     And I fill out a report without consenting to publish it
     And I click submit
     Then the webpage should not display a validation error

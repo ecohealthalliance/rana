@@ -10,7 +10,8 @@ numInvolvedOptions =
   studyId:
     type: String
     autoform:
-      template: 'studySelect'
+      type: 'hidden'
+      label: false
   sourceFile:
     label: """The id of the CSV file from which the event was imported, if any"""
     type: String
