@@ -48,17 +48,20 @@ Router.route('newStudy',
     ]
 )
 
-Router.route('study',
+Router.route('editStudy',
   path: '/study/:studyId'
   template: 'study'
   where: 'client'
   data: ->
     study: getCollections().Studies.findOne(@params.studyId)
     reports: getCollections().Reports.find({studyId: @params.studyId})
+  onAfterAction: ->
+    Meteor.subscribe("genera")
   waitOn: ->
     [
       Meteor.subscribe("studies"),
-      Meteor.subscribe("reports")
+      Meteor.subscribe("reports"),
+      Meteor.subscribe("csvfiles"),
     ]
 )
 
@@ -79,6 +82,16 @@ Router.route('/table',
   waitOn: ->
     [
       Meteor.subscribe("reports")
+    ]
+)
+
+Router.route('/studyTable',
+  where: 'client'
+  data: ->
+    collection: collections.Studies
+  waitOn: ->
+    [
+      Meteor.subscribe("studies")
     ]
 )
 

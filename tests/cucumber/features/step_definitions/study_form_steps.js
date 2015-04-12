@@ -28,9 +28,16 @@
       helper.fillInStudyForm({}, callback);
     });
 
+
     this.When("I fill out the study form with some default report values", function(callback){
       helper.fillInStudyForm({'speciesGenus': 'SomeGenus'}, callback);
     });
+
+    this.When("I fill out the study form differently", function(callback){
+      helper.fillInStudyForm({ 'contact.name': 'Aother Fake Name',
+                               'contact.email': 'zap@bop.com' }, callback);
+    });
+
   };
 
 })();

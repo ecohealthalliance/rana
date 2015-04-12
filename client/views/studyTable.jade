@@ -1,0 +1,5 @@
+template(name="studyTable")
+  if isEmpty
+    h2 No Studies Found
+  else
+    +reactiveTable collection=collection settings=settings

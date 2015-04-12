@@ -61,7 +61,8 @@
     this.When('I click the "$buttonName" button',
     function (buttonName, callback) {
       var buttonNameToSelector = {
-        "Columns" : ".reactive-table-columns-dropdown button"
+        "Columns" : ".reactive-table-columns-dropdown button",
+        "Remove" : "a.remove"
       };
       var selector = buttonName;
       if(buttonName in buttonNameToSelector) {
@@ -70,6 +71,18 @@
       helper.world.browser
         .click(selector)
         .call(callback);
+    });
+
+    this.When('I type "$word" into the prompt',
+    function (word, callback) {
+      helper.world.browser.alertText(word)
+        .call(callback);
+    });
+
+    this.When('I accept the prompt',
+    function (callback) {
+      helper.world.browser.alertAccept()
+      .call(callback);
     });
 
     this.Then(
