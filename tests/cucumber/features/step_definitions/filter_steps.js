@@ -22,7 +22,8 @@
           geo: {
             type: 'Point',
             coordinates: [ 121.55189514218364, 25.046919772516173 ]
-          }
+          },
+          country: 'USA'
         }
       };
       report[property] = value;

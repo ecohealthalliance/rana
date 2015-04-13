@@ -74,7 +74,7 @@ Template.table.settings = =>
     fn: (val, obj) ->
       if obj.createdBy.userId == Meteor.userId() or isAdmin
         new Spacebars.SafeString("""
-          <a class="btn btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
+          <a class="btn btn-edit btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
           <a class="btn btn-danger remove-form" data-id="#{obj._id}">Remove</a>
         """)
       else

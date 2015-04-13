@@ -4,6 +4,12 @@
 
   var assert = require('assert');
 
+  var nestedStringKey = function(key, obj) {
+    return _(key.split('.')).reduce((function(obj, key) {
+      return obj[key];
+    }), obj);
+  };
+
   module.exports = function () {
 
     var helper = this;
@@ -59,7 +65,7 @@
             window.setTimeout(done, 2000);
           }, baseQuery, _.once(callback));
         });
-        
+
         browser.addCommand("waitForReport", function(report, callback) {
           // This turns documents into Mongo queries that use JSON paths.
           // Nested objects queries were failing here,
@@ -117,7 +123,7 @@
           })
           .getText(selector, callback);
         });
-        
+
         browser.addCommand("clickWhenVisible", function(selector, callback) {
           browser
           .waitForExist(selector, 1000, function(err, exists){
@@ -154,7 +160,7 @@
             callback(res.value);
           });
         });
-        
+
         browser.addCommand("setFormFields", function(formData, schemaName, callback) {
           function flattenObjectToSchema(obj, prefix){
             if(!prefix) prefix = [];
@@ -233,6 +239,71 @@
 
             callback();
           });
+        });
+
+        browser.addCommand("checkFormFields", function(formId, expectedValues, callback) {
+          browser
+          .mustExist('.form-group').
+          execute(function(formId) {
+            var values = AutoForm.getFormValues(formId).insertDoc;
+            if (values.eventDate) {
+              values.eventDate = String(values.eventDate);
+            }
+            return values;
+          }, formId, function(err, res) {
+            var formValues = res.value;
+            _.each(expectedValues, function(fieldValuePair){
+
+                var field = fieldValuePair[0];
+                var value = fieldValuePair[1];
+                var formValue = nestedStringKey(field, formValues);
+                if (field == 'eventLocation') {
+                  // Need to check individually so we can forgive minor floating point errors in coords
+                  assert.equal(formValue.source, value.source);
+                  assert.equal(formValue.zone, value.zone);
+                  assert.equal(formValue.country, value.country);
+                  assert.equal(formValue.geo.type, value.geo.type);
+                  assert.equal(Math.round(formValue.easting * 100000),
+                               Math.round(value.easting * 100000));
+                  assert.equal(Math.round(formValue.northing * 100000),
+                               Math.round(value.northing * 100000));
+                  assert.equal(Math.round(formValue.geo.coordinates[0] * 100000),
+                               Math.round(value.geo.coordinates[0] * 100000));
+                  assert.equal(Math.round(formValue.geo.coordinates[1] * 100000),
+                               Math.round(value.geo.coordinates[1] * 100000));
+                } else if (typeof(value) == 'object' || typeof(value) == 'array') {
+                  assert(_.isEqual(formValue, value));
+                } else if (typeof(value) == 'number') {
+                  // avoid floating point errors
+                  assert(_.isEqual(Math.round(formValue * 100000), Math.round(value * 100000)));
+                } else if (field === 'eventDate') {
+                  assert.equal(Date(formValue), Date(value));
+                } else {
+                  assert.equal(formValue, value);
+                }
+            });
+            browser.call(callback);
+          });
+        });
+
+        browser.addCommand("checkTableCells", function(expectedValues, callback) {
+          browser
+          .waitForExist('.reactive-table', function (err, exists) {
+            assert(!err);
+            assert(exists);
+            _.each(expectedValues, function(fieldValuePair){
+              var field = fieldValuePair[0];
+              var value = fieldValuePair[1];
+              browser.getText('.' + field, function(err, text){
+                if (field === 'eventDate') {
+                  assert.equal(Date.parse(text[1]), Date.parse(value));
+                } else {
+                  assert.equal(text[1], String(value));
+                }
+              });
+            });
+            browser.call(callback);
+          })
         });
 
         // Useful for keeping the Chrome window open so you can inspect things

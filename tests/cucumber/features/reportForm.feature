@@ -22,7 +22,7 @@ Feature: A form for reporting Ranavirus outbreaks
     And I click submit
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
-    And the database should have a report linked to my account
+    And the database should have 1 reports linked to my account
     And the data I filled out the form with should be in the database
 
   Scenario: Uploading an image

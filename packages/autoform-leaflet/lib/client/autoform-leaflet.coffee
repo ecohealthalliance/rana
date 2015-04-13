@@ -3,6 +3,7 @@ defaults =
   defaultLon: 2.3522219
   defaultZoom: 10
 
+
 AutoForm.addInputType 'leaflet',
   template: 'leaflet'
   valueOut: ->
@@ -13,6 +14,7 @@ AutoForm.addInputType 'leaflet',
       easting: parseFloat node.find('.easting').val()
       zone: parseInt node.find('.zone').val()
       source: node.find('.source').val()
+      country: node.find('.country').val()
       geo:
         type: 'Point'
         coordinates: [
@@ -37,34 +39,23 @@ Template.leaflet.rendered = ->
   @clearMarker = () =>
     if @marker then @map.removeLayer(@marker)
 
-  @lon2UTMZone = (lon) ->
-    Math.min(Math.floor((lon + 180) / 6), 60) + 1
-
   @updateUTMFromLonLat = () =>
     lon = parseFloat($(@$('.lon')[0]).val())
     lat = parseFloat($(@$('.lat')[0]).val())
     if not isNaN(lon) and not isNaN(lat)
-      zone = @lon2UTMZone(lon)
-
-      utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
-      lonlatProj =  proj4.Proj('WGS84')
-      utm = proj4.transform(lonlatProj, utmProj, [lon, lat])
-      $(@$('.easting')[0]).val utm.x
-      $(@$('.northing')[0]).val utm.y
-      $(@$('.zone')[0]).val zone
+      utm = Mapping.utmFromLonLat lon, lat
+      $(@$('.easting')[0]).val utm.easting
+      $(@$('.northing')[0]).val utm.northing
+      $(@$('.zone')[0]).val utm.zone
 
   @updateLonLatFromUTM = () =>
     easting = parseFloat($(@$('.easting')[0]).val())
     northing = parseFloat($(@$('.northing')[0]).val())
     zone = parseInt($(@$('.zone')[0]).val())
     if not isNaN(easting) and not isNaN(northing) and not isNaN(zone)
-
-      utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
-      lonlatProj =  proj4.Proj('WGS84')
-      lonLat = proj4.transform utmProj, lonlatProj, [easting, northing]
-
-      $(@$('.lat')[0]).val lonLat.y
-      $(@$('.lon')[0]).val lonLat.x
+      coords = Mapping.lonLatFromUTM easting, northing, zone
+      $(@$('.lat')[0]).val coords.lat
+      $(@$('.lon')[0]).val coords.lon
 
   @updateViewFromLonLat = () =>
     lon = parseFloat($(@$('.lon')[0]).val())
@@ -118,6 +109,7 @@ Template.leaflet.rendered = ->
     $(@$('.easting')[0]).val @data.value.easting
     $(@$('.zone')[0]).val @data.value.zone
     $(@$('.source')[0]).val @data.value.source
+    $(@$('.country')[0]).val @data.value.country
     @updateViewFromLonLat()
     @map.setZoom @options.defaultZoom
   else
@@ -137,7 +129,6 @@ Template.leaflet.rendered = ->
     $(@$('.lon')[0]).val e.latlng.lng
     @updateUTMFromLonLat()
     @map.setView @marker.getLatLng(), @map.getZoom()
-
 
   @$('.leaflet-canvas').closest('form').on 'reset', =>
     @reset()

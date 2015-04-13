@@ -38,7 +38,7 @@
           }
         }).call(callback);
     });
-    
+
     this.Then(/^I should see (\d+) reports? on the map$/, function (number, callback) {
       helper.world.browser
       .waitForExist(".leaflet-marker-icon")
@@ -48,14 +48,14 @@
       })
       .call(callback);
     });
-    
+
     this.When(/^I group the reports by "([^"]*)"$/,
     function (property, callback) {
       helper.world.browser
       .selectByValue('#group-by', property)
       .call(callback);
     });
-    
+
     this.Then(/^I should see (\d+) pins with different colors?$/, function (number, callback) {
       helper.world.browser
       .waitForExist(".leaflet-marker-icon")
