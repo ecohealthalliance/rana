@@ -28,6 +28,7 @@ onlyById = (collection)->
     # future versions of Meteor.
     if ids.some(_.isRegExp)
       return null
+
     collection.find({_id: {$in: ids}})
 
 Meteor.publish 'files', onlyById(collections.Files)
