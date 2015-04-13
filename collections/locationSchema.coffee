@@ -72,3 +72,5 @@ SimpleSchema.messages
           return "needsLatLong" unless @value.length is 2
           return 'lonOutOfRange' unless -180 < @value[0] <= 180
           return 'latOutOfRange' unless -90 <= @value[1] <= 90
+  country:
+    type: String

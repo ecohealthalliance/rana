@@ -54,7 +54,7 @@
     this.When("I fill out the form", function(callback){
       helper.fillInForm({}, callback);
     });
-    
+
     this.Then("the data I filled out the form with should be in the database",
     function(callback){
       helper.world.browser
@@ -84,7 +84,7 @@
       .click('div[data-schema-key="' + field + '"] input[value="' + value + '"]')
       .call(callback);
     });
-    
+
     this.Then('the $field field should have the value "$value"',
     function(field, value, callback){
       helper.world.browser

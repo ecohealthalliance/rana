@@ -8,8 +8,9 @@ Meteor.startup () ->
 fileUploaded = (template) ->
   checkUploaded = () ->
     fileId = Session.get 'fileUpload[csvFile]'
+    Meteor.subscribe "csvfiles", fileId
     if fileId
-      record = @collections.CSVFiles.findOne { _id: fileId }
+      record = @collections.CSVFiles.findOne fileId
       if record and record.isUploaded()
         return Meteor.call 'getCSVData', fileId, (err, data) =>
           if err
@@ -28,27 +29,178 @@ clearImportReports = () ->
   ImportReports.remove({})
   Session.set 'unmatchedHeaders', null
 
+getReportFieldType = (field) ->
+  reportSchema = getCollections().Reports.simpleSchema()._schema
+
+  if field not of reportSchema
+    null
+  else
+    reportSchema[field].type
+
 updateImportReports = (data) ->
 
   clearImportReports()
   matches = headerMatches(data).matched
 
   for row in data
-    # Fake contact data to satisfy requirement
-    rowdata =
-      studyId: 'fakeid'
-      contact:
+
+    report = buildReportFromImportData row, report
+
+    report.studyId = 'fakeid'
+    report.createdBy =
+      userId: Meteor.user()._id
+      name: Meteor.user().profile.name
+
+    if 'contact' not in report
+      report.contact =
         name: 'fake'
         email: 'a@b.com'
         phone: '1234567890'
-      createdBy:
+    if 'consent' not in report
+      report.consent = true
+    if 'dataUsePermissions' not in report
+      report.dataUsePermissions = 'Share obfuscated'
+
+    ImportReports.insert report
+
+buildReportFromImportData = (importData, report) ->
+
+  report = {}
+
+  # contact
+  contact = {}
+  for field in ['name', 'email', 'phone']
+    key = 'contact.' + field
+    if key of importData
+      contact[field] = importData[key]
+  institutionAddress = {}
+  for field in ['name', 'street', 'street2', 'city', 'stateOrProvince', 'country', 'postalCode']
+    key = 'contact.institutionAddress.' + field
+    if key of importData
+      institutionAddress[field] = importData[key]
+  if Object.keys(institutionAddress).length > 0
+    contact.institutionAddress = institutionAddress
+  if Object.keys(contact).length > 0
+    report.contact = contact
+
+  # eventLocation
+  if ( 'eventLocation.longitude' of importData and
+       'eventLocation.latitude' of importData )
+    country = importData['eventLocation.country']
+    lon = parseFloat importData['eventLocation.longitude']
+    lat = parseFloat importData['eventLocation.latitude']
+    utm = Mapping.utmFromLonLat lon, lat
+    minSecLon = Mapping.decimal2MinSec lon
+    minSecLat = Mapping.decimal2MinSec lat
+    report['eventLocation'] =
+      source: 'LonLat'
+      northing: utm.northing
+      easting: utm.easting
+      zone: utm.zone
+      degreesLon: minSecLon.degrees
+      minutesLon: minSecLon.minutes
+      secondsLon: minSecLon.seconds
+      degreesLat: minSecLat.degrees
+      minutesLat: minSecLat.minutes
+      secondsLat: minSecLat.seconds
+      country: country
+      geo:
+        type: 'Point'
+        coordinates: [lon, lat]
+  else if ( 'eventLocation.easting' of importData and
+            'eventLocation.northing' of importData and
+            'eventLocation.zone' of importData)
+    country = importData['eventLocation.country']
+    easting = importData['eventLocation.easting']
+    northing = importData['eventLocation.northing']
+    zone = importData['eventLocation.zone']
+    coords = Mapping.lonLatFromUTM easting, northing, zone
+    minSecLon = Mapping.decimal2MinSec coords.lon
+    minSecLat = Mapping.decimal2MinSec coords.lat
+
+    report['eventLocation'] =
+      source: 'LonLat'
+      northing: northing
+      easting: easting
+      zone: zone
+      degreesLon: minSecLon.degrees
+      minutesLon: minSecLon.minutes
+      secondsLon: minSecLon.seconds
+      degreesLat: minSecLat.degrees
+      minutesLat: minSecLat.minutes
+      secondsLat: minSecLat.seconds
+      country: country
+      geo:
+        type: 'Point'
+        coordinates: [coords.lon, coords.lat]
+  else if ('degreesLon' of importData and 'minutesLon' of importData and 'secondsLon' of importData and
+           'degreesLat' of importData and 'minutesLat' of importData and 'secondsLat' of importData)
+    country = importData['eventLocation.country']
+    degreesLon = parseFloat importData['eventLocation.degreesLon']
+    minutesLon = parseFloat importData['eventLocation.minutesLon']
+    secondsLon = parseFloat importData['eventLocation.secondsLon']
+    degreesLat = parseFloat importData['eventLocation.degreesLat']
+    minutesLat = parseFloat importData['eventLocation.minutesLat']
+    secondsLat = parseFloat importData['eventLocation.secondsLat']
+    lon = Mapping.minSec2Decimal degreesLon, minutesLon, secondsLon
+    lat = Mapping.minSec2Decimal degreesLat, minutesLat, secondsLat
+    utm = Mapping.utmFromLonLat lon, lat
+    report['eventLocation'] =
+      source: 'LonLat'
+      northing: utm.northing
+      easting: utm.easting
+      zone: utm.zone
+      degreesLon: degreesLon
+      minutesLon: minutesLon
+      secondsLon: secondsLon
+      degreesLat: degreesLat
+      minutesLat: minutesLat
+      secondsLat: secondsLat
+      country: country
+      geo:
+        type: 'Point'
+        coordinates: [lon, lat]
+  for field of importData
+
+    if '.' not in field
+      fieldType = getReportFieldType field
+      if fieldType
+        value = importData[field]
+        if value
+          if fieldType is Array
+            if field is 'genBankAccessionNumbers'
+              report[field] = _.map(value.split(','), (val) ->
+                { genBankAccessionNumber: val }
+              )
+            else
+              report[field] = value.split ','
+          else if fieldType is Boolean
+            report[field] = value.toLowerCase() in [ 'true', 't', '1', 'y', 'yes' ]
+          else if fieldType is Date
+            report[field] = Date.parse(value)
+          else
+            report[field] = value
+
+  report
+
+@loadCSVData = (csvFile, study, studyId) ->
+  Meteor.call 'getCSVData', csvFile, (err, data) =>
+    reportSchema = getCollections().Reports.simpleSchema()._schema
+    reportFields = Object.keys reportSchema
+    report = {}
+    for studyField in Object.keys study
+      if studyField != '_id' and studyField in reportFields
+        report[studyField] = _.clone study[studyField]
+
+    for importData in data
+      importReport = buildReportFromImportData importData, report
+      _.extend report, importReport
+      report.createdBy =
         userId: Meteor.user()._id
         name: Meteor.user().profile.name
-      consent: true
-      dataUsePermissions: 'Share obfuscated'
-    for field in matches
-      rowdata[field] = row[field]
-    ImportReports.insert rowdata
+      report.studyId = studyId
+      getCollections().Reports.insert report
+
 
 headerMatches = (data) ->
   headers = _.keys data[0]

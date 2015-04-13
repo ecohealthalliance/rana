@@ -45,42 +45,9 @@ AutoForm.hooks
       toastr.error(error.message)
 
     after:
-      insert: (err, res, template) ->
+      insert: (err, res, template) =>
 
         study = getCollections().Studies.findOne { _id: res }
 
         if study and study.csvFile
-
-          Meteor.call 'getCSVData', study.csvFile, (err, data) =>
-            reportSchema = getCollections().Reports.simpleSchema()._schema
-            reportFields = Object.keys reportSchema
-            studyData = {}
-            for studyField in Object.keys study
-              if studyField != '_id' and studyField in reportFields
-                studyData[studyField] = _.clone study[studyField]
-
-            for row in data
-              report = {}
-              for key of studyData
-                report[key] = _.clone studyData[key]
-              for reportField in reportFields
-                if reportField of row and row[reportField]
-                  report[reportField] = row[reportField]
-              report.createdBy =
-                userId: Meteor.user()._id
-                name: Meteor.user().profile.name
-              report.studyId = res
-              @collections.Reports.insert report
-
-Template.studyForm.events
-  'change .file-upload': (evt)->
-    timeout = 10000
-    interval = window.setInterval(()->
-      # The event target will not be in the template once the file is added.
-      if not $.contains(document, evt.target) or timeout <= 0
-        currentDoc = AutoForm.getFormValues("ranavirus-import").insertDoc
-        utils.subscribeToDocFiles(currentDoc)
-        window.clearInterval(interval)
-      timeout -= 1000
-    , 1000)
-
+          @loadCSVData study.csvFile, study, res

@@ -3,37 +3,6 @@ defaults =
   defaultLon: 2.3522219
   defaultZoom: 10
 
-lonlatProj =  proj4.Proj('WGS84')
-
-decimal2MinSec = (decimal) ->
-  degrees = Math.floor(decimal)
-  minutes = Math.floor 60 * (decimal - degrees)
-  seconds = 3600 * (decimal - degrees - minutes / 60)
-
-  degrees: degrees
-  minutes: minutes
-  seconds: seconds
-
-minSec2Decimal = (degrees, min, sec) ->
-  degrees + min / 60 + sec / 3600
-
-@utmFromLonLat = (lon, lat) ->
-  zone = @lon2UTMZone lon
-  utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
-  utm = proj4.transform(lonlatProj, utmProj, [lon, lat])
-  { easting: utm.x, northing: utm.y, zone: zone }
-utmFromLonLat = @utmFromLonLat
-
-@lonLatFromUTM = (easting, northing, zone) ->
-  utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
-  lonLat = proj4.transform utmProj, lonlatProj, [easting, northing]
-  { lon: lonLat.x, lat: lonLat.y }
-lonLatFromUTM = @lonLatFromUTM
-
-@lon2UTMZone = (lon) ->
-  Math.min(Math.floor((lon + 180) / 6), 60) + 1
-lon2UTMZone = @lon2UTMZone
-
 AutoForm.addInputType 'leaflet',
   template: 'leaflet'
   valueOut: ->
@@ -79,7 +48,7 @@ Template.leaflet.rendered = ->
     lon = parseFloat($(@$('.lon')[0]).val())
     lat = parseFloat($(@$('.lat')[0]).val())
     if not isNaN(lon) and not isNaN(lat)
-      utm = utmFromLonLat lon, lat
+      utm = Mapping.utmFromLonLat lon, lat
       $(@$('.easting')[0]).val utm.easting
       $(@$('.northing')[0]).val utm.northing
       $(@$('.zone')[0]).val utm.zone
@@ -89,7 +58,7 @@ Template.leaflet.rendered = ->
     northing = parseFloat($(@$('.northing')[0]).val())
     zone = parseInt($(@$('.zone')[0]).val())
     if not isNaN(easting) and not isNaN(northing) and not isNaN(zone)
-      coords = lonLatFromUTM easting, northing, zone
+      coords = Mapping.lonLatFromUTM easting, northing, zone
       $(@$('.lat')[0]).val coords.lat
       $(@$('.lon')[0]).val coords.lon
 
@@ -103,8 +72,8 @@ Template.leaflet.rendered = ->
 
     if ( not isNaN(degreesLon) and not isNaN(minutesLon) and not isNaN(secondsLon) and
          not isNaN(degreesLon) and not isNaN(minutesLon) and not isNaN(secondsLon) )
-      lon = minSec2Decimal degreesLon, minutesLon, secondsLon
-      lat = minSec2Decimal degreesLat, minutesLat, secondsLat
+      lon = Mapping.minSec2Decimal degreesLon, minutesLon, secondsLon
+      lat = Mapping.minSec2Decimal degreesLat, minutesLat, secondsLat
       $(@$('.lat')[0]).val lat
       $(@$('.lon')[0]).val lon
 
@@ -112,8 +81,8 @@ Template.leaflet.rendered = ->
     lon = parseFloat($(@$('.lon')[0]).val())
     lat = parseFloat($(@$('.lat')[0]).val())
     if not isNaN(lon) and not isNaN(lat)
-      minSecLon = decimal2MinSec lon
-      minSecLat = decimal2MinSec lat
+      minSecLon = Mapping.decimal2MinSec lon
+      minSecLat = Mapping.decimal2MinSec lat
       $(@$('.degreesLon')[0]).val minSecLon.degrees
       $(@$('.minutesLon')[0]).val minSecLon.minutes
       $(@$('.secondsLon')[0]).val minSecLon.seconds

@@ -41,7 +41,6 @@ Router.route('newStudy',
     Meteor.subscribe("genera")
   waitOn: ->
     [
-      Meteor.subscribe("csvfiles"),
       Meteor.subscribe("studies")
     ]
 )
