@@ -40,6 +40,12 @@
               'type': 'Point',
               'coordinates': [2.355194091796875, 48.84845083589778]
             },
+            'degreesLon': 2,
+            'minutesLon': 21,
+            'secondsLon': 18.698730468750078,
+            'degreesLat': 48,
+            'minutesLat': 50,
+            'secondsLat': 54.42300923200478,
             'country': 'USA'
           }
         ],

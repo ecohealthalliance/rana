@@ -15,3 +15,15 @@ Mapping.lonLatFromUTM = (easting, northing, zone) ->
 
 Mapping.lon2UTMZone = (lon) ->
   Math.floor(((lon + 180) / 6) %% 60) + 1
+
+Mapping.decimal2MinSec = (decimal) ->
+  degrees = Math.floor(decimal)
+  minutes = Math.floor 60 * (decimal - degrees)
+  seconds = 3600 * (decimal - degrees - minutes / 60)
+
+  degrees: degrees
+  minutes: minutes
+  seconds: seconds
+
+Mapping.minSec2Decimal = (degrees, min, sec) ->
+  degrees + min / 60 + sec / 3600

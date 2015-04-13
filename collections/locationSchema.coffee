@@ -7,11 +7,17 @@ SimpleSchema.messages
   northing: '[label] northing should be between 0 and 10,000,000'
   easting: '[label] easting should be between 0 and 1,000,000'
   zone: '[label] zone should be between 1 and 60'
+  degressLonOutOfRange: '[label] longitude degrees should be between -180 and 180'
+  minutesLonOutOfRange: '[label] latitude minutes should be between 1 and 60'
+  secondsLonOutOfRange: '[label] latitude seconds should be between 1 and 60'
+  degreesLatOutOfRange: '[label] latitude degrees should be between -90 and 90'
+  minutesLatOutOfRange: '[label] latitude minutes should be between 1 and 60'
+  secondsLatOutOfRange: '[label] latitude seconds should be between 1 and 60'
 
 @locationSchema = new SimpleSchema
   source:
     type: String
-    allowedValues: [ 'LonLat', 'utm', 'map' ]
+    allowedValues: [ 'LonLat', 'MinSec', 'utm', 'map' ]
   northing:
     type: Number
     decimal: true
@@ -26,6 +32,32 @@ SimpleSchema.messages
     type: Number
     custom: ->
       return 'zone' unless 1 <= @value <= 60
+  degreesLon:
+    type: Number
+    custom: ->
+      return 'degreesLon' unless -180 <= @value <= 180
+  secondsLon:
+    type: Number
+    decimal: true
+    custom: ->
+      return 'secondsLon' unless 0 <= @value < 60
+  minutesLon:
+    type: Number
+    custom: ->
+      return 'minutesLon' unless 0 <= @value < 60
+  degreesLat:
+    type: Number
+    custom: ->
+      return 'degreesLat' unless -90 <= @value <= 90
+  secondsLat:
+    type: Number
+    decimal: true
+    custom: ->
+      return 'secondsLat' unless 0 <= @value < 60
+  minutesLat:
+    type: Number
+    custom: ->
+      return 'minutesLat' unless 0 <= @value < 60
   geo:
     type: new SimpleSchema
       type:
