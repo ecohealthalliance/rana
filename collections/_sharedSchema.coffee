@@ -72,6 +72,8 @@
     label: 'Species'
     type: String
     optional: true
+    custom: ()->
+      if not /.+\s.+/.test(this.value) then "notBinomial"
   speciesNotes:
     label: 'Extra notes or comments about the species'
     type: String
@@ -193,3 +195,7 @@
     type: String
     autoform:
       omit: true
+
+SimpleSchema.messages(
+  "notBinomial": "Binomial species names are required."
+)
