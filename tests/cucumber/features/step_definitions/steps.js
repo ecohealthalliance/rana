@@ -31,7 +31,7 @@
 
     this.Then('I should be redirected to the "$path" page', function (path, callback) {
       helper.world.browser
-      .pause(2000)
+      .pause(4000)
       .url(function (err, result) {
         assert.ifError(err);
         if(result.value.slice(-path.length) !== path) {
@@ -117,6 +117,13 @@
           northing: 1,
           easting: 2,
           zone: 3,
+          degreesLon: -170,
+          minutesLon: 30,
+          secondsLon: 40.58647497889751,
+          degreesLat: 0,
+          minutesLat: 0,
+          secondsLat: 0.032469748221482304,
+          country: 'USA',
           geo: {
             type: 'Point',
             coordinates: [ 121.55189514218364, 25.046919772516173 ]
@@ -164,7 +171,7 @@
         })
         .call(callback);
     });
-    
+
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
@@ -208,6 +215,13 @@
             );
           }
         }).call(callback);
+    });
+
+    this.When('I click on the edit button',
+    function(callback){
+      helper.world.browser
+      .click('.reactive-table td.controls .btn-edit')
+      .call(callback);
     });
 
   };
