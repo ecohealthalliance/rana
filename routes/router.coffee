@@ -47,8 +47,6 @@ Router.route('newStudy',
 
 Router.route('/table',
   where: 'client'
-  data: ->
-    collection: collections.Reports
   waitOn: ->
     [
       Meteor.subscribe("reports")
