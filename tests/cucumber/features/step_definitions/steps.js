@@ -117,6 +117,12 @@
           northing: 1,
           easting: 2,
           zone: 3,
+          degreesLon: -170,
+          minutesLon: 30,
+          secondsLon: 40.58647497889751,
+          degreesLat: 0,
+          minutesLat: 0,
+          secondsLat: 0.032469748221482304,
           country: 'USA',
           geo: {
             type: 'Point',

@@ -12,6 +12,33 @@ template(name='leaflet')
             label(for='lat') Latitude
             input.lat.form-control(name='lat')
         .row
+          h4.form-group-header Degrees / Minutes / Seconds
+          .col-md-6
+            h5 Longitude
+            .row
+              .col-md-4
+                label(for='degreesLon') degrees:
+                input.degreesLon.form-control(name='degreesLon')
+              .col-md-4
+                label(for='minutesLon') minutes:
+                input.minutesLon.form-control(name='minutesLon')
+              .col-md-4
+                label(for='secondsLon') seconds:
+                input.secondsLon.form-control(name='secondsLon')
+        .row
+          .col-md-6
+            h5 Latitude
+            .row
+              .col-md-4
+                label(for='degreesLat') degrees:
+                input.degreesLat.form-control(name='degreesLat')
+              .col-md-4
+                label(for='minutesLat') minutes:
+                input.minutesLat.form-control(name='minutesLat')
+              .col-md-4
+                label(for='secondsLat') seconds:
+                input.secondsLat.form-control(name='secondsLat')
+        .row
           h4.form-group-header Universal Transverse Mercator
           .col-md-4
             label(for='easting') Easting

@@ -3,7 +3,6 @@ defaults =
   defaultLon: 2.3522219
   defaultZoom: 10
 
-
 AutoForm.addInputType 'leaflet',
   template: 'leaflet'
   valueOut: ->
@@ -13,6 +12,12 @@ AutoForm.addInputType 'leaflet',
       northing: parseFloat node.find('.northing').val()
       easting: parseFloat node.find('.easting').val()
       zone: parseInt node.find('.zone').val()
+      degreesLon: parseFloat node.find('.degreesLon').val()
+      minutesLon: parseFloat node.find('.minutesLon').val()
+      secondsLon: parseFloat node.find('.secondsLon').val()
+      degreesLat: parseFloat node.find('.degreesLat').val()
+      minutesLat: parseFloat node.find('.minutesLat').val()
+      secondsLat: parseFloat node.find('.secondsLat').val()
       source: node.find('.source').val()
       country: node.find('.country').val()
       geo:
@@ -56,6 +61,34 @@ Template.leaflet.rendered = ->
       coords = Mapping.lonLatFromUTM easting, northing, zone
       $(@$('.lat')[0]).val coords.lat
       $(@$('.lon')[0]).val coords.lon
+
+  @updateLonLatFromMinSec = () =>
+    degreesLon = parseInt($(@$('.degreesLon')[0]).val())
+    minutesLon = parseInt($(@$('.minutesLon')[0]).val())
+    secondsLon = parseFloat($(@$('.secondsLon')[0]).val())
+    degreesLat = parseInt($(@$('.degreesLat')[0]).val())
+    minutesLat = parseInt($(@$('.minutesLat')[0]).val())
+    secondsLat = parseFloat($(@$('.secondsLat')[0]).val())
+
+    if ( not isNaN(degreesLon) and not isNaN(minutesLon) and not isNaN(secondsLon) and
+         not isNaN(degreesLon) and not isNaN(minutesLon) and not isNaN(secondsLon) )
+      lon = Mapping.minSec2Decimal degreesLon, minutesLon, secondsLon
+      lat = Mapping.minSec2Decimal degreesLat, minutesLat, secondsLat
+      $(@$('.lat')[0]).val lat
+      $(@$('.lon')[0]).val lon
+
+  @updateMinSecFromLonLat = () =>
+    lon = parseFloat($(@$('.lon')[0]).val())
+    lat = parseFloat($(@$('.lat')[0]).val())
+    if not isNaN(lon) and not isNaN(lat)
+      minSecLon = Mapping.decimal2MinSec lon
+      minSecLat = Mapping.decimal2MinSec lat
+      $(@$('.degreesLon')[0]).val minSecLon.degrees
+      $(@$('.minutesLon')[0]).val minSecLon.minutes
+      $(@$('.secondsLon')[0]).val minSecLon.seconds
+      $(@$('.degreesLat')[0]).val minSecLat.degrees
+      $(@$('.minutesLat')[0]).val minSecLat.minutes
+      $(@$('.secondsLat')[0]).val minSecLat.seconds
 
   @updateViewFromLonLat = () =>
     lon = parseFloat($(@$('.lon')[0]).val())
@@ -110,6 +143,12 @@ Template.leaflet.rendered = ->
     $(@$('.zone')[0]).val @data.value.zone
     $(@$('.source')[0]).val @data.value.source
     $(@$('.country')[0]).val @data.value.country
+    $(@$('.degreesLon')[0]).val @data.value.degreesLon
+    $(@$('.minutesLon')[0]).val @data.value.minutesLon
+    $(@$('.secondsLon')[0]).val @data.value.secondsLon
+    $(@$('.degreesLat')[0]).val @data.value.degreesLat
+    $(@$('.minutesLat')[0]).val @data.value.minutesLat
+    $(@$('.secondsLat')[0]).val @data.value.secondsLat
     @updateViewFromLonLat()
     @map.setZoom @options.defaultZoom
   else
@@ -121,6 +160,7 @@ Template.leaflet.rendered = ->
     $(@$('.lat')[0]).val e.latlng.lat
     $(@$('.lon')[0]).val e.latlng.lng
     @updateUTMFromLonLat()
+    @updateMinSecFromLonLat()
 
   @map.on 'locationfound', (e) =>
     $(@$('.source')[0]).val 'map'
@@ -128,6 +168,7 @@ Template.leaflet.rendered = ->
     $(@$('.lat')[0]).val e.latlng.lat
     $(@$('.lon')[0]).val e.latlng.lng
     @updateUTMFromLonLat()
+    @updateMinSecFromLonLat()
     @map.setView @marker.getLatLng(), @map.getZoom()
 
   @$('.leaflet-canvas').closest('form').on 'reset', =>
@@ -147,9 +188,17 @@ Template.leaflet.events
   'change .lat, change .lon': (e, t) ->
     t.$(t.$('.source')[0]).val 'LonLat'
     t.updateUTMFromLonLat()
+    t.updateMinSecFromLonLat()
     t.updateViewFromLonLat()
 
   'change .northing, change .easting, change .zone': (e, t) ->
     t.$(t.$('.source')[0]).val 'utm'
     t.updateLonLatFromUTM()
+    t.updateMinSecFromLonLat()
+    t.updateViewFromLonLat()
+
+  'change .degreesLon, change .minutesLon, change .secondsLon, change .degreesLat, change .minutesLat, change .secondsLat': (e, t) ->
+    t.$(t.$('.source')[0]).val 'MinSec'
+    t.updateLonLatFromMinSec()
+    t.updateUTMFromLonLat()
     t.updateViewFromLonLat()

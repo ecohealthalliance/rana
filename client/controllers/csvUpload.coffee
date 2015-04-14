@@ -90,11 +90,19 @@ buildReportFromImportData = (importData, report) ->
     lon = parseFloat importData['eventLocation.longitude']
     lat = parseFloat importData['eventLocation.latitude']
     utm = Mapping.utmFromLonLat lon, lat
+    minSecLon = Mapping.decimal2MinSec lon
+    minSecLat = Mapping.decimal2MinSec lat
     report['eventLocation'] =
       source: 'LonLat'
       northing: utm.northing
       easting: utm.easting
       zone: utm.zone
+      degreesLon: minSecLon.degrees
+      minutesLon: minSecLon.minutes
+      secondsLon: minSecLon.seconds
+      degreesLat: minSecLat.degrees
+      minutesLat: minSecLat.minutes
+      secondsLat: minSecLat.seconds
       country: country
       geo:
         type: 'Point'
@@ -107,16 +115,51 @@ buildReportFromImportData = (importData, report) ->
     northing = importData['eventLocation.northing']
     zone = importData['eventLocation.zone']
     coords = Mapping.lonLatFromUTM easting, northing, zone
+    minSecLon = Mapping.decimal2MinSec coords.lon
+    minSecLat = Mapping.decimal2MinSec coords.lat
+
     report['eventLocation'] =
       source: 'LonLat'
       northing: northing
       easting: easting
       zone: zone
+      degreesLon: minSecLon.degrees
+      minutesLon: minSecLon.minutes
+      secondsLon: minSecLon.seconds
+      degreesLat: minSecLat.degrees
+      minutesLat: minSecLat.minutes
+      secondsLat: minSecLat.seconds
       country: country
       geo:
         type: 'Point'
         coordinates: [coords.lon, coords.lat]
-
+  else if ('degreesLon' of importData and 'minutesLon' of importData and 'secondsLon' of importData and
+           'degreesLat' of importData and 'minutesLat' of importData and 'secondsLat' of importData)
+    country = importData['eventLocation.country']
+    degreesLon = parseFloat importData['eventLocation.degreesLon']
+    minutesLon = parseFloat importData['eventLocation.minutesLon']
+    secondsLon = parseFloat importData['eventLocation.secondsLon']
+    degreesLat = parseFloat importData['eventLocation.degreesLat']
+    minutesLat = parseFloat importData['eventLocation.minutesLat']
+    secondsLat = parseFloat importData['eventLocation.secondsLat']
+    lon = Mapping.minSec2Decimal degreesLon, minutesLon, secondsLon
+    lat = Mapping.minSec2Decimal degreesLat, minutesLat, secondsLat
+    utm = Mapping.utmFromLonLat lon, lat
+    report['eventLocation'] =
+      source: 'LonLat'
+      northing: utm.northing
+      easting: utm.easting
+      zone: utm.zone
+      degreesLon: degreesLon
+      minutesLon: minutesLon
+      secondsLon: secondsLon
+      degreesLat: degreesLat
+      minutesLat: minutesLat
+      secondsLat: secondsLat
+      country: country
+      geo:
+        type: 'Point'
+        coordinates: [lon, lat]
   for field of importData
 
     if '.' not in field
