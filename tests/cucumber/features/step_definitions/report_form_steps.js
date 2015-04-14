@@ -21,6 +21,7 @@
       defaultValues['pathologyReports'] = [];
       defaultValues['consent'] = true;
       defaultValues['dataUsePermissions'] = "Share full record";
+      defaultValues['speciesName'] = "genus x";
       helper.world.browser.generateFormData("Reports", function(generatedValues){
         defaultValues = _.extend(generatedValues, defaultValues);
         // These fields are deleted because setFormFields does not support them.

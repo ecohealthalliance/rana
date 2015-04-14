@@ -73,7 +73,7 @@
     type: String
     optional: true
     custom: ()->
-      if not /.+\s.+/.test(this.value) then "notBinomial"
+      if this.value?.length and not /.+\s.+/.test(this.value) then "notBinomial"
   speciesNotes:
     label: 'Extra notes or comments about the species'
     type: String
