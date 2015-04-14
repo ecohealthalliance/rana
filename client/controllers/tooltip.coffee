@@ -48,6 +48,15 @@ tooltipTexts =
   'ranavirusConfirmationMethods.electron_microscopy': """The presence of pox-like (i.e. icosahedral virus particles)
     particles in tissue samples taken directly from an infected animal
     or samples of virus isolate obtained through virus isolation and culture."""
+  'ranavirusConfirmationMethods.immunohistochemistry': """
+    A color-labeled antibody is used to highlight the pathogen (antigen) within
+    tissue sections on a glass slide for microscopic viewing.
+  """
+  'ranavirusConfirmationMethods.in_situ_hybridization': """
+  A labeled (generally florescent or color) complementary DNA strand is used to
+  highlight the DNA of the pathogen within tissue sections or cells on a glass
+  slide for microscopic viewing.
+  """
   'ranavirusConfirmationMethods.other': """Any other molecular diagnostic tests, not listed here (e.g. ELISA or LUMINEX)
   that has been shown to be a reliable method for determining the presence of live
   or preserved ranavirus particles."""

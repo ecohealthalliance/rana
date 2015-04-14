@@ -12,4 +12,5 @@ Meteor.startup () ->
           - [List of laboratories that test for ranavirus](http://www.ranavirus.org/resources/testing-labs/)
           - [PARC: Partners in Amphibian and Reptile Conservation website](http://parcplace.org/)
           - [SEPARC information sheets (in transition)](http://www.separc.org/products/diseases-and-parasites-of-herpetofauna)
+          - [AmphibiaWeb](http://amphibiaweb.org/)
           """
