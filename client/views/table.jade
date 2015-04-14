@@ -1,5 +1,9 @@
 template(name="table")
-  if isEmpty
-    h2 No Reports Found
-  else
-    +reactiveTable collection=collection settings=settings
+  .vis-container
+    #control-panel
+      +filterControls query=query
+    .vis-table
+      if isEmpty
+        h2 No Reports Found
+      else
+        +reactiveTable collection=collection settings=settings
