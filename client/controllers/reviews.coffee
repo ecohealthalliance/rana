@@ -26,3 +26,4 @@ Template.reviews.events
           userId: Meteor.userId()
           name: Meteor.user()?.profile?.name
       e.target.comment.value = ''
+      e.target.rating.value = ''
