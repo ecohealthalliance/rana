@@ -125,15 +125,22 @@ Template.leaflet.rendered = ->
   @map = L.map(@$('.leaflet-canvas')[0]).setView [0, -0], 2
   L.tileLayer('//otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png', {
     attribution: """
-    Map Data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors,
+    Map Data &copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors,
     Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>
     <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />
+    <br>
+    CRS:
+    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" target="_blank">
+      EPSG:3857
+    </a>,
+    Projection: Spherical Mercator
     """
     subdomains: '1234'
     type: 'osm'
     maxZoom: 18
   }).addTo(@map)
-
+  L.control.scale().addTo(@map)
+  
   if @data.value
     $(@$('.leaflet-search')[0]).val ''
     $(@$('.lon')[0]).val @data.value.geo.coordinates[0]

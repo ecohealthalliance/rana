@@ -3,9 +3,13 @@ getCollections = => @collections
 Template.map.created = ->
   @query = new ReactiveVar()
   @groupBy = new ReactiveVar()
+  @groups = new ReactiveVar()
 
 Template.map.groupBy = ->
   Template.instance().groupBy
+
+Template.map.groups = ->
+  Template.instance().groups.get()
 
 Template.map.query = ->
   Template.instance().query
@@ -15,14 +19,21 @@ Template.map.rendered = ->
   lMap = L.map(@$('.vis-map')[0]).setView([0, -0], 2)
   L.tileLayer('//otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png', {
     attribution: """
-    Map Data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors,
+    Map Data &copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors,
     Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>
     <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />
+    <br>
+    CRS:
+    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" target="_blank">
+      EPSG:3857
+    </a>,
+    Projection: Spherical Mercator
     """
     subdomains: '1234'
     type: 'osm'
     maxZoom: 18
-  }).addTo(lMap);
+  }).addTo(lMap)
+  L.control.scale().addTo(lMap)
 
   markers = new L.FeatureGroup()
 
@@ -32,10 +43,6 @@ Template.map.rendered = ->
     lMap.removeLayer(markers)
     markers = new L.FeatureGroup()
     curGroupBy = Template.instance().groupBy.get()
-    groups = _.uniq(data.map((report)->
-      if curGroupBy
-        report[curGroupBy]
-    ))
     colors = [
       '#8dd3c7'
       '#ffffb3'
@@ -47,13 +54,24 @@ Template.map.rendered = ->
       '#fccde5'
       '#d9d9d9'
     ]
-    if groups.length > colors.length
-      alert("This field has too many values to group")
-      curGroupBy = null
+    groups = []
+    if curGroupBy
+      groups = _.uniq(data.map((report)->
+        report[curGroupBy]
+      )).map((value, idx) ->
+        name: value
+        color: colors[idx]
+      )
+      if groups.length > colors.length
+        alert("This field has too many values to group")
+        curGroupBy = null
+        groups = []
+    Template.instance().groups.set(groups)
     data?.forEach((report)->
       if curGroupBy
-        groupValue = report[curGroupBy]
-        color = colors[groups.indexOf(groupValue)]
+        color = _.findWhere(groups, {
+          name: report[curGroupBy]
+        }).color
       else
         color = colors[0]
       if report.eventLocation and report.eventLocation isnt "," and report.eventLocation isnt null
