@@ -83,7 +83,7 @@
     }
 
     var studyDifferentValues = {
-      'contact.name': 'Aother Fake Name',
+      'contact.name': 'Another Fake Name',
       'contact.email': 'zap@bop.com',
       'dataUsePermissions': 'Share obfuscated'
     }
