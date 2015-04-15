@@ -1,6 +1,5 @@
 template(name="study")
-  p {{ study.name }}
-  a.btn.btn-large(href="/study/{{study._id}}/report?redirectOnSubmit=/study/{{study._id}}") Add a report
-  +table collection=reports
+  h2 {{ study.name }}
 
+  a.btn.btn-default.add-report(href="/study/{{study._id}}/report?redirectOnSubmit=/study/{{study._id}}") Add a report
   +studyForm
