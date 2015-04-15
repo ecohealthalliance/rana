@@ -13,10 +13,11 @@
     var helper = this;
 
     var csvImportValues = {};
+
     csvImportValues['rana_import_one.csv'] = [
       ['screeningReason', 'mortality'],
       ['speciesGenus', 'abstracticus'],
-      ['speciesName', 'genericus'],
+      ['speciesName', 'abstracticus genericus'],
       ['eventDate', '1/2/2010']
     ];
 
@@ -148,6 +149,7 @@
       .call(callback);
     });
 
+    // This step is currently unused.
     this.Then(/^the preview table should contain the values for (.*)$/, function(filename, callback){
       helper.world.browser.checkTableCells(csvImportValues[filename], callback);
     });

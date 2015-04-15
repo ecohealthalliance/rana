@@ -1,3 +1,6 @@
+# This is only global so it can be initialized in the test fixtures.
+@__SpeciesCollection = new Mongo.Collection 'species'
+
 Meteor.methods
 
   getCSVData: (fileId) =>
@@ -22,3 +25,6 @@ Meteor.methods
     if study
       collections.Studies.remove { '_id': studyId }
       collections.Reports.remove { 'studyId': studyId }
+
+  getSpeciesBySynonym: (synonym) =>
+    @__SpeciesCollection.find({ synonyms: synonym }).fetch()

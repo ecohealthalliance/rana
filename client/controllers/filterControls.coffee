@@ -44,7 +44,7 @@ Template.filterControls.created = ->
               item
             else
               {
-                label: getCollections().Reports.simpleSchema().label(item),
+                label: getCollections().Reports.simpleSchema().label(item)
                 value: item
               }
           )
@@ -68,11 +68,11 @@ Template.filterControls.created = ->
   })
 
 Template.filterControls.rendered = ->
-
+  reactiveQuery = Template.currentData().query
   @autorun () =>
     reportSchema = collections.Reports.simpleSchema().schema()
     filterSpec = Template.instance().filterCollection.findOne()?.filters or []
-    filters = filterSpec.map (filterSpecification)->
+    filterPromises = filterSpec.map (filterSpecification)->
       filter = {}
       value = filterSpecification['value']
       property = filterSpecification['property']
@@ -103,12 +103,29 @@ Template.filterControls.rendered = ->
         }
       else
         filter[property] = value
-      return filter
-    query = {}
-    if filters.length > 0
-      query = 
-        $and: filters
-    Template.currentData().query.set(query)
+        if filter?.speciesName
+          return $.Deferred ->
+            # expand species name queries
+            Meteor.call("getSpeciesBySynonym", filter["speciesName"], (err, resp)=>
+              if err
+                alert JSON.stringify(err)
+                return
+              if resp.length > 2
+                console.log "Ambiguous species"
+              if resp.length == 0
+                @resolve filter
+                return
+              filter["speciesName"] = { $in: resp[0].synonyms }
+              @resolve filter
+            )
+      return $.Deferred(-> @resolve filter)
+    $.when.apply(this, filterPromises).then ()=>
+      filters = Array.prototype.slice.call(arguments)
+      query = {}
+      if filters.length > 0
+        query = 
+          $and: filters
+      reactiveQuery.set(query)
 
 Template.filterControls.filterCollection = ->
   Template.instance().filterCollection
