@@ -44,7 +44,7 @@ Template.filterControls.created = ->
               item
             else
               {
-                label: getCollections().Reports.simpleSchema().label(item),
+                label: getCollections().Reports.simpleSchema().label(item)
                 value: item
               }
           )
@@ -68,6 +68,7 @@ Template.filterControls.created = ->
   })
 
 Template.filterControls.rendered = ->
+  reactiveQuery = Template.currentData().query
   @autorun () =>
     reportSchema = collections.Reports.simpleSchema().schema()
     filterSpec = Template.instance().filterCollection.findOne()?.filters or []
@@ -118,13 +119,13 @@ Template.filterControls.rendered = ->
               @resolve filter
             )
       return $.Deferred(-> @resolve filter)
-    $.when.apply(this, filterPromises).then ()->
+    $.when.apply(this, filterPromises).then ()=>
       filters = Array.prototype.slice.call(arguments)
       query = {}
       if filters.length > 0
         query = 
           $and: filters
-      Template.currentData().query.set(query)
+      reactiveQuery.set(query)
 
 Template.filterControls.filterCollection = ->
   Template.instance().filterCollection
