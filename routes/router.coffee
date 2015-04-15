@@ -60,7 +60,8 @@ Router.route('editStudy',
     [
       Meteor.subscribe("studies"),
       Meteor.subscribe("reports"),
-      Meteor.subscribe("csvfiles")
+      Meteor.subscribe("csvfiles"),
+      Meteor.subscribe("groupByPath", "rana")
     ]
 )
 
@@ -76,8 +77,6 @@ Router.route('/studies',
 
 Router.route('/table',
   where: 'client'
-  data: ->
-    collection: getCollections().Reports.find()
   waitOn: ->
     [
       Meteor.subscribe("reports")
