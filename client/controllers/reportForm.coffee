@@ -66,18 +66,12 @@ Template.reportForm.helpers
     Session.get 'studyId'
 
   type: ->
-    reportId = Template.currentData()?.reportId
-    if not reportId
+    if not Template.currentData()?.report
       "insert"
+    else if Meteor.userId() and Meteor.userId() == Template.currentData().report.createdBy.userId
+      "update"
     else
-      currentReport = getCollections().Reports.findOne reportId
-      if not currentReport
-        # This will trigger an error message
-        null
-      else if Meteor.userId() and Meteor.userId() == currentReport.createdBy.userId
-        "update"
-      else
-        "readonly"
+      "readonly"
 
   reportHeader: ->
     if Template.currentData().report
