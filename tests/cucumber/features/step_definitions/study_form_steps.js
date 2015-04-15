@@ -65,7 +65,7 @@
       ['vertebrateClasses', ['fish','reptile']],
       ['ageClasses', ['egg','larvae']],
       ['speciesGenus', 'abstracticus'],
-      ['speciesName', 'genericus'],
+      ['speciesName', 'abstracticus genericus'],
       ['speciesNotes', 'One of the nicest species you will ever meet.'],
       ['speciesAffectedType', 'native'],
       ['ranavirusConfirmationMethods', ['traditional_pcr','electron_microscopy','immunohistochemistry','other']],

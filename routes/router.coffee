@@ -28,9 +28,10 @@ Router.route('editReport',
     report: getCollections().Reports.findOne @params.reportId
   onAfterAction: ->
     Meteor.subscribe("genera")
+    Meteor.subscribe("reviews", @params.reportId)
   waitOn: ->
     [
-      Meteor.subscribe("reports"),
+      Meteor.subscribe("reports")
       Meteor.subscribe("studies")
     ]
 )

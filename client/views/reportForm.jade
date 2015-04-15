@@ -75,7 +75,6 @@ template(name="reportForm")
                 +afQuickField name="speciesAffectedType"
                 +afQuickField name="speciesGenus"
                 +afQuickField name="speciesName"
-                +afQuickField name='speciesAffectedType' id='speciesAffectedType'
                 +afQuickField name="numInvolved"
               .col-lg-6
                 +afQuickField name="speciesNotes"
@@ -121,3 +120,7 @@ template(name="reportForm")
             button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
   else
     h3 Invalid form id
+  .review-panel
+    .review-panel-header Reviews
+    .review-content(style="display:none;")
+      +reviews

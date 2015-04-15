@@ -25,3 +25,5 @@
 @collections.Studies.attachSchema @studySchema
 
 @collections.Genera = new Mongo.Collection 'genera'
+
+@collections.Reviews = new Mongo.Collection 'reviews'
