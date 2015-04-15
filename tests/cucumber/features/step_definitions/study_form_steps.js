@@ -74,18 +74,25 @@
       ['dataUsePermissions', 'Do not share']
     ];
 
+    var studyDefaultValues = {
+      'contact.name': 'Fake Name',
+      'contact.email': 'foo@bar.com',
+      'consent': true,
+      'dataUsePermissions': "Share full record",
+      'name': "Study"
+    }
+
+    var studyDifferentValues = {
+      'contact.name': 'Aother Fake Name',
+      'contact.email': 'zap@bop.com',
+      'dataUsePermissions': 'Share obfuscated'
+    }
+
     this.fillInStudyForm = function (customValues, callback) {
 
-      var defaultValues = {};
-      defaultValues['contact.name'] = 'Fake Name';
-      defaultValues['contact.email'] = 'foo@bar.com';
-      defaultValues['consent'] = true;
-      defaultValues['dataUsePermissions'] = "Share full record";
-      defaultValues['name'] = "Study";
+      _.extend(studyDefaultValues, customValues);
 
-      _.extend(defaultValues, customValues);
-
-      helper.world.browser.setFormFields(defaultValues, 'Studies', callback);
+      helper.world.browser.setFormFields(studyDefaultValues, 'Studies', callback);
 
     };
 
@@ -98,8 +105,7 @@
     });
 
     this.When("I fill out the study form differently", function(callback){
-      helper.fillInStudyForm({ 'contact.name': 'Aother Fake Name',
-                               'contact.email': 'zap@bop.com' }, callback);
+      helper.fillInStudyForm(studyDifferentValues, callback);
     });
 
     this.When('I click the link for the the study called "$name"', function(name, callback){
@@ -148,6 +154,12 @@
 
     this.Then(/^the form should contain the values for (.*)$/, function(filename, callback){
       helper.world.browser.checkFormFields('ranavirus-report', csvImportValues[filename], callback);
+    });
+
+    this.Then(/^the form should contain the different values I entered$/, function (callback) {
+      var values = _.extend(studyDefaultValues, studyDifferentValues)
+      var valuesArr = _.map(values, function(val, key) { return [key, val] } )
+      helper.world.browser.checkFormFields('ranavirus-study', valuesArr, callback);
     });
 
     this.Then(/^the publication should( not)? appear/, function(shouldNot, callback){

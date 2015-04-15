@@ -24,7 +24,9 @@ Feature: A form for setting up a ranavirus study
     And I click submit
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
-    And I click on the edit link in the toast
+    When I dismiss the toast
+    And I navigate to the "studies" page
+    And I click the link for the the study called "Study"
     And I fill out the study form differently
     And I click submit
     Then the form should contain the different values I entered
