@@ -11,7 +11,7 @@ Template.studyForm.helpers
     if not Template.currentData()?.study
       "insert"
     else if Meteor.userId() and Meteor.userId() == Template.currentData().study.createdBy.userId
-        "update"
+      "update"
     else
       "readonly"
 
