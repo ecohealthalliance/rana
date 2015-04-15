@@ -98,6 +98,14 @@
       helper.world.browser.clickWhenVisible('.toast').pause(1000).call(callback);
     });
 
+    // This is broken. Webdriver complains that another element would receive the click.
+    this.When('I click on the edit link in the toast',
+    function (callback) {
+      helper.world.browser
+        .click('.toast-message a')
+        .call(callback);
+    });
+
     this.Then(
       /^the database should( not)? have a report with the (name|email) "([^"]*)"$/,
     function (shouldNot, prop, value, callback) {
