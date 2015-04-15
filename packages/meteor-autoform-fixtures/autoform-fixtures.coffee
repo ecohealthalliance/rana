@@ -30,18 +30,21 @@ makeFakeText = (len, count) ->
       break
   text
 
-getValues = (options, type) ->
+getValues = (options, type, optionsUsed) ->
   # TODO: support allowedValues
   if typeof options is "function"
     options = options.call()
   # Hashtable
   if _.isObject(options) and not _.isArray(options)
-    _.map options, (v, k) ->
-      type(k)
+    _.chain(options)
+      .map((v, k) -> type(k))
+      .difference(optionsUsed)
+      .value()
   else
-    _.map options, (o) ->
-      o.value
-
+    _.chain(options)
+      .map((o) -> o.value)
+      .difference(optionsUsed)
+      .value()
 fillValues = (values, count) ->
   count = Math.round(Math.random() * count) || 1
   result = []
@@ -96,17 +99,24 @@ AutoForm.Fixtures.getPreData = (ss, getFakeTextCallback) ->
       if field.type.name is "Object"
         result[k] = {}
         continue
-      if field.type.name is "Array"
-        count = field.maxCount || 3
-        result[k] = _.range(count)
-        continue
       options = field.autoform?.options or
         field.autoform?.afFieldInput?.options or
         arrayField?.autoform?.options or
         arrayField?.autoform?.afFieldInput?.options
+      if field.type.name is "Array"
+        if field.maxCount
+          count = field.maxCount
+        else if options
+          count = options.length - 1
+        else
+          count = 3
+        result[k] = _.range(count)
+        continue
       if options
-        values = getValues(options, field.type)
+        field.optionsUsed = field.optionsUsed or []
+        values = getValues(options, field.type, field.optionsUsed)
         result[k] = values[Math.floor(Math.random() * values.length)]
+        field.optionsUsed = field.optionsUsed.concat([result[k]])
         continue
       if field.type.name is "String"
         if field.max

@@ -4,6 +4,10 @@ urlParams = null
 
 AutoForm.addHooks(
   'ranavirus-report', {
+    docToForm: (doc, ss)->
+      if doc
+        utils.subscribeToDocFiles(doc)
+      return doc
     formToDoc: (doc)->
       doc.createdBy = {
         userId: Meteor.userId()
@@ -18,10 +22,11 @@ AutoForm.addHooks(
         # This is the timeout after a mouseover event
         extendedTimeOut: "100000"
       }
-      message = """<div>#{operation} successful!</div>"""
-      message += """<a href="/report/#{result}">Edit Study</a>"""
-      toastr.success message
-      window.scrollTo 0, 0
+      toastr.success("""
+      <div>#{operation} successful!</div>
+      <a href="/report/#{@docId}">Edit Report</a>
+      """)
+      window.scrollTo(0, 0)
       redirectOnSubmit =  urlParams?.query?.redirectOnSubmit
       if redirectOnSubmit
         Router.go(redirectOnSubmit)
@@ -44,13 +49,20 @@ AutoForm.addHooks(
 Template.reportForm.helpers
 
   reportDoc: =>
-    reportId = Template.currentData()?.reportId
-    if reportId
-      getCollections().Reports.findOne(reportId) or {}
+    if Template.currentData().report
+      Template.currentData().report
     else
-      getCollections().Studies.findOne Session.get @study._id
+      study = _.extend Template.currentData().study, { studyId: Template.currentData().study._id }
+      console.log 'study.contact', study.contact
+      contactFromUser = @contactFromUser()
+      @mergeObjects study.contact, contactFromUser
+      console.log 'contactFromUser', contactFromUser
+      console.log 'merged study.contact', study.contact
+      study
 
-  studySelected: ->
+  studyName: ->
+    study?.name or
+
     Session.get 'studyId'
 
   type: ->
@@ -67,7 +79,26 @@ Template.reportForm.helpers
       else
         "readonly"
 
+  reportHeader: ->
+    if Template.currentData().report
+      studyName = getCollections().Studies.findOne(Template.currentData().report.studyId).name
+      "#{ studyName } - Edit Report"
+    else
+      studyName = Template.currentData().study.name
+      "#{ studyName } - New Report"
+
 Template.reportForm.events
 
-  'change select[name="studyId"]': (e, t) ->
-    Session.set  'studyId', AutoForm.getFieldValue('ranavirus-report', 'studyId')
+
+Template.reportForm.events
+  'change .file-upload': (evt)->
+    timeout = 10000
+    interval = window.setInterval(()->
+      # The event target will not be in the template once the file is added.
+      if not $.contains(document, evt.target) or timeout <= 0
+        currentDoc = AutoForm.getFormValues("ranavirus-report").insertDoc
+        utils.subscribeToDocFiles(currentDoc)
+        window.clearInterval(interval)
+      timeout -= 1000
+    , 1000)
+

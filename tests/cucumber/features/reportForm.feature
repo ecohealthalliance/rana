@@ -22,13 +22,20 @@ Feature: A form for reporting Ranavirus outbreaks
     And I click submit
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
-    And the database should have a report linked to my account
+    And the database should have 1 reports linked to my account
+    And the data I filled out the form with should be in the database
 
   Scenario: Getting report defaults from a study
     Given I have logged in
     And I am on the "study" page
     When I fill out the study form with some default report values
     And I click submit
-    And I navigate to the "report" page
-    And I select the #2 study
+    And I navigate to the "studies" page
+    And I click the link for the the study called "Study"
     Then the information from the study should be prepopulated
+
+  Scenario: Uploading an image
+    Given I have logged in
+    And I am on the "study/fakeid/report" page
+    When I upload an image
+    Then I should see an image preview

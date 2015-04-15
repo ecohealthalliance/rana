@@ -1,5 +1,5 @@
 template(name="studies")
-  h2 Studies
-  each studies
-    div
-      a(href="/study/{{_id}}") {{name}}
+  if isEmpty
+    h2 No Studies Found
+  else
+    +reactiveTable collection=studies settings=settings

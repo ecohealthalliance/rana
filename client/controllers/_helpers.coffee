@@ -18,3 +18,12 @@
     res
   else
     {}
+
+# Copy properties from source to target, not overr
+@mergeObjects = (target, source) ->
+  if typeof target is 'object' and typeof source is 'object'
+    for prop of source
+      if prop of target and target[prop] != undefined
+        @mergeObjects target[prop], source[prop]
+      else
+        target[prop] = source[prop]

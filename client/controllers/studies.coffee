@@ -1,6 +1,6 @@
 getCollections = => @collections
 
-Template.studyTable.helpers
+Template.studies.helpers
 
   isEmpty: () =>
     not @collections.Studies.findOne()
@@ -23,7 +23,7 @@ Template.studyTable.helpers
       fn: (val, obj) ->
         if obj.createdBy.userId == Meteor.userId()
           new Spacebars.SafeString("""
-            <a class="btn btn-primary" href="/study/#{obj._id}?redirectOnSubmit=/table">Edit</a>
+            <a class="btn btn-primary" for="#{obj.name}" href="/study/#{obj._id}?redirectOnSubmit=/table">Edit</a>
             <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
           """)
         else
@@ -34,7 +34,7 @@ Template.studyTable.helpers
     showColumnToggles: true
     fields: fields
 
-  Template.studyTable.events(
+  Template.studies.events(
     'click .remove-form': (evt)->
       studyId = $(evt.target).data("id")
       reply = prompt('Type "delete" to confirm that this entire study and all associated reports should be removed.')

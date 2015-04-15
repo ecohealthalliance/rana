@@ -5,32 +5,27 @@ getCollections = () -> @collections
 Template.studyForm.helpers
 
   studyDoc: =>
-    studyId = Template.currentData()?.studyId
-    if studyId
-      return getCollections().Studies.findOne(studyId) or {}
-    else
-      { contact: @contactFromUser() }
+    Template.currentData()?.study or { contact: @contactFromUser() }
 
-  type: ->
-    studyId = Template.currentData()?.studyId
-    if not studyId
+  type: =>
+    if not Template.currentData()?.study
       "insert"
-    else
-      currentStudy = getCollections().Studies.findOne studyId
-      if not currentStudy
-        # This will trigger an error message
-        null
-      else if Meteor.userId() and Meteor.userId() == currentStudy.createdBy.userId
+    else if Meteor.userId() and Meteor.userId() == Template.currentData().study.createdBy.userId
         "update"
-      else
-        "readonly"
+    else
+      "readonly"
 
   showCSV: ->
-    not Template.currentData().studyId
+    not Template.currentData().study
 
 
 AutoForm.hooks
   'ranavirus-study':
+
+    docToForm: (doc, ss)->
+      if doc
+        utils.subscribeToDocFiles(doc)
+      return doc
 
     formToDoc: (doc) ->
       doc.createdBy =
@@ -45,11 +40,10 @@ AutoForm.hooks
         timeOut: "100000"
         # This is the timeout after a mouseover event
         extendedTimeOut: "100000"
-      message = """<div>#{operation} successful!</div>"""
-      # don't show link to update if we have just updated
-      if operation is 'insert'
-        message += """<a href="/study/#{result}">Edit Study</a>"""
-      toastr.success message
+      toastr.success("""
+      <div>#{operation} successful!</div>
+      <a href="/study/#{@docId}">Edit Study</a>
+      """)
       window.scrollTo 0, 0
 
     onError: (operation, error) ->
@@ -65,29 +59,9 @@ AutoForm.hooks
       toastr.error(error.message)
 
     after:
-      insert: (err, res, template) ->
+      insert: (err, res, template) =>
 
         study = getCollections().Studies.findOne { _id: res }
 
         if study and study.csvFile
-
-          Meteor.call 'getCSVData', study.csvFile, (err, data) =>
-            reportSchema = getCollections().Reports.simpleSchema()._schema
-            reportFields = Object.keys reportSchema
-            studyData = {}
-            for studyField in Object.keys study
-              if studyField != '_id' and studyField in reportFields
-                studyData[studyField] = _.clone study[studyField]
-
-            for row in data
-              report = {}
-              for key of studyData
-                report[key] = _.clone studyData[key]
-              for reportField in reportFields
-                if reportField of row and row[reportField]
-                  report[reportField] = row[reportField]
-              report.createdBy =
-                userId: Meteor.user()._id
-                name: Meteor.user().profile.name
-              report.studyId = res
-              getCollections().Reports.insert report
+          @loadCSVData study.csvFile, study, res

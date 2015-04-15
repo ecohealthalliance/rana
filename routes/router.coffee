@@ -10,7 +10,7 @@ Router.route('newReport',
   template: 'reportForm'
   where: 'client',
   data: ->
-    study: getCollections().Studies.findOne(@params.studyId)
+    study: getCollections().Studies.findOne @params.studyId
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->
@@ -25,7 +25,7 @@ Router.route('editReport',
   template: 'reportForm'
   where: 'client'
   data: ->
-    reportId: @params.reportId
+    report: getCollections().Reports.findOne @params.reportId
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->
@@ -43,7 +43,6 @@ Router.route('newStudy',
     Meteor.subscribe("genera")
   waitOn: ->
     [
-      Meteor.subscribe("csvfiles"),
       Meteor.subscribe("studies")
     ]
 )
@@ -82,16 +81,7 @@ Router.route('/table',
   waitOn: ->
     [
       Meteor.subscribe("reports")
-    ]
-)
-
-Router.route('/studyTable',
-  where: 'client'
-  data: ->
-    collection: collections.Studies
-  waitOn: ->
-    [
-      Meteor.subscribe("studies")
+      Meteor.subscribe("groupByPath", "rana")
     ]
 )
 

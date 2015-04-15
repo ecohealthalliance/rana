@@ -88,7 +88,7 @@
           { value: 'introduced', label: 'Introduced' }
         ]
         noselect: true
-  ranavirusConfirmMethods:
+  ranavirusConfirmationMethods:
     type: Array
     optional: true
     autoform:
@@ -104,7 +104,7 @@
       ]
       afFieldInput:
         noselect: true
-  'ranavirusConfirmMethods.$':
+  'ranavirusConfirmationMethods.$':
     label: """Ranavirus Confirmation Method"""
     type: String
     autoform:
@@ -116,7 +116,7 @@
     autoform:
       template: 'afFieldValueContains'
       afFieldValueContains:
-        name: 'ranavirusConfirmMethods'
+        name: 'ranavirusConfirmationMethods'
         value: 'other'
   sampleType:
     type: [String]
@@ -146,6 +146,7 @@
     type: String
     optional: true
     autoform:
+      type: "textarea"
       rows: 5
   consent:
     type: Boolean
