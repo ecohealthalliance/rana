@@ -53,11 +53,8 @@ Template.reportForm.helpers
       Template.currentData().report
     else
       study = _.extend Template.currentData().study, { studyId: Template.currentData().study._id }
-      console.log 'study.contact', study.contact
       contactFromUser = @contactFromUser()
       @mergeObjects study.contact, contactFromUser
-      console.log 'contactFromUser', contactFromUser
-      console.log 'merged study.contact', study.contact
       study
 
   studyName: ->
