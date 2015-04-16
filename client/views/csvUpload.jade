@@ -1,15 +1,18 @@
 template(name="csvUpload")
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title CSV file upload
-    .panel-body
+  section.rm-pad.csvUpload
+    .container
+      h3 CSV file upload
       .csv-error #{csvError}
       if importReports.count
         b File: &nbsp;
         tt #{csvFileName}
-      +afQuickField name='csvFile' id='csvFile'
+      .row
+        .col-md-4
+          +afQuickField name='csvFile' id='csvFile'
 
-      if importReports.count
+  if importReports.count
+    section.rm-pad-top.import-table
+      .container
         +reactiveTable collection=importReports fields=importFields
 
         if unmatchedHeadersString

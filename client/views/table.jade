@@ -1,8 +1,10 @@
 template(name="table")
-  .vis-container
-    #control-panel
-      +filterControls query=query
-    .vis-table
+  section
+    .container
+      .vis-container
+        #control-panel
+          +filterControls query=query
+        .vis-table
       if isEmpty
         h2 No Reports Found
       else

@@ -8,96 +8,39 @@ template(name="studyForm")
       doc=studyDoc
     )
 
-      .container-fluid.report-form
-
-        .panel.panel-default.form-input-block
-          .panel-body
+      .report-form.study
+        section.rm-pad-btm
+          .container
             .row
-              .col-lg-4
+              .col-sm-4
                 +afQuickField name='name'
 
         if showCSV
           +csvUpload
 
-        p Please fill out any of the following fields that apply to all reports in this study.
+        section.instructions
+          .container
+            h2 Set default values for the reports in this study.
+            p <span>*</span> Indicates required field
 
-        .panel.panel-default.form-input-block
-          .panel-heading
-            h2.panel-title Contact person info
-          .panel-body
-            .row
-              .col-lg-4
-                +afQuickField name='contact.name'
-              .col-lg-4
-                +afQuickField name='contact.email' placeholder='name@domain.com'
-              .col-lg-4
-                +afQuickField name='contact.phone' minor='(Must include the country code)'
+        section.rm-pad-top
+          +contactInfo
 
-          .panel.panel-default.form-input-block
-            .panel-heading
-              h2.panel-title Reporting institution, diagnostic lab or government agency info
-                +tooltip name='contact.institutionAddress'
-            .panel-body
-              .row
-                .col-lg-5
-                  +afQuickField name="contact.institutionAddress.name"
-              .row
-                .col-lg-5
-                  +afQuickField name="contact.institutionAddress.street"
-                .col-lg-5
-                  +afQuickField name="contact.institutionAddress.street2"
-              .row
-                .col-lg-4
-                  +afQuickField name="contact.institutionAddress.city"
-                .col-lg-4
-                  +afQuickField name="contact.institutionAddress.stateOrProvince"
-                .col-lg-2
-                  +afQuickField name="contact.institutionAddress.postalCode"
-              .row
-                .col-lg-4
-                  +afQuickField name="contact.institutionAddress.country"
+        +populationInfo
 
-        .row.form-input-block
-          .col-lg-4
-            +afQuickField name="populationType"
-          .col-lg-4
-            +afQuickField name="screeningReason"
-          .col-lg-4
-            +afQuickField name="vertebrateClasses"
+        +species numInvolved=false
 
-        .panel.panel-default.form-input-block
-          .panel-heading
-            h2.panel-title Affected Species
-          .panel-body
-            .row
-              .col-lg-6
-                +afQuickField name="speciesGenus"
-                +afQuickField name="speciesName"
-                +afQuickField name='speciesAffectedType' id='speciesAffectedType'
-              .col-lg-6
-                +afQuickField name="speciesNotes"
+        +classesMethods study=true
 
-        .row.form-input-block
-          .col-lg-3
-            +afQuickField name='ageClasses'
-          .col-lg-4
-            +afQuickField name='ranavirusConfirmationMethods'
-            if afFieldValueContains name='ranavirusConfirmationMethods' value='other'
-              +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-          .col-lg-4
-            +afQuickField name='sampleType'
-            if afFieldValueContains name='sampleType' value='other'
-              +afQuickField name='specifyOtherRanavirusSampleTypes'
+        +notes
 
-        +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+        +permissions
 
-        +afQuickField name='consent' id='consent'
+        section.rm-pad-top.form-grp-container.publication
+          .container
+            +afQuickField name='publicationInfo' id='publicationInfo'
 
-        +afQuickField name='additionalNotes' id='additionalNotes'
+        +submit
 
-        +afQuickField name='publicationInfo' id='publicationInfo'
-
-        .form-group
-          button(type='submit' class='btn btn-primary') Submit
   else
     h3 Invalid study id

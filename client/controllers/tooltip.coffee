@@ -1,4 +1,4 @@
-tooltipTexts =
+@tooltipTexts =
   name: 'They must be willing to communicate about the case if so requested.'
   email: 'Enter the most current email address or permanent email address of the person reporting the case.'
   phone: 'Enter the institutional telephone number of the individual who is reporting the case, including the country code.'
@@ -101,29 +101,15 @@ tooltipTexts =
   'dataUsePermissions.share_obfuscated': "only the report country and the reporter's contact information will be released"
 
 Template.reportForm.rendered = () ->
-  @$('[data-toggle="tooltip"]').tooltip()
+  @$('[data-toggle="tooltip"]').popover({trigger: 'hover'})
 
 Template.studyForm.rendered = () ->
-  @$('[data-toggle="tooltip"]').tooltip()
-
-Template.registerHelper 'tooltipAtts', () ->
-  if 'value' of this
-    name = @atts.name + '.' + @value
-  else
-    name = @atts.name
-
-  if name of tooltipTexts
-    'data-toggle': "tooltip"
-    'viewport' : 'body'
-    'data-placement': "right auto"
-    'title': tooltipTexts[name]
-    'class': 'tooltipped'
-  else
-    {}
+  @$('[data-toggle="tooltip"]').popover({trigger: 'hover'})
 
 Template.registerHelper 'tooltipText', (name) ->
-  if name of tooltipTexts
-    tooltipTexts[name]
+  console.log 'tooltipText name', name, '@tooltipTexts', @tooltipTexts
+  if name of @tooltipTexts
+    @tooltipTexts[name]
   else
     false
 
@@ -131,6 +117,7 @@ minorLabelBlockTexts =
   'eventLocation': 'Please provide the highest resolution data possible using (UTM or DD coordinates).'
 
 Template.registerHelper 'minorLabelBlockText', (name) ->
+  console.log 'minorLabelBlockText name', name
   if name of minorLabelBlockTexts
     minorLabelBlockTexts[name]
   else

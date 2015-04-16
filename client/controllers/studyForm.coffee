@@ -1,7 +1,5 @@
 getCollections = () -> @collections
 
-
-
 Template.studyForm.helpers
 
   studyDoc: =>

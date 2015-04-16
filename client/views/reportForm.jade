@@ -9,117 +9,50 @@ template(name="reportForm")
       type=type
       doc=reportDoc
     )
+      form.report-form
 
-      +afQuickField name='studyId'
+        +afQuickField name='studyId'
 
-      .panel.panel-default.form-input-block
-        .panel-heading
-          h2.panel-title Contact person info
-        .panel-body
-          .row
-            .col-lg-4
-              +afQuickField name='contact.name'
-            .col-lg-4
-              +afQuickField name='contact.email' placeholder='name@domain.com'
-            .col-lg-4
-              +afQuickField name='contact.phone' minor='(Must include the country code)'
+        section
+          +contactInfo
 
-        .panel.panel-default.form-input-block
-          .panel-heading
-            h2.panel-title Reporting institution, diagnostic lab or government agency info
-              +tooltip name='contact.institutionAddress'
-          .panel-body
-            .row
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.name"
-            .row
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.street"
-              .col-lg-5
-                +afQuickField name="contact.institutionAddress.street2"
-            .row
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.city"
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.stateOrProvince"
-              .col-lg-2
-                +afQuickField name="contact.institutionAddress.postalCode"
-            .row
-              .col-lg-4
-                +afQuickField name="contact.institutionAddress.country"
+        section.date-location.rm-pad-top
+          .container
+            h3 Date and Location
+            .row.form-input-block
+              .col-sm-12
+                .row
+                  .col-sm-4
+                    +afQuickField name="eventDate"
+                .row
+                  .col-sm-12
+                    +afQuickField name="eventLocation"
 
-      .container-fluid.report-form
-        .panel.panel-default.form-input-block
-          .panel-heading
-            h2.panel-title Event Date and Location
-          .panel-body
-            .row
-              .col-lg-12
-                +afQuickField name="eventDate"
-                +afQuickField name="eventLocation"
+        +populationInfo
 
-        .row.form-input-block
-          .col-lg-4
-            +afQuickField name="populationType"
-          .col-lg-4
-            +afQuickField name="screeningReason"
-          .col-lg-4
-            +afQuickField name="vertebrateClasses"
+        +species numInvolved=true
 
-        .panel.panel-default.form-input-block
-          .panel-heading
-            h2.panel-title Affected Species
-          .panel-body
-            .row
-              .col-lg-6
-                +afQuickField name="speciesAffectedType"
-                +afQuickField name="speciesGenus"
-                +afQuickField name="speciesName"
-                +afQuickField name="numInvolved"
-              .col-lg-6
-                +afQuickField name="speciesNotes"
-        .row.form-input-block
-          .col-lg-3
-            +afQuickField name='ageClasses'
-          .col-lg-4
-            +afQuickField name='ranavirusConfirmationMethods'
-            if afFieldValueContains name='ranavirusConfirmationMethods' value='other'
-              +afQuickField name='specifyOtherRanavirusConfirmationMethods'
-          .col-lg-4
-            +afQuickField name='sampleType'
-            if afFieldValueContains name='sampleType' value='other'
-              +afQuickField name='specifyOtherRanavirusSampleTypes'
+        +classesMethods report=true
 
-        .row.form-input-block
-          .col-lg-4
-            +afQuickField name='totalAnimalsTested'
-          .col-lg-4
-            +afQuickField name='totalAnimalsConfirmedInfected'
-          .col-lg-4
-            +afQuickField name='totalAnimalsConfirmedDiseased'
+        section
+          .container
+            .row.form-input-block
+              .col-md-4.col-sm-6.input-block
+                +afQuickField name='pathologyReports' id='pathologyReports'
+              .col-md-4.col-sm-6.input-block
+                +afQuickField name='images' id='images'
+              .col-md-4.col-sm-6.input-block
+                +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
 
-        .row.form-input-block
-          .col-lg-4
-            +afQuickField name='pathologyReports' id='pathologyReports'
-          .col-lg-4
-            +afQuickField name='images' id='images'
-          .col-lg-4
-            +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+        +notes
 
-      +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+        +permissions
 
-      +afQuickField name='consent' id='consent'
+        +submit
 
-      .row.form-input-block
-        .col-lg-8
-          +afQuickField name='additionalNotes'
-
-      .row
-        .col-lg-4
-          .form-group
-            button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
   else
     h3 Invalid form id
+
   .review-panel
     .review-panel-header Reviews
     .review-content(style="display:none;")
