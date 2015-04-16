@@ -1,6 +1,6 @@
 that = @
 Template.registerHelper 'dynamicAttrs', () ->
-  if !AutoForm.find().ss._schema[@atts.name].optional
+  if !AutoForm.find().ss._schema[@atts.name].optional and 'selected' not of @
     required = 'required'
 
   if 'value' of this
