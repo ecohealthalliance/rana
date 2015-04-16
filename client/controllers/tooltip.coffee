@@ -106,13 +106,6 @@ Template.reportForm.rendered = () ->
 Template.studyForm.rendered = () ->
   @$('[data-toggle="tooltip"]').popover({trigger: 'hover'})
 
-Template.registerHelper 'tooltipText', (name) ->
-  console.log 'tooltipText name', name, '@tooltipTexts', @tooltipTexts
-  if name of @tooltipTexts
-    @tooltipTexts[name]
-  else
-    false
-
 minorLabelBlockTexts =
   'eventLocation': 'Please provide the highest resolution data possible using (UTM or DD coordinates).'
 
