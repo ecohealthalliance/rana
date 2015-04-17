@@ -1,5 +1,7 @@
 getCollections = => @collections
 
+maxRating = 10
+
 Template.reviews.helpers 
   reviews: ->
     if @reportId
@@ -9,11 +11,16 @@ Template.reviews.helpers
     else
       []
 
+  maxRating: () -> maxRating
+
+  scaledRating: () ->
+    @rating * maxRating
+
 Template.reviews.events
   "submit #add-review" : (e, template) ->
     e.preventDefault()
     comment = e.target.comment.value
-    rating = e.target.rating.value
+    rating = e.target.rating.value / maxRating
     if comment
       getCollections().Reviews.insert
         comment: e.target.comment.value
