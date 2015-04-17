@@ -87,9 +87,6 @@
   genBankAccessionNumbers: """Please provide the
     GenBank Accession numbers of the sequences associated with the current event being
     reported if they are available."""
-  dataUsePermissions: "Please select the information that can be shared with other users."
-  consent: """Do you consent to have this data published and made searchable on
-    the Ranavirus Reporting System website as per the data use permissions?"""
   additionalNotes: """List additional information (not previously provided) that describes
     unique features of case (e.g., observations of habitat or husbandry conditions,
     diagnosed presence of other pathogens, observations of gross pathological signs)."""
