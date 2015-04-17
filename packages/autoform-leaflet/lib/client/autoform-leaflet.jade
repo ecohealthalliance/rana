@@ -44,15 +44,6 @@ template(name='leaflet')
                 label(for='secondsLat') seconds:
                 input.secondsLat.form-control(name='secondsLat')
           .form-group
-            h5.form-group-header Degrees Decimal
-            .row
-              .col-md-6
-                label(for='lon') Longitude
-                input.lon.form-control(name='lon')
-              .col-md-6
-                label(for='lat') Latitude
-                input.lat.form-control(name='lat')
-          .form-group
             h5.form-group-header Universal Transverse Mercator
             .row
               .col-md-4
@@ -69,5 +60,5 @@ template(name='leaflet')
               .col-md-4
                 label(for='country') Country
                 input.country.form-control(name='country')
-    .col-md-6
-      div.leaflet-canvas
+      .col-md-6
+        div.leaflet-canvas
