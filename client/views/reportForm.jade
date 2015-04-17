@@ -118,7 +118,8 @@ template(name="reportForm")
             button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
   else
     h3 Invalid form id
-  .review-panel
-    .review-panel-header Reviews
-    .review-content(style="display:none;")
-      +reviews reportId=reportId
+  unless eq type 'insert'
+    .review-panel
+      .review-panel-header Reviews
+      .review-content(style="display:none;")
+        +reviews reportId=reportId
