@@ -57,11 +57,6 @@ Template.reportForm.helpers
       @mergeObjects study.contact, contactFromUser
       study
 
-  studyName: ->
-    study?.name or
-
-    Session.get 'studyId'
-
   type: ->
     if not Template.currentData()?.report
       "insert"
