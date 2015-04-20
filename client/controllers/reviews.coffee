@@ -21,9 +21,9 @@ Template.reviews.events
     e.preventDefault()
     comment = e.target.comment.value
     rating = e.target.rating.value / maxRating
-    if comment
+    if comment or rating
       getCollections().Reviews.insert
-        comment: e.target.comment.value
+        comment: comment
         rating: rating
         reportId: template.data.reportId
         createdBy:
