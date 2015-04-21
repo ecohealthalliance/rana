@@ -11,7 +11,32 @@ h4
 
 h1
   font-weight 800
-  
+
+h2
+  font-size 32px
+  color primary
+  margin-bottom 20px
+  margin-top 0
+
+h2.section-title
+  font-size 40px
+  margin-top 0
+
+h2 a.more-info
+  font-size 12px
+  color btn-default
+
+h3
+  font-size 20px
+  margin-top 0
+  margin-bottom 15px
+  color secondary
+
+h4
+  color body-text
+  font-weight 600
+  font-size 15px
+
 textarea
   display block
   width 100%
@@ -61,9 +86,15 @@ textarea
 .loading
   loading(true)
 
-@media (max-width: 768px)
-  .space-btm
+.space-btm-2
+    margin-bottom 20px
+
+.space-btm-4
     margin-bottom 40px
+
+@media (max-width: 768px)
+  .add-space-btm
+    @extend .space-btm-4
 
 select.form-control,
 input.form-control,

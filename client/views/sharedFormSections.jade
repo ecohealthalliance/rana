@@ -2,7 +2,7 @@
 template(name="contactInfo")
   .container
     .row
-      .col-md-3.space-btm
+      .col-md-3.add-space-btm
         h3 Contact person info
         +afQuickField name='contact.name'
         +afQuickField name='contact.email' placeholder='name@domain.com'
@@ -77,7 +77,7 @@ template(name="permissions")
           +afQuickField name='consent' id='consent'
 
 template(name="submit")
-  .container
+  section
     .row
       .col-sm-4
         .form-group
