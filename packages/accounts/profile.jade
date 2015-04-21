@@ -6,7 +6,41 @@ template(name="profile")
 
       if isCurrentUser
         p Edit Your Profile
-        +quickForm schema=profileSchema doc=user.profile id="update-user-profile-form"
+
+        +autoForm(
+          id="update-user-profile-form"
+          schema=profileSchema
+          doc=user.profile
+        )
+
+          .container
+            .row
+              .col-md-3.space-btm
+                h3 Contact person info
+                +afQuickField name='name'
+                +afQuickField name='phone' minor='(Must include the country code)'
+
+            .row
+              .col-sm-6
+                +afQuickField name="organization"
+            .row
+              .col-sm-6
+                +afQuickField name="organizationStreet"
+              .col-sm-6
+                +afQuickField name="organizationStreet2"
+            .row
+              .col-sm-4
+                +afQuickField name="organizationCity"
+              .col-sm-4
+                +afQuickField name="organizationStateOrProvince"
+              .col-sm-2
+                +afQuickField name="organizationPostalCode"
+            .row
+              .col-sm-6
+                +afQuickField name="organizationCountry"
+
+            +submit
+
       else
         h4
           span

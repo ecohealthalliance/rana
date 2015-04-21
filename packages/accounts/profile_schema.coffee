@@ -1,5 +1,5 @@
 share.UserProfileSchema = new SimpleSchema
-  name: 
+  name:
     type: String
   phone:
     type: String
@@ -10,18 +10,23 @@ share.UserProfileSchema = new SimpleSchema
   'organizationStreet':
     type: String
     optional: true
+    label: 'Street'
   'organizationStreet2':
     type: String,
     optional: true
+    label: 'Street2'
   'organizationCity':
     type: String
     optional: true
+    label: 'City'
   'organizationStateOrProvince':
     type: String
     optional: true
+    label: 'State or Province'
   'organizationCountry':
     type: String
     optional: true
+    label: 'Country'
   'organizationPostalCode':
     type: String
     label: 'ZIP'
