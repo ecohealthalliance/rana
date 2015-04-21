@@ -107,7 +107,6 @@ minorLabelBlockTexts =
   'eventLocation': 'Please provide the highest resolution data possible using (UTM or DD coordinates).'
 
 Template.registerHelper 'minorLabelBlockText', (name) ->
-  console.log 'minorLabelBlockText name', name
   if name of minorLabelBlockTexts
     minorLabelBlockTexts[name]
   else
