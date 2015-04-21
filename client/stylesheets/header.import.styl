@@ -1,3 +1,41 @@
 .navbar
-  margin-bottom 0
   @extend .dark-shadow
+  margin-bottom 0
+  background secondary
+  border 0
+  border-radius 0
+  .btn,
+  .btn-default
+    border 0
+    margin-left 5px
+    text-shadow none
+    buttonHover()
+    transition()
+    &:focus
+      outline primary
+      transition()
+
+.nav
+  float right
+
+.navbar-nav > li > a
+  color white
+  buttonHover()
+
+.navbar-nav .active
+  background white
+  color body-text
+  
+.navbar-brand 
+  font-weight 600
+  text-transform uppercase
+  color white
+
+@media (max-width: 765px)
+  .nav
+    float none
+    li
+      border-bottom l-gray 1px solid
+  .navbar-brand
+    width 75%
+    height auto

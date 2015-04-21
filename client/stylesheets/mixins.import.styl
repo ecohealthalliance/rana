@@ -55,6 +55,30 @@ animate(speed)
   -moz-animation spin speed infinite linear
   -o-animation spin speed infinite linear
 
+bg(path, w, h, type)
+  background url(path + '.' + type) no-repeat
+  background-size w h
+  width w
+  height h
+  text-indent -9999px
+  @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2)
+    background-image: url(path + '-2x.' + type);
+
+centerSmall(margin-bottom=0)
+  @media (max-width:400px)
+    margin 0 auto
+    float none
+    display block
+    if margin-bottom
+      margin-bottom margin-bottom
+
+buttonHover()
+  transition()
+  &:hover
+    background primary
+    color white
+    transition()
+
 @keyframes spin
   from 
     transform rotate(0deg)

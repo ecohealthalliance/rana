@@ -6,10 +6,20 @@ head
 
 template(name="layout")
   body
-    .navbar.navbar-inverse.navbar-fixed.top
+    header
+      nav.navbar
         .container
-            .navbar-header
-              a.navbar-brand Ranavirus Reporting System
+          .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse' data-target=".navbar-collapse")
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            .navbar-brand Ranavirus Reporting System
+          
+          .collapse.navbar-collapse.navbar-right
+            .navbar-right
+              +accountsHeaderButtons
             ul.nav.navbar-nav
               li
                 a(href="/study") New Study
@@ -20,9 +30,13 @@ template(name="layout")
               li
                 a(href="/table") Report Table
               li
-                a(href="/group/rana/info") Ranavirus Information
-            .navbar-right
-                +accountsHeaderButtons
-
+                a(href="/group/rana/info") About Ranavirus
+            
     .fluid-container
         +yield
+
+    footer
+      .container
+        h1.mantle Mantle
+        a.eha-logo(href="http://ecohealthalliance.org")
+          h2 EcoHealth Alliance
