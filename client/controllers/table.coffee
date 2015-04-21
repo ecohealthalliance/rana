@@ -92,9 +92,4 @@ Template.table.events(
     reply = prompt('Type "delete" to confirm that this report should be removed.')
     if reply == "delete"
       getCollections().Reports.remove(reportId)
-  'click .show-filter': () ->
-    $('.filter-wrap').toggleClass('col-sm-0', 'col-sm-3')
-    $('.table-wrap').toggleClass('col-sm-9', 'col-sm-12')
-    $('.filter-controls').toggleClass('hidden')
-    console.log "Clicked"
 )
