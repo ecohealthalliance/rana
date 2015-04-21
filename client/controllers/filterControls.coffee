@@ -15,6 +15,29 @@ resolvePath = (path, obj) ->
   else
     return resolvePath(path.slice(1), obj[component])
 
+# Return possible variations in the way a string may be capitalized
+expandCase = (strOrArray) ->
+  unless _.isArray strOrArray then return expandCase(strOrArray.split(' '))
+  words = strOrArray
+  if words.length > 3
+    console.log(words.join(" ") + " has too many words for case expansion.")
+    return [words.join(" ")]
+  if words.length == 0 then return []
+  word = words[0]
+  _.chain([
+    word[0].toLowerCase() + word.slice(1)
+    word[0].toUpperCase() + word.slice(1)
+    word.toLowerCase()
+    word
+  ])
+  .map (wordVariant)->
+    if words.length <= 1 then return wordVariant
+    _.map expandCase(words.slice(1)), (expandedRemainder)->
+      wordVariant + ' ' + expandedRemainder
+  .flatten()
+  .uniq()
+  .value()
+
 Template.filterControls.created = ->
   @filterCollection = new Meteor.Collection(null)
   
@@ -102,11 +125,13 @@ Template.filterControls.rendered = ->
           $lt: value
         }
       else
-        filter[property] = value
-        if filter?.speciesName
+        filter[property] = {
+          $in: expandCase(value)
+        }
+        if property == "speciesName"
           return $.Deferred ->
             # expand species name queries
-            Meteor.call("getSpeciesBySynonym", filter["speciesName"], (err, resp)=>
+            Meteor.call("getSpeciesBySynonym", value, (err, resp)=>
               if err
                 alert JSON.stringify(err)
                 return
@@ -115,7 +140,9 @@ Template.filterControls.rendered = ->
               if resp.length == 0
                 @resolve filter
                 return
-              filter["speciesName"] = { $in: resp[0].synonyms }
+              filter["speciesName"] = {
+                $in: _.flatten(_.map(resp[0].synonyms, expandCase))
+              }
               @resolve filter
             )
       return $.Deferred(-> @resolve filter)
@@ -159,4 +186,4 @@ Template.filterControls.events
           resolvePath(filterSpecification.property, result)
         )
       $("input[name='#{schemaKey}']").autocomplete
-        source: _.flatten(values)
+        source: _.uniq(_.flatten(values))

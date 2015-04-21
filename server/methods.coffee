@@ -19,4 +19,4 @@ Meteor.methods
       false
   
   getSpeciesBySynonym: (synonym) =>
-    @__SpeciesCollection.find({ synonyms: synonym }).fetch()
+    @__SpeciesCollection.find({ lowerCaseSynonyms: synonym.toLowerCase() }).fetch()
