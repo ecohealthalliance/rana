@@ -9,46 +9,45 @@ template(name="reportForm")
       type=type
       doc=reportDoc
     )
-      form.report-form
 
-        +afQuickField name='studyId'
+      +afQuickField name='studyId'
 
-        section
-          +contactInfo
+      section
+        +contactInfo
 
-        section.date-location.rm-pad-top
-          .container
-            h3 Date and Location
-            .row.form-input-block
-              .col-sm-12
-                .row
-                  .col-sm-4
-                    +afQuickField name="eventDate"
-                .row
-                  .col-sm-12
-                    +afQuickField name="eventLocation"
+      section.date-location.rm-pad-top
+        .container
+          h3 Date and Location
+          .row.form-input-block
+            .col-sm-12
+              .row
+                .col-sm-4
+                  +afQuickField name="eventDate"
+              .row
+                .col-sm-12
+                  +afQuickField name="eventLocation"
 
-        +populationInfo
+      +populationInfo
 
-        +species numInvolved=true
+      +species numInvolved=true
 
-        +classesMethods report=true
+      +classesMethods report=true
 
-        section
-          .container
-            .row.form-input-block
-              .col-md-4.col-sm-6.input-block
-                +afQuickField name='pathologyReports' id='pathologyReports'
-              .col-md-4.col-sm-6.input-block
-                +afQuickField name='images' id='images'
-              .col-md-4.col-sm-6.input-block
-                +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+      section
+        .container
+          .row.form-input-block
+            .col-md-4.col-sm-6.input-block
+              +afQuickField name='pathologyReports' id='pathologyReports'
+            .col-md-4.col-sm-6.input-block
+              +afQuickField name='images' id='images'
+            .col-md-4.col-sm-6.input-block
+              +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
 
-        +notes
+      +notes
 
-        +permissions
+      +permissions
 
-        +submit
+      +submit
 
   else
     h3 Invalid form id
