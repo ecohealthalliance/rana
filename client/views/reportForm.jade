@@ -1,7 +1,9 @@
 template(name="reportForm")
 
   if type
-    h3 {{reportHeader}}
+    section.rm-pad-btm
+      .container
+        h2 {{reportHeader}}
 
     +autoForm(
       id="ranavirus-report"
@@ -12,8 +14,9 @@ template(name="reportForm")
 
       +afQuickField name='studyId'
 
-      section
+      section.rm-pad-top
         +contactInfo
+
 
       section.date-location.rm-pad-top
         .container
