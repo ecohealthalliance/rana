@@ -1,6 +1,5 @@
 getCollections = => @collections
-
-urlParams = null
+contactFromUser = @contactFromUser
 
 AutoForm.addHooks(
   'ranavirus-report', {
@@ -27,7 +26,7 @@ AutoForm.addHooks(
       <a href="/report/#{@docId}">Edit Report</a>
       """)
       window.scrollTo(0, 0)
-      redirectOnSubmit =  urlParams?.query?.redirectOnSubmit
+      redirectOnSubmit =  template.data?.query?.redirectOnSubmit
       if redirectOnSubmit
         Router.go(redirectOnSubmit)
       else
@@ -48,18 +47,16 @@ AutoForm.addHooks(
 
 Template.reportForm.helpers
 
-  reportDoc: =>
-    urlParams = Iron.controller().getParams()
-    if urlParams?.reportId
-      return getCollections().Reports.findOne(urlParams.reportId) or {}
+  reportDoc: ->
+    if @reportId
+      return getCollections().Reports.findOne(@reportId) or {}
     else
-      { contact: @contactFromUser() }
+      { contact: contactFromUser() }
 
   type: ->
-    urlParams = Iron.controller().getParams()
-    if not urlParams?.reportId
+    if not @reportId
       return "insert"
-    currentReport = getCollections().Reports.findOne(urlParams.reportId)
+    currentReport = getCollections().Reports.findOne(@reportId)
     if not currentReport
       # This will trigger an error message
       return null
@@ -84,3 +81,5 @@ Template.reportForm.events
       timeout -= 1000
     , 1000)
 
+  'click .review-panel-header': ()->
+    $(".review-content").toggle()
