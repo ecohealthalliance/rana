@@ -36,12 +36,14 @@ template(name="populationInfo")
   section.odd
     .container
       .row.form-input-block
-        .col-sm-4.input-block
+        .col-sm-3.input-block
             +afQuickField name="populationType"
-        .col-sm-4.input-block
+        .col-sm-3.input-block
+            +afQuickField name="speciesAffectedType"
+        .col-sm-3.input-block
             +afQuickField name="screeningReason"
         .clearfix.visible-xs-block
-        .col-sm-4.input-block
+        .col-sm-3.input-block
             +afQuickField name="vertebrateClasses"
 
 template(name="species")
