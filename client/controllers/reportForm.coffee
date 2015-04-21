@@ -74,9 +74,6 @@ Template.reportForm.helpers
       "#{ studyName } - New Report"
 
 Template.reportForm.events
-
-
-Template.reportForm.events
   'change .file-upload': (evt)->
     timeout = 10000
     interval = window.setInterval(()->
