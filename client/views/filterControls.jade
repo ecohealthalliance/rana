@@ -11,5 +11,6 @@ template(name="filterControls")
       template="bootstrap3"
     )
     .form-group
-      button.btn.btn-primary(type="submit") Apply filters
-      button.btn.btn-primary.reset(type="reset") Reset filters
+      button.btn.btn-primary.btn-block.filter(type="submit") Filter
+      a.reset(type="reset")
+        span.glyphicon.glyphicon-remove-circle
