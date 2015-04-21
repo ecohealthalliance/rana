@@ -20,9 +20,8 @@ makeButton(color, text = white, dark = false, noOutline = false)
   border 1px solid darken(color, 10%)
   &:hover,
   &:focus
-    background darken(color, 10%)
-    color darken(text, 20%)
-    border-color darken(color, 20%)
+    background darken(color, 20%)
+    border-color darken(color, 30%)
   &:active
     background darken(color, 20%)
   &:focus
@@ -72,8 +71,9 @@ centerSmall(margin-bottom=0)
     if margin-bottom
       margin-bottom margin-bottom
 
-buttonHover()
+buttonHover(bg=none)
   transition()
+  background bg
   &:hover
     background primary
     color white

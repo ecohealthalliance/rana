@@ -4,21 +4,35 @@ footer
   h1,
   h2
     margin 0
-  
-.mantle
-  bg('images/mantle-logo', 200px, 49px,'png')
+ 
+.logo
   display inline-block
   vertical-align middle
-  centerSmall(10px)
-  margin-right 20px
-  opacity .9
+  p
+    display inline-block
+    color l-gray
+    font-size 11px   
 
-.eha-logo
-  bg('images/eha-logo', 200px, 49px,'png')
-  centerSmall()
-  transition()
+.mantle
+  display inline-block
+  h1
+    bg('images/mantle-logo', 130px, 32px,'png')
+    centerSmall(10px)
+    opacity .9
+
+.eha
   float right
-  opacity .9
-  &:hover
-    opacity 1
+  h2
+    bg('images/eha-logo', 220px, 54px,'png')
+    centerSmall()
     transition()
+    opacity .9
+    &:hover
+      opacity 1
+      transition()
+      
+@media (max-width: 765px)
+  .logo
+    margin 0 auto
+    text-align center
+    margin-bottom 20px
