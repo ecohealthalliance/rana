@@ -1,5 +1,5 @@
 @tooltipTexts =
-  'contact.name': 'They must be willing to communicate about the case if so requested.'
+  contactHeader: 'They must be willing to communicate about the case if so requested.'
   email: 'Enter the most current email address or permanent email address of the person reporting the case.'
   phone: 'Enter the institutional telephone number of the individual who is reporting the case, including the country code.'
   institutionAddress: """Enter the name and full address of the institution,
@@ -112,3 +112,7 @@ Template.registerHelper 'minorLabelBlockText', (name) ->
   else
     false
 
+Template.registerHelper 'tooltipText', (name) ->
+
+  if name of tooltipTexts
+    tooltipTexts[name]

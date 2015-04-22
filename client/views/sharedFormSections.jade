@@ -3,7 +3,8 @@ template(name="contactInfo")
   .container
     .row
       .col-md-3.add-space-btm
-        h3 Contact person info
+
+        +tooltippedHeader name='contactHeader' text='Contact person info'
         +afQuickField name='contact.name'
         +afQuickField name='contact.email' placeholder='name@domain.com'
         +afQuickField name='contact.phone' minor='(Must include the country code)'
