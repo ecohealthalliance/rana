@@ -15,6 +15,29 @@ resolvePath = (path, obj) ->
   else
     return resolvePath(path.slice(1), obj[component])
 
+# Return possible variations in the way a string may be capitalized
+expandCase = (strOrArray) ->
+  unless _.isArray strOrArray then return expandCase(strOrArray.split(' '))
+  words = strOrArray
+  if words.length > 3
+    console.log(words.join(" ") + " has too many words for case expansion.")
+    return [words.join(" ")]
+  if words.length == 0 then return []
+  word = words[0]
+  _.chain([
+    word[0].toLowerCase() + word.slice(1)
+    word[0].toUpperCase() + word.slice(1)
+    word.toLowerCase()
+    word
+  ])
+  .map (wordVariant)->
+    if words.length <= 1 then return wordVariant
+    _.map expandCase(words.slice(1)), (expandedRemainder)->
+      wordVariant + ' ' + expandedRemainder
+  .flatten()
+  .uniq()
+  .value()
+
 Template.filterControls.created = ->
   @filterCollection = new Meteor.Collection(null)
   
@@ -44,7 +67,7 @@ Template.filterControls.created = ->
               item
             else
               {
-                label: getCollections().Reports.simpleSchema().label(item),
+                label: getCollections().Reports.simpleSchema().label(item)
                 value: item
               }
           )
@@ -68,11 +91,11 @@ Template.filterControls.created = ->
   })
 
 Template.filterControls.rendered = ->
-
+  reactiveQuery = Template.currentData().query
   @autorun () =>
     reportSchema = collections.Reports.simpleSchema().schema()
     filterSpec = Template.instance().filterCollection.findOne()?.filters or []
-    filters = filterSpec.map (filterSpecification)->
+    filterPromises = filterSpec.map (filterSpecification)->
       filter = {}
       value = filterSpecification['value']
       property = filterSpecification['property']
@@ -102,13 +125,34 @@ Template.filterControls.rendered = ->
           $lt: value
         }
       else
-        filter[property] = value
-      return filter
-    query = {}
-    if filters.length > 0
-      query = 
-        $and: filters
-    Template.currentData().query.set(query)
+        filter[property] = {
+          $in: expandCase(value)
+        }
+        if property == "speciesName"
+          return $.Deferred ->
+            # expand species name queries
+            Meteor.call("getSpeciesBySynonym", value, (err, resp)=>
+              if err
+                alert JSON.stringify(err)
+                return
+              if resp.length > 2
+                console.log "Ambiguous species"
+              if resp.length == 0
+                @resolve filter
+                return
+              filter["speciesName"] = {
+                $in: _.flatten(_.map(resp[0].synonyms, expandCase))
+              }
+              @resolve filter
+            )
+      return $.Deferred(-> @resolve filter)
+    $.when.apply(this, filterPromises).then ()=>
+      filters = Array.prototype.slice.call(arguments)
+      query = {}
+      if filters.length > 0
+        query = 
+          $and: filters
+      reactiveQuery.set(query)
 
 Template.filterControls.filterCollection = ->
   Template.instance().filterCollection
@@ -142,4 +186,4 @@ Template.filterControls.events
           resolvePath(filterSpecification.property, result)
         )
       $("input[name='#{schemaKey}']").autocomplete
-        source: _.flatten(values)
+        source: _.uniq(_.flatten(values))

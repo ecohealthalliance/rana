@@ -16,7 +16,7 @@
       csvImportValues['rana_import_one.csv'] = [
         ['screeningReason', 'mortality'],
         ['speciesGenus', 'abstracticus'],
-        ['speciesName', 'genericus'],
+        ['speciesName', 'abstracticus genericus'],
         ['eventDate', '1/2/2010']
       ];
 
@@ -64,7 +64,7 @@
         ['vertebrateClasses', ['fish','reptile']],
         ['ageClasses', ['egg','larvae']],
         ['speciesGenus', 'abstracticus'],
-        ['speciesName', 'genericus'],
+        ['speciesName', 'abstracticus genericus'],
         ['speciesNotes', 'One of the nicest species you will ever meet.'],
         ['speciesAffectedType', 'native'],
         ['ranavirusConfirmationMethods', ['traditional_pcr','electron_microscopy','immunohistochemistry','other']],
@@ -130,6 +130,7 @@
       .call(callback);
     });
 
+    // This step is currently unused.
     this.Then(/^the preview table should contain the values for (.*)$/, function(filename, callback){
       helper.world.browser.checkTableCells(csvImportValues[filename], callback);
     });

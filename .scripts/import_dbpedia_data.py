@@ -8,6 +8,7 @@ import requests
 import pymongo
 import argparse
 import re
+import json
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -19,8 +20,10 @@ if __name__ == '__main__':
   )
   args = parser.parse_args()
   db = pymongo.Connection(args.mongo_url)[args.db_name]
-  collection = db['genera']
-  collection.drop()
+  
+  print "Importing genera..."
+  genera = db['genera']
+  genera.drop()
   r = requests.post('http://dbpedia.org/sparql', data={
       'default-graph-uri' : 'http://dbpedia.org',
       'query' : """
@@ -43,7 +46,7 @@ if __name__ == '__main__':
       'timeout' : 60000
     })
 
-  formatPatt = re.compile(ur"""(^['"])|(['"]$)|(\(.*\))""", re.UNICODE)
+  formatPatt = re.compile(ur"""(^['"])|(['"]$)|(\(.*\))|\?""", re.UNICODE)
 
   def removeStrangeFormatting(s):
     return formatPatt.sub("", s).strip()
@@ -56,4 +59,60 @@ if __name__ == '__main__':
     # Skip extinct genera
     if u"†" in result: continue
     if len(result) > 0:
-      collection.insert({'value':result})
+      genera.insert({'value':result})
+
+  print "Importing species names..."
+  speciesCollection = db['species']
+  speciesCollection.drop()
+  r = requests.post('http://dbpedia.org/sparql', data={
+      'default-graph-uri' : 'http://dbpedia.org',
+      'query' : """
+      SELECT ?entity
+      (group_concat(DISTINCT ?genus;separator=";;") as ?genera)
+      (group_concat(DISTINCT ?species;separator=";;") as ?species)
+      (group_concat(DISTINCT ?binomial;separator=";;") as ?binomials)
+      (group_concat(DISTINCT ?label;separator=";;") as ?labels)
+      (group_concat(DISTINCT ?synonym;separator=";;") as ?synonyms)
+      WHERE {
+        {
+          ?entity dbpprop:genus ?genus .
+          ?entity dbpprop:species ?species .
+          ?entity dbpprop:phylum dbpedia:Chordate .
+          OPTIONAL { 
+            ?entity dbpprop:binomial ?binomial .
+            ?entity rdfs:label ?label .
+            ?entity dbpedia-owl:synonym ?synonym
+          }
+        }
+      } GROUP BY ?entity
+      """,
+      'format' : 'application/sparql-results+json',
+      'timeout' : 60000
+    })
+  # Sometimes there are malformed unicode chars in the response
+  resp_text = r.text.replace("\U", "\u")
+  for result in json.loads(resp_text)['results']['bindings']:
+    genera = result["genera"]["value"].split(";;")
+    # If there is more than one genera, it is generall because one is a URI
+    # if len(genera) > 1:
+    #   print result
+    binomials = result["binomials"]["value"].split(";;")
+    synonyms = (
+      result["species"]["value"].split(";;") +
+      binomials +
+      result["labels"]["value"].split(";;") +
+      result["synonyms"]["value"].split(";;")
+    )
+    synSet = set([
+      removeStrangeFormatting(syn)
+      for syn in synonyms
+      if len(syn) > 0 
+    ])
+    speciesCollection.insert({
+      "entity": result["entity"]["value"],
+      "genera": genera,
+      "primaryName": binomials[0],
+      "synonyms": list(synSet),
+      # This is for case insensitive searches
+      "lowerCaseSynonyms": [syn.lower() for syn in synSet]
+    })

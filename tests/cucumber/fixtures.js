@@ -13,6 +13,34 @@
           email: "admin@admin.com",
           password: "adminuser"
         });
+        __SpeciesCollection.remove({});
+        __SpeciesCollection.insert({
+          "genera" : [  "Lithobates" ],
+          "primaryName" : "Lithobates sylvaticus",
+          "synonyms" : [
+            "Лесная лягушка",
+            "L. sylvaticus",
+            "Rana sylvatica",
+            "Żaba leśna",
+            "Grenouille des bois",
+            "Wood frog",
+            "Lithobates sylvaticus",
+            "Boskikker",
+            "Waldfrosch"
+          ],
+          "lowerCaseSynonyms" : [
+            "лесная лягушка",
+            "l. sylvaticus",
+            "rana sylvatica",
+            "żaba leśna",
+            "grenouille des bois",
+            "wood frog",
+            "lithobates sylvaticus",
+            "boskikker",
+            "waldfrosch"
+          ],
+          "entity" : "http://dbpedia.org/resource/Wood_frog"
+        });
         Roles.addUsersToRoles(
           adminUserId,
           ['admin', 'user'],
