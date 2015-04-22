@@ -9,30 +9,13 @@ template(name="filterControls")
     +afQuickFields(
       id-prefix=idPrefix
       template="filter"
+      minCount=1
     )
     .form-group
       .row.filter
-        if table
-          +filterControlsTable
-        else 
-          +filterControlsMap
-
-template(name="filterControlsTable")
-  .col-sm-6.col-sm-offset-3
-    .row
-      .col-sm-10
-        button.btn.btn-primary.btn-block.btn-lg(type="submit") Filter
-      .col-sm-2.reset-wrap
-        button.reset.btn.btn-default.btn-block.btn-lg Clear
-
-
-template(name="filterControlsMap")
-  .col-sm-12
-    .row
-      .col-sm-10
-        button.btn.btn-primary.btn-block(type="submit") Filter
-      .col-sm-2.reset-wrap
-        button.reset.btn.btn-default.btn-block Clear
+        .filter-buttons
+          button.run-filter.btn.btn-primary.btn-block(type="submit") Filter
+          button.clear.btn.btn-default.btn-block Clear
 
 template(name="afArrayField_filter")
   .filter-wrap
