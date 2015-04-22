@@ -1,12 +1,10 @@
 template(name="table")
   section
     .container.reports-table
-      .filter-controls
+      button.toggle-filter.btn.btn-default(href="#") Filter Table 
+      .filter-controls.hidden
         +filterControls query=query
-      .row
-        .filter-wrap.col-sm-
-        .table-wrap.col-sm-9
-          if isEmpty
-            h2 No Reports Found
-          else
-            +reactiveTable collection=collection settings=settings
+      if isEmpty
+        h2 No Reports Found
+      else
+        +reactiveTable collection=collection settings=settings
