@@ -4,13 +4,16 @@ template(name="filterControls")
     doc=filter
     type="update"
     id="filter-panel"
-    template="bootstrap3"
+    template="plain"
   )
     +afQuickFields(
       id-prefix=idPrefix
       template="bootstrap3"
     )
     .form-group
-      button.btn.btn-primary.btn-block.filter(type="submit") Filter
-      a.reset(type="reset")
-        span.glyphicon.glyphicon-remove-circle
+      .row.filter
+        .col-sm-11
+          button.btn.btn-primary.btn-block(type="submit") Filter
+        .col-sm-1.reset-wrap
+          a.reset(type="reset")
+            span.glyphicon.glyphicon-remove-circle

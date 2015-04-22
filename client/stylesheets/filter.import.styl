@@ -3,15 +3,69 @@
 .filter-panel
   position relative
 
+.reset-wrap
+  padding 0
+
 .reset
-  position absolute
-  top 10px
-  right 10px
-  font-size 20px
+  font-size 24px
+  color body-text
   
 .filter
   margin-top 20px
+  width 90%
+  margin 10px auto
   
+.group-wrap,
+.filter-wrap
+  margin 10px
+
+#control-panel
+  position absolute
+  left 50px
+  top 10px
+  z-index 200
+  max-width 25%
+  min-width 20%
+  border-radius 5px
+  max-height 100%
+  overflow-y auto
+  overflow-x hidden
+  box-shadow 0 1px 5px rgba(0,0,0,0.3)
+  background rgba(255,255,255,.8)
+
+
+.toggler
+  display block
+  border-top 1px solid m-gray
+  padding 10px
+  font-size 16px
+  font-weight 600
+  position relative
+  color body-text
+  &:after
+    content '+'
+    position absolute
+    right 5px
+    transform translate(-50%, 0)
+  &:hover
+    background-color strong-primary
+    color white
+    text-decoration none
+  &:first-of-type
+    border 0
+
+.toggler.active
+  background-color secondary
+  color white
+  text-decoration none
+  &:after
+    content '-'
+  &:hover
+    background-color strong-primary
+    color white
+    text-decoration none
+  
+
 // #filter-panel
 //   @extend .content-panel
 //   .media-body

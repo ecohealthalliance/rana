@@ -4,9 +4,9 @@ template(name="table")
       if isEmpty
         h2 No Reports Found
       else
-      .row
-        .filter-wrap.col-sm-3
-          .filter-controls
-            +filterControls query=query
-        .table-wrap.col-sm-9
-          +reactiveTable collection=collection settings=settings
+        .row
+          .filter-wrap.col-sm-3
+            .filter-controls
+              +filterControls query=query
+          .table-wrap.col-sm-9
+            +reactiveTable collection=collection settings=settings

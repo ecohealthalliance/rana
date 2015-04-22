@@ -100,3 +100,12 @@ Template.map.rendered = ->
         """)
       )
     markers.addTo(lMap)
+
+Template.map.events
+  'click .toggle-group': () ->
+    $('.group-wrap').toggleClass('hidden showing')
+    $('.toggle-group').toggleClass('active')
+  'click .toggle-filter': () ->
+    $('.filter-wrap').toggleClass('hidden showing')
+    $('.toggle-filter').toggleClass('active')
+
