@@ -3,7 +3,7 @@ template(name="table")
     .container.reports-table
       button.toggle-filter.btn.btn-primary(href="#") Filter Table 
       .filter-controls.hidden
-        +filterControls query=query
+        +filterControls query=query table=true
       if isEmpty
         h2 No Reports Found
       else

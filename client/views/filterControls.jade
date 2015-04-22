@@ -12,12 +12,27 @@ template(name="filterControls")
     )
     .form-group
       .row.filter
-        .col-sm-6.col-sm-offset-3
-          .row
-            .col-sm-10
-              button.btn.btn-primary.btn-block.btn-lg(type="submit") Filter
-            .col-sm-2.reset-wrap
-              button.reset.btn.btn-default.btn-block.btn-lg Clear
+        if table
+          +filterControlsTable
+        else 
+          +filterControlsMap
+
+template(name="filterControlsTable")
+  .col-sm-6.col-sm-offset-3
+    .row
+      .col-sm-10
+        button.btn.btn-primary.btn-block.btn-lg(type="submit") Filter
+      .col-sm-2.reset-wrap
+        button.reset.btn.btn-default.btn-block.btn-lg Clear
+
+
+template(name="filterControlsMap")
+  .col-sm-12
+    .row
+      .col-sm-10
+        button.btn.btn-primary.btn-block(type="submit") Filter
+      .col-sm-2.reset-wrap
+        button.reset.btn.btn-default.btn-block Clear
 
 template(name="afArrayField_filter")
   .filter-wrap
@@ -34,4 +49,3 @@ template(name="afArrayField_filter")
     if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
       a.autoform-add-item(type="button" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}")
         span.glyphicon.glyphicon-plus
-

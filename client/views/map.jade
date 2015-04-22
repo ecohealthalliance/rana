@@ -19,6 +19,6 @@ template(name="map")
                     else
                       i [ empty ]
       a.toggle-filter.toggler(href="#") Filter
-      .filter-wrap.hidden
-        +filterControls query=query
+      .filter-wrap.map-filters.hidden
+        +filterControls query=query map=true
 
