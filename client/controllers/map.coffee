@@ -78,7 +78,7 @@ Template.map.rendered = ->
         })
         .addTo(markers)
         .bindPopup("""
-        <div>
+        <div class="map-popup">
         <dl>
           <dt>Date</dt>
           <dd>#{report.eventDate}</dd>

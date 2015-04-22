@@ -4,11 +4,11 @@ template(name="filterControls")
     doc=filter
     type="update"
     id="filter-panel"
-    template="plain"
+    template="filter"
   )
     +afQuickFields(
       id-prefix=idPrefix
-      template="bootstrap3"
+      template="filter"
     )
     .form-group
       .row.filter
@@ -17,3 +17,21 @@ template(name="filterControls")
         .col-sm-1.reset-wrap
           a.reset(type="reset")
             span.glyphicon.glyphicon-remove-circle
+
+template(name="afArrayField_filter")
+  .filter-wrap
+    sdfasdf {{afFieldLabelText name=this.atts.name}}
+    if afFieldIsInvalid name=this.atts.name
+      .autoform-array-field-error
+        {{{afFieldMessage name=this.atts.name}}}
+    ul.list-unstyled
+      +afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+        li.autoform-array-item
+          +afQuickField name=this.name label=false
+          if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount
+            a(type="button" class="autoform-remove-item") 
+              span.glyphicon.glyphicon-remove-circle
+    if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
+      div(style="margin-top: 20px;")
+        button(type="button" class="autoform-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}") Add
+

@@ -19,6 +19,29 @@
 .filter-wrap
   margin 10px
 
+.reports-table
+  .group-wrap,
+  .filter-wrap
+    margin 0
+  .filter-wrap
+    margin-top 50px
+
+.autoform-array-item
+  position relative
+  float left
+  max-width 20%
+  padding 20px
+  background ll-gray
+  border 1px solid darken(ll-gray,10%)
+  border-radius 3px
+  margin 10px
+
+.autoform-remove-item
+  position absolute
+  top -10px
+  right -10px
+  font-size 20px
+
 #control-panel
   position absolute
   left 50px
@@ -33,7 +56,6 @@
   box-shadow 0 1px 5px rgba(0,0,0,0.3)
   background rgba(255,255,255,.8)
 
-
 .toggler
   display block
   border-top 1px solid m-gray
@@ -42,6 +64,7 @@
   font-weight 600
   position relative
   color body-text
+  transition()
   &:after
     content '+'
     position absolute
@@ -51,6 +74,7 @@
     background-color strong-primary
     color white
     text-decoration none
+    transition()
   &:first-of-type
     border 0
 
@@ -64,10 +88,3 @@
     background-color strong-primary
     color white
     text-decoration none
-  
-
-// #filter-panel
-//   @extend .content-panel
-//   .media-body
-//     @extend .content-block
-    

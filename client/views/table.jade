@@ -1,12 +1,12 @@
 template(name="table")
   section
-    .container
-      if isEmpty
-        h2 No Reports Found
-      else
-        .row
-          .filter-wrap.col-sm-3
-            .filter-controls
-              +filterControls query=query
-          .table-wrap.col-sm-9
+    .container.reports-table
+      .filter-controls
+        +filterControls query=query
+      .row
+        .filter-wrap.col-sm-
+        .table-wrap.col-sm-9
+          if isEmpty
+            h2 No Reports Found
+          else
             +reactiveTable collection=collection settings=settings
