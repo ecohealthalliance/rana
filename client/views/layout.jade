@@ -21,16 +21,7 @@ template(name="layout")
             .navbar-right
               +accountsHeaderButtons
             ul.nav.navbar-nav
-              li
-                a(href="/study") New Study
-              li
-                a(href="/studies") All Studies
-              li
-                a(href="/map") Report Map
-              li
-                a(href="/table") Report Table
-              li
-                a(href="/group/rana/info") About Ranavirus
+              +navLinks
             
     .fluid-container
         +yield
@@ -43,3 +34,15 @@ template(name="layout")
         .logo.eha
           a(href="http://ecohealthalliance.org")
             h2 EcoHealth Alliance
+
+template(name="navLinks")
+  li
+    a(href="/study") New Study
+  li
+    a(href="/studies") All Studies
+  li
+    a(href="/map") Report Map
+  li
+    a(href="/table") Report Table
+  li
+    a(href="/group/rana/info") About Ranavirus
