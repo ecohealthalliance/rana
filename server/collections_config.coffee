@@ -67,6 +67,9 @@ Meteor.publish 'reports', ->
     ]
   })
 
+Meteor.publish 'reviews', (reportId)->
+  collections.Reviews.find({reportId : reportId})
+
 allowCreatorAndAdmin = (userId, doc) ->
   if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
     return true
@@ -79,6 +82,11 @@ allowCreatorAndAdmin = (userId, doc) ->
   remove: allowCreatorAndAdmin
 
 @collections.Studies.allow
+  insert: allowCreatorAndAdmin
+  update: allowCreatorAndAdmin
+  remove: allowCreatorAndAdmin
+
+@collections.Reviews.allow
   insert: allowCreatorAndAdmin
   update: allowCreatorAndAdmin
   remove: allowCreatorAndAdmin
