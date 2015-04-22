@@ -250,6 +250,13 @@
       .call(callback);
     });
 
+    this.When('I click on the edit profile button',
+    function(callback){
+      helper.world.browser
+      .click('.edit-profile')
+      .call(callback);
+    });
+
   };
 
 })();
