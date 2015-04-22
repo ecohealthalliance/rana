@@ -9,6 +9,7 @@
     border 0
     margin-left 5px
     text-shadow none
+    font-size 13px
     buttonHover(trans-white)
     transition()
     &:focus
@@ -18,13 +19,20 @@
 .nav
   float right
 
-.navbar-nav > li > a
-  color white
-  buttonHover()
+.account
+  margin-left 10px
 
-.navbar-nav .active
+.navbar-nav
+  margin-right 10px
+  > li > a
+    color white
+    buttonHover()
+    font-size 13px
+
+.navbar-nav .active a
   background white
   color body-text
+  text-shadow none
   
 .navbar-brand 
   font-weight 600
@@ -44,6 +52,25 @@
     float none
     li
       border-bottom l-gray 1px solid
+      &:last-child
+        border 0
   .navbar-brand
     width 75%
     height auto
+  .navbar-nav
+    margin-right 0
+  .account
+    margin-left 0
+    button
+      width 80%
+      margin-top 15px
+      margin-bottom 15px
+      margin-right auto
+      margin-left auto
+      padding 15px
+      display block
+  .navbar .btn, .navbar .btn-default
+    margin-left auto
+
+  .navbar-collapse
+    padding-right 0
