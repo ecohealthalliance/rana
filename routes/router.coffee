@@ -27,6 +27,7 @@ Router.route('editReport',
   where: 'client'
   data: ->
     report: getCollections().Reports.findOne @params.reportId
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
     Meteor.subscribe("reviews", @params.reportId)

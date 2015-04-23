@@ -52,7 +52,8 @@ template(name="reportForm")
   else
     h3 Invalid form id
 
-  .review-panel
-    .review-panel-header Reviews
-    .review-content(style="display:none;")
-      +reviews
+  unless eq type 'insert'
+    .review-panel
+      .review-panel-header Reviews
+      .review-content(style="display:none;")
+        +reviews reportId=report._id

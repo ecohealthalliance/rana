@@ -27,4 +27,4 @@ Meteor.methods
       collections.Reports.remove { 'studyId': studyId }
 
   getSpeciesBySynonym: (synonym) =>
-    @__SpeciesCollection.find({ synonyms: synonym }).fetch()
+    @__SpeciesCollection.find({ lowerCaseSynonyms: synonym.toLowerCase() }).fetch()

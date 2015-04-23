@@ -112,5 +112,7 @@ if __name__ == '__main__':
       "entity": result["entity"]["value"],
       "genera": genera,
       "primaryName": binomials[0],
-      "synonyms": list(synSet)
+      "synonyms": list(synSet),
+      # This is for case insensitive searches
+      "lowerCaseSynonyms": [syn.lower() for syn in synSet]
     })

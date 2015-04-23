@@ -27,7 +27,18 @@
             "Wood frog",
             "Lithobates sylvaticus",
             "Boskikker",
-            "Waldfrosch" 
+            "Waldfrosch"
+          ],
+          "lowerCaseSynonyms" : [
+            "лесная лягушка",
+            "l. sylvaticus",
+            "rana sylvatica",
+            "żaba leśna",
+            "grenouille des bois",
+            "wood frog",
+            "lithobates sylvaticus",
+            "boskikker",
+            "waldfrosch"
           ],
           "entity" : "http://dbpedia.org/resource/Wood_frog"
         });
