@@ -100,5 +100,5 @@ Template.table.events(
       getCollections().Reports.remove(reportId)
   'click .toggle-filter': () ->
     $('.filter-controls').toggleClass('hidden')
-    $('.toggle-filter').toggleClass('positioned showingOpts')
+    $('.toggle-filter').toggleClass('showingOpts')
 )
