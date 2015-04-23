@@ -1,3 +1,11 @@
+.reports-table
+  .group-wrap,
+  .filter-wrap
+    margin 0
+
+.group-wrap
+  margin 10px
+
 .filter-controls
   padding 10px
   background ll-gray
@@ -5,82 +13,71 @@
   border 1px solid darken(ll-gray, 10%)
   margin-top 10px
 
-.filter-panel
-  position relative
-
-.reset-wrap
-  padding 0
-
 .filter
   margin-top 20px
   margin 10px auto
   padding-top 20px
   border-top 1px solid l-gray
 
-.group-wrap
-  margin 10px
+.filter-blocks
+  &::after
+    clearFix()
 
-.reports-table
-  .group-wrap,
-  .filter-wrap
-    margin 0
-    
+.filter-panel
+  position relative
+
 .filter-wrap
   margin 5px
   &::after
     clearFix()
 
-.filter-blocks
-  &::after
-    clearFix()
+  .autoform-array-item,
+  .autoform-add-item
+    position relative
+    float left
+    width 23%
+    padding 20px
+    background white
+    border 1px solid darken(ll-gray,10%)
+    border-radius 5px
+    margin 1%
+    box-shadow 0 1px 2px rgba(100,100,100,.1)
+    
+  .autoform-array-item
+    min-height 250px
+    h3
+      display none
 
-.autoform-array-item,
-.autoform-add-item
-  position relative
-  float left
-  width 23%
-  padding 20px
-  background white
-  border 1px solid darken(ll-gray,10%)
-  border-radius 5px
-  margin 1%
-  box-shadow 0 1px 2px rgba(100,100,100,.1)
-  
-.autoform-array-item
-  min-height 250px
-  h3
-    display none
-
-.autoform-remove-item
-  position absolute
-  top 4px
-  right 4px
-  font-size 24px
-  margin 0
-  color d-gray
-  span
-    top 0
-    line-height 0
-  &:hover
-    color strong-primary
-  
-.autoform-add-item
-  text-align center
-  min-height 265px
-  span
+  .autoform-remove-item
     position absolute
-    top 50%
-    left 50%
-    transform translate(-50%, -50%)
-    font-size 40px    
-    color m-gray
-    transition()
-  &:hover
-    background darken(ll-gray, 2%)
-    transition()
+    top 4px
+    right 4px
+    font-size 24px
+    margin 0
+    color d-gray
     span
-      color darken(m-gray, 10%)
+      top 0
+      line-height 0
+    &:hover
+      color strong-primary
+    
+  .autoform-add-item
+    text-align center
+    min-height 265px
+    span
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      font-size 40px    
+      color m-gray
       transition()
+    &:hover
+      background darken(ll-gray, 2%)
+      transition()
+      span
+        color darken(m-gray, 10%)
+        transition()
 
 .table-filters
   .filter-buttons
@@ -98,7 +95,6 @@
     &::after
       clearFix()
     
-
 .map-filters
   .autoform-array-item,
   .autoform-add-item
@@ -110,6 +106,7 @@
     font-size 24px
   .filter-buttons
     margin 0 10px
+
 
 #control-panel
   position absolute
