@@ -26,7 +26,7 @@ numInvolvedOptions =
     type: Date
     optional: true
     autoform:
-      tooltip: """Enter the date when the ranavirus event being reported occurred or was disco vered.
+      tooltip: """Enter the date when the ranavirus event being reported occurred or was discovered.
         This may be the date that carcasses were collected.
         If this date is unavailable or unknown, then the date that the diagnostic tests were performed can be used."""
   eventLocation:
