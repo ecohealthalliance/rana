@@ -211,17 +211,6 @@
         .call(callback);
     });
 
-    this.Then("I should not see a checkbox for the edit column",
-    function (callback) {
-      helper.world.browser
-        .getTextWhenVisible('.reactive-table-columns-dropdown li:last-child label',
-        function(err, text){
-          assert(!err);
-          assert.notEqual(text.trim(), "Controls column has visible checkbox.");
-        })
-        .call(callback);
-    });
-
     this.Then(/^I should( not)? see the text "([^"]*)"/,
     function (shouldNot, text, callback) {
 
