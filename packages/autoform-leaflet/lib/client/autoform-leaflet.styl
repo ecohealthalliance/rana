@@ -1,8 +1,7 @@
 makeButton(color, text, shadow = 0)
-  color text !important
+  color text
   darker = darken(color, 10%)
   background color
-  color white
   border 1px solid darker
   transition .2s
   font-weight 300
@@ -58,6 +57,7 @@ makeButton(color, text, shadow = 0)
 
 .leaflet-locate
   makeButton(#377BB5, white)
+  
 .leaflet-clear
   makeButton(#ebebeb, #333, 255)
 
