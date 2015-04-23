@@ -31,9 +31,17 @@
 
     this.Then('I should be redirected to the "$path" page', function (path, callback) {
       helper.world.browser
-      .pause(2000)
+      .pause(4000)
       .url(function (err, result) {
-        assert(!err);
+        assert.ifError(err);
+        if(result.value.slice(-path.length) !== path) {
+          helper.world.browser.saveScreenshot(
+            helper.getAppDirectory() +
+            "/tests/screenshots/redirect failure - " +
+            helper.world.scenario.getName() +
+            ".png"
+          );
+        }
         assert.equal(result.value.slice(-path.length), path);
       }).call(callback);
     });
@@ -86,7 +94,7 @@
         });
         window.setTimeout(done, 2000);
       }, query, _.once(function(err, ret){
-        assert(!err);
+        assert.ifError(err);
         if(shouldNot) {
           assert(!ret.value, 'Report found');
         } else {
@@ -95,48 +103,86 @@
       })).call(callback);
     });
 
-    this.Given(/^there is a report( with a geopoint)? in the database$/,
-    function(withGeo, callback) {
-      helper.resetTestDB([{
+    this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,
+    function(withGeo, someoneElse, callback) {
+      var report = {
         studyId: 'fakeid',
         consent: true,
-        contact: {name: 'Text User', 'email': 'test@foo.com'},
-        dataUsePermissions: "Share full record",
-        eventLocation: {
+        contact: {name: 'Test User', email: 'test@foo.com'},
+        dataUsePermissions: "Share full record"
+      };
+      if(withGeo) {
+        report["eventLocation"] = {
           source: 'LonLat',
           northing: 1,
           easting: 2,
           zone: 3,
+          degreesLon: -170,
+          minutesLon: 30,
+          secondsLon: 40.58647497889751,
+          degreesLat: 0,
+          minutesLat: 0,
+          secondsLat: 0.032469748221482304,
+          country: 'USA',
           geo: {
             type: 'Point',
             coordinates: [ 121.55189514218364, 25.046919772516173 ]
           }
-        }
-      }], function(err){
-        if(err) {
-          console.log(err);
-        }
-        assert(!err);
+        };
+      }
+      if(someoneElse) {
+        report['createdBy'] = {
+          userId: "fakeId",
+          name: "Someone Else"
+        };
+      }
+      helper.addReports([report], function(err){
+        assert.ifError(err);
         helper.world.browser
-        .executeAsync(function(done){
-          Tracker.autorun(function(){
-            var report = collections.Reports.findOne({
-              eventLocation: {$exists: true}
-            });
-            if(report) done(report);
-          });
-          window.setTimeout(done, 2000);
-        }, _.once(function(err, ret){
-          assert(!err);
-          assert(ret.value, "No reports in the database");
-          callback();
-        }));
+        .waitForReport(report)
+        .call(callback);
       });
+    });
+
+    this.Then("there should be no delete button for the report by someone else",
+    function(callback){
+      helper.world.browser
+        .mustExist('.reactive-table tr')
+        .execute(function() {
+          return $('.reactive-table tr').map(function(idx, element){
+            var $el = $(element);
+            var someoneElse = /Someone Else/.test(
+              $el.find('td[class="createdBy.name"]').text()
+            );
+            var hasDelete = Boolean($el.find(".remove-form").length);
+            if(someoneElse && hasDelete) {
+              return $el.find('td').map(function(idx, item){
+                return item.textContent;
+              }).toArray().join(", ");
+            }
+            return false;
+          });
+        }, function(err, result){
+          assert.ifError(err);
+          var badRows = result.value.filter(function(item){
+            return item;
+          });
+          assert.equal(badRows.length, 0, "Delete button found in rows:\n" + badRows.join("\n"));
+        })
+        .call(callback);
     });
 
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
+    });
+
+    this.When("I delete the report", function(callback){
+      helper.world.browser
+        .clickWhenVisible(".remove-form")
+        .alertText("delete", assert.ifError)
+        .alertAccept(assert.ifError)
+        .call(callback);
     });
 
     this.Then("I should not see a checkbox for the edit column",
@@ -150,13 +196,12 @@
         .call(callback);
     });
 
-    this.Then(/^I should( not)? see the text \"(text)\"/,
+    this.Then(/^I should( not)? see the text "([^"]*)"/,
     function (shouldNot, text, callback) {
 
       helper.world.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
-          console.log(bodyText);
           assert(!err);
           if (shouldNot) {
             assert(
@@ -170,6 +215,13 @@
             );
           }
         }).call(callback);
+    });
+
+    this.When('I click on the edit button',
+    function(callback){
+      helper.world.browser
+      .click('.reactive-table td.controls .btn-edit')
+      .call(callback);
     });
 
   };

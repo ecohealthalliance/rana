@@ -63,17 +63,19 @@
       afFieldInput:
         noselect: true
   speciesGenus:
-    label: 'Species Affected Genus'
+    label: 'Genus'
     type: String
     autoform:
       type: 'genusAutocomplete'
     optional: true
   speciesName:
-    label: 'Species Affected Name'
+    label: 'Species'
     type: String
     optional: true
+    custom: ()->
+      if this.value?.length and not /.+\s.+/.test(this.value) then "notBinomial"
   speciesNotes:
-    label: 'Species Notes'
+    label: 'Extra notes or comments about the species'
     type: String
     optional: true
     autoform:
@@ -88,7 +90,7 @@
           { value: 'introduced', label: 'Introduced' }
         ]
         noselect: true
-  ranavirusConfirmMethods:
+  ranavirusConfirmationMethods:
     type: Array
     optional: true
     autoform:
@@ -104,7 +106,7 @@
       ]
       afFieldInput:
         noselect: true
-  'ranavirusConfirmMethods.$':
+  'ranavirusConfirmationMethods.$':
     label: """Ranavirus Confirmation Method"""
     type: String
     autoform:
@@ -116,7 +118,7 @@
     autoform:
       template: 'afFieldValueContains'
       afFieldValueContains:
-        name: 'ranavirusConfirmMethods'
+        name: 'ranavirusConfirmationMethods'
         value: 'other'
   sampleType:
     type: [String]
@@ -142,10 +144,11 @@
         name: 'sampleType'
         value: 'other'
   additionalNotes:
-    label: 'Additional Notes'
+    label: 'Additional Notes (these will be included in published reports)'
     type: String
     optional: true
     autoform:
+      type: "textarea"
       rows: 5
   consent:
     type: Boolean
@@ -192,3 +195,7 @@
     type: String
     autoform:
       omit: true
+
+SimpleSchema.messages(
+  "notBinomial": "Binomial species names are required."
+)

@@ -24,11 +24,13 @@ Router.route('editReport',
   where: 'client'
   data: ->
     reportId: @params.reportId
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
+    Meteor.subscribe("reviews", @params.reportId)
   waitOn: ->
     [
-      Meteor.subscribe("reports"),
+      Meteor.subscribe("reports")
       Meteor.subscribe("studies")
     ]
 )
@@ -41,18 +43,16 @@ Router.route('newStudy',
     Meteor.subscribe("genera")
   waitOn: ->
     [
-      Meteor.subscribe("csvfiles"),
       Meteor.subscribe("studies")
     ]
 )
 
 Router.route('/table',
   where: 'client'
-  data: ->
-    collection: collections.Reports
   waitOn: ->
     [
       Meteor.subscribe("reports")
+      Meteor.subscribe("groupByPath", "rana")
     ]
 )
 

@@ -1,4 +1,4 @@
-Groups = @Groups
+Groups = share.Groups
 
 Invites = new Mongo.Collection 'invites'
 
@@ -32,7 +32,7 @@ if Meteor.isServer
         userEmail = Meteor.users.findOne(@userId).emails[0].address
 
         Email.send {
-          from: "#{groupName} Administrator"
+          from: "#{groupName} Administrator<no-reply@ecohealth.io>"
           to: doc.email
           subject: "Join #{groupName}"
           text: "You have been invited to #{groupName} by #{userEmail}. Visit #{Meteor.absoluteUrl()}join/#{inviteId} to join."
@@ -56,4 +56,4 @@ if Meteor.isServer
     groupId = Invites.findOne({_id: inviteId})?.group
     [Invites.find({_id: inviteId}), Groups.find({_id: groupId})]
 
-@Invites = Invites
+share.Invites = Invites

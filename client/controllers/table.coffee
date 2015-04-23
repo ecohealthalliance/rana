@@ -1,9 +1,19 @@
 getCollections = => @collections
 
-Template.table.isEmpty = =>
-  not @collections.Reports.findOne()
+Template.table.created = ->
+  @query = new ReactiveVar()
+
+Template.table.query = ->
+  Template.instance().query
+
+Template.table.isEmpty = ->
+  getCollections().Reports.find(Template.instance().query.get()).count() is 0
+
+Template.table.collection = ->
+  getCollections().Reports.find(Template.instance().query.get())
 
 Template.table.settings = =>
+  isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
   schema = @collections.Reports.simpleSchema().schema()
 
   fields = []
@@ -16,8 +26,14 @@ Template.table.settings = =>
         String(val.geo.coordinates[0]) + ', ' + String(val.geo.coordinates[1])
       else
         ''
-
-  for key in ["speciesGenus", "speciesName", "screeningReason", "populationType"]
+  
+  columns = [
+    "speciesGenus"
+    "speciesName"
+    "screeningReason"
+    "populationType"
+  ]
+  for key in columns
     do (key) ->
       label = schema[key].label or key
       if label.length > 30
@@ -62,17 +78,18 @@ Template.table.settings = =>
     label: ""
     hideToggle: true
     fn: (val, obj) ->
-      if obj.createdBy.userId == Meteor.userId()
+      if obj.createdBy.userId == Meteor.userId() or isAdmin
         new Spacebars.SafeString("""
-          <a class="btn btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
+          <a class="btn btn-edit btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
           <a class="btn btn-danger remove-form" data-id="#{obj._id}">Remove</a>
         """)
       else
         new Spacebars.SafeString("""
-          <a class="btn btn-primary" href="/form/#{obj._id}">View</a>
+          <a class="btn btn-primary" href="/report/#{obj._id}">View</a>
         """)
 
   showColumnToggles: true
+  showFilter: false
   fields: fields
 
 Template.table.events(

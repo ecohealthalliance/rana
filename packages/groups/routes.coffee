@@ -1,5 +1,5 @@
-Groups = @Groups
-Invites = @Invites
+Groups = share.Groups
+Invites = share.Invites
 
 Router.route "/group/:groupPath", {
 
@@ -36,5 +36,14 @@ Router.route "/join/:inviteId", {
   waitOn: () ->
     Meteor.subscribe "invite", @params.inviteId
 }
+
+Router.route('/group/:groupPath/info',
+  where: 'client'
+  template: 'groupInfo'
+  data: ->
+    group: Groups.findOne {path: @params.groupPath}
+  waitOn: ->
+    Meteor.subscribe "groupByPath", @params.groupPath
+)
 
 Router.plugin "ensureSignedIn", {only: ["newGroup", "join"]}

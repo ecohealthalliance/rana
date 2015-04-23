@@ -25,7 +25,7 @@ Package.onUse(function(api) {
       'mquandalle:jade@0.4.1',
       'aldeed:autoform@4.2.2',
       'fuatsengul:leaflet@1.0.1',
-      'proj4:proj4'
+      'rana:mapping'
     ], 'client'
   );
 

@@ -1,3 +1,6 @@
+# This is only global so it can be initialized in the test fixtures.
+@__SpeciesCollection = new Mongo.Collection 'species' 
+
 Meteor.methods
 
   getCSVData: (fileId) =>
@@ -14,3 +17,6 @@ Meteor.methods
         throw new Meteor.Error 500, 'The uploaded file could not be parsed. Please check the format and try again.'
     else
       false
+  
+  getSpeciesBySynonym: (synonym) =>
+    @__SpeciesCollection.find({ lowerCaseSynonyms: synonym.toLowerCase() }).fetch()

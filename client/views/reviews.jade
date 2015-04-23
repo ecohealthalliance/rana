@@ -1,0 +1,22 @@
+template(name="reviews")
+  each reviews
+    .panel.panel-default
+      .panel-heading
+        h3.panel-title Rating #{scaledRating} / #{maxRating}
+      .panel-body
+        p #{comment}
+        p
+          i #{createdBy.name}
+  form#add-review
+    .panel.panel-default
+      .panel-heading
+        h3.panel-title New Review
+      .panel-body
+        .form-group
+          label Data Quality Rating (1 - #{maxRating})
+          input.form-control(type="number" name="rating" min="1" max="#{maxRating}")
+        .form-group
+          label Comment
+          textarea.form-control.new-comment(name="comment")
+        .btn-group
+          button.btn.btn-primary.btn-lg.btn-block.add-comment(type="submit") Add Review
