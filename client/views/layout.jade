@@ -5,24 +5,23 @@ head
     rel='stylesheet' type='text/css')
 
 template(name="layout")
-  body
-    .navbar.navbar-inverse.navbar-fixed.top
-        .container
-            .navbar-header
-              a.navbar-brand Ranavirus Reporting System
-            ul.nav.navbar-nav
-              li
-                a(href="/study") New Study
-              li
-                a(href="/studies") All Studies
-              li
-                a(href="/map") Report Map
-              li
-                a(href="/table") Report Table
-              li
-                a(href="/group/rana/info") Ranavirus Information
-            .navbar-right
-                +accountsHeaderButtons
+  .navbar.navbar-inverse.navbar-fixed.top
+      .container
+          .navbar-header
+            a.navbar-brand Ranavirus Reporting System
+          ul.nav.navbar-nav
+            li
+              a(href="/study") New Study
+            li
+              a(href="/studies") All Studies
+            li
+              a(href="/map") Report Map
+            li
+              a(href="/table") Report Table
+            li
+              a(href="/group/rana/info") Ranavirus Information
+          .navbar-right
+              +accountsHeaderButtons
 
-    .fluid-container
-        +yield
+  .fluid-container
+      +yield

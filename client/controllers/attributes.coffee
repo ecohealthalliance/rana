@@ -19,7 +19,7 @@ Template.registerHelper 'dynamicAttrs', () ->
       schema[name].autoform?.tooltip
 
   if tooltip
-    'data-toggle': "tooltip"
+    'data-toggle': "popover"
     'data-content': tooltip
     'tooltip': true
     'class': 'tooltipped '+required
