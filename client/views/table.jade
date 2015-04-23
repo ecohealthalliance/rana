@@ -1,7 +1,7 @@
 template(name="table")
   section
     .container.reports-table
-      button.toggle-filter.btn.btn-primary(href="#") Filter Table 
+      button.toggle-filter.positioned.btn.btn-primary(href="#") Filter Table 
       .filter-controls.table-filters.hidden
         +filterControls query=query table=true
       if isEmpty

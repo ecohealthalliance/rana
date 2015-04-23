@@ -82,7 +82,7 @@ Template.table.settings = =>
           <a class="btn btn-primary" href="/report/#{obj._id}">View</a>
         """)
 
-  showColumnToggles: false
+  showColumnToggles: true
   showFilter: false
   fields: fields
 
@@ -94,5 +94,5 @@ Template.table.events(
       getCollections().Reports.remove(reportId)
   'click .toggle-filter': () ->
     $('.filter-controls').toggleClass('hidden')
-    console.log "clicked"
+    $('.toggle-filter').toggleClass('positioned showingOpts')
 )
