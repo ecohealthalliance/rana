@@ -1,6 +1,6 @@
 template(name="groupByControls")
   select#group-by.form-control
-    option(value="" disabled selected) Group By
+    option(value="" default) Group By
     each groups
       if selected
         option(value=value selected) {{label}}
