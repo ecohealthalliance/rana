@@ -1,5 +1,3 @@
-getCollections = => @collections
-
 Template.studies.helpers
 
   isEmpty: () =>
