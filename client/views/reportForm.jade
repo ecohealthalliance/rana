@@ -1,7 +1,11 @@
 template(name="reportForm")
 
   if type
-    h3 {{reportHeader}}
+    h3 #{study.name}
+      if isInsert
+        | - New Report
+      else if isUpdate
+        | - Update Report
 
     +autoForm(
       id="ranavirus-report"

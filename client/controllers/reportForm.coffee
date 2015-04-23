@@ -47,6 +47,12 @@ AutoForm.addHooks(
 
 Template.reportForm.helpers
 
+  isInsert: ->
+    Template.currentData().type == 'insert'
+
+  isUpdate: ->
+    Template.currentData().type == 'update'
+
   reportDoc: =>
     if Template.currentData().report
       Template.currentData().report
@@ -55,22 +61,6 @@ Template.reportForm.helpers
       contactFromUser = @contactFromUser()
       @mergeObjects study.contact, contactFromUser
       study
-
-  type: ->
-    if not Template.currentData()?.report
-      "insert"
-    else if Meteor.userId() and Meteor.userId() == Template.currentData().report.createdBy.userId
-      "update"
-    else
-      "readonly"
-
-  reportHeader: ->
-    if Template.currentData().report
-      studyName = getCollections().Studies.findOne(Template.currentData().report.studyId).name
-      "#{ studyName } - Edit Report"
-    else
-      studyName = Template.currentData().study.name
-      "#{ studyName } - New Report"
 
 Template.reportForm.events
   'change .file-upload': (evt)->
