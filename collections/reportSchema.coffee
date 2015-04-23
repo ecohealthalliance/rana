@@ -38,7 +38,7 @@ numInvolvedOptions =
       afFieldInput:
         type: 'leaflet'
       tooltip: """Where were the carcasses actually collected or animals sampled?
-        Please provide the highest resolution data possible using (UTM or DD coordinates)."""
+        Please provide the highest resolution data possible (using UTM or DD coordinates)."""
   #eventCountry:
     #label: 'Event Country'
     #type: String
