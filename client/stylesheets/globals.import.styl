@@ -37,6 +37,18 @@ h4
   font-weight 600
   font-size 15px
 
+a,
+button,
+.btn
+  transition()
+  &:hover
+    transition()
+
+a
+  color primary
+  &:hover
+    color secondary
+
 textarea
   display block
   width 100%
@@ -86,11 +98,20 @@ textarea
 .loading
   loading(true)
 
+.hidden
+  display none
+  
+.showing
+  display block
+  
+.col-sm-0
+  width 0%
+
 .space-btm-2
-    margin-bottom 20px
+  margin-bottom 20px
 
 .space-btm-4
-    margin-bottom 40px
+  margin-bottom 40px
 
 @media (max-width: 768px)
   .add-space-btm
@@ -98,7 +119,8 @@ textarea
 
 select.form-control,
 input.form-control,
-textarea
+textarea,
+textarea.form-control
   border 2px solid m-gray
 
 input,

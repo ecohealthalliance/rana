@@ -1,3 +1,8 @@
+clearFix()
+  clear both
+  display block
+  content ""
+
 addFont(fontTitle, allTypes = true, type = '')
   @font-face
     if allTypes
@@ -9,6 +14,10 @@ addFont(fontTitle, allTypes = true, type = '')
 
 transition(time = .2s, prop = )
   transition: time prop
+
+vAlign()
+  display inline-block
+  vertical-align middle  
   
 makeButton(color, text = white, dark = false, noOutline = false)
   if dark 
@@ -36,7 +45,7 @@ loading(positioned=false)
   &::before
     @extend .icon
     animate(1.5s)
-    if position
+    if positioned
       position absolute
       top 50%
       left 45%

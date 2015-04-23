@@ -2,7 +2,6 @@ getCollections = => @collections
 
 Template.groupByControls.groups = ->
   [
-    ""
     "speciesName"
     "speciesGenus"
     "populationType"

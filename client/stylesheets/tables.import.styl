@@ -1,0 +1,50 @@
+.table > tbody > tr > td
+  vertical-align middle
+
+.reactive-table-options
+  width 100%
+  margin-bottom 10px
+  padding 0
+  float none !important
+  &::after
+    clearFix()
+
+.pull-right > .dropdown-menu
+  left 0
+
+.reactive-table-columns-dropdown
+  float left !important
+  padding 0
+  button
+    float none !important
+    
+.reactive-table-filter
+  width 33%
+  padding 0
+
+.table-wrap
+  .reactive-table-options
+    display none
+    
+.reports-table
+  .reactive-table-columns-dropdown
+    float left !important
+    padding 0
+    width 100%
+    button
+      float right !important
+  .pull-right > .dropdown-menu
+    left auto
+  .positioned
+    position absolute
+    z-index 200
+  .filter-controls
+    margin 10px 0
+
+.showingOpts
+  &::after
+    @extend .icons
+    vAlign()
+    content: 'x'
+    font-size 120%
+    padding-left 5px
