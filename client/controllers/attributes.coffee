@@ -1,4 +1,3 @@
-that = @
 Template.registerHelper 'dynamicAttrs', () ->
 
   schema = AutoForm.find().ss._schema
