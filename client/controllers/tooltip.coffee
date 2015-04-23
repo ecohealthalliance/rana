@@ -9,7 +9,7 @@ Template.studyForm.rendered = () ->
     trigger: 'hover'
     placement: 'right auto'
     container: 'body'
-    viewport
+    viewport:
       selector: 'body'
       padding: 10
 
