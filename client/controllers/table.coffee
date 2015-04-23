@@ -7,11 +7,7 @@ Template.table.query = ->
   Template.instance().query
 
 Template.table.isEmpty = ->
-  query = Template.instance().query.get()
-  if query
-    getCollections().Reports.find(query).count() is 0
-  else
-    getCollections().Reports.find().count() is 0
+  getCollections().Reports.find(Template.instance().query.get()).count() is 0
 
 Template.table.collection = ->
   getCollections().Reports.find(Template.instance().query.get())
