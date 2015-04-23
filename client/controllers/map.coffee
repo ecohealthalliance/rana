@@ -103,9 +103,9 @@ Template.map.rendered = ->
 
 Template.map.events
   'click .toggle-group': () ->
-    @$('.group-wrap').toggleClass('hidden showing')
-    @$('.toggle-group').toggleClass('active')
+    $('.group-wrap').toggleClass('hidden showing')
+    $('.toggle-group').toggleClass('active')
   'click .toggle-filter': () ->
-    @$('.map-filters').toggleClass('hidden showing')
-    @$('.toggle-filter').toggleClass('active')
+    $('.map-filters').toggleClass('hidden showing')
+    $('.toggle-filter').toggleClass('active')
 
