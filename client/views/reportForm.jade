@@ -51,7 +51,11 @@ template(name="reportForm")
             .col-md-4.col-sm-6.input-block
               +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
 
-      +notes
+      section.rm-pad-top
+        .container
+          .row
+            .col-sm-9
+              +afQuickField name='additionalNotes' id='additionalNotes'
 
       +permissions
 
