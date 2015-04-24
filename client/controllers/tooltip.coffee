@@ -3,7 +3,7 @@
 
 popoverOpts =
   trigger: 'hover'
-  placement: 'right auto'
+  placement: 'bottom auto'
   container: 'body'
   viewport:
     selector: 'body'
