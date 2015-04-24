@@ -1,8 +1,11 @@
 template(name="csvUpload")
   section.rm-pad.csvUpload
     .container
-      h3 CSV file upload
-      a(href='/importInstructions') CSV import instructions
+      .upload-wrap
+        h3.upload-file CSV file upload
+        a.instructions-link(href='/importInstructions') 
+          span CSV import instructions
+          span.glyphicon.glyphicon-info-sign
       .csv-error #{csvError}
       if importReports.count
         b File: &nbsp;
