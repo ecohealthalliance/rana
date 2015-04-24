@@ -6,7 +6,7 @@ Meteor.startup () ->
         path: 'rana'
         description: 'Global Ranavirus Reporting System'
         info: """
-          ### Ranavirus Information
+          ## Ranavirus Information
 
           - [Historical vertebrate Ranavirus reference list](http://www.ranavirus.org/resources/sample-page/)
           - [List of laboratories that test for ranavirus](http://www.ranavirus.org/resources/testing-labs/)

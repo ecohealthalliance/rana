@@ -1,8 +1,7 @@
 makeButton(color, text, shadow = 0)
-  color text !important
+  color text
   darker = darken(color, 10%)
   background color
-  color white
   border 1px solid darker
   transition .2s
   font-weight 300
@@ -17,10 +16,15 @@ makeButton(color, text, shadow = 0)
   &:active
     background darken(color, 20%)
 
+animate(speed)
+  animation spin speed infinite linear
+  -webkit-animation spin speed infinite linear
+  -moz-animation spin speed infinite linear
+  -o-animation spin speed infinite linear
+
 .leaflet-canvas
-  margin-top -70px
   min-width 100%
-  height 350px
+  min-height 500px
 
 .leaflet-search
   margin-top 16px
@@ -58,8 +62,23 @@ makeButton(color, text, shadow = 0)
 
 .leaflet-locate
   makeButton(#377BB5, white)
+  
 .leaflet-clear
   makeButton(#ebebeb, #333, 255)
+
+.btn-loading
+  &::before
+    font-family 'icon'
+    font-style normal
+    font-weight normal
+    padding-top 2px
+    position relative
+    top 2px
+    animate(1.5s)
+    content '\e031'
+    display inline-block
+    margin-right 10px
+    font-size 12px
 
 @media (max-width: 992px)
   .leaflet-canvas

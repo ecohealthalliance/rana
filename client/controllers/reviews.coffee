@@ -1,27 +1,31 @@
 getCollections = => @collections
 
-urlParams = null
+maxRating = 10
 
-Template.reviews.helpers 
-  reviews: =>
-    urlParams = Iron.controller().getParams()
-    if urlParams?.reportId
+Template.reviews.helpers
+  reviews: ->
+    if @reportId
       getCollections().Reviews.find({
-        reportId: urlParams.reportId
+        reportId: @reportId
       })
     else
       []
 
+  maxRating: () -> maxRating
+
+  scaledRating: () ->
+    @rating * maxRating
+
 Template.reviews.events
-  "submit #add-review" : (e) ->
+  "submit #add-review" : (e, template) ->
     e.preventDefault()
     comment = e.target.comment.value
-    rating = e.target.rating.value
-    if comment
+    rating = e.target.rating.value / maxRating
+    if comment or rating
       getCollections().Reviews.insert
-        comment: e.target.comment.value
+        comment: comment
         rating: rating
-        reportId: urlParams.reportId
+        reportId: template.data.reportId
         createdBy:
           userId: Meteor.userId()
           name: Meteor.user()?.profile?.name

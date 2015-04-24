@@ -17,19 +17,15 @@ Template.map.query = ->
 Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
   lMap = L.map(@$('.vis-map')[0]).setView([0, -0], 2)
-  L.tileLayer('//otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png', {
-    attribution: """
-    Map Data &copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors,
-    Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>
-    <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />
+  L.tileLayer('//{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: """Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.
     <br>
     CRS:
-    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" target="_blank">
-      EPSG:3857
+    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" >
+    EPSG:3857
     </a>,
-    Projection: Spherical Mercator
-    """
-    subdomains: '1234'
+    Projection: Spherical Mercator""",
+    subdomains: 'abcd',
     type: 'osm'
     maxZoom: 18
   }).addTo(lMap)
@@ -56,8 +52,15 @@ Template.map.rendered = ->
     ]
     groups = []
     if curGroupBy
+      getGroup = (report) ->
+        keys = curGroupBy.split "."
+        result = report
+        for key in keys
+          result = result?[key]
+        result
+      
       groups = _.uniq(data.map((report)->
-        report[curGroupBy]
+        getGroup(report)
       )).map((value, idx) ->
         name: value
         color: colors[idx]
@@ -70,7 +73,7 @@ Template.map.rendered = ->
     data?.forEach((report)->
       if curGroupBy
         color = _.findWhere(groups, {
-          name: report[curGroupBy]
+          name: getGroup(report)
         }).color
       else
         color = colors[0]
@@ -88,7 +91,7 @@ Template.map.rendered = ->
         })
         .addTo(markers)
         .bindPopup("""
-        <div>
+        <div class="map-popup">
         <dl>
           <dt>Date</dt>
           <dd>#{report.eventDate}</dd>
@@ -110,3 +113,12 @@ Template.map.rendered = ->
         """)
       )
     markers.addTo(lMap)
+
+Template.map.events
+  'click .toggle-group': () ->
+    $('.group-wrap').toggleClass('hidden showing')
+    $('.toggle-group').toggleClass('active')
+  'click .toggle-filter': () ->
+    $('.map-filters').toggleClass('hidden showing')
+    $('.toggle-filter').toggleClass('active')
+

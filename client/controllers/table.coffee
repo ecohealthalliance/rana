@@ -26,8 +26,14 @@ Template.table.settings = =>
         String(val.geo.coordinates[0]) + ', ' + String(val.geo.coordinates[1])
       else
         ''
-
-  for key in ["speciesGenus", "speciesName", "screeningReason", "populationType"]
+  
+  columns = [
+    "speciesGenus"
+    "speciesName"
+    "screeningReason"
+    "populationType"
+  ]
+  for key in columns
     do (key) ->
       label = schema[key].label or key
       if label.length > 30
@@ -92,4 +98,7 @@ Template.table.events(
     reply = prompt('Type "delete" to confirm that this report should be removed.')
     if reply == "delete"
       getCollections().Reports.remove(reportId)
+  'click .toggle-filter': () ->
+    $('.filter-controls').toggleClass('hidden')
+    $('.toggle-filter').toggleClass('showingOpts')
 )

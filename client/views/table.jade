@@ -1,10 +1,9 @@
 template(name="table")
   section
-    .container
-      .vis-container
-        #control-panel
-          +filterControls query=query
-        .vis-table
+    .container.reports-table
+      button.toggle-filter.btn.btn-primary(href="#") Filter Table 
+      .filter-controls.table-filters.hidden
+        +filterControls query=query
       if isEmpty
         h2 No Reports Found
       else

@@ -3,7 +3,7 @@ getCollections = => @collections
 Router.configure
   layoutTemplate: "layout"
   loadingTemplate: "loading"
-  
+
 Router.route('/', ()-> @redirect('/group/rana'))
 
 Router.route('newReport',
@@ -11,6 +11,7 @@ Router.route('newReport',
   template: 'reportForm'
   where: 'client',
   data: ->
+    type: 'insert'
     study: getCollections().Studies.findOne @params.studyId
   onAfterAction: ->
     Meteor.subscribe("genera")
@@ -26,7 +27,18 @@ Router.route('editReport',
   template: 'reportForm'
   where: 'client'
   data: ->
-    report: getCollections().Reports.findOne @params.reportId
+    report = getCollections().Reports.findOne @params.reportId
+    if report
+      study = getCollections().Studies.findOne report.studyId
+      type = if Meteor.userId() and Meteor.userId() == report.createdBy.userId
+          'update'
+        else
+          'readonly'
+
+    type: type
+    report: report
+    study: study
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
     Meteor.subscribe("reviews", @params.reportId)

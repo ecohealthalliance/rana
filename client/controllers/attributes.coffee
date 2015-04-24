@@ -1,16 +1,26 @@
-that = @
 Template.registerHelper 'dynamicAttrs', () ->
-  if !AutoForm.find().ss._schema[@atts.name].optional and 'selected' not of @
+
+  name = @atts.name.replace(/\.[\d+]\./, ".$.")
+
+  schema = AutoForm.find().ss._schema
+  if !schema[name]?.optional and 'selected' not of @
     required = 'required'
 
-  if 'value' of this
-    name = @atts.name + '.' + @value
-  else
-    name = @atts.name
+  
 
-  if name of that.tooltipTexts
-    'data-toggle': "tooltip"
-    'data-content': that.tooltipTexts[name]
+  tooltip =
+    if @value
+      value = @value
+      options = schema[name]?.autoform.options or schema[name]?.autoform.afFieldInput.options
+      option = _.find options, (option) ->
+        option.value is value
+      option?.tooltip
+    else
+      schema[name].autoform?.tooltip
+
+  if tooltip
+    'data-toggle': "popover"
+    'data-content': tooltip
     'tooltip': true
     'class': 'tooltipped '+required
   else if required
