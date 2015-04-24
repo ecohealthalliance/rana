@@ -1,9 +1,3 @@
-.map-wrap
-  position relative
-
-.leaflet-container
-  background mapBG
-
 sidebar-width = 300px
 top-nav-height = 52px
 
@@ -12,19 +6,27 @@ marker-height = 24px
 arrow-top = (marker-height * 4 / 5)
 arrow-width = (marker-width * 3 / 4)
 arrow-height = (arrow-width / 2)
-.map-marker {
+
+.map-wrap
+  position relative
+
+.leaflet-container
+  background mapBG
+
+.map-marker
   position relative
   text-align center
-  background black
-  width marker-width
-  height marker-height
-  border-radius 50%
   // Shift marker position so it points to the correct location
   margin-top (-(arrow-top + arrow-height))
   margin-left (-(marker-width / 2))
-  box-shadow inset 0 3px 3px white, 1px 5px 1px rgba(0,0,0,.5)
-}
-.map-marker .arrow {
+  text-shadow 0px 2px 5px rgba(0,0,0,.1)
+  &::before
+    content 'm'
+    display block
+    font-family icons
+    font-size 32px
+
+.map-marker .arrow
   position relative
   border-left arrow-height solid transparent
   border-right arrow-height solid transparent
@@ -33,7 +35,6 @@ arrow-height = (arrow-width / 2)
   left ((marker-width - arrow-width) / 2)
   width 0
   height 0
-}
 
 .vis-container
     position absolute
@@ -51,4 +52,3 @@ arrow-height = (arrow-width / 2)
 
 .leaflet-bar a, .leaflet-bar a:hover
   background rgba(255,255,255,.8)
-  

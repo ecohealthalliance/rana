@@ -40,15 +40,15 @@ Template.map.rendered = ->
     markers = new L.FeatureGroup()
     curGroupBy = Template.instance().groupBy.get()
     colors = [
-      '#8dd3c7'
-      '#ffffb3'
-      '#bebada'
-      '#fb8072'
-      '#80b1d3'
-      '#fdb462'
-      '#b3de69'
-      '#fccde5'
-      '#d9d9d9'
+      '#68c4b5'
+      '#ffff80'
+      '#9f98c8'
+      '#f95543'
+      '#5898c6'
+      '#fc9d31'
+      '#9ed53f'
+      '#f99fce'
+      '#bfbfbf'
     ]
     groups = []
     if curGroupBy
@@ -83,8 +83,7 @@ Template.map.rendered = ->
             className: 'map-marker-container'
             iconSize:null
             html:"""
-            <div class="map-marker" style="background-color:#{color};">
-              <div class="arrow" style="border-top-color:#{color};"></div>
+            <div class="map-marker" style="color:#{color};">
             </div>
             """
           })
