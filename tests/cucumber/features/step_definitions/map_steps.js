@@ -52,6 +52,8 @@
     this.When(/^I group the reports by "([^"]*)"$/,
     function (property, callback) {
       helper.world.browser
+      .click('.toggle-group')
+      .waitForVisible('#group-by')
       .selectByValue('#group-by', property)
       .call(callback);
     });

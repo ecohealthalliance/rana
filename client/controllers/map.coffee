@@ -52,8 +52,15 @@ Template.map.rendered = ->
     ]
     groups = []
     if curGroupBy
+      getGroup = (report) ->
+        keys = curGroupBy.split "."
+        result = report
+        for key in keys
+          result = result?[key]
+        result
+      
       groups = _.uniq(data.map((report)->
-        report[curGroupBy]
+        getGroup(report)
       )).map((value, idx) ->
         name: value
         color: colors[idx]
@@ -66,7 +73,7 @@ Template.map.rendered = ->
     data?.forEach((report)->
       if curGroupBy
         color = _.findWhere(groups, {
-          name: report[curGroupBy]
+          name: getGroup(report)
         }).color
       else
         color = colors[0]

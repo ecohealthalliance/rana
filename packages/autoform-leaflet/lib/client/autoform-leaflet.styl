@@ -16,6 +16,12 @@ makeButton(color, text, shadow = 0)
   &:active
     background darken(color, 20%)
 
+animate(speed)
+  animation spin speed infinite linear
+  -webkit-animation spin speed infinite linear
+  -moz-animation spin speed infinite linear
+  -o-animation spin speed infinite linear
+
 .leaflet-canvas
   min-width 100%
   min-height 500px
@@ -59,6 +65,20 @@ makeButton(color, text, shadow = 0)
   
 .leaflet-clear
   makeButton(#ebebeb, #333, 255)
+
+.btn-loading
+  &::before
+    font-family 'icon'
+    font-style normal
+    font-weight normal
+    padding-top 2px
+    position relative
+    top 2px
+    animate(1.5s)
+    content '\e031'
+    display inline-block
+    margin-right 10px
+    font-size 12px
 
 @media (max-width: 992px)
   .leaflet-canvas

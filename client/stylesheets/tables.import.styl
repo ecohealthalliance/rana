@@ -5,7 +5,7 @@
   width 100%
   margin-bottom 10px
   padding 0
-  float none !important
+  float none
   &::after
     clearFix()
 
@@ -16,7 +16,7 @@
   float left !important
   padding 0
   button
-    float none !important
+    float none
     
 .reactive-table-filter
   width 33%
@@ -27,12 +27,14 @@
     display none
     
 .reports-table
+  h2
+    margin-top 10px
   .reactive-table-columns-dropdown
-    float left !important
+    float left
     padding 0
     width 100%
     button
-      float right !important
+      float right
   .pull-right > .dropdown-menu
     left auto
   .positioned
@@ -45,6 +47,10 @@
   &::after
     @extend .icons
     vAlign()
-    content: 'x'
+    content 'x'
     font-size 120%
     padding-left 5px
+    
+.reactive-table-navigation 
+  .form-inline input
+    vertical-align initial
