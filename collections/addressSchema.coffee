@@ -4,6 +4,7 @@
   street:
     type: String
   street2:
+    label: "Street 2 (Apt/Suite #)"
     type: String,
     optional: true
   city:

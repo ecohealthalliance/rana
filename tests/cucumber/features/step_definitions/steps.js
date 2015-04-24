@@ -69,7 +69,8 @@
     this.When('I click the "$buttonName" button',
     function (buttonName, callback) {
       var buttonNameToSelector = {
-        "Columns" : ".reactive-table-columns-dropdown button"
+        "Columns" : ".reactive-table-columns-dropdown button",
+        "Remove" : "a.remove"
       };
       var selector = buttonName;
       if(buttonName in buttonNameToSelector) {
@@ -77,6 +78,31 @@
       }
       helper.world.browser
         .click(selector)
+        .call(callback);
+    });
+
+    this.When('I type "$word" into the prompt',
+    function (word, callback) {
+      helper.world.browser.alertText(word)
+        .call(callback);
+    });
+
+    this.When('I accept the prompt',
+    function (callback) {
+      helper.world.browser.alertAccept()
+      .call(callback);
+    });
+
+    this.When('I dismiss the toast',
+    function (callback) {
+      helper.world.browser.clickWhenVisible('.toast').pause(1000).call(callback);
+    });
+
+    // This is broken. Webdriver complains that another element would receive the click.
+    this.When('I click on the edit link in the toast',
+    function (callback) {
+      helper.world.browser
+        .click('.toast-message a')
         .call(callback);
     });
 
@@ -185,17 +211,6 @@
         .call(callback);
     });
 
-    this.Then("I should not see a checkbox for the edit column",
-    function (callback) {
-      helper.world.browser
-        .getTextWhenVisible('.reactive-table-columns-dropdown li:last-child label',
-        function(err, text){
-          assert(!err);
-          assert.notEqual(text.trim(), "Controls column has visible checkbox.");
-        })
-        .call(callback);
-    });
-
     this.Then(/^I should( not)? see the text "([^"]*)"/,
     function (shouldNot, text, callback) {
 
@@ -221,6 +236,13 @@
     function(callback){
       helper.world.browser
       .click('.reactive-table td.controls .btn-edit')
+      .call(callback);
+    });
+
+    this.When('I click on the edit profile button',
+    function(callback){
+      helper.world.browser
+      .click('.edit-profile')
       .call(callback);
     });
 

@@ -2,11 +2,23 @@ getCollections = () -> @collections
 
 Template.studyForm.helpers
 
-  importDoc: () =>
-    { contact: @contactFromUser() }
+  studyDoc: =>
+    Template.currentData()?.study or { contact: @contactFromUser() }
+
+  type: =>
+    if not Template.currentData()?.study
+      "insert"
+    else if Meteor.userId() and Meteor.userId() == Template.currentData().study.createdBy.userId
+      "update"
+    else
+      "readonly"
+
+  showCSV: ->
+    not Template.currentData().study
+
 
 AutoForm.hooks
-  'ranavirus-import':
+  'ranavirus-study':
 
     docToForm: (doc, ss)->
       if doc

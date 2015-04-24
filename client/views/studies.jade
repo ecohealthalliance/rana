@@ -1,0 +1,7 @@
+template(name="studies")
+  section
+    .container
+      if isEmpty
+        h2 No Studies Found
+      else
+        +reactiveTable collection=studies settings=settings

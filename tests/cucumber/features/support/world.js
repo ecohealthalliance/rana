@@ -188,11 +188,7 @@
                 console.log("Bad key: "+ key);
                 return;
               }
-              if (key === 'studyId') {
-                // studyId is designated as a select via options passed in via
-                // a helper, so it's not in the schema and can't be detected here.
-                browser.selectByValue('select[data-schema-key="' + key + '"]', value);
-              } else if (schema[key].autoform && schema[key].autoform.rows) { //textarea
+              if (schema[key].autoform && schema[key].autoform.rows) { //textarea
                 browser.setValue('textarea[data-schema-key="' + key + '"]', value);
               } else if (schema[key].type === Boolean) {
                 browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');

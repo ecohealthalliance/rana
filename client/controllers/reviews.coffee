@@ -2,7 +2,7 @@ getCollections = => @collections
 
 maxRating = 10
 
-Template.reviews.helpers 
+Template.reviews.helpers
   reviews: ->
     if @reportId
       getCollections().Reviews.find({

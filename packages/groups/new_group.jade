@@ -1,20 +1,17 @@
 template(name="newGroup")
+  .container
+    section.create-group
+      +autoForm collection=groups id="new-group-form" type="insert"
+          h2 Create a Group
+          .row
+            .col-sm-6.col-sm-offset-3
+              +afQuickField name="name"
 
-  +autoForm collection=groups id="new-group-form" type="insert"
-    .panel.panel-default.form-input-block
-      .panel-heading
-        h2 Create a Group
+              +afQuickField name="path"
 
-      .panel-body
-        .row
-          .col-lg-6
-            +afQuickField name="name"
+              +afQuickField name="description"
 
-            +afQuickField name="path"
-
-            +afQuickField name="description"
-
-        .row
-          .col-lg-4
-            .form-group
-              button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit
+          .row
+            .col-sm-4.col-sm-offset-4
+              .form-group
+                button.btn-lg.btn.btn-primary.btn-block(type='submit') Submit

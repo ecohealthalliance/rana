@@ -81,7 +81,7 @@ Template.table.settings = =>
       if obj.createdBy.userId == Meteor.userId() or isAdmin
         new Spacebars.SafeString("""
           <a class="btn btn-edit btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
-          <a class="btn btn-danger remove-form" data-id="#{obj._id}">Remove</a>
+          <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
         """)
       else
         new Spacebars.SafeString("""
@@ -98,4 +98,7 @@ Template.table.events(
     reply = prompt('Type "delete" to confirm that this report should be removed.')
     if reply == "delete"
       getCollections().Reports.remove(reportId)
+  'click .toggle-filter': () ->
+    $('.filter-controls').toggleClass('hidden')
+    $('.toggle-filter').toggleClass('showingOpts')
 )

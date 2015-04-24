@@ -98,6 +98,15 @@ Template.leaflet.rendered = ->
       @setMarker location
       @map.panTo location
 
+  @toggleLoader = (e) =>
+    details = $('.location-details')
+    if(e)
+      $(e.target).attr('disabled', true).addClass('btn-loading')
+      details.addClass('loading')
+    else
+      $('.leaflet-locate').attr('disabled', false).removeClass('btn-loading')
+      details.removeClass('loading')
+
   @reset = () =>
     @clearMarker()
     @map.panTo new L.LatLng(@options.defaultLat, @options.defaultLon)
@@ -123,24 +132,20 @@ Template.leaflet.rendered = ->
   @marker = null
 
   @map = L.map(@$('.leaflet-canvas')[0]).setView [0, -0], 2
-  L.tileLayer('//otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png', {
-    attribution: """
-    Map Data &copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors,
-    Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>
-    <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />
+  L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: """Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.
     <br>
     CRS:
-    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" target="_blank">
-      EPSG:3857
+    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" >
+    EPSG:3857
     </a>,
-    Projection: Spherical Mercator
-    """
-    subdomains: '1234'
-    type: 'osm'
+    Projection: Spherical Mercator""",
+    subdomains: 'abcd',
+    type: 'osm',
     maxZoom: 18
   }).addTo(@map)
   L.control.scale().addTo(@map)
-  
+
   if @data.value
     $(@$('.leaflet-search')[0]).val ''
     $(@$('.lon')[0]).val @data.value.geo.coordinates[0]
@@ -178,6 +183,9 @@ Template.leaflet.rendered = ->
     @updateMinSecFromLonLat()
     @map.setView @marker.getLatLng(), @map.getZoom()
 
+    @toggleLoader()
+
+
   @$('.leaflet-canvas').closest('form').on 'reset', =>
     @reset()
 
@@ -186,6 +194,7 @@ Template.leaflet.events
   'click .leaflet-locate': (e, t) ->
     e.preventDefault()
     unless navigator.geolocation then return false
+    t.toggleLoader(e)
     t.map.locate()
 
   'click .leaflet-clear': (e, t) ->

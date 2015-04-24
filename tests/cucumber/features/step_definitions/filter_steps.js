@@ -44,27 +44,35 @@
     this.When(/^I add a filter where "([^"]*)" is "([^"]*)"$/,
     function (property, value, callback) {
       helper.world.browser
-      .elements(".autoform-array-item", function(err, resp){
+      .isVisible('#filter-panel', function(err, isVisible) {
         assert.ifError(err);
-        var currentIdx = resp.value.length;
-        var propKey = "filters." + currentIdx + ".property";
-        var predKey = "filters." + currentIdx + ".predicate";
-        var valKey = "filters." + currentIdx + ".value";
-        helper.world.browser
-        .click(".autoform-add-item")
-        .pause(200)
-        .selectByValue('select[data-schema-key="' + propKey + '"]', property)
-        .selectByValue('select[data-schema-key="' + predKey + '"]', "=")
-        .setValue('input[data-schema-key="' + valKey + '"]', value)
-        .click('button[type="submit"]')
-        .call(callback);
-      });
+        if (!isVisible) {
+          helper.world.browser
+          .click('.toggle-filter')
+          .waitForVisible('#filter-panel')
+        }
 
+        helper.world.browser
+        .elements(".autoform-array-item", function(err, resp){
+          assert.ifError(err);
+          var currentIdx = resp.value.length - 1;
+          var propKey = "filters." + currentIdx + ".property";
+          var predKey = "filters." + currentIdx + ".predicate";
+          var valKey = "filters." + currentIdx + ".value";
+          helper.world.browser
+          .click(".autoform-add-item")
+          .selectByValue('select[data-schema-key="' + propKey + '"]', property)
+          .selectByValue('select[data-schema-key="' + predKey + '"]', "=")
+          .setValue('input[data-schema-key="' + valKey + '"]', value)
+          .click('button[type="submit"]')
+          .call(callback);
+        });
+      });
     });
     
     this.When(/^I remove the filters$/, function (callback) {
       helper.world.browser
-      .click(".reset")
+      .click(".clear")
       .call(callback);
     });
   };

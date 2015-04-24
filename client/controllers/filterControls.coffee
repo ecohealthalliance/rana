@@ -161,7 +161,7 @@ Template.filterControls.filter = ->
   Template.instance().filterCollection.findOne()
 
 Template.filterControls.events
-  'click .reset': ()->
+  'click .clear': ()->
     @._af.collection.remove(@._af.doc._id)
     @._af.collection.insert({
       filters: []

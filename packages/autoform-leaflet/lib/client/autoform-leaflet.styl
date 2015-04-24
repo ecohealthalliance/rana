@@ -1,6 +1,30 @@
+makeButton(color, text, shadow = 0)
+  color text
+  darker = darken(color, 10%)
+  background color
+  border 1px solid darker
+  transition .2s
+  font-weight 300
+  letter-spacing 0.03em
+  text-shadow 0 1px 0 rgba(shadow,shadow,shadow,.3)
+  &:hover,
+  &:focus
+    background darker
+    color white
+    transition .2s
+    border-color darker
+  &:active
+    background darken(color, 20%)
+
+animate(speed)
+  animation spin speed infinite linear
+  -webkit-animation spin speed infinite linear
+  -moz-animation spin speed infinite linear
+  -o-animation spin speed infinite linear
+
 .leaflet-canvas
-  width 500px
-  height 300px
+  min-width 100%
+  min-height 500px
 
 .leaflet-search
   margin-top 16px
@@ -32,5 +56,34 @@
 .form-group label
   width 300px
 
-.btn-group button
-  margin 16px
+.location-btns
+  margin-top 15px
+  margin-bottom 25px
+
+.leaflet-locate
+  makeButton(#377BB5, white)
+  
+.leaflet-clear
+  makeButton(#ebebeb, #333, 255)
+
+.btn-loading
+  &::before
+    font-family 'icon'
+    font-style normal
+    font-weight normal
+    padding-top 2px
+    position relative
+    top 2px
+    animate(1.5s)
+    content '\e031'
+    display inline-block
+    margin-right 10px
+    font-size 12px
+
+@media (max-width: 992px)
+  .leaflet-canvas
+    margin-top 20px
+  .location-btns
+    button
+      margin-bottom 10px
+      padding 15px

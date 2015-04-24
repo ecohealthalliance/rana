@@ -33,7 +33,8 @@
           'eventDate',
           'genBankAccessionNumbers',
           'eventLocation',
-          'sourceFile'
+          'sourceFile',
+          'studyId'
         ];
         defaultValues = _.omit(defaultValues, badKeys);
         if(!_.isEmpty(_.pick(customValues, badKeys))) {
@@ -83,6 +84,13 @@
     function(value, field, callback){
       helper.world.browser
       .click('div[data-schema-key="' + field + '"] input[value="' + value + '"]')
+      .call(callback);
+    });
+
+    this.When('I select the #(\d+) study',
+    function(studyIndex, callback){
+      helper.world.browser
+      .selectByIndex('select[data-schema-key="studyId"]', parseInt(studyIndex))
       .call(callback);
     });
 
@@ -209,6 +217,14 @@
       .checkValue('[data-schema-key="contact.institutionAddress.stateOrProvince"]', "NY")
       .checkValue('[data-schema-key="contact.institutionAddress.country"]', "USA")
       .checkValue('[data-schema-key="contact.institutionAddress.postalCode"]', "10001")
+      .call(callback);
+    });
+
+    this.Then("the information from the study should be prepopulated",
+    function(callback){
+      helper.world.browser
+      .pause(2000)
+      .checkValue('[data-schema-key="speciesGenus"]', "SomeGenus")
       .call(callback);
     });
   };
