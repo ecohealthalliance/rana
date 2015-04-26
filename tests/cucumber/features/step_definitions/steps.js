@@ -232,6 +232,17 @@
         }).call(callback);
     });
 
+    this.Then(/^I should be on the "([^"]*)" page$/,
+    function (page, callback) {
+
+      helper.world.browser.pause(2000).
+      url(function(err, res) {
+        assert(!err);
+        assert.equal(res.value, 'http://localhost:5000/' + page);
+      }).call(callback);
+
+    });
+
     this.When('I click on the edit button',
     function(callback){
       helper.world.browser

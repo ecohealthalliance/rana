@@ -1,6 +1,8 @@
 getCollections = => @collections
 contactFromUser = @contactFromUser
 
+urlParams = null
+
 AutoForm.addHooks(
   'ranavirus-report', {
     docToForm: (doc, ss)->
@@ -26,7 +28,7 @@ AutoForm.addHooks(
       <a href="/report/#{@docId}">Edit Report</a>
       """)
       window.scrollTo(0, 0)
-      redirectOnSubmit =  template.data?.query?.redirectOnSubmit
+      redirectOnSubmit = urlParams?.redirectOnSubmit
       if redirectOnSubmit
         Router.go(redirectOnSubmit)
       else
@@ -54,6 +56,7 @@ Template.reportForm.helpers
     Template.currentData().type == 'update'
 
   reportDoc: =>
+    urlParams = Template.currentData().urlQuery
     if Template.currentData().report
       Template.currentData().report
     else
