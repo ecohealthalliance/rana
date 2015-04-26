@@ -48,14 +48,15 @@ Meteor.publish 'pdfs', onlyById(collections.PDFs)
 
 Meteor.publish 'csvfiles', onlyById(collections.CSVFiles)
 
-Meteor.publish 'studies', ->
-  collections.Studies.find()
+Meteor.publish 'studies', onlyById(collections.Studies)
 
-Meteor.publish 'reports', ->
+ReactiveTable.publish "studies", collections.Studies
+
+ReactiveTable.publish 'reports', collections.Reports, () ->
   # Uncomment this if the admin should be allowed to see unpublished reports.
   #if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
-    #return collections.Reports.find({})
-  collections.Reports.find({
+    #return {}
+  {
     $or : [
       {
         "createdBy.userId": @userId
@@ -65,7 +66,68 @@ Meteor.publish 'reports', ->
         consent: true
       }
     ]
-  })
+  }
+
+Meteor.publish "reportLocations", () ->
+  collections.Reports.find(
+    {
+      $and: [
+        {
+          "eventLocation.source": {"$exists": true}
+        }
+        { 
+          $or: [
+            {
+              "createdBy.userId": @userId
+            }
+            {
+              dataUsePermissions: "Share full record",
+              consent: true
+            }
+          ] 
+        }
+      ]
+    }
+    {
+      fields:
+        eventLocation: 1
+        speciesName: 1
+        speciesGenus: 1
+        populationType: 1
+        vertebrateClasses: 1
+        ageClasses: 1
+        "createdBy.name": 1
+        eventDate: 1
+        totalAnimalsConfirmedInfected: 1
+        totalAnimalsConfirmedDiseased: 1
+    }
+  )
+
+Meteor.publishComposite 'reportAndStudy', (reportId) ->
+  find: () ->
+    collections.Reports.find
+      $and: [
+        {
+          _id: reportId
+        }
+        { 
+          $or: [
+            {
+              "createdBy.userId": @userId
+            }
+            {
+              dataUsePermissions: "Share full record",
+              consent: true
+            }
+          ] 
+        }
+      ]
+  children: [
+    {
+      find: (report) ->
+        collections.Studies.find {_id: report.studyId}
+    }
+  ]
 
 Meteor.publish 'reviews', (reportId)->
   collections.Reviews.find({reportId : reportId})

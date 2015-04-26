@@ -1,7 +1,7 @@
 template(name="studies")
   section
     .container
-      if isEmpty
-        h2 No Studies Found
-      else
-        +reactiveTable collection=studies settings=settings
+      +reactiveTable collection="studies" settings=settings
+
+template(name="noStudies")
+  h2 No Studies Found

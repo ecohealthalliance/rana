@@ -4,7 +4,7 @@ template(name="table")
       button.toggle-filter.btn.btn-primary(href="#") Filter Table 
       .filter-controls.table-filters.hidden
         +filterControls query=query
-      if isEmpty
-        h2 No Reports Found
-      else
-        +reactiveTable collection=collection settings=settings
+      +reactiveTable collection="reports" settings=settings
+
+template(name="noReports")
+  h2 No Reports Found

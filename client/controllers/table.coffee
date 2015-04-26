@@ -6,15 +6,20 @@ Template.table.created = ->
 Template.table.query = ->
   Template.instance().query
 
-Template.table.isEmpty = ->
-  getCollections().Reports.find(Template.instance().query.get()).count() is 0
-
-Template.table.collection = ->
-  getCollections().Reports.find(Template.instance().query.get())
-
 Template.table.settings = =>
   isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
   schema = @collections.Reports.simpleSchema().schema()
+
+  filters = []
+  query = Template.instance().query.get() or {}
+  # reactive-table filters don't support arbitrary queries yet
+  queries = if '$and' of query then query['$and'] else [query]
+  for q in queries
+    key = Object.keys(q)[0]
+    value = q[key]
+    filter = new ReactiveTable.Filter('reports-' + key, [key])
+    filter.set(value)
+    filters.push 'reports-' + key
 
   fields = []
 
@@ -91,6 +96,8 @@ Template.table.settings = =>
   showColumnToggles: true
   showFilter: false
   fields: fields
+  filters: filters
+  noDataTmpl: Template.noReports
 
 Template.table.events(
   'click .remove-form': (evt)->
