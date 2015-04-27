@@ -19,6 +19,12 @@ Template.table.settings = =>
   fields = []
 
   fields.push
+    key: "studyId"
+    label: "Study"
+    fn: (val, obj) ->
+      getCollections().Studies.findOne(val).name
+
+  fields.push
     key: "eventLocation"
     label: "Event Location"
     fn: (val, obj) ->
@@ -26,7 +32,7 @@ Template.table.settings = =>
         String(val.geo.coordinates[0]) + ', ' + String(val.geo.coordinates[1])
       else
         ''
-  
+
   columns = [
     "speciesGenus"
     "speciesName"

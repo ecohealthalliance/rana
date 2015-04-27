@@ -94,6 +94,7 @@ Router.route('/table',
   waitOn: ->
     [
       Meteor.subscribe("reports")
+      Meteor.subscribe("studies")
       Meteor.subscribe("groupByPath", "rana")
     ]
 )
@@ -103,6 +104,7 @@ Router.route('/map',
   waitOn: ->
     [
       Meteor.subscribe("reports")
+      Meteor.subscribe("studies")
     ]
 )
 
