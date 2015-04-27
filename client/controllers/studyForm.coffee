@@ -59,7 +59,8 @@ AutoForm.hooks
     after:
       insert: (err, res, template) =>
 
-        study = getCollections().Studies.findOne { _id: res }
+        Meteor.subscribe "studies", res, () =>
+          study = getCollections().Studies.findOne { _id: res }
 
-        if study and study.csvFile
-          @loadCSVData study.csvFile, study, res
+          if study and study.csvFile
+            @loadCSVData study.csvFile, study, res
