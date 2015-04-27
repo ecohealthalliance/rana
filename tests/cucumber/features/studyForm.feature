@@ -47,3 +47,16 @@ Feature: A form for setting up a ranavirus study
     And I type "delete" into the prompt
     And I accept the prompt
     Then I should see the text "No Studies Found"
+
+  Scenario: Trying to re-use a study name
+    Given I have logged in
+    And I am on the "study" page
+    When I fill out the study form
+    And I click submit
+    Then the webpage should not display a validation error
+    And I should see a "insert successful" toast
+    When I dismiss the toast
+    And I navigate to the "study" page
+    And I fill out the study form
+    And I click submit
+    Then the webpage should display a validation error

@@ -58,7 +58,7 @@ Template.map.rendered = ->
         for key in keys
           result = result?[key]
         result
-      
+
       groups = _.uniq(data.map((report)->
         getGroup(report)
       )).map((value, idx) ->
@@ -77,6 +77,7 @@ Template.map.rendered = ->
         }).color
       else
         color = colors[0]
+      studyName = getCollections().Studies.findOne(report.studyId).name
       if report.eventLocation and report.eventLocation isnt "," and report.eventLocation isnt null
         L.marker(report.eventLocation.geo.coordinates.reverse(), {
           icon: L.divIcon({
@@ -93,6 +94,8 @@ Template.map.rendered = ->
         .bindPopup("""
         <div class="map-popup">
         <dl>
+          <dt>Study</dt>
+          <dd>#{studyName}</dd>
           <dt>Date</dt>
           <dd>#{report.eventDate}</dd>
           <dt>Type of population</dt>

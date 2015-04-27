@@ -68,40 +68,48 @@ ReactiveTable.publish 'reports', collections.Reports, () ->
     ]
   }
 
-Meteor.publish "reportLocations", () ->
-  collections.Reports.find(
+Meteor.publishComposite "reportLocations", () ->
+  find: () ->
+    collections.Reports.find(
+      {
+        $and: [
+          {
+            "eventLocation.source": {"$exists": true}
+          }
+          { 
+            $or: [
+              {
+                "createdBy.userId": @userId
+              }
+              {
+                dataUsePermissions: "Share full record",
+                consent: true
+              }
+            ] 
+          }
+        ]
+      }
+      {
+        fields:
+          studyId: 1
+          eventLocation: 1
+          speciesName: 1
+          speciesGenus: 1
+          populationType: 1
+          vertebrateClasses: 1
+          ageClasses: 1
+          "createdBy.name": 1
+          eventDate: 1
+          totalAnimalsConfirmedInfected: 1
+          totalAnimalsConfirmedDiseased: 1
+      }
+    )
+  children: [
     {
-      $and: [
-        {
-          "eventLocation.source": {"$exists": true}
-        }
-        { 
-          $or: [
-            {
-              "createdBy.userId": @userId
-            }
-            {
-              dataUsePermissions: "Share full record",
-              consent: true
-            }
-          ] 
-        }
-      ]
+      find: (report) ->
+        collections.Studies.find {_id: report.studyId}, {fields: {name: 1}}
     }
-    {
-      fields:
-        eventLocation: 1
-        speciesName: 1
-        speciesGenus: 1
-        populationType: 1
-        vertebrateClasses: 1
-        ageClasses: 1
-        "createdBy.name": 1
-        eventDate: 1
-        totalAnimalsConfirmedInfected: 1
-        totalAnimalsConfirmedDiseased: 1
-    }
-  )
+  ]
 
 Meteor.publishComposite 'reportAndStudy', (reportId) ->
   find: () ->

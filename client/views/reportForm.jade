@@ -4,7 +4,8 @@ template(name="reportForm")
 
     section.rm-pad-btm
       .container
-        h2 #{study.name}
+        h2
+          a(href='/study/#{study._id}') #{study.name}
           if isInsert
             span - New Report
           else if isUpdate
@@ -60,7 +61,7 @@ template(name="reportForm")
   else
     h3 Invalid form id
 
-  unless eq type 'insert'
+  unless isInsert
     .review-panel
       .review-panel-header Reviews
       .review-content(style="display:none;")

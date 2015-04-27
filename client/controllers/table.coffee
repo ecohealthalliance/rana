@@ -22,6 +22,25 @@ Template.table.settings = =>
     filters.push 'reports-' + key
 
   fields = []
+  
+  studyVars = {}
+  getStudyNameVar = (studyId) ->
+    if studyVars[studyId]
+      return studyVars[studyId]
+    else
+      studyNameVar = new ReactiveVar("")
+      studyVars[studyId] = studyNameVar
+      onReady = () ->
+        studyName = getCollections().Studies.findOne(studyId)?.name
+        studyNameVar.set studyName
+      Meteor.subscribe "studies", studyId, onReady
+      return studyNameVar
+
+  fields.push
+    key: "studyId"
+    label: "Study"
+    fn: (val, obj) ->
+      getStudyNameVar(val).get()
 
   fields.push
     key: "eventLocation"
@@ -31,7 +50,7 @@ Template.table.settings = =>
         String(val.geo.coordinates[0]) + ', ' + String(val.geo.coordinates[1])
       else
         ''
-  
+
   columns = [
     "speciesGenus"
     "speciesName"
