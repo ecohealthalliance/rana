@@ -22,8 +22,6 @@ Template.table.settings = =>
     key: "studyId"
     label: "Study"
     fn: (val, obj) ->
-      console.log getCollections().Studies
-      console.log 'val', val
       getCollections().Studies.findOne(val).name
 
   fields.push
