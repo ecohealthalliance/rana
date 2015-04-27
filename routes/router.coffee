@@ -104,6 +104,7 @@ Router.route('/map',
   waitOn: ->
     [
       Meteor.subscribe("reports")
+      Meteor.subscribe("studies")
     ]
 )
 
