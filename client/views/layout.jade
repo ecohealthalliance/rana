@@ -7,6 +7,7 @@ head
 
 
 template(name="layout")
+  .page-wrap
     header
       nav.navbar
         .container
@@ -21,9 +22,9 @@ template(name="layout")
           .collapse.navbar-collapse.navbar-right
             ul.nav.navbar-nav
               +navLinks
-            
-    .fluid-container
-        +yield
+    .content-wrap        
+      .fluid-container
+          +yield
 
     footer
       .container.footer
