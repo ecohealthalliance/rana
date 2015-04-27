@@ -111,22 +111,14 @@
     function (shouldNot, prop, value, callback) {
       var query = {};
       query[prop] = value;
-      helper.world.browser
-      .executeAsync(function(query, done){
-        Meteor.subscribe("reports");
-        Tracker.autorun(function(){
-          var reports = collections.Reports.find(query);
-          if(reports.count() > 0) done(reports.fetch());
-        });
-        window.setTimeout(done, 2000);
-      }, query, _.once(function(err, ret){
-        assert.ifError(err);
-        if(shouldNot) {
-          assert(!ret.value, 'Report found');
+      helper.checkForReports(query, function (reports) {
+        if (shouldNot) {
+          assert(!reports.length, "Report found");
         } else {
-          assert.equal(ret.value.length, 1, 'Incorrect number of reports');
+          assert.equal(reports.length, 1, "Incorrect number of reports");
         }
-      })).call(callback);
+        callback();
+      });
     });
 
     this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,

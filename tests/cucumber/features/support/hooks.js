@@ -17,13 +17,13 @@
       }, 1000);
       var connection = DDP.connect(helper.world.cucumber.mirror.host);
       connection.call(route, parameter, function(err, res) {
+        connection.disconnect();
         if (err) {
           console.log("DDP Error", err);
           done('Error in ' + route + ' DDP call to ' + helper.world.cucumber.mirror.host);
         } else {
-          done();
+          done(err, res);
         }
-        connection.disconnect();
       });
     });
 
@@ -34,6 +34,10 @@
     this.addReports = function(reports, next) {
       this.DDPCall('/fixtures/addReports', reports, next);
     };
+
+    this.checkForReports = function (reportQuery, next) {
+      this.DDPCall('/fixtures/checkForReports', reportQuery, next);
+    }
 
     this.Before(function(scenario) {
       var world = helper.world;
