@@ -2,6 +2,7 @@
   name:
     type: String
     label: 'Study Name'
+    unique: true
   contact:
     type: @contactSchema
   publicationInfo:
@@ -37,6 +38,9 @@
       afFieldInput:
         type: 'fileUpload'
         collection: 'csvfiles'
-
 ]
+
+@studySchema.messages {
+  "notUnique name": "A study with that name already exists."
+}
 
