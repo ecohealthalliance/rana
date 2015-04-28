@@ -50,12 +50,20 @@ Meteor.publish 'csvfiles', onlyById(collections.CSVFiles)
 
 Meteor.publish 'studies', onlyById(collections.Studies)
 
-ReactiveTable.publish "studies", collections.Studies
+ReactiveTable.publish "studies", collections.Studies, () ->
+  {
+    $or : [
+      {
+        "createdBy.userId": @userId
+      }
+      {
+        dataUsePermissions: "Share full record",
+        consent: true
+      }
+    ]
+  }
 
 ReactiveTable.publish 'reports', collections.Reports, () ->
-  # Uncomment this if the admin should be allowed to see unpublished reports.
-  #if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
-    #return {}
   {
     $or : [
       {
@@ -140,23 +148,26 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
 Meteor.publish 'reviews', (reportId)->
   collections.Reviews.find({reportId : reportId})
 
+allowCreator = (userId, doc) ->
+  doc.createdBy.userId == userId
+
 allowCreatorAndAdmin = (userId, doc) ->
   if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
     return true
   else
-    return doc.createdBy.userId == userId
+    allowCreator userId, doc
 
 @collections.Reports.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin
 
 @collections.Studies.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin
 
 @collections.Reviews.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin

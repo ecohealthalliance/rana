@@ -72,6 +72,10 @@ Router.route('editStudy',
 
 Router.route('/studies',
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe("groupByPath", "rana")
+    ]
 )
 
 Router.route('/table',
