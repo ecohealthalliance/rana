@@ -13,8 +13,8 @@ template(name="importInstructions")
         p Here is an example CSV file with every field specified. In your own file, do not include any columns for which you have no data.
 
         a.btn.btn-primary(href="/sample_csv_import.csv") 
-          span.glyphicon.glyphicon-download
           span Download a Sample CSV import file
+          span.glyphicon.glyphicon-download
 
     .container
       section#content
@@ -138,31 +138,31 @@ template(name="importInstructions")
 
       section#methods
         h2 Methods
+        .sub-section
+          h3 Ranavirus Confirmation Methods
+          +markdown
+            ```
+            ranavirusConfirmationMethods
+            specifyOtherRanavirusConfirmationMethods
+            ```
 
-        h3 Ranavirus Confirmation Methods
-        +markdown
-          ```
-          ranavirusConfirmationMethods
-          specifyOtherRanavirusConfirmationMethods
-          ```
+          p You may supply multiple methods in a comma-separated list. Allowed values: 
+            code traditional_pcr, qrt_pcr, virus_isolation, sequencing, electron_microscopy, in_situ_hybridization, immunohistochemistry, other
 
-        p You may supply multiple methods in a comma-separated list. Allowed values: 
-          code traditional_pcr, qrt_pcr, virus_isolation, sequencing, electron_microscopy, in_situ_hybridization, immunohistochemistry, other
+          p If other confirmation methods are specified, include the value #[code other] in the list and then include the values for each other confirmation method in a comma-separated list in the #[code specifyOtherRanavirusConfirmationMethods] field.
+        .sub-section
+          h3 Sample Type
+          +markdown
+            ```
+            sampleType
+            specifyOtherRanavirusSampleTypes
+            ```
+        
+          p You may supply multiple sample types in a comma-separated list. 
+          p Allowed values:
+            code internal_swabs, external_swabs, internal_organ_tissues, tail_toe_clips, blood, other
 
-        p If other confirmation methods are specified, include the value #[code other] in the list and then include the values for each other confirmation method in a comma-separated list in the #[code specifyOtherRanavirusConfirmationMethods] field.
-
-        h3 Sample Type
-        +markdown
-          ```
-          sampleType
-          specifyOtherRanavirusSampleTypes
-          ```
-      
-        p You may supply multiple sample types in a comma-separated list. 
-        p Allowed values:
-          code internal_swabs, external_swabs, internal_organ_tissues, tail_toe_clips, blood, other
-
-        p If other confirmation sample types are specified, include the value #[code other] in the list and then include the values for each other sample type in a comma-separated list in the #[code specifyOtherRanavirusSampleTypes] field.
+          p If other confirmation sample types are specified, include the value #[code other] in the list and then include the values for each other sample type in a comma-separated list in the #[code specifyOtherRanavirusSampleTypes] field.
 
       section#gen-bank-accession-numbers
         h2 Gen Bank Accession Numbers
