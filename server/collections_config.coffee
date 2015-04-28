@@ -48,33 +48,33 @@ Meteor.publish 'pdfs', onlyById(collections.PDFs)
 
 Meteor.publish 'csvfiles', onlyById(collections.CSVFiles)
 
-Meteor.publish 'studies', onlyById(collections.Studies)
+
+sharedOrCreator = (userId) ->
+  {
+    $or : [
+      {
+        "createdBy.userId": userId
+      }
+      {
+        dataUsePermissions: "Share full record",
+        consent: true
+      }
+    ]
+  }
+
+Meteor.publish 'studies', (id) ->
+  collections.Studies.find {
+    $and: [
+      { _id: id }
+      sharedOrCreator @userId
+    ]
+  }
 
 ReactiveTable.publish "studies", collections.Studies, () ->
-  {
-    $or : [
-      {
-        "createdBy.userId": @userId
-      }
-      {
-        dataUsePermissions: "Share full record",
-        consent: true
-      }
-    ]
-  }
+  sharedOrCreator @userId
 
 ReactiveTable.publish 'reports', collections.Reports, () ->
-  {
-    $or : [
-      {
-        "createdBy.userId": @userId
-      }
-      {
-        dataUsePermissions: "Share full record",
-        consent: true
-      }
-    ]
-  }
+  sharedOrCreator @userId
 
 Meteor.publishComposite "reportLocations", () ->
   find: () ->
@@ -84,17 +84,7 @@ Meteor.publishComposite "reportLocations", () ->
           {
             "eventLocation.source": {"$exists": true}
           }
-          { 
-            $or: [
-              {
-                "createdBy.userId": @userId
-              }
-              {
-                dataUsePermissions: "Share full record",
-                consent: true
-              }
-            ] 
-          }
+          sharedOrCreator @userId
         ]
       }
       {
@@ -115,7 +105,12 @@ Meteor.publishComposite "reportLocations", () ->
   children: [
     {
       find: (report) ->
-        collections.Studies.find {_id: report.studyId}, {fields: {name: 1}}
+        collections.Studies.find {
+          $and: [
+            {_id: report.studyId}
+            sharedOrCreator @userId
+          ]
+        }, {fields: {name: 1}}
     }
   ]
 
@@ -126,22 +121,17 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
         {
           _id: reportId
         }
-        { 
-          $or: [
-            {
-              "createdBy.userId": @userId
-            }
-            {
-              dataUsePermissions: "Share full record",
-              consent: true
-            }
-          ] 
-        }
+        sharedOrCreator @userId
       ]
   children: [
     {
       find: (report) ->
-        collections.Studies.find {_id: report.studyId}
+        collections.Studies.find {
+          $and: [
+            {_id: report.studyId}
+            sharedOrCreator @userId
+          ]
+        }, {fields: {name: 1}}
     }
   ]
 
