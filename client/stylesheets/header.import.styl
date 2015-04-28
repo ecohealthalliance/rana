@@ -1,7 +1,7 @@
 .navbar
   @extend .dark-shadow
   margin-bottom 0
-  background secondary
+  background header-footer-BG
   border 0
   border-radius 0
   min-height header-height
@@ -30,10 +30,10 @@
     buttonHover()
     font-size 13px
 
-.navbar-nav .active a
-  background white
-  color body-text
-  text-shadow none
+.navbar-nav .active a,
+.navbar-nav .active a:focus
+  background primary
+  outline 0
   
 .navbar-brand 
   padding 5px 0
