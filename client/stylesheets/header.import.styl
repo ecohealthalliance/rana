@@ -17,6 +17,9 @@
       outline primary
       transition()
 
+.navbar-header
+  width 100%
+  
 .nav
   float right
 
@@ -36,17 +39,40 @@
   text-shadow none
   
 .navbar-brand 
-  font-weight 600
-  text-transform uppercase
-  color white
+  padding 5px 15px
+  h1
+    margin 0
+    color white
+    font-weight 600
+    text-transform uppercase
+    line-height 18px
+    font-size 18px
+    vAlign()
+    padding-left 3px
+  span
+    @extend .icons
+    padding-top 1px
+    font-size 35px
+    color white
+    line-height 0
+    vAlign()
 
 .navbar-toggle
-  margin-top 17px
-  .icon-bar
-    background white
-    height 3px
-    width 25px
-    border-radius 1px
+  @extend .icons
+  float right
+  padding 4px
+  margin 0
+  color white
+  font-size 28px
+  
+@media (max-width: 1000px)
+  .navbar-collapse
+    .nav
+      display none
+      visibility hidden
+  .navbar-toggle
+    display block
+
 
 @media (max-width: 765px)
   .nav

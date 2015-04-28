@@ -12,16 +12,13 @@ template(name="layout")
       nav.navbar
         .container
           .navbar-header
-            button.navbar-toggle.collapsed(type='button', data-toggle='collapse' data-target=".navbar-collapse")
-              span.sr-only Toggle navigation
-              span.icon-bar
-              span.icon-bar
-              span.icon-bar
-            .navbar-brand Ranavirus Reporting System
-          
-          .collapse.navbar-collapse.navbar-right
-            ul.nav.navbar-nav
-              +navLinks
+            .navbar-brand 
+              span M
+              h1 Ranavirus #[br] Reporting System
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse' data-target=".navbar-collapse") =
+            .collapse.navbar-collapse.navbar-right
+              ul.nav.navbar-nav
+                +navLinks
     .content-wrap        
       .fluid-container
           +yield
@@ -37,13 +34,13 @@ template(name="layout")
 
 template(name="navLinks")
   li
-    a(href="/study") New Study
+    a(href="/study") Add Study
   li
-    a(href="/studies") All Studies
+    a(href="/studies") View Studies
   li
-    a(href="/map") Report Map
+    a(href="/map") Map
   li
-    a(href="/table") Report Table
+    a(href="/table") View Reports
   li
     a(href="/group/rana/info") About Ranavirus
 
