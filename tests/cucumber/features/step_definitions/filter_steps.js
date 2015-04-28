@@ -65,6 +65,7 @@
           .selectByValue('select[data-schema-key="' + predKey + '"]', "=")
           .setValue('input[data-schema-key="' + valKey + '"]', value)
           .click('button[type="submit"]')
+          .pause(500)
           .call(callback);
         });
       });

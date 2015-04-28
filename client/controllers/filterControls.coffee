@@ -61,7 +61,9 @@ Template.filterControls.created = ->
             "eventDate"
             "totalAnimalsConfirmedInfected"
             "totalAnimalsConfirmedDiseased"
-            {label: "creator", value: "createdBy.name"}
+            "eventLocation.country"
+            {label: "Creator", value: "createdBy.name"}
+            {label: "Study Name", value: "studyName"}
           ].map((item)->
             if _.isObject(item)
               item
@@ -99,6 +101,28 @@ Template.filterControls.rendered = ->
       filter = {}
       value = filterSpecification['value']
       property = filterSpecification['property']
+      if property == "studyName"
+        return $.Deferred ->
+          if filterSpecification['predicate'] != "="
+            alert("Predicate is not supported for study name.")
+            return @resolve {
+              studyId : "Does not exist"
+            }
+          Meteor.call "getStudyByName", value, (err, resp)=>
+            if err
+              console.log("Error", err)
+              @resolve {
+                studyId : "Error"
+              }
+            else
+              if resp?._id
+                @resolve {
+                  studyId : resp._id
+                }
+              else
+                @resolve {
+                  studyId : "Does not exist"
+                }
       if value and reportSchema[property].type == Number
         value = parseFloat(value)
       if value and reportSchema[property].type == Date
@@ -173,6 +197,7 @@ Template.filterControls.events
     schemaKeyIdx = schemaKeyComponents.slice(-2)[0]
     if schemaKeyType == "value"
       filterSpecification = AutoForm.getFormValues("filter-panel").insertDoc.filters[schemaKeyIdx]
+      if filterSpecification.property == "studyName" then return
       query = {}
       query[filterSpecification.property] = {
         $regex: "^" + utils.regexEscape($(e.target).val())
