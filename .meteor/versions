@@ -19,6 +19,7 @@ blaze-tools@1.0.2
 boilerplate-generator@1.0.2
 callback-hook@1.0.2
 cfs:access-point@0.1.44
+cfs:autoform@2.2.1
 cfs:base-package@0.0.28
 cfs:collection@0.5.4
 cfs:collection-filters@0.2.4
@@ -87,6 +88,7 @@ practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3
 proj4:proj4@2.3.4-alpha
 raix:eventemitter@0.1.1
+raix:ui-dropped-event@0.0.7
 rana:accounts@0.0.1
 rana:groups@0.0.1
 rana:mapping@0.0.1
@@ -122,4 +124,3 @@ webapp@1.1.6
 webapp-hashing@1.0.2
 xolvio:cucumber@0.5.3
 xolvio:webdriver@0.5.2
-yogiben:autoform-file@0.2.0

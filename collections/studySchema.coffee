@@ -20,8 +20,9 @@
     label: """If the data has been published please provide a PDF."""
     optional: true
     autoform:
+      template: "bootstrap3"
       afFieldInput:
-        type: 'fileUpload'
+        type: 'cfs-file'
         collection: 'pdfs'
   'publicationInfo.reference':
     type: String
@@ -34,9 +35,10 @@
     label: """csvFile"""
     optional: true
     autoform:
+      template: "bootstrap3"
       label: false
       afFieldInput:
-        type: 'fileUpload'
+        type: 'cfs-file'
         collection: 'csvfiles'
 ]
 

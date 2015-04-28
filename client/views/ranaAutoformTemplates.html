@@ -1,3 +1,17 @@
 <template name="afTextarea_rana">
   <textarea {{atts}}>{{this.value}}</textarea>
 </template>
+
+<!--
+The problem with overriding the cfsFile templates like this is that the cfsFile scripts reference the bootstrap3 theme.
+One workaround it to set the template theme in the prompt schema as I have done.
+-->
+<template name="cfsFileField_rana">
+  <input type="file" class="cfsaf-hidden" data-cfs-collection="{{this.atts.collection}}" {{fileInputAtts}}>
+  <input type="text" readonly {{textInputAtts}}>
+</template>
+
+<template name="cfsFilesField_rana">
+  <input type="file" class="cfsaf-hidden" multiple data-cfs-collection="{{this.atts.collection}}" {{fileInputAtts}}>
+  <input type="text" readonly {{textInputAtts}}>
+</template>

@@ -90,7 +90,7 @@ numInvolvedOptions =
     optional: true
     autoform:
       afFieldInput:
-        type: 'fileUpload'
+        type: 'cfs-file'
         collection: 'files'
   'pathologyReports.$.notified':
     label: "Has the pathologist or laboratory that authored the report been notified that it is being uploaded?"
@@ -117,7 +117,7 @@ numInvolvedOptions =
     type: String
     autoform:
       afFieldInput:
-        type: 'fileUpload'
+        type: 'cfs-file'
         collection: 'files'
   genBankAccessionNumbers:
     type: Array
