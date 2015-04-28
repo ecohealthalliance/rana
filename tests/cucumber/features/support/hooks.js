@@ -10,11 +10,14 @@
 
     var helper = this;
 
-    this.DDPCall = Meteor.bindEnvironment(function(route, parameter, next) {
+    this.DDPCall = Meteor.bindEnvironment(function(route, parameter, next, timeout) {
+      if(!timeout) {
+        timeout = 1000;
+      }
       var done = _.once(next);
       setTimeout(function(){
         done("Timeout");
-      }, 1000);
+      }, timeout);
       var connection = DDP.connect(helper.world.cucumber.mirror.host);
       connection.call(route, parameter, function(err, res) {
         connection.disconnect();
@@ -31,13 +34,13 @@
       this.DDPCall('/fixtures/resetDB', reports, next);
     };
 
-    this.addReports = function(reports, next) {
-      this.DDPCall('/fixtures/addReports', reports, next);
+    this.addReports = function(reports, next, timeout) {
+      this.DDPCall('/fixtures/addReports', reports, next, timeout);
     };
 
     this.checkForReports = function (reportQuery, next) {
       this.DDPCall('/fixtures/checkForReports', reportQuery, next);
-    }
+    };
 
     this.Before(function(scenario) {
       var world = helper.world;
