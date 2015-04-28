@@ -7,24 +7,21 @@
   min-height header-height
   .btn,
   .btn-default
+    padding 6px 12px
     border 0
     margin-left 5px
     text-shadow none
     font-size 13px
+    color body-text
+    line-height 1.42857143
     buttonHover(trans-white)
     transition()
     &:focus
       outline primary
       transition()
-
-.navbar-header
-  width 100%
   
 .nav
   float right
-
-.account
-  margin-left 10px
 
 .navbar-nav
   margin-right 10px
@@ -39,7 +36,7 @@
   text-shadow none
   
 .navbar-brand 
-  padding 5px 15px
+  padding 5px 0
   h1
     margin 0
     color white
@@ -64,40 +61,71 @@
   margin 0
   color white
   font-size 28px
-  
-@media (max-width: 1000px)
-  .navbar-collapse
-    .nav
-      display none
-      visibility hidden
+
+.main-nav-last
+  margin-right 5px
+     
+@media (max-width: 1000px) 
+  .navbar-header
+    float none
+  .navbar-left,
+  .navbar-right
+    float none !important
   .navbar-toggle
     display block
+  .navbar-fixed-top
+    top 0
+    border-width 0 0 1px
+  .navbar-collapse.collapse
+    display none !important
+    height 1px !important
+  .navbar-nav
+    float none !important
+    margin-top 7.5px
+  .navbar-nav>li
+    float none
+  .navbar-nav>li>a
+    padding-top 10px
+    padding-bottom 10px
+  .collapse.in
+    display block !important
+    height auto !important
 
-
-@media (max-width: 765px)
   .nav
     float none
     li
       border-bottom l-gray 1px solid
-      &:last-child
-        border 0
+      &.account
+        margin-left 0
+        border 0 
+      &.main-nav-last
+        margin 0
+      .btn
+        width 40%
+        margin 15px
+        padding 10px
+        display block
+        float left
   .navbar-brand
     width 75%
-    height auto
+    padding-top 10px
+    span
+      font-size 25px
+    h1
+      font-size 14px
+      line-height 14px
   .navbar-nav
     margin-right 0
-  .account
-    margin-left 0
-    button
-      width 80%
-      margin-top 15px
-      margin-bottom 15px
-      margin-right auto
-      margin-left auto
-      padding 15px
-      display block
+    margin-top 0
   .navbar .btn, .navbar .btn-default
     margin-left auto
-
+  .container>.navbar-header
+    margin 0
   .navbar-collapse
     padding-right 0
+    
+@media (min-width: 768px) and (max-width: 1000px) 
+  .nav
+    li
+      .btn
+        width 20%

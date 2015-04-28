@@ -10,14 +10,15 @@ template(name="layout")
   .page-wrap
     header
       nav.navbar
-        .container
-          .navbar-header
-            .navbar-brand 
-              span M
-              h1 Ranavirus #[br] Reporting System
-            button.navbar-toggle.collapsed(type='button', data-toggle='collapse' data-target=".navbar-collapse") =
-            .collapse.navbar-collapse.navbar-right
-              ul.nav.navbar-nav
+        .fluid-container
+          .container
+            .navbar-header
+              button.navbar-toggle.collapsed(type='button', data-toggle='collapse' data-target=".navbar-collapse") =
+              .navbar-brand 
+                span M
+                h1 Ranavirus #[br] Reporting System
+            .navbar-collapse.collapse
+              ul.nav.navbar-nav.navbar-right
                 +navLinks
     .content-wrap        
       .fluid-container
@@ -41,7 +42,7 @@ template(name="navLinks")
     a(href="/map") Map
   li
     a(href="/table") View Reports
-  li
+  li.main-nav-last
     a(href="/group/rana/info") About Ranavirus
 
   +accountsHeaderButtons
