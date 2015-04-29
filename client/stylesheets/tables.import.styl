@@ -54,3 +54,90 @@
 .reactive-table-navigation 
   .form-inline input
     vertical-align initial
+
+
+@media (max-width: 768px)
+ 
+  .reactive-table-filter
+    width 40%
+    padding 0
+    
+@media (max-width: 768px)
+  .reports-table
+    .toggle-filter
+      width 100%
+      margin-bottom 15px
+      padding 10px
+  .reactive-table
+    thead
+      display none
+    tr
+      position relative
+      display block
+      padding 15px 0
+      min-height 30px
+      border-bottom 1px solid l-gray
+      background white !important
+      &:first-child
+        border-top 1px solid l-gray
+    td
+      display none
+      border-top 0 !important
+      &:first-child
+        display block
+        padding-right 50%        
+    .controls
+      display block
+      position absolute
+      right 0
+      top 50%
+      transform translate(0,-50%)
+      width 50%
+      text-align right
+      padding 0
+      &:hover,
+      &:focus
+        background white
+      .btn
+        margin 0 2px
+        &:last-of-type
+          margin-right 0
+    tr:last-child td:first-child
+      border 0
+  .reactive-table-filter
+    padding 10px 0 10px 0
+  .reactive-table-options
+    margin 0
+    padding 0
+    .dropdown-toggle
+      display none
+  .reactive-table-input
+    padding 20px 10px
+  .next-page
+  .page-number
+    width 100%
+    float none
+    label 
+      display none
+    .previous-page,
+    .next-page
+      display block
+      width 45%
+      float left
+      background secondary
+      text-align center
+      padding 10px
+      color white
+      border-radius 3px
+      cursor pointer
+      &:focus,
+      &:hover
+        background darken(secondary, 15%)
+        border primary
+        color white
+      
+    .next-page
+      float right
+      
+  .rows-per-page
+    display none
