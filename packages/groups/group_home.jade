@@ -2,9 +2,9 @@ template(name="groupHome")
   .container
     section
       if group
-
-        h2 {{group.name}}
-        p {{group.description}}
+        .group-info
+          h1 {{group.name}}
+          h3 {{group.description}}
 
         if isInRole 'admin' group._id
           +groupAdmin
@@ -15,36 +15,35 @@ template(name="groupHome")
 
 template(name="groupAdmin")
   .row
-    .panel-group
-      .col-sm-6
-        .panel.panel-default
-          .panel-heading
-            h4.panel-title
-              a(data-toggle="collapse", href="#edit-group-panel") Edit Group Information
-          #edit-group-panel
-            .panel-body
-              +quickForm collection=groups doc=group id="update-group-form" type="update" template="bootstrap3"
-      .col-sm-6
-        .panel.panel-default
-          .panel-heading
-            h4.panel-title
-              a(data-toggle="collapse", href="#manage-users-panel") Manage users
-          #manage-users-panel
-            .panel-body
-              h5 Admins
-                each groupAdmins
-                  +groupUser
-              h5 Users
-                each groupUsers
-                  +groupUser
-                else
-                  p None
-                +invite groupId=group._id
+    .col-sm-6
+      .panel.panel-default.group-info
+        .panel-heading
+          h3.panel-title Edit Group Information
+        .panel-body
+          +quickForm collection=groups doc=group id="update-group-form" type="update" template="bootstrap3"
+    .col-sm-6
+      .panel.panel-default.users
+        .panel-heading
+          h3.panel-title Manage users
+        .panel-body
+          h4 Admins
+          ul.list-unstyled
+            each groupAdmins
+              +groupUser
+          h4 Users
+          ul.list-unstyled
+            each groupUsers
+              +groupUser
+            else
+              p None
+
+          +invite groupId=group._id
 
 template(name="groupUser")
-  div
-    span {{profile.name}}
+  ul.user-info.list-unstyled
+    li.name {{profile.name}}
       if profile.organization
-        i {{profile.organization}}
+        li.organization {{profile.organization}}
     each emails
-      span {{address}}
+      li.email 
+        a(href="mailto:#{address}") {{address}}
