@@ -129,4 +129,7 @@ Template.table.events(
   'click .toggle-filter': () ->
     $('.filter-controls').toggleClass('hidden')
     $('.toggle-filter').toggleClass('showingOpts')
+  "click .next-page, click .previous-page" : () ->
+    if (window.scrollY > 0)
+      $('body').animate({scrollTop:0,400})
 )
