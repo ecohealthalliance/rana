@@ -119,6 +119,7 @@ Template.table.settings = =>
   showFilter: false
   fields: fields
   noDataTmpl: Template.noReports
+  rowsPerPage: 4
 
 Template.table.events(
   'click .remove-form': (evt)->
