@@ -76,7 +76,7 @@ Meteor.publishComposite "reportLocations", () ->
           {
             "eventLocation.source": {"$exists": true}
           }
-          { 
+          {
             $or: [
               {
                 "createdBy.userId": @userId
@@ -85,7 +85,7 @@ Meteor.publishComposite "reportLocations", () ->
                 dataUsePermissions: "Share full record",
                 consent: true
               }
-            ] 
+            ]
           }
         ]
       }
@@ -112,24 +112,41 @@ Meteor.publishComposite "reportLocations", () ->
   ]
 
 Meteor.publishComposite 'reportAndStudy', (reportId) ->
+
+  report = collections.Reports.findOne(reportId)
+
+  fields =
+    if report.dataUsePermissions is 'Share obfuscated' and report.createdBy.userId != @userId
+      createdBy: true
+      contact: true
+      'eventLocation.country': true
+    else
+      {}
+
   find: () ->
-    collections.Reports.find
-      $and: [
-        {
-          _id: reportId
-        }
-        { 
-          $or: [
-            {
-              "createdBy.userId": @userId
-            }
-            {
-              dataUsePermissions: "Share full record",
-              consent: true
-            }
-          ] 
-        }
-      ]
+    collections.Reports.find(
+      {
+        $and: [
+          {
+            _id: reportId
+          }
+          {
+            $or: [
+              {
+                "createdBy.userId": @userId
+              }
+              {
+                dataUsePermissions: { $in: ["Share full record", "Share obfuscated"] }
+                consent: true
+              }
+            ]
+          }
+        ],
+      }
+      {
+        fields: fields
+      }
+    )
   children: [
     {
       find: (report) ->

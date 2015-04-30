@@ -72,6 +72,13 @@
       helper.fillInForm(customValues, callback);
     });
 
+    this.When("I fill out a report with obfuscated permissions",
+    function(callback){
+      var customValues = {};
+      customValues['dataUsePermissions'] = 'Share obfuscated';
+      helper.fillInForm(customValues, callback);
+    });
+
     this.When('I fill out the $field field with "$value"',
     function(field, value, callback){
       helper.world.browser

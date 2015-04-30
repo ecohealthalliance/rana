@@ -28,7 +28,11 @@ Router.route('editReport',
   data: ->
     report = getCollections().Reports.findOne @params.reportId
     if report
-      study = getCollections().Studies.findOne report.studyId
+      study = null
+      obfuscated = true
+      if report.studyId
+        study = getCollections().Studies.findOne report.studyId
+        obfuscated = false
       type = if Meteor.userId() and Meteor.userId() == report.createdBy.userId
           'update'
         else
@@ -38,6 +42,7 @@ Router.route('editReport',
     report: report
     study: study
     urlQuery: @params.query
+    obfuscated: obfuscated
   onAfterAction: ->
     Meteor.subscribe("genera")
     Meteor.subscribe("reviews", @params.reportId)
@@ -45,6 +50,7 @@ Router.route('editReport',
     [
       Meteor.subscribe("reportAndStudy", @params.reportId)
     ]
+
 )
 
 Router.route('newStudy',
