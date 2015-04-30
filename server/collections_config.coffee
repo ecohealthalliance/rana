@@ -68,6 +68,18 @@ ReactiveTable.publish 'reports', collections.Reports, () ->
     ]
   }
 
+ReactiveTable.publish 'obfuscatedReports', () ->
+  collections.Reports.find(
+    {
+      "createdBy.userId": { $ne: @userId },
+      dataUsePermissions: "Share obfuscated",
+      consent: true
+    },
+    {
+      fields: { createdBy: true, contact: true, 'eventLocation.country': true }
+    }
+  )
+
 Meteor.publishComposite "reportLocations", () ->
   find: () ->
     collections.Reports.find(
