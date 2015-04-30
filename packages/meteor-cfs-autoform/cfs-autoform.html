@@ -1,4 +1,4 @@
-<template name="cfsFileField_bootstrap3">
+<template name="cfsFileField">
   {{#if isEmpty}}
     {{!-- the upload a file case --}}
     <input type="text" readonly {{textInputAtts}}>
@@ -28,7 +28,7 @@
          data-cfs-collection="{{this.atts.collection}}" {{fileInputAtts}}>
 </template>
 
-<template name="cfsFilesField_bootstrap3">
+<template name="cfsFilesField">
   {{#each files}}
     <div class="img-container">
       {{#if hasThumbnail}}

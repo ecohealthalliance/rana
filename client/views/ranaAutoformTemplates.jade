@@ -12,25 +12,25 @@ template(name="infoIcon")
   span.infoIcon ?
 
 template(name="afFormGroup_rana")
-  .form-group(class="form-group{{#if afFieldIsInvalid name=this.atts.name}} has-error{{/if}}")
+  .form-group(class="form-group{{#if afFieldIsInvalid name=this.name}} has-error{{/if}}")
     unless skipLabel
       label($dyn=dynamicAttrs)
         if this.label
           | this.label
         else
-          | {{afFieldLabelText name=this.atts.name}}
+          | {{afFieldLabelText name=this.name}}
         if dynamicAttrs.tooltip
           +infoIcon
-      if minorLabelBlockText this.atts.name
-        span.minor-label.block {{minorLabelBlockText this.atts.name}}
+      if minorLabelBlockText this.name
+        span.minor-label.block {{minorLabelBlockText this.name}}
     +afFieldInput this.afFieldInputAtts
-    span.help-block {{afFieldMessage name=this.atts.name}}
+    span.help-block {{afFieldMessage name=this.name}}
 
 template(name="afObjectField_rana")
-  h3 {{afFieldLabelText name=this.atts.name}}
-  if afFieldIsInvalid name=this.atts.name
-    .help-block {{afFieldMessage name=this.atts.name}}
-  +afQuickFields name=this.atts.name
+  h3 {{afFieldLabelText name=this.name}}
+  if afFieldIsInvalid name=this.name
+    .help-block {{afFieldMessage name=this.name}}
+  +afQuickFields name=this.name
 
 template(name="afArrayField_rana")
   .panel.panel-default.content-panel

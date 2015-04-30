@@ -93,7 +93,7 @@ if (Meteor.isClient) {
     return obj;
   }
 
-  Template['cfsFileField_bootstrap3'].helpers(
+  Template['cfsFileField'].helpers(
       _.extend(
           {},
           CfsAutoForm.helpers,
@@ -104,7 +104,7 @@ if (Meteor.isClient) {
       ));
 
 
-  Template['cfsFilesField_bootstrap3'].helpers(
+  Template['cfsFilesField'].helpers(
       _.extend(
           {},
           CfsAutoForm.helpers,
@@ -116,8 +116,8 @@ if (Meteor.isClient) {
 
 
 
-  Template['cfsFileField_bootstrap3'].rendered =
-      Template['cfsFilesField_bootstrap3'].rendered = function() {
+  Template['cfsFileField'].rendered =
+      Template['cfsFilesField'].rendered = function() {
         // By adding hooks dynamically on render,
         // hopefully any user hooks will have
         // been added before so we won't disrupt
@@ -130,12 +130,12 @@ if (Meteor.isClient) {
       };
 
 
-  Template['cfsFileField_bootstrap3'].destroyed = function() {
+  Template['cfsFileField'].destroyed = function() {
     var name = this.data.name;
   };
 
 
-  Template.cfsFileField_bootstrap3.events(
+  Template.cfsFileField.events(
       _.extend(
           {},
           CfsAutoForm.events,
@@ -149,12 +149,12 @@ if (Meteor.isClient) {
 
 
   //NOTE: rendered function for cfsFilesField is defined above with cfsFileField
-  Template['cfsFilesField_bootstrap3'].destroyed = function() {
+  Template['cfsFilesField'].destroyed = function() {
     var name = this.data.name;
   };
 
 
-  Template.cfsFilesField_bootstrap3.events(
+  Template.cfsFilesField.events(
       _.extend(
           {},
           CfsAutoForm.events,

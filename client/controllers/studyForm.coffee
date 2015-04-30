@@ -14,7 +14,7 @@ Template.studyForm.helpers
       "readonly"
 
   showCSV: ->
-    not Template.currentData().study
+    not Template.currentData()?.study
 
 
 AutoForm.hooks
@@ -31,7 +31,7 @@ AutoForm.hooks
         name: Meteor.user().profile?.name or "None"
       doc
 
-    onSuccess: (operation, result, template) ->
+    onSuccess: (operation, result) ->
       toastr.options =
         closeButton: true
         positionClass: "toast-bottom-center"
@@ -57,7 +57,7 @@ AutoForm.hooks
       toastr.error(error.message)
 
     after:
-      insert: (err, res, template) =>
+      method: (err, res) =>
 
         Meteor.subscribe "studies", res, () =>
           study = getCollections().Studies.findOne { _id: res }

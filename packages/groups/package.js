@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   api.use('email');
   api.use('iron:router@1.0.7');
   api.use('aldeed:collection2@2.3.2');
-  api.use('aldeed:autoform@4.2.2');
+  api.use('aldeed:autoform');
   api.use('alanning:roles@1.2.11');
   api.use('matb33:collection-hooks@0.7.11');
   api.use('useraccounts:core@1.7.0');

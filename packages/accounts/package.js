@@ -13,7 +13,7 @@ Package.onUse(function(api) {
   api.use('mquandalle:jade@0.4.1');
   api.use('iron:router@1.0.7');
   api.use('aldeed:collection2@2.3.2');
-  api.use('aldeed:autoform@4.2.2');
+  api.use('aldeed:autoform');
   api.use('accounts-password');
   api.use('useraccounts:core@1.7.0');
   

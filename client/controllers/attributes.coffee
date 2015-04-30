@@ -1,8 +1,8 @@
 Template.registerHelper 'dynamicAttrs', () ->
-
-  name = @atts.name.replace(/\.[\d+]\./, ".$.")
-
-  schema = AutoForm.find().ss._schema
+  schema = AutoForm.getFormSchema() #AutoForm.find().ss._schema
+  if not schema or not @atts?.name then return @atts
+  
+  name = @atts.name #.replace(/\.[\d+]\./, ".$.")
   if !schema[name]?.optional and 'selected' not of @
     required = 'required'
 
