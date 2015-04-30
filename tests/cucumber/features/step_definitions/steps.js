@@ -162,6 +162,50 @@
       });
     });
 
+    // Currently this is just used for benchmarking tests that aren't included
+    // in the main branch of the repository.
+    this.Given(/^there are (\d+) reports in the database$/,
+    function(number, callback) {
+      number = parseInt(number, 10);
+      var reports = _.range(number).map(function(){
+        return {
+          studyId: 'fakeid',
+          consent: true,
+          contact: {name: 'Test User', email: 'test@foo.com'},
+          dataUsePermissions: "Share full record",
+          // Random data to simulate large reports
+          speciesNotes: _.range(200).map(Math.random).join(' '),
+          eventLocation: {
+            source: 'LonLat',
+            // These fields are not used in the many reports test,
+            // so we do not need to generate correct values for them.
+            northing: 1,
+            easting: 2,
+            zone: 3,
+            degreesLon: -170,
+            minutesLon: 30,
+            secondsLon: 40.58647497889751,
+            degreesLat: 0,
+            minutesLat: 0,
+            secondsLat: 0.032469748221482304,
+            country: 'USA',
+            geo: {
+              type: 'Point',
+              coordinates: [
+                Math.random() * 360 - 180,
+                Math.random() * 180 - 90
+              ]
+            }
+          }
+        };
+      });
+      helper.addReports(reports, function(err){
+        assert.ifError(err);
+        callback();
+      }, 200 * number);
+    });
+
+
     this.Then("there should be no delete button for the report by someone else",
     function(callback){
       helper.world.browser
