@@ -104,32 +104,28 @@ Template.filterControls.rendered = ->
       if property == "studyName"
         return $.Deferred ->
           if filterSpecification['predicate'] != "="
-            alert("Predicate is not supported for study name.")
-            return @resolve {
-              studyId : "Does not exist"
-            }
+            return @reject "Predicate is not supported for study name."
           Meteor.call "getStudyByName", value, (err, resp)=>
             if err
-              console.log("Error", err)
-              @resolve {
-                studyId : "Error"
-              }
+              @reject err
             else
               if resp?._id
                 @resolve {
                   studyId : resp._id
                 }
               else
+                # Filtering by a value that returns no documents is not an error
+                # so this is not rejected.
                 @resolve {
-                  studyId : "Does not exist"
+                  thisShouldMatchNothing: true  
                 }
+        .promise()
       if value and reportSchema[property].type == Number
         value = parseFloat(value)
       if value and reportSchema[property].type == Date
         value = new Date(value)
         if ("" + value) == "Invalid Date"
-          alert("Invalid Date Format")
-          return {}
+          return $.Deferred(-> @reject "Invalid Date Format").promise()
       if filterSpecification['predicate'] == 'defined'
         filter[property] = {
           $exists: true
@@ -139,12 +135,16 @@ Template.filterControls.rendered = ->
           $exists: false
         }
       else if not value
-        return {}
+        return $.Deferred(-> @reject "No value").promise()
       else if filterSpecification['predicate'] == '>'
+        if reportSchema[property].type == String
+          return $.Deferred(-> @reject "Invalid predicate").promise()
         filter[property] = {
           $gt: value
         }
       else if filterSpecification['predicate'] == '<'
+        if reportSchema[property].type == String
+          return $.Deferred(-> @reject "Invalid predicate").promise()
         filter[property] = {
           $lt: value
         }
@@ -157,26 +157,32 @@ Template.filterControls.rendered = ->
             # expand species name queries
             Meteor.call("getSpeciesBySynonym", value, (err, resp)=>
               if err
-                alert JSON.stringify(err)
-                return
+                return @reject err
               if resp.length > 2
                 console.log "Ambiguous species"
               if resp.length == 0
-                @resolve filter
-                return
+                return @resolve filter
               filter["speciesName"] = {
                 $in: _.flatten(_.map(resp[0].synonyms, expandCase))
               }
               @resolve filter
             )
-      return $.Deferred(-> @resolve filter)
-    $.when.apply(this, filterPromises).then ()=>
+          .promise()
+      return $.Deferred(-> @resolve filter).promise()
+    $.when.apply(this, filterPromises)
+    .then ()=>
       filters = Array.prototype.slice.call(arguments)
       query = {}
       if filters.length > 0
         query = 
           $and: filters
       reactiveQuery.set(query)
+    .fail (result)=>
+      console.log result
+      reactiveQuery.set({
+        thisShouldMatchNothing: true  
+      })
+      alert(result?.message or result)
 
 Template.filterControls.filterCollection = ->
   Template.instance().filterCollection
