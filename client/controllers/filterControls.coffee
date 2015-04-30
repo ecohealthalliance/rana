@@ -117,7 +117,7 @@ Template.filterControls.rendered = ->
                 # Filtering by a value that returns no documents is not an error
                 # so this is not rejected.
                 @resolve {
-                  thisShouldMatchNothing: true  
+                  thisShouldMatchNothing: "true"
                 }
         .promise()
       if value and reportSchema[property].type == Number
@@ -180,7 +180,7 @@ Template.filterControls.rendered = ->
     .fail (result)=>
       console.log result
       reactiveQuery.set({
-        thisShouldMatchNothing: true  
+        thisShouldMatchNothing: "true"
       })
       alert(result?.message or result)
 
