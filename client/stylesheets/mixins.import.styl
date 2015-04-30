@@ -42,21 +42,16 @@ makeButton(color, text = white, dark = false, noOutline = false)
       outline 0
 
 loading(positioned=false)
-  &::before
-    @extend .icon
-    animate(1.5s)
-    if positioned
-      position absolute
-      top 50%
-      left 45%
-      transform translate(-50%, -50%)
-      z-index 100
-    opacity 1
-    font-size 60px
-    content '\e031'
-  div
-    opacity .7
-    transition .2s
+  @extend .icons
+  animate(2s)
+  if positioned
+    position absolute
+    top 50%
+    left 45%
+    transform translate(-50%, -50%)
+    z-index 100
+  opacity 1
+  font-size 100px
 
 animate(speed)
   animation spin speed infinite linear

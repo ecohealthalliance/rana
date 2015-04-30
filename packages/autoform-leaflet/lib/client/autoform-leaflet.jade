@@ -6,10 +6,13 @@ template(name='leaflet')
         .location-btns
           .row
             .col-md-6.col-sm-8.col-xs-8
-              button.leaflet-locate.btn.btn-primary.btn-block Current location
+              button.leaflet-locate.btn.btn-primary.btn-block 
+                span.loader l
+                span Current location
             .col-md-3.col-sm-4.col-xs-4
               button.leaflet-clear.btn.btn-default.btn-block Clear
         .location-details
+          span.loader l
           .form-group
             h5.form-group-header Degrees Decimal
             .row
