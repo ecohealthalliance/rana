@@ -1,0 +1,48 @@
+/* CSS declarations go here */
+.cfsaf-hidden {
+	display: none !important;
+}
+
+.cfsaf-field {
+	cursor: pointer !important;
+}
+
+.cfsaf-thumb {
+}
+
+.img-fileUpload-thumbnail
+{
+	max-width:100px;
+	width:200px;
+}
+
+.file-upload-clear
+{
+	cursor: pointer;
+}
+
+.form-group.file-upload > .form-group > label
+{
+	display: none;
+}
+
+.form-group.file-upload > .form-group > input
+{
+	display: none;
+}
+
+.form-group.file-upload > .btn {
+	max-width: 100%;
+	text-overflow: ellipsis;
+	overflow:hidden;
+}
+
+.img-container {
+    width: 200px;
+}
+
+.title {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

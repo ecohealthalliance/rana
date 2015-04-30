@@ -1,0 +1,60 @@
+<template name="cfsFileField_bootstrap3">
+  {{#if isEmpty}}
+    {{!-- the upload a file case --}}
+    <input type="text" readonly {{textInputAtts}}>
+    {{#if isUploading}}{{percentComplete}}%{{/if}}
+  {{else}}
+    {{#with file}}
+      {{#if hasThumbnail}}
+        {{!-- the "file is uploaded and we want to show a pretty thumb" case --}}
+        <img src="{{thumbSrc}}" alt=""
+             class="cfsaf-thumb img-fileUpload-thumbnail img-thumbnail img-rounded">
+        <a class="file-upload-clear" file-input="{{this.filename}}"><i
+            class="fa fa-times"></i> Remove</a>
+        {{else}}
+        {{!-- the "we have a file but don't know how to display it" case --}}
+        <span class="fa-stack fa-2x">
+            {{!-- use an icon based on the filename --}}
+            <i class="fa {{icon}} fa-stack-2x"></i>
+            <i class="fa fa-upload fa-stack-1x"></i>
+        </span>
+        <a class="file-upload-clear" file-input="{{this.filename}}"><i
+            class="fa fa-times"></i> Remove</a>
+      {{/if}}
+    {{/with}}
+  {{/if}}
+
+  <input type="file" class="cfsaf-hidden"
+         data-cfs-collection="{{this.atts.collection}}" {{fileInputAtts}}>
+</template>
+
+<template name="cfsFilesField_bootstrap3">
+  {{#each files}}
+    <div class="img-container">
+      {{#if hasThumbnail}}
+       {{!-- the "file is uploaded and we want to show a pretty thumb" case --}}
+          <img src="{{thumbSrc}}" alt=""
+               class="cfsaf-thumb img-fileUpload-thumbnail img-thumbnail img-rounded">
+      {{else}}
+        {{!-- the "we have a file but don't know how to display it" case --}}
+        <span class="fa-stack fa-2x">
+            {{!-- use an icon based on the filename --}}
+            <i class="fa {{icon}} fa-stack-2x"></i>
+            <i class="fa fa-upload fa-stack-1x"></i>
+        </span>
+      {{/if}}
+      <span class="title">{{original.name}}</span>
+      <a class="file-upload-clear" file-input="{{this.filename}}"><i
+          class="fa fa-times"></i> Remove</a>
+    </div>
+  {{/each}}
+
+
+  <input type="text" readonly {{textInputAtts}}>
+  {{#if isUploading}}{{percentComplete}}%{{/if}}
+
+  <input type="file" class="cfsaf-hidden"
+         multiple data-cfs-collection="{{this.atts.collection}}"
+         {{fileInputAtts}}>
+</template>
+
