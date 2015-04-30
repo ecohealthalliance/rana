@@ -65,36 +65,51 @@
           });
         });
 
-        browser.addCommand("waitForReport", function(report, callback) {
-          // This turns documents into Mongo queries that use JSON paths.
-          // Nested objects queries were failing here,
-          // but strangely I've been able to use in my browser console.
-          function objectToQuery(obj, prefix){
-            if(!prefix) prefix = [];
-            var returnVal = {};
-            Object.keys(obj).forEach(function(key){
-              var value = obj[key];
-              if(_.isArray(value)) {
-                if(value.length > 0) {
-                  if(value.some(function(item){
-                    return _.isObject(item);
-                  })) {
-                    throw new Error("waitForReport does not support reports with object arrays.");
-                  }
-                  returnVal[prefix.concat(key).join('.')] = { $all: value };
+        // This turns documents into Mongo queries that use JSON paths.
+        // Nested objects queries were failing here,
+        // but strangely I've been able to use in my browser console.
+        function objectToQuery(obj, prefix){
+          if(!prefix) prefix = [];
+          var returnVal = {};
+          Object.keys(obj).forEach(function(key){
+            var value = obj[key];
+            if(_.isArray(value)) {
+              if(value.length > 0) {
+                if(value.some(function(item){
+                  return _.isObject(item);
+                })) {
+                  throw new Error("waitForReport does not support reports with object arrays.");
                 }
-              } else if(_.isObject(value)) {
-                _.extend(returnVal, objectToQuery(value, prefix.concat([key])));
-              } else {
-                returnVal[prefix.concat(key).join('.')] = value;
+                returnVal[prefix.concat(key).join('.')] = { $all: value };
               }
-            });
-            return returnVal;
-          }
+            } else if(_.isObject(value)) {
+              _.extend(returnVal, objectToQuery(value, prefix.concat([key])));
+            } else {
+              returnVal[prefix.concat(key).join('.')] = value;
+            }
+          });
+          return returnVal;
+        }
+
+        browser.addCommand("waitForReport", function(report, callback) {
           var query = objectToQuery(report);
           helper.checkForReports(query, function (err, reports) {
             if (reports.length) {
               callback(reports[0]);
+            } else {
+              callback({
+                error: "Query:\n" +
+                  JSON.stringify(query, 2,2)
+              });
+            }
+          });
+        });
+
+        browser.addCommand("waitForStudy", function(study, callback) {
+          var query = objectToQuery(study);
+          helper.checkForStudies(query, function (err, studies) {
+            if (studies.length) {
+              callback(studies[0]);
             } else {
               callback({
                 error: "Query:\n" +
