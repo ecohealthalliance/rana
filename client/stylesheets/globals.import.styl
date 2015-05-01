@@ -149,6 +149,13 @@ textarea,
 .space-btm-4
   margin-bottom 40px
 
+.curtain
+  &::before
+    content ''
+    display block
+    background rgba(0,0,0,.4)
+    cover()
+    
 @media (max-width: 768px) 
   .content-wrap
     padding-bottom footer-height-mobile-actual

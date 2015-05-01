@@ -1,22 +1,73 @@
 .review-panel
-  display none
   position fixed
   left 50% 
   bottom 0px
   transform translate(-50%,0)
-  min-width 600px
-  z-index 5000
+  min-width 30%
+  max-width 600px
+  z-index 1000
+  box-shadow 0 5px 20px rgba(100,100,100,0.5)
+  .created-by
+    font-style italic
   
+  .panel
+    border-radius 0
+    border 0
+    box-shadow none
+  .panel-heading
+    background lighten(secondary,90%)
+    border-bottom 2px solid lighten(secondary,70%)
   .review-panel-header
-    padding 4px 10px
-    background-color #222
+    position relative
+    padding 8px 10px
+    background-color trans-primary
     color white
     line-height 26px
+    border-bottom 2px solid darken(trans-primary, 20%)
     border-radius 5px 5px 0 0
     font-weight bold
     font-size 1.2em
+    cursor pointer
+    transition()
+    &:hover
+      background trans-strong-primary
+      border-bottom 2px solid darken(trans-strong-primary, 20%)
+      transition()
+    &::after
+      @extend .icons
+      content '+'
+      position absolute
+      top 50%
+      right 10px
+      centerPosition(0,-50%)
+    &.showing
+      background strong-primary
+      border-bottom 2px solid darken(trans-strong-primary, 20%)
+      transition()
+      &:hover
+        background darken(strong-primary,5%)
+      &::after
+        content '-'
+      
   .review-content
     background-color white
-    border 1px solid gray
     max-height 600px
     overflow-y auto
+    transition()
+    &.hidden-panel
+      max-height 0
+      display block
+      transition()
+  .new-review
+    .panel-heading
+      background lighten(primary,90%)
+      border-bottom 2px solid lighten(primary,70%)
+    .panel-body
+      padding-bottom 25px
+      
+
+@media (max-width: 768px)
+  .review-panel
+    min-width 90%
+    .review-content
+      max-height 350px

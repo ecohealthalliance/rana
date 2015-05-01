@@ -48,7 +48,7 @@ loading(positioned=false)
       position absolute
       top 50%
       left 45%
-      transform translate(-50%, -50%)
+      centerPosition(-50%,-50%)
       z-index 100
     opacity 1
     font-size 60px
@@ -87,6 +87,17 @@ buttonHover(bg=none)
     background primary
     color white
     transition()
+
+centerPosition(h,v)
+  transform translate(h,v)
+
+cover()
+  position absolute
+  top 0
+  bottom 0
+  left 0
+  right 0
+  z-index 500
 
 @keyframes spin
   from 
