@@ -35,18 +35,21 @@ footer
     centerSmall()
       
 @media (max-width: 765px)
-  footer
-    height footer-height*2
+  .logo
+    padding 0
+  .mantle
+    text-align left
+    float left
+    h1
+      bg('images/mantle-logo', 90px, 23px,'png')
+      margin 0
+
+  .eha
+    margin-top 12px
+    float right
+    h2
+      bg('images/eha-logo', 150px, 38px,'png')
+      margin 0
+      
   .footer
     width 100%
-  .logo
-    margin 0 auto
-    text-align center
-  .mantle,
-  .eha
-    float none
-    h1,
-    h2
-      margin 0 auto
-    h1
-      margin-bottom 30px
