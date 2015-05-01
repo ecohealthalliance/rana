@@ -1,3 +1,134 @@
+header
+  position relative
+  z-index 5000
 .navbar
-  margin-bottom 0
   @extend .dark-shadow
+  margin-bottom 0
+  background header-footer-BG
+  border 0
+  border-radius 0
+  min-height header-height
+  .btn,
+  .btn-default
+    padding 6px 12px
+    border 0
+    margin-left 5px
+    text-shadow none
+    font-size 13px
+    color body-text
+    line-height 1.42857143
+    buttonHover(trans-white)
+    transition()
+    &:focus
+      outline primary
+      transition()
+  
+.nav
+  float right
+
+.navbar-nav
+  margin-right 10px
+  > li > a
+    color white
+    buttonHover()
+    font-size 13px
+
+.navbar-nav .active a,
+.navbar-nav .active a:focus
+  background primary
+  outline 0
+  
+.navbar-brand 
+  padding 5px 0
+  h1
+    margin 0
+    color white
+    font-weight 600
+    text-transform uppercase
+    line-height 18px
+    font-size 18px
+    vAlign()
+    padding-left 3px
+  span
+    @extend .icons
+    padding-top 1px
+    font-size 35px
+    color white
+    line-height 0
+    vAlign()
+
+.navbar-toggle
+  @extend .icons
+  float right
+  padding 4px
+  margin 0
+  color white
+  font-size 28px
+
+.main-nav-last
+  margin-right 5px
+     
+@media (max-width: 1000px) 
+  .navbar-header
+    float none
+  .navbar-left,
+  .navbar-right
+    float none !important
+  .navbar-toggle
+    display block
+  .navbar-fixed-top
+    top 0
+    border-width 0 0 1px
+  .navbar-collapse.collapse
+    display none !important
+    height 1px !important
+  .navbar-nav
+    float none !important
+    margin-top 7.5px
+  .navbar-nav>li
+    float none
+  .navbar-nav>li>a
+    padding-top 10px
+    padding-bottom 10px
+  .collapse.in
+    display block !important
+    height auto !important
+
+  .nav
+    float none
+    li
+      border-bottom l-gray 1px solid
+      &.account
+        margin-left 0
+        border 0 
+      &.main-nav-last
+        margin 0
+      .btn
+        width 40%
+        margin 15px
+        padding 10px
+        display block
+        float left
+  .navbar-brand
+    width 75%
+    padding-top 10px
+    span
+      font-size 25px
+    h1
+      font-size 14px
+      line-height 14px
+  .navbar-nav
+    margin-right 0
+    margin-top 0
+  .navbar .btn, .navbar .btn-default
+    margin-left auto
+  .container>.navbar-header
+    margin 0
+  .navbar-collapse
+    padding-right 0
+    
+@media (min-width: 768px) and (max-width: 1000px) 
+  .nav
+    li
+      .btn
+        width 20%

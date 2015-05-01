@@ -1,3 +1,7 @@
+html,
+body
+  height 100%
+
 body
   color body-text
   @extend .open-sans
@@ -67,6 +71,28 @@ textarea
   -o-transition border-color ease-in-out .15s, box-shadow ease-in-out .15s
   transition border-color ease-in-out .15s, box-shadow ease-in-out .15s
 
+select.form-control,
+input.form-control,
+textarea,
+textarea.form-control
+  border 2px solid m-gray
+
+input,
+textarea,
+.form-control
+  &:focus
+    outline 0
+    box-shadow none
+    webkit-box-shadow none
+    border-color secondary
+
+.page-wrap
+  position relative
+  min-height 100%
+
+.content-wrap
+  padding-bottom footer-height-actual+10
+
 .rm-pad
   padding 0
 
@@ -75,6 +101,16 @@ textarea
   
 .rm-pad-btm
   padding-bottom 0
+
+.btn-primary
+  makeButton(secondary)
+
+.btn-danger
+  makeButton(strong-primary)
+
+.file-upload .btn, 
+.file-upload label.btn
+  makeButton(secondary)
 
 .button-default[disabled]
 .btn[disabled]
@@ -113,22 +149,9 @@ textarea
 .space-btm-4
   margin-bottom 40px
 
-@media (max-width: 768px)
+@media (max-width: 768px) 
+  .content-wrap
+    padding-bottom footer-height-mobile-actual
   .add-space-btm
     @extend .space-btm-4
-
-select.form-control,
-input.form-control,
-textarea,
-textarea.form-control
-  border 2px solid m-gray
-
-input,
-textarea,
-.form-control
-  &:focus
-    outline 0
-    box-shadow none
-    webkit-box-shadow none
-    border-color secondary
   
