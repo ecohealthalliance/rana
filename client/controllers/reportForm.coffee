@@ -28,9 +28,8 @@ AutoForm.addHooks(
       <a href="/report/#{@docId}">Edit Report</a>
       """)
       window.scrollTo(0, 0)
-      redirectOnSubmit = urlParams?.redirectOnSubmit
-      if redirectOnSubmit
-        Router.go(redirectOnSubmit)
+      if template.data.redirectOnSubmit
+        Router.go template.data.redirectOnSubmit
       else
         window.scrollTo(0, 0)
     onError: (operation, error) ->
