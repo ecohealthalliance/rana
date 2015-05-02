@@ -36,26 +36,24 @@ settings = (tableType) =>
 
   fields = []
 
-  if tableType is 'full'
+  studyVars = {}
+  getStudyNameVar = (studyId) ->
+    if studyVars[studyId]
+      return studyVars[studyId]
+    else
+      studyNameVar = new ReactiveVar("")
+      studyVars[studyId] = studyNameVar
+      onReady = () ->
+        studyName = getCollections().Studies.findOne(studyId)?.name
+        studyNameVar.set studyName
+      Meteor.subscribe "studies", studyId, onReady
+      return studyNameVar
 
-    studyVars = {}
-    getStudyNameVar = (studyId) ->
-      if studyVars[studyId]
-        return studyVars[studyId]
-      else
-        studyNameVar = new ReactiveVar("")
-        studyVars[studyId] = studyNameVar
-        onReady = () ->
-          studyName = getCollections().Studies.findOne(studyId)?.name
-          studyNameVar.set studyName
-        Meteor.subscribe "studies", studyId, onReady
-        return studyNameVar
-
-    fields.push
-      key: "studyId"
-      label: "Study"
-      fn: (val, obj) ->
-        getStudyNameVar(val).get()
+  fields.push
+    key: "studyId"
+    label: "Study"
+    fn: (val, obj) ->
+      getStudyNameVar(val).get()
 
   if tableType is 'full'
     fields.push

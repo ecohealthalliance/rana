@@ -73,7 +73,7 @@ ReactiveTable.publish 'obfuscatedReports', collections.Reports,
       'dataUsePermissions': "Share obfuscated",
       'consent': true
     },
-    { fields: {'createdBy': 1, 'contact': 1, 'eventLocation.country': 1} }
+    { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy': 1, 'contact': 1, 'eventLocation.country': 1} }
 
 Meteor.publishComposite "reportLocations", () ->
   find: () ->
@@ -124,6 +124,8 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
 
   fields =
     if report.dataUsePermissions is 'Share obfuscated' and report.createdBy.userId != @userId
+      studyId: true
+      dataUsePermissions: true
       createdBy: true
       contact: true
       'eventLocation.country': true
