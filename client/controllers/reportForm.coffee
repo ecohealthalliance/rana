@@ -1,8 +1,6 @@
 getCollections = => @collections
 contactFromUser = @contactFromUser
 
-urlParams = null
-
 AutoForm.addHooks(
   'ranavirus-report', {
     docToForm: (doc, ss)->
@@ -55,7 +53,6 @@ Template.reportForm.helpers
     Template.currentData().type == 'update'
 
   reportDoc: =>
-    urlParams = Template.currentData().urlQuery
     if Template.currentData().report
       Template.currentData().report
     else
