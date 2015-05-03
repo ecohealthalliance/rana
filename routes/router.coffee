@@ -27,12 +27,14 @@ Router.route('editReport',
   where: 'client'
   data: ->
     report = getCollections().Reports.findOne @params.reportId
+
+    obfuscated = false
     if report
+      if report.dataUsePermissions is 'Share obfuscated' and report.createdBy.userId != @userId
+        obfuscated = true
       study = null
-      obfuscated = true
       if report.studyId
         study = getCollections().Studies.findOne report.studyId
-        obfuscated = false
       type = if Meteor.userId() and Meteor.userId() == report.createdBy.userId
           'update'
         else
