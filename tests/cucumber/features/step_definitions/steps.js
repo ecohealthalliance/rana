@@ -275,10 +275,10 @@
       .call(callback);
     });
 
-    this.When('I click on the edit profile button',
+    this.When('I click on the profile button',
     function(callback){
       helper.world.browser
-      .click('.edit-profile')
+      .click('.profile')
       .call(callback);
     });
 
