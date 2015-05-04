@@ -6,17 +6,44 @@ Template.table.created = ->
 Template.table.query = ->
   Template.instance().query
 
-Template.table.isEmpty = ->
-  getCollections().Reports.find(Template.instance().query.get()).count() is 0
-
-Template.table.collection = ->
-  getCollections().Reports.find(Template.instance().query.get())
+Template.table.filters = =>
+  filters = []
+  query = Template.instance().query.get() or {}
+  # reactive-table filters don't support arbitrary queries yet
+  queries = if '$and' of query then query['$and'] else [query]
+  for q in queries
+    key = Object.keys(q)[0]
+    value = q[key] or ""
+    filter = new ReactiveTable.Filter('reports-' + key, [key])
+    if value isnt filter.get()
+      filter.set(value)
+    filters.push 'reports-' + key
+  filters
 
 Template.table.settings = =>
   isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
   schema = @collections.Reports.simpleSchema().schema()
 
   fields = []
+  
+  studyVars = {}
+  getStudyNameVar = (studyId) ->
+    if studyVars[studyId]
+      return studyVars[studyId]
+    else
+      studyNameVar = new ReactiveVar("")
+      studyVars[studyId] = studyNameVar
+      onReady = () ->
+        studyName = getCollections().Studies.findOne(studyId)?.name
+        studyNameVar.set studyName
+      Meteor.subscribe "studies", studyId, onReady
+      return studyNameVar
+
+  fields.push
+    key: "studyId"
+    label: "Study"
+    fn: (val, obj) ->
+      getStudyNameVar(val).get()
 
   fields.push
     key: "eventLocation"
@@ -26,7 +53,7 @@ Template.table.settings = =>
         String(val.geo.coordinates[0]) + ', ' + String(val.geo.coordinates[1])
       else
         ''
-  
+
   columns = [
     "speciesGenus"
     "speciesName"
@@ -91,6 +118,7 @@ Template.table.settings = =>
   showColumnToggles: true
   showFilter: false
   fields: fields
+  noDataTmpl: Template.noReports
 
 Template.table.events(
   'click .remove-form': (evt)->

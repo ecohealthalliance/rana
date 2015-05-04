@@ -41,10 +41,10 @@
 
     this.Then(/^I should see (\d+) reports? on the map$/, function (number, callback) {
       helper.world.browser
-      .waitForExist(".leaflet-marker-icon")
+      .waitForExist(".leaflet-marker-icon", 10000)
       .elements(".leaflet-marker-icon", function(err, resp){
         assert.ifError(err);
-        assert.equal(resp.value.length, parseInt(number));
+        assert.equal(resp.value.length, parseInt(number, 10));
       })
       .call(callback);
     });

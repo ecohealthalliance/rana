@@ -107,6 +107,10 @@
           collections.Reports.insert(report);
         });
         return reports;
+      },
+
+      '/fixtures/checkForReports': function (reportQuery) {
+        return collections.Reports.find(reportQuery).fetch();
       }
     });
 

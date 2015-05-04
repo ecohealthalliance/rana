@@ -10,9 +10,9 @@ Feature: The ability to authenticate users
     And I click submit
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
-    When I navigate to the "map" page
-    Then my reports without consent should be available
+    When I navigate to the "table" page
+    Then I should see 1 reports in the table
     When I log out
-    And I navigate to the "map" page
+    And I navigate to the "table" page
     Then I am not logged in
-    And my reports without consent should not be available
+    And I should see 0 reports in the table

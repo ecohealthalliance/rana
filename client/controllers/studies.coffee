@@ -1,8 +1,5 @@
 Template.studies.helpers
 
-  isEmpty: () =>
-    not @collections.Studies.findOne()
-
   settings: () =>
     schema = @collections.Studies.simpleSchema().schema()
 
@@ -30,7 +27,8 @@ Template.studies.helpers
           """)
 
     showColumnToggles: true
-    fields: fields
+    fields: fields,
+    noDataTmpl: Template.noStudies
 
   Template.studies.events(
     'click .remove-form': (evt)->
