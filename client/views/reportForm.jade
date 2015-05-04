@@ -5,7 +5,8 @@ template(name="reportForm")
     section.rm-pad-btm
       .container
         h2
-          a(href='/study/#{study._id}') #{study.name}
+          a.study-link(href='/study/#{study._id}') #{study.name} 
+            span.glyphicon.glyphicon-link
           if isInsert
             span - New Report
           else if isUpdate
