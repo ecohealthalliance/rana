@@ -1,0 +1,198 @@
+template(name="importInstructions")
+  .fluid-container.import-instructions
+    section#importing-data
+      .container
+        h1 Importing Data
+
+        p Rather than individually adding records to a study one at a time through the web interface, you may wish to perform a bulk upload of records when you create a new study. To do so, you must transform your data to match the import format expected by the system.
+
+        p When filling out the #[a(href="/study") New Study form], any report fields you choose to fill out will become default values for all reports associated with that study. These will be pre-filled on the form for new reports, and they will also be default values for reports added via imports. If no data is specified for a field in the import file, any value specified for the entire study will be used. If a value is specified in the import however, it will override any defaults set on the study.
+
+        p Below is a description of each field and the values it may take. Unless otherwise specified, values may be arbitrary strings. The variable names correspond to column names in the header row of a spreadsheet. Data must be exported in the comma-separated value (CSV) format prior to being imported into the system.
+
+        p Here is an example CSV file with every field specified. In your own file, do not include any columns for which you have no data.
+
+        a.btn.btn-primary(href="/sample_csv_import.csv") 
+          span Download a Sample CSV import file
+          span.glyphicon.glyphicon-download
+
+    .container
+      section#content
+        h2 Contact
+        +markdown
+          ```
+          contact.name
+          contact.email
+          contact.phone
+          contact.institutionAddress.name
+          contact.institutionAddress.street
+          contact.institutionAddress.street2
+          contact.institutionAddress.city
+          contact.institutionAddress.stateOrProvince
+          contact.institutionAddress.country
+          contact.institutionAddress.postalCode
+          ```
+        p These fields specify the contact information for the person responsible for this report. If they are not specified in the CSV file, they will be inherited from the study.
+
+      section#event-date-location
+        h2 Event Date and Location
+
+        .sub-section
+          h3 Date
+          +markdown
+            ```
+            eventDate
+            ```
+          p The date the event occurred. Use #[code MM/DD/YYYY] format.
+
+        .sub-section.location
+          h3 Location
+
+          p Location coordinates can be specified in one of three ways. No matter what input format is used, the location is converted into decimal degrees latitude and longitude to use for map display, but the original input format is recorded and preserved. The #[code eventLocation.country] field, containing the name of the country where the event occurred, must be specified as well if coordinates are given. To include location data in a report, specify each field in one of the following sets of fields:
+
+          h4 Latitude and Longitude in Decimal Degrees
+          +markdown
+            ```
+            eventLocation.latitude
+            eventLocation.longitude
+            eventLocation.country
+            ```
+          h4 Latitude and Longitude in Degrees / Minutes / Seconds
+          +markdown
+            ```
+            eventLocation.degreesLon
+            eventLocation.minutesLon
+            eventLocation.secondsLon
+            eventLocation.degreesLat
+            eventLocation.minutesLat
+            eventLocation.secondsLat
+            eventLocation.country
+            ```
+          h4 UTM
+          +markdown
+            ```
+            eventLocation.northing
+            eventLocation.easting
+            eventLocation.zone
+            eventLocation.country
+            ```
+
+      section#animal-characteristics
+        h2 Animal Characteristics
+
+        .sub-section
+          h3 Species information
+          +markdown
+            ```
+            speciesGenus
+            speciesName
+            speciesNotes
+            ```
+          p Specify the species name in binomial nomenclature, including the genus.
+
+        .sub-section
+          h3 Number of Animals Involved
+          +markdown
+            ```
+            numInvolved
+            ```
+          p Allowed values: 
+            code 1, 2_10, 11_50, 51_100, 101_500, 500_
+          p The number of animals involved falls into one of six buckets, from one animal to more than 500 animals.
+
+        .sub-section
+          h3 Animal testing
+          +markdown
+            ```
+            totalAnimalsTested
+            totalAnimalsConfirmedInfected
+            totalAnimalsConfirmedDiseased
+            ```
+          p Integer values for the total number of animals tested, confirmed infected, and confirmed diseased.
+
+        .sub-section
+          h3 Population type
+          +markdown
+            ```
+            populationType
+            ```
+          p Allowed values: 
+            code wild, zoological, production
+
+        .sub-section
+          h3 Vertebrate Classes
+          +markdown
+            ```
+            vertebrateClasses
+            ```
+          p Allowed values: 
+            code fish, amphibian, reptile
+
+        .sub-section
+          h3 Age Classes
+          +markdown
+            ```
+            ageClasses
+            ```
+          code egg, larvae, juvenile, adult
+
+      section#methods
+        h2 Methods
+        .sub-section
+          h3 Ranavirus Confirmation Methods
+          +markdown
+            ```
+            ranavirusConfirmationMethods
+            specifyOtherRanavirusConfirmationMethods
+            ```
+
+          p You may supply multiple methods in a comma-separated list. Allowed values: 
+            code traditional_pcr, qrt_pcr, virus_isolation, sequencing, electron_microscopy, in_situ_hybridization, immunohistochemistry, other
+
+          p If other confirmation methods are specified, include the value #[code other] in the list and then include the values for each other confirmation method in a comma-separated list in the #[code specifyOtherRanavirusConfirmationMethods] field.
+        .sub-section
+          h3 Sample Type
+          +markdown
+            ```
+            sampleType
+            specifyOtherRanavirusSampleTypes
+            ```
+        
+          p You may supply multiple sample types in a comma-separated list. 
+          p Allowed values:
+            code internal_swabs, external_swabs, internal_organ_tissues, tail_toe_clips, blood, other
+
+          p If other confirmation sample types are specified, include the value #[code other] in the list and then include the values for each other sample type in a comma-separated list in the #[code specifyOtherRanavirusSampleTypes] field.
+
+      section#gen-bank-accession-numbers
+        h2 Gen Bank Accession Numbers
+        +markdown
+          ```
+          genBankAccessionNumbers
+          ```
+        p Use a comma-separated list to include multiple values.
+
+        +markdown
+          ```
+          additionalNotes
+          ```
+
+        p Specify any additional notes for the report.
+
+      section#consent
+        h2 Consent
+        +markdown
+          ```
+          consent
+          ```
+        p Use the value #[code 1] or #[code true] if you consent to sharing this report, #[code 0] or #[code false] if not.
+
+      section#data-use-permissions
+        h2 Data Use Permissions
+        +markdown
+          ```
+          dataUsePermissions
+          ```
+        p Choose only one of the following values: 
+          code Do not share, Share obfuscated, Share full record
+

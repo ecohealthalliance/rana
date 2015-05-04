@@ -1,3 +1,7 @@
 template(name="accountsHeaderButtons")
-  a.btn.btn-default.edit-profile(href="{{pathFor route='profile'}}") Edit Profile
-  +atNavButton
+  if currentUser
+    li.account
+      a.profile.btn.btn-default.navbar-btn(href="{{pathFor route='profile'}}") Profile
+  li.account
+    +atNavButton
+

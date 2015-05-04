@@ -60,13 +60,6 @@ template(name="species")
         .col-sm-7.col-sm-offset-1
           +afQuickField name="speciesNotes"
 
-template(name="notes")
-  section
-    .container
-      .row
-        .col-sm-9
-          +afQuickField name='additionalNotes' id='additionalNotes'
-
 template(name="permissions")
   section.rm-pad-top
     .container
@@ -90,9 +83,9 @@ template(name="classesMethods")
     .container
       .row.form-input-block
         if report
-          .col-sm-8.input-block
+          .col-md-8.col-sm-12.input-block
             +classesMethodsInputs
-          .col-sm-4
+          .col-md-4.col-sm-6
               +afQuickField name='totalAnimalsTested'
               +afQuickField name='totalAnimalsConfirmedInfected'
               +afQuickField name='totalAnimalsConfirmedDiseased'

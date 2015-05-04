@@ -111,22 +111,14 @@
     function (shouldNot, prop, value, callback) {
       var query = {};
       query[prop] = value;
-      helper.world.browser
-      .executeAsync(function(query, done){
-        Meteor.subscribe("reports");
-        Tracker.autorun(function(){
-          var reports = collections.Reports.find(query);
-          if(reports.count() > 0) done(reports.fetch());
-        });
-        window.setTimeout(done, 2000);
-      }, query, _.once(function(err, ret){
-        assert.ifError(err);
-        if(shouldNot) {
-          assert(!ret.value, 'Report found');
+      helper.checkForReports(query, function (reports) {
+        if (shouldNot) {
+          assert(!reports.length, "Report found");
         } else {
-          assert.equal(ret.value.length, 1, 'Incorrect number of reports');
+          assert.equal(reports.length, 1, "Incorrect number of reports");
         }
-      })).call(callback);
+        callback();
+      });
     });
 
     this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,
@@ -169,6 +161,50 @@
         .call(callback);
       });
     });
+
+    // Currently this is just used for benchmarking tests that aren't included
+    // in the main branch of the repository.
+    this.Given(/^there are (\d+) reports in the database$/,
+    function(number, callback) {
+      number = parseInt(number, 10);
+      var reports = _.range(number).map(function(){
+        return {
+          studyId: 'fakeid',
+          consent: true,
+          contact: {name: 'Test User', email: 'test@foo.com'},
+          dataUsePermissions: "Share full record",
+          // Random data to simulate large reports
+          speciesNotes: _.range(200).map(Math.random).join(' '),
+          eventLocation: {
+            source: 'LonLat',
+            // These fields are not used in the many reports test,
+            // so we do not need to generate correct values for them.
+            northing: 1,
+            easting: 2,
+            zone: 3,
+            degreesLon: -170,
+            minutesLon: 30,
+            secondsLon: 40.58647497889751,
+            degreesLat: 0,
+            minutesLat: 0,
+            secondsLat: 0.032469748221482304,
+            country: 'USA',
+            geo: {
+              type: 'Point',
+              coordinates: [
+                Math.random() * 360 - 180,
+                Math.random() * 180 - 90
+              ]
+            }
+          }
+        };
+      });
+      helper.addReports(reports, function(err){
+        assert.ifError(err);
+        callback();
+      }, 200 * number);
+    });
+
 
     this.Then("there should be no delete button for the report by someone else",
     function(callback){
@@ -250,10 +286,10 @@
       .call(callback);
     });
 
-    this.When('I click on the edit profile button',
+    this.When('I click on the profile button',
     function(callback){
       helper.world.browser
-      .click('.edit-profile')
+      .click('.profile')
       .call(callback);
     });
 
