@@ -60,3 +60,10 @@ Feature: A form for setting up a ranavirus study
     And I fill out the study form
     And I click submit
     Then the webpage should display a validation error
+
+  Scenario: Redirecting after editing a study
+    Given I have logged in
+    And I am on the "studies" page
+    And I click on the edit button
+    And I click submit
+    Then I should be on the "studies" page
