@@ -257,6 +257,13 @@
       .call(callback);
     });
 
+    this.When('I click the Add a report button',
+    function(callback){
+      helper.world.browser
+      .click('.add-report')
+      .call(callback);
+    });
+
   };
 
 })();

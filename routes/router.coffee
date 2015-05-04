@@ -13,6 +13,7 @@ Router.route('newReport',
   data: ->
     type: 'insert'
     study: getCollections().Studies.findOne @params.studyId
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->
