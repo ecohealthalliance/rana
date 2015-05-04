@@ -29,23 +29,6 @@
     this.Given('I am on the "$path" page', this.visit);
     this.When('I navigate to the "$path" page', this.visit);
 
-    this.Then('I should be redirected to the "$path" page', function (path, callback) {
-      helper.world.browser
-      .pause(4000)
-      .url(function (err, result) {
-        assert.ifError(err);
-        if(result.value.slice(-path.length) !== path) {
-          helper.world.browser.saveScreenshot(
-            helper.getAppDirectory() +
-            "/tests/screenshots/redirect failure - " +
-            helper.world.scenario.getName() +
-            ".png"
-          );
-        }
-        assert.equal(result.value.slice(-path.length), path);
-      }).call(callback);
-    });
-
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
         title(function (err, res) {
@@ -268,16 +251,23 @@
         }).call(callback);
     });
 
-    this.Then(/^I should be on the "([^"]*)" page$/,
-    function (page, callback) {
-
-      helper.world.browser.pause(2000).
-      url(function(err, res) {
-        assert(!err);
-        assert.equal(res.value, 'http://localhost:5000/' + page);
+    this.Then('I should be on the "$path" page', function (path, callback) {
+      helper.world.browser
+      .pause(4000)
+      .url(function (err, result) {
+        assert.ifError(err);
+        if(result.value.slice(-path.length) !== path) {
+          helper.world.browser.saveScreenshot(
+            helper.getAppDirectory() +
+            "/tests/screenshots/redirect failure - " +
+            helper.world.scenario.getName() +
+            ".png"
+          );
+        }
+        assert.equal(result.value.slice(-path.length), path);
       }).call(callback);
-
     });
+
 
     this.When('I click on the edit button',
     function(callback){
