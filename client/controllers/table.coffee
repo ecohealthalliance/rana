@@ -131,7 +131,7 @@ Template.table.events(
     $('.filter-controls').toggleClass('hidden')
     $('.toggle-filter').toggleClass('showingOpts')
 
-  'click .export': (event, template) ->
+  'click .export:not(.disabled)': (event, template) ->
     $(event.target).addClass('disabled')
     query = template.query.get()
     Meteor.call 'export', query, (err, result) ->
