@@ -68,6 +68,7 @@ Router.route('editStudy',
   data: ->
     study: getCollections().Studies.findOne(@params.studyId)
     reports: getCollections().Reports.find({studyId: @params.studyId})
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->
