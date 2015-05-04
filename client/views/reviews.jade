@@ -2,13 +2,12 @@ template(name="reviews")
   each reviews
     .panel.panel-default
       .panel-heading
-        h3.panel-title Rating #{scaledRating} / #{maxRating}
+        h3.panel-title Rating: #{scaledRating} / #{maxRating}
       .panel-body
-        p #{comment}
-        p
-          i #{createdBy.name}
+        p.comment #{comment}
+        p.created-by #{createdBy.name}
   form#add-review
-    .panel.panel-default
+    .panel.panel-default.new-review
       .panel-heading
         h3.panel-title New Review
       .panel-body
@@ -18,5 +17,4 @@ template(name="reviews")
         .form-group
           label Comment
           textarea.form-control.new-comment(name="comment")
-        .btn-group
-          button.btn.btn-primary.btn-lg.btn-block.add-comment(type="submit") Add Review
+        button.btn.btn-primary.btn-block.add-comment(type="submit") Add Review

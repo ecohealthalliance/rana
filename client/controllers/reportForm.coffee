@@ -74,5 +74,8 @@ Template.reportForm.events
       timeout -= 1000
     , 1000)
 
-  'click .review-panel-header': ()->
-    $(".review-content").toggle()
+  'click .review-panel-header': (e)->
+    $(e.target).toggleClass('showing')
+    $('.review-content').toggleClass('hidden-panel')
+    $('.page-wrap').toggleClass('curtain')
+
