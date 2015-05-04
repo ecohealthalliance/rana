@@ -32,12 +32,20 @@ header
     color white
     buttonHover()
     font-size 13px
+    &:focus
+      background primary
+      outline 5px auto darken(primary, 10%)
 
-.navbar-nav .active a,
-.navbar-nav .active a:focus
-  background primary
-  outline 0
-  
+.navbar-nav 
+  .active a,
+  .active a:focus
+    background primary
+    outline 0
+  .account.active a
+    background trans-white
+  .account.active a:focus
+    background white
+
 .navbar-brand 
   padding 5px 0
   h1
