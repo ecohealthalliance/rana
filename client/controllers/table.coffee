@@ -126,7 +126,19 @@ Template.table.events(
     reply = prompt('Type "delete" to confirm that this report should be removed.')
     if reply == "delete"
       getCollections().Reports.remove(reportId)
+
   'click .toggle-filter': () ->
     $('.filter-controls').toggleClass('hidden')
     $('.toggle-filter').toggleClass('showingOpts')
+
+  'click .export': (event, template) ->
+    $(event.target).addClass('disabled')
+    query = template.query.get()
+    Meteor.call 'export', query, (err, result) ->
+      if (err)
+        console.log err
+        alert "There was an error exporting the data."
+      else
+        window.open "data:text/csv;charset=utf-8," + encodeURIComponent(result)
+      $(event.target).removeClass('disabled')
 )
