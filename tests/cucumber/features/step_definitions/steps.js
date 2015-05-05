@@ -54,7 +54,7 @@
         });
     });
 
-    this.When(/^I click submit$/, function (callback) {
+    this.When(/^I click submit( again)?$/, function (again, callback) {
       helper.world.browser
         .saveScreenshot(
           helper.getAppDirectory() +
@@ -70,13 +70,15 @@
     function (buttonName, callback) {
       var buttonNameToSelector = {
         "Columns" : ".reactive-table-columns-dropdown button",
-        "Remove" : "a.remove"
+        "Remove" : "a.remove",
+        "Edit Report" : ".toast-message a"
       };
       var selector = buttonName;
       if(buttonName in buttonNameToSelector) {
         selector = buttonNameToSelector[buttonName];
       }
       helper.world.browser
+        .waitForExist(selector, assert.ifError)
         .click(selector)
         .call(callback);
     });

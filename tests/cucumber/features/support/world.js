@@ -236,8 +236,9 @@
                 throw new Error(error);
               }
             });
-
-            callback();
+            // The browser input calls above do not block future calls to
+            // browser methods, so a pause is used to wait for input to be entered.
+            browser.pause(1000).call(callback);
           });
         });
 

@@ -14,29 +14,8 @@
   download: (userId)->
     true
 
-# This makes it so it isn't possible to retrieve all the records in the system.
-# It is necessairy to know their id, which should make it necessairy to have
-# access to the record they are attached to.
-onlyById = (collection)->
-  (id)->
-    if _.isArray id
-      ids = id
-    else
-      ids = [id]
-    # It doesn't seem to be possible to pass in RegExps
-    # but we still check for them just incase it becomes possible in
-    # future versions of Meteor.
-    if ids.some(_.isRegExp)
-      return null
-
-    collection.find({_id: {$in: ids}})
-
-Meteor.publish 'files', onlyById(collections.Files)
-
 Meteor.publish 'genera', ->
   collections.Genera.find()
-
-Meteor.publish 'pdfs', onlyById(collections.PDFs)
 
 @collections.PDFs.allow
   insert: (userId, doc) ->
@@ -46,8 +25,15 @@ Meteor.publish 'pdfs', onlyById(collections.PDFs)
   download: (userId)->
     true
 
-Meteor.publish 'csvfiles', onlyById(collections.CSVFiles)
-
+Meteor.publish 'csvfiles', (id)=>
+  @collections.CSVFiles.find {
+    _id: id
+    # Currently, to load data from a CSV, it needs to be subscribed to before
+    # the study it is attached to is created. This prevents data from the csv
+    # from being downloaded after the study is created, when it is no longer
+    # necessary, as a security measure.
+    studyId: { $exists: false }
+  }
 
 sharedOrCreator = (userId) ->
   {
@@ -62,13 +48,22 @@ sharedOrCreator = (userId) ->
     ]
   }
 
-Meteor.publish 'studies', (id) ->
-  collections.Studies.find {
-    $and: [
-      { _id: id }
-      sharedOrCreator @userId
-    ]
-  }
+Meteor.publishComposite 'studies', (id) ->
+  find: () ->
+    collections.Studies.find {
+      $and: [
+        { _id: id }
+        sharedOrCreator @userId
+      ]
+    }
+  children: [
+    {
+      find: (study) ->
+        collections.PDFs.find
+          _id: study?.publicationInfo?.pdf
+          studyId: study._id
+    }
+  ]
 
 ReactiveTable.publish "studies", collections.Studies, () ->
   sharedOrCreator @userId
@@ -133,10 +128,31 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
           ]
         }, {fields: {name: 1}}
     }
+    {
+      find: (report) ->
+        ids = _.pluck(report?.images or [], "image")
+        if ids.some(_.isRegExp)
+          return []
+        collections.Files.find
+          _id:
+            $in: ids
+          reportId: report._id
+    }
+    {
+      find: (report) ->
+        ids = _.pluck(report?.pathologyReports or [], "report")
+        if ids.some(_.isRegExp)
+          return []
+        collections.Files.find
+          _id:
+            $in: ids
+          reportId: report._id
+    }
+    {
+      find: (report) ->
+        collections.Reviews.find {reportId : report._id}
+    }
   ]
-
-Meteor.publish 'reviews', (reportId)->
-  collections.Reviews.find({reportId : reportId})
 
 allowCreator = (userId, doc) ->
   doc.createdBy.userId == userId

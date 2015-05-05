@@ -38,4 +38,6 @@ Feature: A form for reporting Ranavirus outbreaks
     Given I have logged in
     And I am on the "study/fakeid/report" page
     When I upload an image
+    And I click submit
+    And I click the "Edit Report" button
     Then I should see an image preview
