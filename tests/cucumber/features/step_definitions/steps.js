@@ -162,6 +162,27 @@
       });
     });
 
+    this.Given(/^there is a study( created by someone else)? in the database$/,
+    function(someoneElse, callback) {
+      var study = {
+        consent: true,
+        contact: {name: 'Test User', email: 'test@foo.com'},
+        dataUsePermissions: "Share full record"
+      };
+      if(someoneElse) {
+        study['createdBy'] = {
+          userId: "fakeId",
+          name: "Someone Else"
+        };
+      }
+      helper.addStudies([study], function(err){
+        assert.ifError(err);
+        helper.world.browser
+        .waitForStudy(study)
+        .call(callback);
+      });
+    });
+
     // Currently this is just used for benchmarking tests that aren't included
     // in the main branch of the repository.
     this.Given(/^there are (\d+) reports in the database$/,
@@ -205,46 +226,9 @@
       }, 200 * number);
     });
 
-
-    this.Then("there should be no delete button for the report by someone else",
-    function(callback){
-      helper.world.browser
-        .mustExist('.reactive-table tr')
-        .execute(function() {
-          return $('.reactive-table tr').map(function(idx, element){
-            var $el = $(element);
-            var someoneElse = /Someone Else/.test(
-              $el.find('td[class="createdBy.name"]').text()
-            );
-            var hasDelete = Boolean($el.find(".remove-form").length);
-            if(someoneElse && hasDelete) {
-              return $el.find('td').map(function(idx, item){
-                return item.textContent;
-              }).toArray().join(", ");
-            }
-            return false;
-          });
-        }, function(err, result){
-          assert.ifError(err);
-          var badRows = result.value.filter(function(item){
-            return item;
-          });
-          assert.equal(badRows.length, 0, "Delete button found in rows:\n" + badRows.join("\n"));
-        })
-        .call(callback);
-    });
-
     this.Given(/^there are no reports in the database$/,
     function (callback) {
       helper.resetTestDB([], callback);
-    });
-
-    this.When("I delete the report", function(callback){
-      helper.world.browser
-        .clickWhenVisible(".remove-form")
-        .alertText("delete", assert.ifError)
-        .alertAccept(assert.ifError)
-        .call(callback);
     });
 
     this.Then(/^I should( not)? see the text "([^"]*)"/,
@@ -275,10 +259,10 @@
       .call(callback);
     });
 
-    this.When('I click on the edit profile button',
+    this.When('I click on the profile button',
     function(callback){
       helper.world.browser
-      .click('.edit-profile')
+      .click('.profile')
       .call(callback);
     });
 

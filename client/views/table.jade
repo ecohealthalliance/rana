@@ -2,6 +2,7 @@ template(name="table")
   section
     .container.reports-table
       button.toggle-filter.btn.btn-primary(href="#") Filter Table 
+      button.export.btn.btn-primary(href="#") Export
       .filter-controls.table-filters.hidden
         +filterControls query=query
       +reactiveTable collection="reports" settings=settings filters=filters

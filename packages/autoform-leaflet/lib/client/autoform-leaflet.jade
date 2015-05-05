@@ -16,46 +16,46 @@ template(name='leaflet')
           .form-group
             h5.form-group-header Degrees Decimal
             .row
-              .col-sm-6
+              .col-xs-6
                 label(for='lon') Longitude
                 input.lon.form-control(name='lon')
-              .col-sm-6
+              .col-xs-6
                 label(for='lat') Latitude
                 input.lat.form-control(name='lat')
           .form-group
             h5.form-group-header Degrees / Minutes / Seconds
-            h5 Longitude
+            h5.form-group-subHeader Longitude
             .row
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='degreesLon') degrees:
                 input.degreesLon.form-control(name='degreesLon')
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='minutesLon') minutes:
                 input.minutesLon.form-control(name='minutesLon')
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='secondsLon') seconds:
                 input.secondsLon.form-control(name='secondsLon')
-            h5 Latitude
+            h5.form-group-subHeader Latitude
             .row
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='degreesLat') degrees:
                 input.degreesLat.form-control(name='degreesLat')
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='minutesLat') minutes:
                 input.minutesLat.form-control(name='minutesLat')
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='secondsLat') seconds:
                 input.secondsLat.form-control(name='secondsLat')
           .form-group
             h5.form-group-header Universal Transverse Mercator
             .row
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='easting') Easting
                 input.easting.form-control(name='easting')
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='northing') Northing
                 input.northing.form-control(name='northing')
-              .col-sm-4
+              .col-sm-4.col-xs-6
                 label(for='zone') Zone
                 input.zone.form-control(name='zone')
           .form-group

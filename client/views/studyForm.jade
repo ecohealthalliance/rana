@@ -32,7 +32,11 @@ template(name="studyForm")
 
         +classesMethods study=true
 
-        +notes
+        section
+          .container
+            .row
+              .col-sm-9
+                +afQuickField name='additionalNotes' id='additionalNotes'
 
         +permissions
 
