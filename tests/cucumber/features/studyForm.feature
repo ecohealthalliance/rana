@@ -29,6 +29,7 @@ Feature: A form for setting up a ranavirus study
     And I click the link for the the study called "Study"
     And I fill out the study form differently
     And I click submit
+    And I click the link for the the study called "Study"
     Then the form should contain the different values I entered
 
   Scenario: Removing a study

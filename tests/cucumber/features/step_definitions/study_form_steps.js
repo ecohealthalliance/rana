@@ -111,6 +111,7 @@
 
     this.When('I click the link for the the study called "$name"', function(name, callback){
       helper.world.browser
+      .pause(2000)
       .click('a[for="' + name + '"]')
       .call(callback);
     });
