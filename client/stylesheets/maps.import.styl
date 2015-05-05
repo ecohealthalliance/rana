@@ -2,7 +2,7 @@ sidebar-width = 300px
 top-nav-height = header-height
 
 marker-width = 22px
-marker-height = 24px
+marker-height = 32px
 arrow-top = (marker-height * 4 / 5)
 arrow-width = (marker-width * 3 / 4)
 arrow-height = (arrow-width / 2)
@@ -24,7 +24,7 @@ arrow-height = (arrow-width / 2)
     content 'm'
     display block
     font-family icons
-    font-size 32px
+    font-size marker-height
 
 .map-marker .arrow
   position relative
@@ -64,9 +64,42 @@ arrow-height = (arrow-width / 2)
 .leaflet-bar
   box-shadow 0 1px 5px rgba(0,0,0,0.3)
 
+.leaflet-container .leaflet-control-attribution, 
+.leaflet-container .leaflet-control-scale
+  @extend .open-sans  
+
+.leaflet-popup-content-wrapper, 
+.leaflet-popup-tip
+  box-shadow 0 1px 5px rgba(0,0,0,0.3)
+  background rgba(255,255,255,0.9)
+  
+.leaflet-popup-content-wrapper
+  border-radius 5px
+
 .leaflet-bar a, .leaflet-bar a:hover
   background rgba(255,255,255,.8)
 
+.leaflet-bar a, 
+.leaflet-bar a:hover
+  color primary
+
+.map-popup
+  color body-text
+  font-size 12px
+  @extend .open-sans
+  h2
+    font-size 20px
+    margin 0 0 3px 0
+  .date
+    display block
+    color d-gray
+    margin-bottom 10px
+  dd
+    margin-bottom 5px
+
+.leaflet-container a.leaflet-popup-close-button
+  @extend .icons
+  
 @media (max-width: 768px)
   .vis-container
     bottom footer-height-mobile

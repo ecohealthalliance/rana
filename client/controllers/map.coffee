@@ -40,15 +40,15 @@ Template.map.rendered = ->
     markers = new L.FeatureGroup()
     curGroupBy = Template.instance().groupBy.get()
     colors = [
-      '#86C8DF'
+      '#BC6A28'
       '#C78DCA'
-      '#2C7BB6'
+      '#86C8DF'
       '#6354BF'
       '#FDAE61'
       '#00A453'
       '#C10004'
       '#363636'
-      '#726258'
+      '#2C7BB6'
     ]
     groups = []
     if curGroupBy
@@ -92,25 +92,23 @@ Template.map.rendered = ->
         .addTo(markers)
         .bindPopup("""
         <div class="map-popup">
-        <dl>
-          <dt>Study</dt>
-          <dd>#{studyName}</dd>
-          <dt>Date</dt>
-          <dd>#{report.eventDate}</dd>
-          <dt>Type of population</dt>
-          <dd>#{report.populationType}</dd>
-          <dt>Vertebrate classes</dt>
-          <dd>#{report.vertebrateClasses}</dd>
-          <dt>Species affected name</dt>
-          <dd>#{report.speciesName}</dd>
-          <dt>Number of individuals involved</dt>
-          <dd>#{report.numInvolved}</dd>
-          <dt>Reported By</dt>
-          <dd>#{report.createdBy.name}</dd>
-        </dl>
-        <a class="btn btn-primary btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">
-          View/Edit
-        </a>
+          <h2>#{studyName}</h2>
+          <span class="date">#{report.eventDate}</span>
+          <dl>
+            <dt>Type of population</dt>
+            <dd>#{report.populationType}</dd>
+            <dt>Vertebrate classes</dt>
+            <dd>#{report.vertebrateClasses}</dd>
+            <dt>Species affected name</dt>
+            <dd>#{report.speciesName}</dd>
+            <dt>Number of individuals involved</dt>
+            <dd>#{report.numInvolved}</dd>
+            <dt>Reported By</dt>
+            <dd>#{report.createdBy.name}</dd>
+          </dl>
+          <a class="btn btn-primary btn-block btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">
+            View/Edit
+          </a>
         </div>
         """)
       )
