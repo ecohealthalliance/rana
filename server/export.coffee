@@ -29,11 +29,23 @@ Meteor.methods
       ]
     ).fetch()
 
+    schema = reportSchema()._schema
+    objectKeys = reportSchema()._objectKeys
+
     keys = ['studyName'].concat reportSchema()._schemaKeys
-    keys = _.without keys, 'studyId', '_id', 'contact', 'eventLocation', 'createdBy', 'createdBy.userId', 'contact.institutionAddress', 'eventLocation.geo', 'pathologyReports', 'images'
+    keys = _.without keys, 'studyId', '_id', 'createdBy', 'createdBy.userId', 'eventLocation.geo.type', 'eventLocation.geo.coordinates'
     keys = _.filter keys, (key) ->
-      not /\$/.test key
-    
+      hasUploadChildren = (key) ->
+
+        if key + '.$.' of objectKeys
+          for child in objectKeys[key + '.$.']
+            childKey = key + '.$.' + child
+            if schema[childKey].autoform?.afFieldInput?.type is 'fileUpload'
+              return true
+          false
+
+      (not /\$/.test key) and not (key + '.' of objectKeys) and not (hasUploadChildren key)
+
     csvRows = [keys.join(",")]
 
     for report in reports
