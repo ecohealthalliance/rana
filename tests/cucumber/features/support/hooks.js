@@ -38,8 +38,16 @@
       this.DDPCall('/fixtures/addReports', reports, next, timeout);
     };
 
+    this.addStudies = function(studies, next, timeout) {
+      this.DDPCall('/fixtures/addStudies', studies, next, timeout);
+    };
+
     this.checkForReports = function (reportQuery, next) {
       this.DDPCall('/fixtures/checkForReports', reportQuery, next);
+    };
+
+    this.checkForStudies = function (studyQuery, next) {
+      this.DDPCall('/fixtures/checkForStudies', studyQuery, next);
     };
 
     this.Before(function(scenario) {
