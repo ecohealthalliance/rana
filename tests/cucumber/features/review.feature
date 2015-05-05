@@ -14,7 +14,7 @@ Feature: Report Review
     When I enter the rating 9
     And I add the review
     Then the review panel should appear
-    And I should see the text "Rating 9 / 10"
+    And I should see the text "Rating: 9 / 10"
 
   Scenario: Adding a rating and a comment
     Given I have logged in
@@ -28,7 +28,7 @@ Feature: Report Review
     And I enter the comment "This report is incomplete"
     And I add the review
     Then the review panel should appear
-    And I should see the text "Rating 3 / 10"
+    And I should see the text "Rating: 3 / 10"
     And I should see the text "This report is incomplete\nTest User"
 
   Scenario: Adding an invalid rating

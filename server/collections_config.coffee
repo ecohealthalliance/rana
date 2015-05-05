@@ -48,45 +48,116 @@ Meteor.publish 'pdfs', onlyById(collections.PDFs)
 
 Meteor.publish 'csvfiles', onlyById(collections.CSVFiles)
 
-Meteor.publish 'studies', ->
-  collections.Studies.find()
 
-Meteor.publish 'reports', ->
-  # Uncomment this if the admin should be allowed to see unpublished reports.
-  #if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
-    #return collections.Reports.find({})
-  collections.Reports.find({
+sharedOrCreator = (userId) ->
+  {
     $or : [
       {
-        "createdBy.userId": @userId
+        "createdBy.userId": userId
       }
       {
         dataUsePermissions: "Share full record",
         consent: true
       }
     ]
-  })
+  }
+
+Meteor.publish 'studies', (id) ->
+  collections.Studies.find {
+    $and: [
+      { _id: id }
+      sharedOrCreator @userId
+    ]
+  }
+
+ReactiveTable.publish "studies", collections.Studies, () ->
+  sharedOrCreator @userId
+
+ReactiveTable.publish 'reports', collections.Reports, () ->
+  sharedOrCreator @userId
+
+Meteor.publishComposite "reportLocations", () ->
+  find: () ->
+    collections.Reports.find(
+      {
+        $and: [
+          {
+            "eventLocation.source": {"$exists": true}
+          }
+          sharedOrCreator @userId
+        ]
+      }
+      {
+        fields:
+          studyId: 1
+          eventLocation: 1
+          speciesName: 1
+          speciesGenus: 1
+          populationType: 1
+          vertebrateClasses: 1
+          ageClasses: 1
+          "createdBy.name": 1
+          eventDate: 1
+          totalAnimalsConfirmedInfected: 1
+          totalAnimalsConfirmedDiseased: 1
+      }
+    )
+  children: [
+    {
+      find: (report) ->
+        collections.Studies.find {
+          $and: [
+            {_id: report.studyId}
+            sharedOrCreator @userId
+          ]
+        }, {fields: {name: 1}}
+    }
+  ]
+
+Meteor.publishComposite 'reportAndStudy', (reportId) ->
+  find: () ->
+    collections.Reports.find
+      $and: [
+        {
+          _id: reportId
+        }
+        sharedOrCreator @userId
+      ]
+  children: [
+    {
+      find: (report) ->
+        collections.Studies.find {
+          $and: [
+            {_id: report.studyId}
+            sharedOrCreator @userId
+          ]
+        }, {fields: {name: 1}}
+    }
+  ]
 
 Meteor.publish 'reviews', (reportId)->
   collections.Reviews.find({reportId : reportId})
+
+allowCreator = (userId, doc) ->
+  doc.createdBy.userId == userId
 
 allowCreatorAndAdmin = (userId, doc) ->
   if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
     return true
   else
-    return doc.createdBy.userId == userId
+    allowCreator userId, doc
 
 @collections.Reports.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin
 
 @collections.Studies.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin
 
 @collections.Reviews.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin

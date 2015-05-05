@@ -15,5 +15,3 @@ window.utils =
         "pdfs",
         doc.publicationInfo.pdf
       )
-
-Template.registerHelper 'eq', (a, b) -> a == b

@@ -4,7 +4,8 @@ template(name="reportForm")
 
     section.rm-pad-btm
       .container
-        h2 #{study.name}
+        h2
+          a(href='/study/#{study._id}') #{study.name}
           if isInsert
             span - New Report
           else if isUpdate
@@ -51,7 +52,11 @@ template(name="reportForm")
             .col-md-4.col-sm-6.input-block
               +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
 
-      +notes
+      section.rm-pad-top
+        .container
+          .row
+            .col-sm-9
+              +afQuickField name='additionalNotes' id='additionalNotes'
 
       +permissions
 
@@ -60,8 +65,8 @@ template(name="reportForm")
   else
     h3 Invalid form id
 
-  unless eq type 'insert'
+  unless isInsert
     .review-panel
       .review-panel-header Reviews
-      .review-content(style="display:none;")
+      .review-content.hidden-panel
         +reviews reportId=report._id

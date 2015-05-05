@@ -40,15 +40,15 @@ Template.map.rendered = ->
     markers = new L.FeatureGroup()
     curGroupBy = Template.instance().groupBy.get()
     colors = [
-      '#68c4b5'
-      '#ffff80'
-      '#9f98c8'
-      '#f95543'
-      '#5898c6'
-      '#fc9d31'
-      '#9ed53f'
-      '#f99fce'
-      '#bfbfbf'
+      '#86C8DF'
+      '#C78DCA'
+      '#2C7BB6'
+      '#6354BF'
+      '#FDAE61'
+      '#00A453'
+      '#C10004'
+      '#363636'
+      '#726258'
     ]
     groups = []
     if curGroupBy
@@ -58,7 +58,7 @@ Template.map.rendered = ->
         for key in keys
           result = result?[key]
         result
-      
+
       groups = _.uniq(data.map((report)->
         getGroup(report)
       )).map((value, idx) ->
@@ -77,6 +77,7 @@ Template.map.rendered = ->
         }).color
       else
         color = colors[0]
+      studyName = getCollections().Studies.findOne(report.studyId).name
       if report.eventLocation and report.eventLocation isnt "," and report.eventLocation isnt null
         L.marker(report.eventLocation.geo.coordinates.reverse(), {
           icon: L.divIcon({
@@ -92,6 +93,8 @@ Template.map.rendered = ->
         .bindPopup("""
         <div class="map-popup">
         <dl>
+          <dt>Study</dt>
+          <dd>#{studyName}</dd>
           <dt>Date</dt>
           <dd>#{report.eventDate}</dd>
           <dt>Type of population</dt>

@@ -1,5 +1,5 @@
 sidebar-width = 300px
-top-nav-height = 52px
+top-nav-height = header-height
 
 marker-width = 22px
 marker-height = 24px
@@ -36,19 +36,41 @@ arrow-height = (arrow-width / 2)
   width 0
   height 0
 
-.vis-container
+.badge
+  background none
+  &::before
+    @extend .icons
+    content 'm'
+    display block
+    font-size 24px
     position absolute
-    left 0
-    right 0
-    top top-nav-height
-    bottom 0
+    top 50%
+    right 10px
+    centerPosition(0,-50%)
+  &:empty
+    display block
+
+.vis-container
+  position absolute
+  left 0
+  right 0
+  top top-nav-height
+  bottom footer-height
 
 .vis-map
-    width 100%
-    height 100%
+  width 100%
+  height 100%
 
 .leaflet-bar
   box-shadow 0 1px 5px rgba(0,0,0,0.3)
 
 .leaflet-bar a, .leaflet-bar a:hover
   background rgba(255,255,255,.8)
+
+@media (max-width: 768px)
+  .vis-container
+    bottom footer-height-mobile
+  .leaflet-container .leaflet-control-attribution, 
+  .leaflet-container .leaflet-control-scale
+    max-width 70%
+    font-size 8px

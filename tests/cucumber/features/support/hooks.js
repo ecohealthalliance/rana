@@ -10,20 +10,23 @@
 
     var helper = this;
 
-    this.DDPCall = Meteor.bindEnvironment(function(route, parameter, next) {
+    this.DDPCall = Meteor.bindEnvironment(function(route, parameter, next, timeout) {
+      if(!timeout) {
+        timeout = 1000;
+      }
       var done = _.once(next);
       setTimeout(function(){
         done("Timeout");
-      }, 1000);
+      }, timeout);
       var connection = DDP.connect(helper.world.cucumber.mirror.host);
       connection.call(route, parameter, function(err, res) {
+        connection.disconnect();
         if (err) {
           console.log("DDP Error", err);
           done('Error in ' + route + ' DDP call to ' + helper.world.cucumber.mirror.host);
         } else {
-          done();
+          done(err, res);
         }
-        connection.disconnect();
       });
     });
 
@@ -31,8 +34,20 @@
       this.DDPCall('/fixtures/resetDB', reports, next);
     };
 
-    this.addReports = function(reports, next) {
-      this.DDPCall('/fixtures/addReports', reports, next);
+    this.addReports = function(reports, next, timeout) {
+      this.DDPCall('/fixtures/addReports', reports, next, timeout);
+    };
+
+    this.addStudies = function(studies, next, timeout) {
+      this.DDPCall('/fixtures/addStudies', studies, next, timeout);
+    };
+
+    this.checkForReports = function (reportQuery, next) {
+      this.DDPCall('/fixtures/checkForReports', reportQuery, next);
+    };
+
+    this.checkForStudies = function (studyQuery, next) {
+      this.DDPCall('/fixtures/checkForStudies', studyQuery, next);
     };
 
     this.Before(function(scenario) {

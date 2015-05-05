@@ -16,23 +16,10 @@
       helper.world.browser
       .getMyReports({}, function(err, ret){
         assert.ifError(err);
-        assert(ret.value);
-        assert.equal(ret.value.length, parseInt(number), 'Incorrect number of reports');
-      }).call(callback);
-    });
-
-    this.Then(/my reports without consent should( not)? be available/,
-    function(shouldNot, callback){
-      helper.world.browser
-      .getMyReports({consent: false}, function(err, ret){
-        assert.ifError(err);
-        if(shouldNot) {
-          assert(!ret.value);
-        } else {
-          assert(ret.value);
-          assert(ret.value.length >= 1);
-        }
-      }).call(callback);
+        assert(ret);
+        assert.equal(ret.length, parseInt(number), 'Incorrect number of reports ' + ret.length + '; should be ' + number);
+        callback();
+      });
     });
 
     this.When("I register an account", function(callback){

@@ -208,7 +208,7 @@ Template.leaflet.events
     t.updateViewFromLonLat()
 
   'change .northing, change .easting, change .zone': (e, t) ->
-    t.$(t.$('.source')[0]).val 'utm'
+    t.$(t.$('.source')[0]).val 'UTM'
     t.updateLonLatFromUTM()
     t.updateMinSecFromLonLat()
     t.updateViewFromLonLat()
