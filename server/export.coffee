@@ -61,7 +61,10 @@ Meteor.methods
             else
               output = undefined
           if _.isArray output
-            output = output.join(",")
+            output = if key is 'genBankAccessionNumbers'
+              ( item.genBankAccessionNumber for item in output ).join(",")
+            else
+              output.join(",")
         row.push "\"#{output}\""
       csvRows.push row.join(",")
 
