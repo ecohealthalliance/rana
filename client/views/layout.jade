@@ -8,30 +8,25 @@ head
 
 template(name="layout")
   .page-wrap
-    header
-      nav.navbar
-        .fluid-container
-          .container
-            .navbar-header
-              button.navbar-toggle.collapsed(type='button', data-toggle='collapse' data-target=".navbar-collapse") =
-              .navbar-brand 
-                span M
-                h1 Ranavirus #[br] Reporting System
-            .navbar-collapse.collapse
-              ul.nav.navbar-nav.navbar-right
-                +navLinks
+    +header
     .content-wrap        
       .fluid-container
           +yield
+    +footer
 
-    footer
-      .container.footer
-        .logo.mantle
-          p powered by
-          h1 Mantle
-        .logo.eha
-          a(href="http://ecohealthalliance.org")
-            h2 EcoHealth Alliance
+template(name="header")
+  header
+    nav.navbar
+      .fluid-container
+        .container
+          .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse' data-target=".navbar-collapse") =
+            .navbar-brand 
+              span M
+              h1 Ranavirus #[br] Reporting System
+          .navbar-collapse.collapse
+            ul.nav.navbar-nav.navbar-right
+              +navLinks
 
 template(name="navLinks")
   li
@@ -47,3 +42,12 @@ template(name="navLinks")
 
   +accountsHeaderButtons
 
+template(name="footer")
+  footer
+  .container.footer
+    .logo.mantle
+      p powered by
+      h1 Mantle
+    .logo.eha
+      a(href="http://ecohealthalliance.org")
+        h2 EcoHealth Alliance
