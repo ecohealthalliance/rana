@@ -93,8 +93,9 @@ Template.map.rendered = ->
         .bindPopup("""
         <div class="map-popup">
           <h2>#{studyName}</h2>
-          <span class="date">#{report.eventDate}</span>
           <dl>
+            <dt>Date</dt>
+            <dd>#{report.eventDate}</dd>
             <dt>Type of population</dt>
             <dd>#{report.populationType}</dd>
             <dt>Vertebrate classes</dt>

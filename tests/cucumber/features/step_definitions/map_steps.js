@@ -65,7 +65,7 @@
         return $(".leaflet-marker-icon > :first-child")
           .toArray()
           .map(function(el){
-            return $(el).css("background-color");
+            return $(el).css("color");
           });
       }, function(err, resp){
         assert.ifError(err);
