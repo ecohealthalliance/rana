@@ -80,11 +80,11 @@ centerSmall(margin-bottom=0)
     if margin-bottom
       margin-bottom margin-bottom
 
-buttonHover(bg=none)
+buttonHover(hoverBG, bg=none)
   transition()
   background bg
   &:hover
-    background primary
+    background hoverBG
     color white
     transition()
 

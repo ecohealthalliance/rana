@@ -45,11 +45,21 @@ template(name="navLinks")
 
   li.main-nav-last
     a(href="/group/rana/info") About Ranavirus
-
-  if isInRole 'admin' groupId
-    li
-      a(href="/group/rana")
+  
+  if currentUser
+    li.nav-icon
+      a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false")
         i.fa.fa-gear
-
-  +accountsHeaderButtons
+      ul.dropdown-menu(role="menu")
+        if isInRole 'admin' groupId
+          li
+            a(href="/group/rana") 
+              i.fa.fa-group
+              span Group Admin
+          +accountsHeaderButtons
+  else
+    li
+      a(type="button" id="at-nav-button" class="navbar-btn")
+        i.fa.fa-sign-in
+        span Sign-in 
 

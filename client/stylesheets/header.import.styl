@@ -17,7 +17,7 @@ header
     font-size 13px
     color body-text
     line-height 1.42857143
-    buttonHover(trans-white)
+    buttonHover(nav-hover, trans-white)
     transition()
     &:focus
       outline primary
@@ -30,12 +30,16 @@ header
   margin-right 10px
   > li > a
     color white
-    buttonHover()
+    buttonHover(nav-hover)
     font-size 13px
+  > li.nav-icon > a
+    &:hover
+      background none
+      color nav-hover
 
 .navbar-nav .active a,
 .navbar-nav .active a:focus
-  background primary
+  background nav-hover
   outline 0
   
 .navbar-brand 
