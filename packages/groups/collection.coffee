@@ -46,14 +46,14 @@ Groups.before.insert (userId, doc) ->
 Groups.after.insert (userId, doc) ->
   if @._id
     if userId
-      Roles.addUsersToRoles userId, ['admin', 'user'], @._id
+      Roles.addUsersToRoles userId, 'admin', @._id
     else
       # first user to log in will be an admin of the group
       handle = null
       groupId = @._id
       createAdminUser = (loginInfo) ->
         userId = loginInfo.user._id
-        Roles.addUsersToRoles userId, ['admin', 'user'], groupId
+        Roles.addUsersToRoles userId, 'admin', groupId
         handle.stop()
       handle = Accounts.onLogin createAdminUser
 
