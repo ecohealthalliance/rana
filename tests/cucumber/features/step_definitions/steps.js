@@ -54,7 +54,7 @@
         });
     });
 
-    this.When(/^I click submit( again)?$/, function (again, callback) {
+    this.When(/^I click submit(?: again)?$/, function (callback) {
       helper.world.browser
         .saveScreenshot(
           helper.getAppDirectory() +
