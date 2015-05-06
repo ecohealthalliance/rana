@@ -23,7 +23,7 @@ Package.onUse(function(api) {
       'templating',
       'stylus',
       'mquandalle:jade@0.4.1',
-      'aldeed:autoform@4.2.2',
+      'aldeed:autoform',
       'fuatsengul:leaflet@1.0.1',
       'rana:mapping'
     ], 'client'

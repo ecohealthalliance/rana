@@ -13,7 +13,7 @@ AutoForm.addHooks(
         name: Meteor.user().profile?.name or "None"
       }
       return doc
-    onSuccess: (operation, result, template)->
+    onSuccess: (operation, result)->
       toastr.options = {
         closeButton: true
         positionClass: "toast-bottom-center"
@@ -26,7 +26,7 @@ AutoForm.addHooks(
       <a href="/report/#{@docId}">Edit Report</a>
       """)
       window.scrollTo(0, 0)
-      redirectOnSubmit =  template.data?.query?.redirectOnSubmit
+      redirectOnSubmit =  @template.data?.query?.redirectOnSubmit
       if redirectOnSubmit
         Router.go(redirectOnSubmit)
       else

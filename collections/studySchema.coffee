@@ -21,7 +21,7 @@
     optional: true
     autoform:
       afFieldInput:
-        type: 'fileUpload'
+        type: 'cfs-file'
         collection: 'pdfs'
   'publicationInfo.reference':
     type: String
@@ -36,7 +36,7 @@
     autoform:
       label: false
       afFieldInput:
-        type: 'fileUpload'
+        type: 'cfs-file'
         collection: 'csvfiles'
 ]
 
