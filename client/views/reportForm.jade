@@ -59,8 +59,8 @@ template(name="reportForm")
               +afQuickField name='additionalNotes' id='additionalNotes'
 
       +permissions
-
-      +submit
+      unless eq type "readonly"
+        +submit
 
   else
     h3 Invalid form id
