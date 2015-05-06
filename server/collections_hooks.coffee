@@ -1,4 +1,4 @@
-@collections.Reports.after.insert (userId, doc)=>
+reportHook = (userId, doc)=>
   ids = _.pluck(doc.pathologyReports, "report").concat(
     _.pluck(doc.images, "image")
   )
@@ -10,8 +10,10 @@
       $set:
         reportId: doc._id
     })
+@collections.Reports.after.insert reportHook
+@collections.Reports.after.update reportHook
 
-@collections.Studies.after.insert (userId, doc)=>
+studyHook = (userId, doc)=>
   @collections.PDFs.update({
     _id: doc?.publicationInfo?.pdf
     studyId: { $exists: false }
@@ -26,3 +28,5 @@
     $set:
       owner: userId
   })
+@collections.Studies.after.insert studyHook
+@collections.Studies.after.update studyHook
