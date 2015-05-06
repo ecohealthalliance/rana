@@ -189,7 +189,7 @@
             _.each(formData, function (value, key) {
               // Specify other fiels are not supported because they might be
               // hidden depending on what is selected
-              if(key.startsWith("specifyOther")) {
+              if(key.indexOf("specifyOther") === 0) {
                 console.log("WARNING: Specify other field ignored by setFormFields: " + key);
                 return;
               }
