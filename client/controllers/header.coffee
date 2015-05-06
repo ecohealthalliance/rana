@@ -1,6 +1,6 @@
 Template.header.events
-  'click .navbar-toggle' : (e) ->
-    $(e.target).blur()
+  'click a, click button' : (e) ->
+    $(e.currentTarget).blur()
 Template.navLinks.events
   'click a' : (e) ->
     if $('.navbar-toggle').is(':visible')
