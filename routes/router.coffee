@@ -3,6 +3,8 @@ getCollections = => @collections
 Router.configure
   layoutTemplate: "layout"
   loadingTemplate: "loading"
+  subscriptions: () ->
+    Meteor.subscribe "groupByPath", "rana"
 
 Router.route('/', ()-> @redirect('/group/rana'))
 
@@ -67,25 +69,16 @@ Router.route('editStudy',
     Meteor.subscribe("genera")
   waitOn: ->
     [
-      Meteor.subscribe("studies", @params.studyId),
-      Meteor.subscribe("groupByPath", "rana")
+      Meteor.subscribe("studies", @params.studyId)
     ]
 )
 
 Router.route('/studies',
   where: 'client'
-  waitOn: ->
-    [
-      Meteor.subscribe("groupByPath", "rana")
-    ]
 )
 
 Router.route('/table',
   where: 'client'
-  waitOn: ->
-    [
-      Meteor.subscribe("groupByPath", "rana")
-    ]
 )
 
 Router.route('/map',

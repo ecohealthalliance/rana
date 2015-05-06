@@ -6,3 +6,7 @@ Template.navLinks.events
 
       $(".nav").find(".active").removeClass("active");
       $(e.target).parent().addClass("active");
+
+Template.navLinks.helpers
+  groupId: () ->
+  	Groups.findOne({path: 'rana'})._id
