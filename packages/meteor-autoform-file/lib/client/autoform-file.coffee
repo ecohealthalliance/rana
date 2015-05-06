@@ -117,7 +117,10 @@ Template.afFileUpload.helpers
 			if file.length == 17
 				if collection.findOne({_id:file})
 					filename = collection.findOne({_id:file}).name()
-					src = collection.findOne({_id:file}).url()
+					# File downloads are forced because Chrome can't open PDFs
+					# served by CollectionFS.
+					# see: https://github.com/CollectionFS/Meteor-CollectionFS/issues/495
+					src = collection.findOne({_id:file}).url { download: true }
 				else
 					# No subscription
 					filename = Session.get 'fileUploadSelected[' + name + ']'
