@@ -19,16 +19,19 @@ Template.studies.helpers
       fn: (val, obj) ->
         if obj.createdBy.userId == Meteor.userId()
           new Spacebars.SafeString("""
+            <a class="btn btn-primary" href="/study/#{obj._id}/report?redirectOnSubmit=/studies">Add Report</a>
             <a class="btn btn-edit btn-primary" for="#{obj.name}" href="/study/#{obj._id}?redirectOnSubmit=/studies">Edit</a>
             <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
           """)
         else if isAdmin
           new Spacebars.SafeString("""
+            <a class="btn btn-primary" href="/study/#{obj._id}/report?redirectOnSubmit=/studies">Add Report</a>
             <a class="btn btn-primary" for="#{obj.name}" href="/study/#{obj._id}">View</a>
             <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
           """)
         else
           new Spacebars.SafeString("""
+            <a class="btn btn-primary" href="/study/#{obj._id}/report?redirectOnSubmit=/studies">Add Report</a>
             <a class="btn btn-primary" for="#{obj.name}" href="/study/#{obj._id}">View</a>
           """)
 
