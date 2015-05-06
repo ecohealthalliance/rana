@@ -13,6 +13,7 @@ Router.route('newReport',
   data: ->
     type: 'insert'
     study: getCollections().Studies.findOne @params.studyId
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->
@@ -60,6 +61,8 @@ Router.route('editStudy',
   where: 'client'
   data: ->
     study: getCollections().Studies.findOne(@params.studyId)
+    reports: getCollections().Reports.find({studyId: @params.studyId})
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->

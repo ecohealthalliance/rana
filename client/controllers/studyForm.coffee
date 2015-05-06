@@ -37,7 +37,10 @@ AutoForm.hooks
       <div>#{operation} successful!</div>
       <a href="/study/#{@docId}">Edit Study</a>
       """)
-      window.scrollTo 0, 0
+      if template.data.redirectOnSubmit
+        Router.go template.data.redirectOnSubmit
+      else
+        window.scrollTo(0, 0)
 
     onError: (operation, error) ->
       errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")

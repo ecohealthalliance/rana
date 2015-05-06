@@ -29,23 +29,6 @@
     this.Given('I am on the "$path" page', this.visit);
     this.When('I navigate to the "$path" page', this.visit);
 
-    this.Then('I should be redirected to the "$path" page', function (path, callback) {
-      helper.world.browser
-      .pause(4000)
-      .url(function (err, result) {
-        assert.ifError(err);
-        if(result.value.slice(-path.length) !== path) {
-          helper.world.browser.saveScreenshot(
-            helper.getAppDirectory() +
-            "/tests/screenshots/redirect failure - " +
-            helper.world.scenario.getName() +
-            ".png"
-          );
-        }
-        assert.equal(result.value.slice(-path.length), path);
-      }).call(callback);
-    });
-
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
         title(function (err, res) {
@@ -254,6 +237,24 @@
         }).call(callback);
     });
 
+    this.Then('I should be on the "$path" page', function (path, callback) {
+      helper.world.browser
+      .pause(4000)
+      .url(function (err, result) {
+        assert.ifError(err);
+        if(result.value.slice(-path.length) !== path) {
+          helper.world.browser.saveScreenshot(
+            helper.getAppDirectory() +
+            "/tests/screenshots/redirect failure - " +
+            helper.world.scenario.getName() +
+            ".png"
+          );
+        }
+        assert.equal(result.value.slice(-path.length), path);
+      }).call(callback);
+    });
+
+
     this.When('I click on the edit button',
     function(callback){
       helper.world.browser
@@ -265,6 +266,13 @@
     function(callback){
       helper.world.browser
       .click('.profile')
+      .call(callback);
+    });
+
+    this.When('I click the Add a report button',
+    function(callback){
+      helper.world.browser
+      .click('.add-report')
       .call(callback);
     });
 

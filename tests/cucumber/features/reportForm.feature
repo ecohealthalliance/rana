@@ -41,3 +41,21 @@ Feature: A form for reporting Ranavirus outbreaks
     And I click submit
     And I click the "Edit Report" button
     Then I should see an image preview
+
+  Scenario: Redirecting after report submission
+    Given I have logged in
+    And I am on the "study/fakeid/report" page
+    And I have logged in
+    When I fill out the form
+    And I click submit
+    And I navigate to the "table" page
+    And I click on the edit button
+    And I click submit
+    Then I should be on the "table" page
+
+  Scenario: Redirecting after new report submission
+    Given I have logged in
+    And I am on the "study/fakeid" page
+    And I click the Add a report button
+    And I click submit
+    Then I should be on the "study/fakeid" page
