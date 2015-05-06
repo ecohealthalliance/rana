@@ -40,7 +40,6 @@ Router.route('editReport',
     urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
-    Meteor.subscribe("reviews", @params.reportId)
   waitOn: ->
     [
       Meteor.subscribe("reportAndStudy", @params.reportId)

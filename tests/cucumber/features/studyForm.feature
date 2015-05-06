@@ -28,7 +28,7 @@ Feature: A form for setting up a ranavirus study
     And I navigate to the "studies" page
     And I click the link for the the study called "Study"
     And I fill out the study form differently
-    And I click submit
+    And I click submit again
     Then the form should contain the different values I entered
 
   Scenario: Removing a study
@@ -58,5 +58,5 @@ Feature: A form for setting up a ranavirus study
     When I dismiss the toast
     And I navigate to the "study" page
     And I fill out the study form
-    And I click submit
+    And I click submit again
     Then the webpage should display a validation error
