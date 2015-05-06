@@ -187,7 +187,12 @@
           .call(function(){
             var schema = collections[schemaName].simpleSchema().schema();
             _.each(formData, function (value, key) {
-              if(key === "specifyOtherRanavirusSampleTypes") return;
+              // Specify other fiels are not supported because they might be
+              // hidden depending on what is selected
+              if(key.startsWith("specifyOther")) {
+                console.log("WARNING: Specify other field ignored by setFormFields: " + key);
+                return;
+              }
               if(!schema[key]) {
                 console.log("Bad key: "+ key);
                 return;
