@@ -41,7 +41,6 @@ Router.route('editReport',
     urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
-    Meteor.subscribe("reviews", @params.reportId)
   waitOn: ->
     [
       Meteor.subscribe("reportAndStudy", @params.reportId)
@@ -75,6 +74,10 @@ Router.route('editStudy',
 
 Router.route('/studies',
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe("groupByPath", "rana")
+    ]
 )
 
 Router.route('/table',

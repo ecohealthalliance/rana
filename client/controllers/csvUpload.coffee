@@ -8,20 +8,15 @@ Meteor.startup () ->
 fileUploaded = (template) ->
   checkUploaded = () ->
     fileId = Session.get 'fileUpload[csvFile]'
-    Meteor.subscribe "csvfiles", fileId
-    if fileId
-      record = @collections.CSVFiles.findOne fileId
-      if record and record.isUploaded()
-        return Meteor.call 'getCSVData', fileId, (err, data) =>
-          if err
-            template.csvError.set err.reason
-            Session.set 'fileUpload[csvFile]', false
-          else if data
-            template.csvError.set null
-            updateImportReports data
-          else
-            setTimeout checkUploaded, 10
-    setTimeout checkUploaded, 10
+    Meteor.call 'getCSVData', fileId, (err, data) =>
+      if err
+        template.csvError.set err.reason
+        Session.set 'fileUpload[csvFile]', false
+      else if data
+        template.csvError.set null
+        updateImportReports data
+      else
+        setTimeout checkUploaded, 100
 
   checkUploaded()
 
@@ -238,11 +233,7 @@ Template.csvUpload.helpers
     Session.get 'fileUpload[csvFile]'
 
   csvFileName: () ->
-    fileId = Session.get 'fileUpload[csvFile]'
-    if fileId
-      getCollections().CSVFiles.findOne({ _id: Session.get 'fileUpload[csvFile]' }).original.name
-    else
-      null
+    Session.get 'fileUploadSelected[csvFile]'
 
   importReports: () ->
     ImportReports.find()

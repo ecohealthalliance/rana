@@ -20,11 +20,6 @@ Template.studyForm.helpers
 AutoForm.hooks
   'ranavirus-study':
 
-    docToForm: (doc, ss)->
-      if doc
-        utils.subscribeToDocFiles(doc)
-      return doc
-
     formToDoc: (doc) ->
       doc.createdBy =
         userId: Meteor.userId()

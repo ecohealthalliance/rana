@@ -91,9 +91,9 @@
 
     this.fillInStudyForm = function (customValues, callback) {
 
-      _.extend(studyDefaultValues, customValues);
-
-      helper.world.browser.setFormFields(studyDefaultValues, 'Studies', callback);
+      var values = _.extend({}, studyDefaultValues, customValues);
+      
+      helper.world.browser.setFormFields(values, 'Studies', callback);
 
     };
 
@@ -160,7 +160,7 @@
     });
 
     this.Then(/^the form should contain the different values I entered$/, function (callback) {
-      var values = _.extend(studyDefaultValues, studyDifferentValues)
+      var values = _.extend({}, studyDefaultValues, studyDifferentValues)
       var valuesArr = _.map(values, function(val, key) { return [key, val] } )
       helper.world.browser.checkFormFields('ranavirus-study', valuesArr, callback);
     });

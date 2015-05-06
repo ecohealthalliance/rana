@@ -57,8 +57,10 @@ Template.map.rendered = ->
         result = report
         for key in keys
           result = result?[key]
-        result
-
+        if _.isArray result
+          result.sort().join(", ")
+        else
+          result
       groups = _.uniq(data.map((report)->
         getGroup(report)
       )).map((value, idx) ->
