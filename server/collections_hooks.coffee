@@ -21,8 +21,8 @@
   })
   @collections.CSVFiles.update({
     _id: doc?.csvFile
-    studyId: { $exists: false }
+    owner: { $exists: false }
   }, {
     $set:
-      studyId: doc._id
+      owner: userId
   })

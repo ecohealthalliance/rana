@@ -25,16 +25,6 @@ Meteor.publish 'genera', ->
   download: (userId)->
     true
 
-Meteor.publish 'csvfiles', (id)=>
-  @collections.CSVFiles.find {
-    _id: id
-    # Currently, to load data from a CSV, it needs to be subscribed to before
-    # the study it is attached to is created. This prevents data from the csv
-    # from being downloaded after the study is created, when it is no longer
-    # necessary, as a security measure.
-    studyId: { $exists: false }
-  }
-
 sharedOrCreator = (userId) ->
   {
     $or : [
