@@ -14,7 +14,10 @@ fileUploaded = (template) ->
         Session.set 'fileUpload[csvFile]', false
       else if data
         template.csvError.set null
-        updateImportReports data
+        updateImportReports data, (err) ->
+          if err
+            template.csvError.set err
+            Session.set 'fileUpload[csvFile]', false
       else
         setTimeout checkUploaded, 100
 
@@ -32,7 +35,7 @@ getReportFieldType = (field) ->
   else
     reportSchema[field].type
 
-updateImportReports = (data) ->
+updateImportReports = (data, errorCallback) ->
 
   clearImportReports()
   matches = headerMatches(data).matched
@@ -56,7 +59,7 @@ updateImportReports = (data) ->
     if 'dataUsePermissions' not in report
       report.dataUsePermissions = 'Share obfuscated'
 
-    ImportReports.insert report
+    ImportReports.insert report, errorCallback
 
 buildReportFromImportData = (importData, report) ->
 

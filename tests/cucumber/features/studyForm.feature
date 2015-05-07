@@ -17,6 +17,12 @@ Feature: A form for setting up a ranavirus study
     And I click on the edit button
     Then the form should contain the values for rana_import_complete.csv
 
+  Scenario: Importing an invalid CSV file
+    Given I have logged in
+    And I am on the "study" page
+    When I upload the CSV file rana_invalid.csv
+    Then I should see the text "Error: Binomial species names are required"
+
   Scenario: Updating a study
     Given I have logged in
     And I am on the "study" page
