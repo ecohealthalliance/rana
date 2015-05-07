@@ -91,7 +91,7 @@
     this.When("I log out",
     function (callback) {
       helper.world.browser
-        .click('#at-nav-button')
+        .click('.sign-out')
         .pause(500)
         .call(callback);
     });
