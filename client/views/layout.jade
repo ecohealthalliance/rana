@@ -59,7 +59,7 @@ template(name="navLinks")
         +accountsHeaderButtons
   else
     li
-      a(href="/sign-in" class="sign-in navbar-btn")
-        span Sign-in 
+      a(href="{{pathFor route='atSignIn'}}" class="sign-in navbar-btn")
+        span Sign In 
         i.fa.fa-sign-in
 
