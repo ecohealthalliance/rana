@@ -14,7 +14,7 @@ images = [
 
 allImages = ""
 _.each(images, (image, i) ->
-    allImages += "[![#{image.credit}](../../../images/info/thumbs/#{image.file}_t.jpg)](../../../images/info/#{image.file}.jpg)"
+    allImages += "[![Image #{i}](../../../images/info/thumbs/#{image.file}_t.jpg '#{image.credit}')](../../../images/info/#{image.file}.jpg)"
   )
 
 Meteor.startup () ->
