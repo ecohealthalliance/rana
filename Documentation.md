@@ -1,18 +1,26 @@
 # Ranavirus Reporting System
 
-Welcome to the Ranavirus Reporting System, powered by Mantle from The EcoHealth Alliance. The Ranavirus Reporting System allows you to create and manage records for Ranavirus studies and reports, import and export data, view tables and maps of reports, and leave reviews and comments on reports. These video demonstrations will introduce you to the main functions of the system.
+Welcome to the Ranavirus Reporting System—powered by Mantle—from EcoHealth Alliance.
+
+The Ranavirus Reporting System allows you to create and manage records for Ranavirus studies and reports, import and export data, view tables and maps of reports, and leave reviews and comments on reports.
+
+These video demonstrations will introduce you to the main functions of the system.
 
 ## Access
 
-Anonymous visitors to the site can view reports that have been shared with the public on the map and table views, and they can also download bulk exports of shared reports. To add your own conten to the site by creating new studies and reports, you'll need an account. To sign up for an account, click the [Sign In](/sign-in) button in the upper-right-hand corner of the screen, and then click the Register link below the form.
+Anonymous visitors to the site can view tables and maps of reports that have been shared with the public, and can download bulk exports of shared reports.
 
-To create an account, you must enter your email address, a password, and your name. Optionally, you may also enter your organizational contact details, which will then become the default contact information for any new studies and reports you create.
+To add your own content to the site by creating new studies and reports, you'll need an account.
+
+To sign up for an account, click the [Sign In](/sign-in) button in the upper-right-hand corner of the screen, and then click the Register link below the form.
+
+You must enter your email address, a password, and your name. Optionally, you may also enter your organizational contact details, which will then become the default contact information for any new studies and reports you create.
 
 ## Adding a Study
 
 All reports in the Ranavirus Reporting System are associated with a study, so to create a reports you must first create the study they belong to. Start by clicking the [Add Study](/study) link at the top of the page.
 
-At a minimum, you need to give the study a name, enter the details for the contact person on the study (these will default to your own account contact information if you have provided it), and specify how you wish to share and publish the records in this study.
+At a minimum, you need to give the study a name, enter the details for the contact person on the study (these will default to your account's contact information if you have provided it), and specify if and how you want to share and publish the records in this study.
 
 You may also specify any of a number of additional fields that will become default values for new reports added to this study. Some fields have helpful explanations which can be shown by placing your cursor over the question mark icon.
 
@@ -24,7 +32,7 @@ To add a report, first click on the [View Studies](/studies) link in the menu at
 
 ## Viewing Reports
 
-There are two ways to view collections of reports that have been submitted to the system: the table view, and the map views. Both views allow you to see all of your own reports, as well as all other reports that have been submitted with permission to be shared on the site.
+There are two ways to view collections of reports that have been submitted to the system: the table view, and the map views. Both views allow you to see all of your own reports, as well as all other reports that have been shared publicly.
 
 ### Report Table
 
@@ -32,7 +40,7 @@ To see report data in a tabular view, click [View Reports](/table) in the top me
 
 ### Exporting data
 
-From the report table, [View Reports](/table), you can also export the report data in the CSV format. The export will respect any filters that you have enabled for the table. Click the Export button, and you browser will download a CSV file containing all report records that you have permission to view which match you filter settings.
+From the report table, [View Reports](/table), you can also export the report data in CSV format. The export will respect any filters that you have enabled for the table. Click the Export button, and you browser will download a CSV file containing all report records that you have permission to view which match you filter settings.
 
 ### Report Map
 
