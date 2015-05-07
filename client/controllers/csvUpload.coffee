@@ -244,13 +244,16 @@ Template.csvUpload.helpers
   importFields: () ->
     data = ImportReports.findOne()
     if data
-      res = ( field for field in [ 'eventDate', 'coordinatesAvailable', 'eventLocation', 'eventCountry',
+      keys = ( field for field in [ 'eventDate', 'coordinatesAvailable', 'eventLocation', 'eventCountry',
           'numInvolved', 'totalAnimalsTested', 'totalAnimalsConfirmedInfected',
           'totalAnimalsConfirmedDiseased', 'populationType', 'screeningReason',
           'speciesGenus', 'speciesName', 'speciesNotes', 'sampleType',
           'additionalNotes' ] when field of data
       )
-      res
+      _.map keys, (key, index) ->
+        key: key
+        label: key
+        hidden: index > 5
     else
       []
 
