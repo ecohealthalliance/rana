@@ -1,20 +1,20 @@
 images = [
-  'cressier_01',
-  'cressier_02',
-  'cressier_03',
-  'cressier_04',
-  'cressier_05',
-  'cressier_06',
-  'lesions-Pelophylax-sp-Netherlands-Aug2013_01',
-  'LESIONS',
-  'LiverNecrosis_DebraMiller',
-  'symptoms-Pelophylax-spp-Netherlands-Aug2013-02',
-  'Swollen-legs_PSTR_PhotoCredit_Mihaljevic'
+  {file:'cressier_01', credit: 'Image: Alan Cressier'},
+  {file: 'cressier_02', credit: 'Image: Alan Cressier'},
+  {file: 'cressier_03', credit: 'Image: Alan Cressier'},
+  {file: 'cressier_04', credit: 'Image: Alan Cressier'},
+  {file: 'cressier_05', credit: 'Image: Alan Cressier'},
+  {file: 'cressier_06', credit: 'Image: Alan Cressier'},
+  {file: 'lesions-Pelophylax-sp-Netherlands-Aug2013_01', credit: 'Image: Annemarieke Spitzen'},
+  {file: 'LESIONS', credit: 'Image: Jesse Brunner'},
+  {file: 'LiverNecrosis_DebraMiller', credit: 'Image: Debra Miller'},
+  {file: 'symptoms-Pelophylax-spp-Netherlands-Aug2013-02', credit: 'Image: Annemarieke Spitzen'},
+  {file: 'Swollen-legs_PSTR_PhotoCredit_Mihaljevic', credit: 'Mihaljevic'}
 ]
 
 allImages = ""
 _.each(images, (image, i) ->
-    allImages += "[![Image #{i}](../../../images/info/thumbs/#{image}_t.jpg)](../../../images/info/#{image}.jpg)"
+    allImages += "[![#{image.credit}](../../../images/info/thumbs/#{image.file}_t.jpg)](../../../images/info/#{image.file}.jpg)"
   )
 
 Meteor.startup () ->
