@@ -1,4 +1,4 @@
-# Ranavirus REporting System
+# Ranavirus Reporting System
 
 Welcome to the Ranavirus Reporting System, powered by Mantle from The EcoHealth Alliance. The Ranavirus Reporting System allows you to create and manage records for Ranavirus studies and reports, import and export data, view tables and maps of reports, and leave reviews and comments on reports. These video demonstrations will introduce you to the main functions of the system.
 
