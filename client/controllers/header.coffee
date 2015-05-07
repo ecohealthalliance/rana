@@ -3,10 +3,10 @@ Template.navLinks.events
     if($('.navbar-toggle').is(':visible'))
       $('.navbar-collapse').collapse('toggle')
     else
+      $(".nav").find(".active").removeClass("active")
+      $(e.target).parent().addClass("active")
 
-      $(".nav").find(".active").removeClass("active");
-      $(e.target).parent().addClass("active");
-  'click .sign-out'
+  'click .sign-out' : () ->
     Meteor.logout()
 
 Template.navLinks.helpers
