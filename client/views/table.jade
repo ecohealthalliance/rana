@@ -1,16 +1,18 @@
 template(name="table")
   section
-    .container.reports-table
-      h2 Full Reports
-      button.toggle-filter.btn.btn-primary(href="#") Filter Table
+    .container
+      button.toggle-filter.btn.btn-primary(href="#") Filter Tables
       .filter-controls.table-filters.hidden
         +filterControls query=query
-      +reactiveTable collection="reports" settings=settings filters=filters
 
   section
     .container.reports-table
+      h2 Full Reports
+      +reactiveTable collection="reports" settings=settings filters=filters
+  section
+    .container.reports-table
       h2 Obfuscated Reports
-      +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings
+      +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
 
 template(name="noReports")
   h3 No Reports Found
