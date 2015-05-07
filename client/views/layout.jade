@@ -48,7 +48,7 @@ template(name="navLinks")
   
   if currentUser
     li.nav-icon
-      a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false")
+      a.dropdown-toggle.admin-settings(href="#" data-toggle="dropdown" aria-expanded="false")
         i.fa.fa-gear
       ul.dropdown-menu(role="menu")
         if isInRole 'admin' groupId
@@ -56,10 +56,10 @@ template(name="navLinks")
             a(href="/group/rana") 
               i.fa.fa-group
               span Group Admin
-          +accountsHeaderButtons
+        +accountsHeaderButtons
   else
     li
-      a(type="button" id="at-nav-button" class="navbar-btn")
-        i.fa.fa-sign-in
+      a(href="/sign-in" class="sign-in navbar-btn")
         span Sign-in 
+        i.fa.fa-sign-in
 

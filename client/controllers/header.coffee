@@ -6,6 +6,8 @@ Template.navLinks.events
 
       $(".nav").find(".active").removeClass("active");
       $(e.target).parent().addClass("active");
+  'click .sign-out'
+    Meteor.logout()
 
 Template.navLinks.helpers
   groupId: () ->

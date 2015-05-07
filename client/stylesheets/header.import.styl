@@ -22,7 +22,7 @@ header
     &:focus
       outline primary
       transition()
-  
+      
 .nav
   float right
 
@@ -32,10 +32,25 @@ header
     color white
     buttonHover(nav-hover)
     font-size 13px
-  > li.nav-icon > a
-    &:hover
-      background none
-      color nav-hover
+    i
+      vAlign()
+      font-size 16px
+  .admin-settings
+    i
+      font-size 20px
+.dropdown-menu
+  background nav-hover
+  > li 
+    border-bottom 1px solid primary-dark
+    &:last-of-type
+      border 0
+    > a
+      color white
+      padding 10px 15px
+      &:hover
+        background secondary
+        color white
+
 
 .navbar-nav .active a,
 .navbar-nav .active a:focus
@@ -61,6 +76,9 @@ header
     line-height 0
     vAlign()
 
+.navbar-btn
+  margin 0
+
 .navbar-toggle
   @extend .icons
   float right
@@ -70,7 +88,7 @@ header
   font-size 28px
 
 .main-nav-last
-  margin-right 5px
+  margin-right 0
 
 .fa-gear
   font-size 20px
