@@ -1,11 +1,10 @@
 template(name="accountsHeaderButtons")
-  if currentUser
-    li.account
-      a.profile.navbar-btn(href="{{pathFor route='profile'}}") 
-        i.fa.fa-user  
-        span Profile
-    li.account
-      a(class="sign-out navbar-btn")
-        i.fa.fa-sign-out
-        span Sign Out
+  li.account
+    a.profile.navbar-btn(href="{{pathFor route='profile'}}")
+      i.fa.fa-user
+      span Profile
+  li.account
+    a(class="sign-out navbar-btn" href="#")
+      i.fa.fa-sign-out
+      span Sign Out
 
