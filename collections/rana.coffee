@@ -13,10 +13,8 @@ images = [
 ]
 
 allImages = ""
-i = 1
-_.each(images, (image) ->
+_.each(images, (image, i) ->
     allImages += "[![Image #{i}](../../../images/info/thumbs/#{image}_t.jpg)](../../../images/info/#{image}.jpg)"
-    i++
   )
 
 Meteor.startup () ->
