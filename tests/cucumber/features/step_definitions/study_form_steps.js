@@ -174,10 +174,18 @@
       .call(callback);
     });
 
-    this.Then("I remove the publication", function(callback){
+    this.When("I remove the publication", function(callback){
       helper.world.browser
       .pause(500)
       .clickWhenVisible('.file-upload-clear[file-input="publicationInfo.pdf"]')
+      .pause(500)
+      .call(callback);
+    });
+
+    this.When("I remove the CSV file", function(callback){
+      helper.world.browser
+      .pause(500)
+      .clickWhenVisible('.file-upload-clear[file-input="csvFile"]')
       .pause(500)
       .call(callback);
     });
