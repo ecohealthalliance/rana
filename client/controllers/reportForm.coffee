@@ -58,19 +58,8 @@ Template.reportFormComplete.helpers
     Template.currentData().type == 'update'
 
 Template.reportFormComplete.events
-  'change .file-upload': (evt)->
-    timeout = 10000
-    interval = window.setInterval(()->
-      # The event target will not be in the template once the file is added.
-      if not $.contains(document, evt.target) or timeout <= 0
-        currentDoc = AutoForm.getFormValues("ranavirus-report").insertDoc
-        utils.subscribeToDocFiles(currentDoc)
-        window.clearInterval(interval)
-      timeout -= 1000
-    , 1000)
 
   'click .review-panel-header': (e)->
     $(e.target).toggleClass('showing')
     $('.review-content').toggleClass('hidden-panel')
     $('.page-wrap').toggleClass('curtain')
-
