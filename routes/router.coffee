@@ -51,6 +51,7 @@ Router.route('editReport',
   waitOn: ->
     [
       Meteor.subscribe("reportAndStudy", @params.reportId)
+      Meteor.subscribe("obfuscatedReportAndStudy", @params.reportId)
     ]
 
 )

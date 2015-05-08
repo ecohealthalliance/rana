@@ -32,7 +32,7 @@ sharedOrCreator = (userId) ->
         "createdBy.userId": userId
       }
       {
-        dataUsePermissions: { $in: ["Share full record", "Share obfuscated"] }
+        dataUsePermissions: "Share full record"
         consent: true
       }
     ]
@@ -111,16 +111,6 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
 
   report = collections.Reports.findOne(reportId)
 
-  fields =
-    if report.dataUsePermissions is 'Share obfuscated' and report.createdBy.userId != @userId
-      studyId: true
-      dataUsePermissions: true
-      createdBy: true
-      contact: true
-      'eventLocation.country': true
-    else
-      {}
-
   find: () ->
     collections.Reports.find(
       {
@@ -130,9 +120,6 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
           }
           sharedOrCreator @userId
         ]
-      }
-      {
-        fields: fields
       }
     )
   children: [
@@ -168,6 +155,35 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
     {
       find: (report) ->
         collections.Reviews.find {reportId : report._id}
+    }
+  ]
+
+Meteor.publishComposite 'obfuscatedReportAndStudy', (reportId) ->
+
+  report = collections.Reports.findOne(reportId)
+
+  find: () ->
+    collections.Reports.find(
+      {
+        _id: reportId
+        dataUsePermissions: 'Share obfuscated'
+      }
+      {
+        fields: {
+          studyId: true
+          dataUsePermissions: true
+          createdBy: true
+          contact: true
+          'eventLocation.country': true
+        }
+      }
+    )
+  children: [
+    {
+      find: (report) ->
+        collections.Studies.find {
+          _id: report.studyId
+        }, {fields: {name: 1}}
     }
   ]
 
