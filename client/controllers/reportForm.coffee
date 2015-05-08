@@ -49,7 +49,7 @@ Template.registerHelper 'reportDoc', () =>
       @mergeObjects study.contact, contactFromUser
       study
 
-Template.reportForm.helpers
+Template.reportFormComplete.helpers
 
   isInsert: ->
     Template.currentData().type == 'insert'
