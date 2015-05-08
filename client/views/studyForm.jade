@@ -6,6 +6,7 @@ template(name="studyForm")
       collection="collections.Studies"
       type=type
       doc=studyDoc
+      redirectOnSubmit=urlQuery.redirectOnSubmit
     )
 
       .report-form.study
@@ -44,7 +45,8 @@ template(name="studyForm")
           .container
             +afQuickField name='publicationInfo' id='publicationInfo'
 
-        +submit
+        unless eq type "readonly"
+          +submit
 
   else
     h3 Invalid study id

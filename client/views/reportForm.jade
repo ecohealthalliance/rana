@@ -17,6 +17,7 @@ template(name="reportForm")
       collection="collections.Reports"
       type=type
       doc=reportDoc
+      redirectOnSubmit=urlQuery.redirectOnSubmit
     )
 
       +afQuickField name='studyId'
@@ -60,8 +61,8 @@ template(name="reportForm")
               +afQuickField name='additionalNotes' id='additionalNotes'
 
       +permissions
-
-      +submit
+      unless eq type "readonly"
+        +submit
 
   else
     h3 Invalid form id

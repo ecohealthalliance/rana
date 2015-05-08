@@ -65,36 +65,51 @@
           });
         });
 
-        browser.addCommand("waitForReport", function(report, callback) {
-          // This turns documents into Mongo queries that use JSON paths.
-          // Nested objects queries were failing here,
-          // but strangely I've been able to use in my browser console.
-          function objectToQuery(obj, prefix){
-            if(!prefix) prefix = [];
-            var returnVal = {};
-            Object.keys(obj).forEach(function(key){
-              var value = obj[key];
-              if(_.isArray(value)) {
-                if(value.length > 0) {
-                  if(value.some(function(item){
-                    return _.isObject(item);
-                  })) {
-                    throw new Error("waitForReport does not support reports with object arrays.");
-                  }
-                  returnVal[prefix.concat(key).join('.')] = { $all: value };
+        // This turns documents into Mongo queries that use JSON paths.
+        // Nested objects queries were failing here,
+        // but strangely I've been able to use in my browser console.
+        function objectToQuery(obj, prefix){
+          if(!prefix) prefix = [];
+          var returnVal = {};
+          Object.keys(obj).forEach(function(key){
+            var value = obj[key];
+            if(_.isArray(value)) {
+              if(value.length > 0) {
+                if(value.some(function(item){
+                  return _.isObject(item);
+                })) {
+                  throw new Error("waitForReport does not support reports with object arrays.");
                 }
-              } else if(_.isObject(value)) {
-                _.extend(returnVal, objectToQuery(value, prefix.concat([key])));
-              } else {
-                returnVal[prefix.concat(key).join('.')] = value;
+                returnVal[prefix.concat(key).join('.')] = { $all: value };
               }
-            });
-            return returnVal;
-          }
+            } else if(_.isObject(value)) {
+              _.extend(returnVal, objectToQuery(value, prefix.concat([key])));
+            } else {
+              returnVal[prefix.concat(key).join('.')] = value;
+            }
+          });
+          return returnVal;
+        }
+
+        browser.addCommand("waitForReport", function(report, callback) {
           var query = objectToQuery(report);
           helper.checkForReports(query, function (err, reports) {
             if (reports.length) {
               callback(reports[0]);
+            } else {
+              callback({
+                error: "Query:\n" +
+                  JSON.stringify(query, 2,2)
+              });
+            }
+          });
+        });
+
+        browser.addCommand("waitForStudy", function(study, callback) {
+          var query = objectToQuery(study);
+          helper.checkForStudies(query, function (err, studies) {
+            if (studies.length) {
+              callback(studies[0]);
             } else {
               callback({
                 error: "Query:\n" +
@@ -172,7 +187,12 @@
           .call(function(){
             var schema = collections[schemaName].simpleSchema().schema();
             _.each(formData, function (value, key) {
-              if(key === "specifyOtherRanavirusSampleTypes") return;
+              // Specify other fiels are not supported because they might be
+              // hidden depending on what is selected
+              if(key.indexOf("specifyOther") === 0) {
+                console.log("WARNING: Specify other field ignored by setFormFields: " + key);
+                return;
+              }
               if(!schema[key]) {
                 console.log("Bad key: "+ key);
                 return;
@@ -221,8 +241,9 @@
                 throw new Error(error);
               }
             });
-
-            callback();
+            // The browser input calls above do not block future calls to
+            // browser methods, so a pause is used to wait for input to be entered.
+            browser.pause(1000).call(callback);
           });
         });
 
