@@ -121,8 +121,6 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
     else
       {}
 
-  console.log 'reportId', reportId, 'fields', fields
-
   find: () ->
     collections.Reports.find(
       {
