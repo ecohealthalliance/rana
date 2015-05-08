@@ -91,6 +91,7 @@
     this.When("I log out",
     function (callback) {
       helper.world.browser
+        .click('.admin-settings')
         .click('.sign-out')
         .pause(500)
         .call(callback);
