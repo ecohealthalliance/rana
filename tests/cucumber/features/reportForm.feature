@@ -73,3 +73,25 @@ Feature: A form for reporting Ranavirus outbreaks
     And I click the Add a report button
     And I click submit
     Then I should be on the "study/fakeid" page
+
+  Scenario: Redirecting after new report submission
+    Given I have logged in
+    And I am on the "study/fakeid" page
+    And I click the Add a report button
+    And I click submit
+    Then I should be on the "study/fakeid" page
+
+  Scenario: Reviews don't appear on report insert forms
+    Given I have logged in
+    And I am on the "study/fakeid" page
+    And I click the Add a report button
+    Then I should not see the review panel header
+
+  Scenario: Reviews appear on reports user has added
+    Given I have logged in
+    And I am on the "study/fakeid" page
+    And I click the Add a report button
+    When I fill out the form
+    And I click submit
+    And I click the "Edit Report" button
+    Then I should see the review panel header
