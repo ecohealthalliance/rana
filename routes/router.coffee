@@ -29,9 +29,6 @@ Router.route('editReport',
   data: ->
     report = getCollections().Reports.findOne @params.reportId
 
-    console.log 'rpeort', report
-    console.log '@userId', @userId
-    console.log 'Meteor.userId()', Meteor.userId()
     obfuscated = false
     if report
       if report.dataUsePermissions is 'Share obfuscated' and report.createdBy.userId != Meteor.userId()
@@ -43,10 +40,6 @@ Router.route('editReport',
           'update'
         else
           'readonly'
-
-    console.log 'obfuscated', obfuscated
-    console.log 'type', type
-
 
     type: type
     report: report
