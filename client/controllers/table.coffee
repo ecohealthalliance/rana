@@ -136,9 +136,6 @@ settings = (tableType) =>
           <a class="btn btn-primary btn-view" href="/report/#{obj._id}">View</a>
         """)
 
-  console.log 'tableType', tableType
-  console.log 'fields', fields
-
   showColumnToggles: true
   showFilter: false
   fields: fields
