@@ -1,7 +1,8 @@
 template(name="table")
   section
-    .container
+    .container.reports-table
       button.toggle-filter.btn.btn-primary(href="#") Filter Tables
+      button.export.btn.btn-primary(href="#") Export
       .filter-controls.table-filters.hidden
         +filterControls query=query
 

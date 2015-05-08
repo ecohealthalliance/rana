@@ -3,10 +3,6 @@ contactFromUser = @contactFromUser
 
 AutoForm.addHooks(
   'ranavirus-report', {
-    docToForm: (doc, ss)->
-      if doc
-        utils.subscribeToDocFiles(doc)
-      return doc
     formToDoc: (doc)->
       doc.createdBy = {
         userId: Meteor.userId()
@@ -26,9 +22,8 @@ AutoForm.addHooks(
       <a href="/report/#{@docId}">Edit Report</a>
       """)
       window.scrollTo(0, 0)
-      redirectOnSubmit =  template.data?.query?.redirectOnSubmit
-      if redirectOnSubmit
-        Router.go(redirectOnSubmit)
+      if template.data.redirectOnSubmit
+        Router.go template.data.redirectOnSubmit
       else
         window.scrollTo(0, 0)
     onError: (operation, error) ->
@@ -54,7 +49,7 @@ Template.registerHelper 'reportDoc', () =>
       @mergeObjects study.contact, contactFromUser
       study
 
-Template.reportFormComplete.helpers
+Template.reportForm.helpers
 
   isInsert: ->
     Template.currentData().type == 'insert'
@@ -74,5 +69,8 @@ Template.reportFormComplete.events
       timeout -= 1000
     , 1000)
 
-  'click .review-panel-header': ()->
-    $(".review-content").toggle()
+  'click .review-panel-header': (e)->
+    $(e.target).toggleClass('showing')
+    $('.review-content').toggleClass('hidden-panel')
+    $('.page-wrap').toggleClass('curtain')
+

@@ -14,29 +14,8 @@
   download: (userId)->
     true
 
-# This makes it so it isn't possible to retrieve all the records in the system.
-# It is necessairy to know their id, which should make it necessairy to have
-# access to the record they are attached to.
-onlyById = (collection)->
-  (id)->
-    if _.isArray id
-      ids = id
-    else
-      ids = [id]
-    # It doesn't seem to be possible to pass in RegExps
-    # but we still check for them just incase it becomes possible in
-    # future versions of Meteor.
-    if ids.some(_.isRegExp)
-      return null
-
-    collection.find({_id: {$in: ids}})
-
-Meteor.publish 'files', onlyById(collections.Files)
-
 Meteor.publish 'genera', ->
   collections.Genera.find()
-
-Meteor.publish 'pdfs', onlyById(collections.PDFs)
 
 @collections.PDFs.allow
   insert: (userId, doc) ->
@@ -46,34 +25,49 @@ Meteor.publish 'pdfs', onlyById(collections.PDFs)
   download: (userId)->
     true
 
-Meteor.publish 'csvfiles', onlyById(collections.CSVFiles)
-
-Meteor.publish 'studies', onlyById(collections.Studies)
-
-ReactiveTable.publish "studies", collections.Studies
-
-ReactiveTable.publish 'reports', collections.Reports, () ->
-  # Uncomment this if the admin should be allowed to see unpublished reports.
-  #if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
-    #return {}
+sharedOrCreator = (userId) ->
   {
     $or : [
       {
-        "createdBy.userId": @userId
+        "createdBy.userId": userId
       }
       {
-        dataUsePermissions: "Share full record",
+        dataUsePermissions: { $in: ["Share full record", "Share obfuscated"] }
         consent: true
       }
     ]
   }
 
-ReactiveTable.publish 'obfuscatedReports', collections.Reports,
+
+Meteor.publishComposite 'studies', (id) ->
+  find: () ->
+    collections.Studies.find {
+      $and: [
+        { _id: id }
+        sharedOrCreator @userId
+      ]
+    }
+  children: [
     {
-      'dataUsePermissions': "Share obfuscated",
-      'consent': true
-    },
-    { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'contact': 1, 'eventLocation.country': 1} }
+      find: (study) ->
+        collections.PDFs.find
+          _id: study?.publicationInfo?.pdf
+          studyId: study._id
+    }
+  ]
+
+ReactiveTable.publish "studies", collections.Studies, () ->
+  sharedOrCreator @userId
+
+ReactiveTable.publish 'reports', collections.Reports, () ->
+  sharedOrCreator @userId
+
+ReactiveTable.publish 'obfuscatedReports', collections.Reports,
+  {
+    'dataUsePermissions': "Share obfuscated",
+    'consent': true
+  },
+  { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'contact': 1, 'eventLocation.country': 1} }
 
 Meteor.publishComposite "reportLocations", () ->
   find: () ->
@@ -83,17 +77,7 @@ Meteor.publishComposite "reportLocations", () ->
           {
             "eventLocation.source": {"$exists": true}
           }
-          {
-            $or: [
-              {
-                "createdBy.userId": @userId
-              }
-              {
-                dataUsePermissions: "Share full record",
-                consent: true
-              }
-            ]
-          }
+          sharedOrCreator @userId
         ]
       }
       {
@@ -114,7 +98,12 @@ Meteor.publishComposite "reportLocations", () ->
   children: [
     {
       find: (report) ->
-        collections.Studies.find {_id: report.studyId}, {fields: {name: 1}}
+        collections.Studies.find {
+          $and: [
+            {_id: report.studyId}
+            sharedOrCreator @userId
+          ]
+        }, {fields: {name: 1}}
     }
   ]
 
@@ -132,6 +121,8 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
     else
       {}
 
+  console.log 'reportId', reportId, 'fields', fields
+
   find: () ->
     collections.Reports.find(
       {
@@ -139,18 +130,8 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
           {
             _id: reportId
           }
-          {
-            $or: [
-              {
-                "createdBy.userId": @userId
-              }
-              {
-                dataUsePermissions: { $in: ["Share full record", "Share obfuscated"] }
-                consent: true
-              }
-            ]
-          }
-        ],
+          sharedOrCreator @userId
+        ]
       }
       {
         fields: fields
@@ -159,30 +140,59 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
   children: [
     {
       find: (report) ->
-        collections.Studies.find {_id: report.studyId}
+        collections.Studies.find {
+          $and: [
+            {_id: report.studyId}
+            sharedOrCreator @userId
+          ]
+        }, {fields: {name: 1}}
+    }
+    {
+      find: (report) ->
+        ids = _.pluck(report?.images or [], "image")
+        if ids.some(_.isRegExp)
+          return []
+        collections.Files.find
+          _id:
+            $in: ids
+          reportId: report._id
+    }
+    {
+      find: (report) ->
+        ids = _.pluck(report?.pathologyReports or [], "report")
+        if ids.some(_.isRegExp)
+          return []
+        collections.Files.find
+          _id:
+            $in: ids
+          reportId: report._id
+    }
+    {
+      find: (report) ->
+        collections.Reviews.find {reportId : report._id}
     }
   ]
 
-Meteor.publish 'reviews', (reportId)->
-  collections.Reviews.find({reportId : reportId})
+allowCreator = (userId, doc) ->
+  doc.createdBy.userId == userId
 
 allowCreatorAndAdmin = (userId, doc) ->
   if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
     return true
   else
-    return doc.createdBy.userId == userId
+    allowCreator userId, doc
 
 @collections.Reports.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin
 
 @collections.Studies.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin
 
 @collections.Reviews.allow
-  insert: allowCreatorAndAdmin
-  update: allowCreatorAndAdmin
+  insert: allowCreator
+  update: allowCreator
   remove: allowCreatorAndAdmin

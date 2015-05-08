@@ -28,6 +28,7 @@
         var badKeys = [
           'specifyOtherRanavirusSampleTypes',
           'specifyOtherRanavirusConfirmationMethods',
+          'specifyOtherVertebrateClasses',
           'sampleType',
           'ranavirusConfirmationMethods',
           'eventDate',

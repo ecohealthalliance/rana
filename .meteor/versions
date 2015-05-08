@@ -42,6 +42,7 @@ coffeescript@1.0.5
 csats:csv-parse@1.0.1
 ddp@1.0.14
 deps@1.0.6
+eha:autoform-file@0.2.5
 eha:autoform-fixtures@1.1.4
 ejson@1.0.5
 email@1.0.5
@@ -123,4 +124,3 @@ webapp@1.1.6
 webapp-hashing@1.0.2
 xolvio:cucumber@0.5.3
 xolvio:webdriver@0.5.2
-yogiben:autoform-file@0.2.0

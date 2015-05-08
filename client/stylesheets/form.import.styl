@@ -88,19 +88,27 @@ textarea
 .panel-intro
   padding 15px
 
+.form-group.file-upload .btn
+  width 100%
+
 .location-info
-  .form-group-header
+  .form-group-header,
+  .form-group-subHeader
     margin-bottom 12px
     font-size 14px
     font-weight bold
+    color #444
+  .form-group-subHeader
+    color #666
   .form-group
     margin-bottom 15px
   label
-    color #666
     font-size 13px
   .row:last-child,
   .form-group:last-child
       margin-bottom 0
+  h5
+    color #666
 
 .content-panel
   @extend .no-padding
@@ -221,11 +229,6 @@ textarea
   .file-upload
     margin-top 10px
 
-.csvUpload
-  margin-top 15px
-  h3
-    margin-bottom 5px  
-
 .check-list
   .list-group-item
     margin-bottom 15px
@@ -262,8 +265,12 @@ textarea
   table
     margin 20px 0
 
+#toast-container
+  pointer-events none
+
 #toast-container > .toast
   opacity 1.0
+  pointer-events auto
   a
     color lightblue
   a:hover
@@ -287,6 +294,31 @@ textarea
 .has-error
   label
     color strong-primary
+
+.csvUpload
+  margin-top 15px
+
+.upload-wrap
+  margin-bottom 15px
+
+.upload-file
+  vAlign()
+  margin-bottom 0
+
+.instructions-link
+  color d-gray
+  vAlign()
+  &:hover,
+  &:focus
+    text-decoration none
+    outline 0
+  span
+    vAlign()
+    &:first-child
+      margin-left 5px
+  span.glyphicon
+    font-size 120%
+    top 0
 
 @media (max-width: 992px)
   .panel

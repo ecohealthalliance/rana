@@ -6,7 +6,7 @@ template(name="reportFormComplete")
       .container
         h2
           if study.name
-            a(href='/study/#{study._id}') #{study.name}
+            a(href='/study/#{study._id}') #{study.name}&nbsp;
             if isInsert
               span - New Report
             else if isUpdate
@@ -17,6 +17,7 @@ template(name="reportFormComplete")
       collection="collections.Reports"
       type=type
       doc=reportDoc
+      redirectOnSubmit=urlQuery.redirectOnSubmit
     )
 
       +afQuickField name='studyId'
@@ -57,7 +58,8 @@ template(name="reportFormComplete")
 
       +permissions
 
-      +submit
+      unless eq type "readonly"
+        +submit
 
   else
     h3 Invalid form id
@@ -65,5 +67,5 @@ template(name="reportFormComplete")
   unless isInsert
     .review-panel
       .review-panel-header Reviews
-      .review-content(style="display:none;")
+      .review-content.hidden-panel
         +reviews reportId=report._id

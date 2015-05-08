@@ -8,20 +8,15 @@ Meteor.startup () ->
 fileUploaded = (template) ->
   checkUploaded = () ->
     fileId = Session.get 'fileUpload[csvFile]'
-    Meteor.subscribe "csvfiles", fileId
-    if fileId
-      record = @collections.CSVFiles.findOne fileId
-      if record and record.isUploaded()
-        return Meteor.call 'getCSVData', fileId, (err, data) =>
-          if err
-            template.csvError.set err.reason
-            Session.set 'fileUpload[csvFile]', false
-          else if data
-            template.csvError.set null
-            updateImportReports data
-          else
-            setTimeout checkUploaded, 10
-    setTimeout checkUploaded, 10
+    Meteor.call 'getCSVData', fileId, (err, data) =>
+      if err
+        template.csvError.set err.reason
+        Session.set 'fileUpload[csvFile]', false
+      else if data
+        template.csvError.set null
+        updateImportReports data
+      else
+        setTimeout checkUploaded, 100
 
   checkUploaded()
 
@@ -119,7 +114,7 @@ buildReportFromImportData = (importData, report) ->
     minSecLat = Mapping.decimal2MinSec coords.lat
 
     report['eventLocation'] =
-      source: 'LonLat'
+      source: 'UTM'
       northing: northing
       easting: easting
       zone: zone
@@ -133,8 +128,12 @@ buildReportFromImportData = (importData, report) ->
       geo:
         type: 'Point'
         coordinates: [coords.lon, coords.lat]
-  else if ('degreesLon' of importData and 'minutesLon' of importData and 'secondsLon' of importData and
-           'degreesLat' of importData and 'minutesLat' of importData and 'secondsLat' of importData)
+  else if ('eventLocation.degreesLon' of importData and
+           'eventLocation.minutesLon' of importData and
+           'eventLocation.secondsLon' of importData and
+           'eventLocation.degreesLat' of importData and
+           'eventLocation.minutesLat' of importData and
+           'eventLocation.secondsLat' of importData)
     country = importData['eventLocation.country']
     degreesLon = parseFloat importData['eventLocation.degreesLon']
     minutesLon = parseFloat importData['eventLocation.minutesLon']
@@ -146,7 +145,7 @@ buildReportFromImportData = (importData, report) ->
     lat = Mapping.minSec2Decimal degreesLat, minutesLat, secondsLat
     utm = Mapping.utmFromLonLat lon, lat
     report['eventLocation'] =
-      source: 'LonLat'
+      source: 'MinSec'
       northing: utm.northing
       easting: utm.easting
       zone: utm.zone
@@ -234,11 +233,7 @@ Template.csvUpload.helpers
     Session.get 'fileUpload[csvFile]'
 
   csvFileName: () ->
-    fileId = Session.get 'fileUpload[csvFile]'
-    if fileId
-      getCollections().CSVFiles.findOne({ _id: Session.get 'fileUpload[csvFile]' }).original.name
-    else
-      null
+    Session.get 'fileUploadSelected[csvFile]'
 
   importReports: () ->
     ImportReports.find()

@@ -13,6 +13,7 @@ Router.route('newReport',
   data: ->
     type: 'insert'
     study: getCollections().Studies.findOne @params.studyId
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->
@@ -28,9 +29,12 @@ Router.route('editReport',
   data: ->
     report = getCollections().Reports.findOne @params.reportId
 
+    console.log 'rpeort', report
+    console.log '@userId', @userId
+    console.log 'Meteor.userId()', Meteor.userId()
     obfuscated = false
     if report
-      if report.dataUsePermissions is 'Share obfuscated' and report.createdBy.userId != @userId
+      if report.dataUsePermissions is 'Share obfuscated' and report.createdBy.userId != Meteor.userId()
         obfuscated = true
       study = null
       if report.studyId
@@ -40,6 +44,10 @@ Router.route('editReport',
         else
           'readonly'
 
+    console.log 'obfuscated', obfuscated
+    console.log 'type', type
+
+
     type: type
     report: report
     study: study
@@ -47,7 +55,6 @@ Router.route('editReport',
     obfuscated: obfuscated
   onAfterAction: ->
     Meteor.subscribe("genera")
-    Meteor.subscribe("reviews", @params.reportId)
   waitOn: ->
     [
       Meteor.subscribe("reportAndStudy", @params.reportId)
@@ -69,6 +76,8 @@ Router.route('editStudy',
   where: 'client'
   data: ->
     study: getCollections().Studies.findOne(@params.studyId)
+    reports: getCollections().Reports.find({studyId: @params.studyId})
+    urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->
@@ -80,6 +89,10 @@ Router.route('editStudy',
 
 Router.route('/studies',
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe("groupByPath", "rana")
+    ]
 )
 
 Router.route('/table',
@@ -99,6 +112,10 @@ Router.route('/map',
 )
 
 Router.route('/info',
+  where: 'client'
+)
+
+Router.route('/importInstructions',
   where: 'client'
 )
 

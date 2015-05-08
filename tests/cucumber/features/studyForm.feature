@@ -28,7 +28,8 @@ Feature: A form for setting up a ranavirus study
     And I navigate to the "studies" page
     And I click the link for the the study called "Study"
     And I fill out the study form differently
-    And I click submit
+    And I click submit again
+    And I click the link for the the study called "Study"
     Then the form should contain the different values I entered
 
   Scenario: Removing a study
@@ -58,5 +59,12 @@ Feature: A form for setting up a ranavirus study
     When I dismiss the toast
     And I navigate to the "study" page
     And I fill out the study form
-    And I click submit
+    And I click submit again
     Then the webpage should display a validation error
+
+  Scenario: Redirecting after editing a study
+    Given I have logged in
+    And I am on the "studies" page
+    And I click on the edit button
+    And I click submit
+    Then I should be on the "studies" page
