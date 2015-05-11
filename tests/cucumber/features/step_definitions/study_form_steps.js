@@ -106,7 +106,7 @@
       helper.fillInStudyForm({'speciesGenus': 'SomeGenus'}, callback);
     });
 
-    this.When("I fill out the study form differently", function(callback){
+    this.When(/I fill out the study form differently(?: with obfuscated permissions)?/, function(callback){
       helper.fillInStudyForm(studyDifferentValues, callback);
     });
 

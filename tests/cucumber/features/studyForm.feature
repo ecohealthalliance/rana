@@ -72,7 +72,7 @@ Feature: A form for setting up a ranavirus study
   Scenario: Obfuscated study display
     Given I have logged in
     And I am on the "study" page
-    And I fill out the study form differently
+    And I fill out the study form differently with obfuscated permissions
     And I click submit
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
