@@ -1,20 +1,17 @@
 getCollections = () -> @collections
 
-Template.studyForm.helpers
+Template.studyFormComplete.helpers
 
   studyDoc: =>
     Template.currentData()?.study or { contact: @contactFromUser() }
 
-  type: =>
-    if not Template.currentData()?.study
-      "insert"
-    else if Meteor.userId() and Meteor.userId() == Template.currentData().study.createdBy.userId
-      "update"
-    else
-      "readonly"
-
   showCSV: ->
     not Template.currentData().study
+
+Template.studyFormObfuscated.helpers
+
+  studyDoc: =>
+    Template.currentData()?.study
 
 
 AutoForm.hooks

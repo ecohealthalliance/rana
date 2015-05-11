@@ -32,7 +32,7 @@ sharedOrCreator = (userId) ->
         "createdBy.userId": userId
       }
       {
-        dataUsePermissions: "Share full record",
+        dataUsePermissions: "Share full record"
         consent: true
       }
     ]
@@ -55,11 +55,41 @@ Meteor.publishComposite 'studies', (id) ->
     }
   ]
 
-ReactiveTable.publish "studies", collections.Studies, () ->
-  sharedOrCreator @userId
+ReactiveTable.publish "studies", collections.Studies,
+  {
+    $or : [
+      {
+        "createdBy.userId": @userId
+      },
+      {
+        dataUsePermissions: { $in: [ "Share full record", "Share obfuscated" ] },
+        consent: true
+      }
+    ]
+  },
+  { fields: { name: 1, createdBy: 1, dataUsePermissions: 1}}
+
+
+Meteor.publish 'obfuscatedStudies', (id) ->
+  collections.Studies.find(
+    {
+      _id: id,
+      'dataUsePermissions': "Share obfuscated",
+      'consent': true
+    },
+    { fields: {name: 1, dataUsePermissions: 1, createdBy: 1} }
+  )
 
 ReactiveTable.publish 'reports', collections.Reports, () ->
   sharedOrCreator @userId
+
+ReactiveTable.publish 'obfuscatedReports', collections.Reports, (() ->
+  {
+    'dataUsePermissions': "Share obfuscated",
+    'createdBy.userId': { $ne: @userId },
+    'consent': true
+  }),
+  { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'eventLocation.country': 1} }
 
 Meteor.publishComposite "reportLocations", () ->
   find: () ->
@@ -100,14 +130,20 @@ Meteor.publishComposite "reportLocations", () ->
   ]
 
 Meteor.publishComposite 'reportAndStudy', (reportId) ->
+
+  report = collections.Reports.findOne(reportId)
+
   find: () ->
-    collections.Reports.find
-      $and: [
-        {
-          _id: reportId
-        }
-        sharedOrCreator @userId
-      ]
+    collections.Reports.find(
+      {
+        $and: [
+          {
+            _id: reportId
+          }
+          sharedOrCreator @userId
+        ]
+      }
+    )
   children: [
     {
       find: (report) ->
@@ -141,6 +177,35 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
     {
       find: (report) ->
         collections.Reviews.find {reportId : report._id}
+    }
+  ]
+
+Meteor.publishComposite 'obfuscatedReportAndStudy', (reportId) ->
+
+  report = collections.Reports.findOne(reportId)
+
+  find: () ->
+    collections.Reports.find(
+      {
+        _id: reportId
+        dataUsePermissions: 'Share obfuscated'
+      }
+      {
+        fields: {
+          studyId: true
+          dataUsePermissions: true
+          createdBy: true
+          contact: true
+          'eventLocation.country': true
+        }
+      }
+    )
+  children: [
+    {
+      find: (report) ->
+        collections.Studies.find {
+          _id: report.studyId
+        }, {fields: {name: 1}}
     }
   ]
 
