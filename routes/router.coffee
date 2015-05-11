@@ -60,6 +60,8 @@ Router.route('newStudy',
   path: '/study'
   template: 'studyForm'
   where: 'client'
+  data: ->
+    type: 'insert'
   onAfterAction: ->
     Meteor.subscribe("genera")
 )
@@ -68,15 +70,30 @@ Router.route('editStudy',
   path: '/study/:studyId'
   template: 'study'
   where: 'client'
+
   data: ->
+    study = getCollections().Studies.findOne @params.studyId
+
+    obfuscated = false
+    if study
+      if study.dataUsePermissions is 'Share obfuscated' and study.createdBy.userId != Meteor.userId()
+        obfuscated = true
+      type = if Meteor.userId() and Meteor.userId() == study.createdBy.userId
+          'update'
+        else
+          'readonly'
+
+    type: type
     study: getCollections().Studies.findOne(@params.studyId)
     reports: getCollections().Reports.find({studyId: @params.studyId})
     urlQuery: @params.query
+    obfuscated: obfuscated
   onAfterAction: ->
     Meteor.subscribe("genera")
   waitOn: ->
     [
-      Meteor.subscribe("studies", @params.studyId),
+      Meteor.subscribe("studies", @params.studyId)
+      Meteor.subscribe("obfuscatedStudies")
       Meteor.subscribe("groupByPath", "rana")
     ]
 )

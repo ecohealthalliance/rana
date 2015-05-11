@@ -38,7 +38,6 @@ sharedOrCreator = (userId) ->
     ]
   }
 
-
 Meteor.publishComposite 'studies', (id) ->
   find: () ->
     collections.Studies.find {
@@ -56,8 +55,29 @@ Meteor.publishComposite 'studies', (id) ->
     }
   ]
 
-ReactiveTable.publish "studies", collections.Studies, () ->
-  sharedOrCreator @userId
+ReactiveTable.publish "studies", collections.Studies,
+  {
+    $or : [
+      {
+        "createdBy.userId": @userId
+      },
+      {
+        dataUsePermissions: { $in: [ "Share full record", "Share obfuscated" ] },
+        consent: true
+      }
+    ]
+  },
+  { fields: { name: 1, createdBy: 1, dataUsePermissions: 1}}
+
+
+Meteor.publish 'obfuscatedStudies', () ->
+  collections.Studies.find(
+    {
+      'dataUsePermissions': "Share obfuscated",
+      'consent': true
+    },
+    { fields: {name: 1, dataUsePermissions: 1, createdBy: 1} }
+  )
 
 ReactiveTable.publish 'reports', collections.Reports, () ->
   sharedOrCreator @userId

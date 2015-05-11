@@ -31,7 +31,7 @@ Feature: A form for reporting Ranavirus outbreaks
     When I fill out the study form with some default report values
     And I click submit
     And I navigate to the "studies" page
-    And I click the link for the the study called "Study"
+    And I click the add-report button for the study called "Study"
     Then the information from the study should be prepopulated
 
   Scenario: Uploading an image

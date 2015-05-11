@@ -84,6 +84,7 @@
     }
 
     var studyDifferentValues = {
+      'name': 'Obfuscated study',
       'contact.name': 'Another Fake Name',
       'contact.email': 'zap@bop.com',
       'dataUsePermissions': 'Share obfuscated'
@@ -92,7 +93,7 @@
     this.fillInStudyForm = function (customValues, callback) {
 
       var values = _.extend({}, studyDefaultValues, customValues);
-      
+
       helper.world.browser.setFormFields(values, 'Studies', callback);
 
     };
@@ -109,10 +110,10 @@
       helper.fillInStudyForm(studyDifferentValues, callback);
     });
 
-    this.When('I click the link for the the study called "$name"', function(name, callback){
+    this.When('I click the $buttonType button for the study called "$name"', function(buttonType, name, callback){
       helper.world.browser
       .pause(2000)
-      .click('a[for="' + name + '"]')
+      .click('a.btn-' + buttonType + '[for="' + name + '"]')
       .call(callback);
     });
 
@@ -186,6 +187,23 @@
       helper.world.browser
       .setValue('[data-schema-key="publicationInfo.reference"]', '')
       .call(callback);
+    });
+
+
+  this.Then(/^the webpage should( not)? display an? (.+) button for the '(.+)' study$/,
+    function(shouldNot, buttonType, studyName, callback){
+      var reverse = !!shouldNot;
+      helper.world.browser
+      // custom errors on groups don't create a has-error class
+      .waitForExist('a.btn-' + buttonType + '[for="' + studyName + '"]', 1000, reverse,
+      function(err, result){
+        assert.equal(err, null);
+        if(shouldNot) {
+          assert(result, buttonType + ' button for ' + studyName + ' should not be displayed');
+        } else {
+          assert(result, buttonType + ' button for ' + studyName + ' is missing');
+        }
+      }).call(callback);
     });
 
   };
