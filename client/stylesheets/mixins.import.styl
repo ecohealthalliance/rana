@@ -19,9 +19,11 @@ vAlign()
   display inline-block
   vertical-align middle  
   
-makeButton(color, text = white, dark = false, noOutline = false)
-  if dark 
+makeButton(color, text = white, dark = false, noOutline = false, hoverColor = white)
+  if dark
     @extend .light-shadow
+    &:hover
+      color hoverColor
   else 
     @extend .dark-shadow
   background color
@@ -79,11 +81,11 @@ centerSmall(margin-bottom=0)
     if margin-bottom
       margin-bottom margin-bottom
 
-buttonHover(bg=none)
+buttonHover(hoverBG, bg=none)
   transition()
   background bg
   &:hover
-    background primary
+    background hoverBG
     color white
     transition()
 

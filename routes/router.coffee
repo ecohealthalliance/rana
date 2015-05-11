@@ -3,6 +3,8 @@ getCollections = => @collections
 Router.configure
   layoutTemplate: "layout"
   loadingTemplate: "loading"
+  subscriptions: () ->
+    Meteor.subscribe "groupByPath", "rana"
 
 Router.onRun () ->
   if Session.equals('AnalyticsJS_loaded', true)
@@ -100,24 +102,15 @@ Router.route('editStudy',
     [
       Meteor.subscribe("studies", @params.studyId)
       Meteor.subscribe("obfuscatedStudies", @params.studyId)
-      Meteor.subscribe("groupByPath", "rana")
     ]
 )
 
 Router.route('/studies',
   where: 'client'
-  waitOn: ->
-    [
-      Meteor.subscribe("groupByPath", "rana")
-    ]
 )
 
 Router.route('/table',
   where: 'client'
-  waitOn: ->
-    [
-      Meteor.subscribe("groupByPath", "rana")
-    ]
 )
 
 Router.route('/map',

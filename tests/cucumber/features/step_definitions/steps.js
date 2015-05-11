@@ -262,6 +262,13 @@
       .call(callback);
     });
 
+    this.When('I click on the admin settings button',
+    function(callback){
+      helper.world.browser
+      .click('.admin-settings')
+      .call(callback);
+    });
+
     this.When('I click on the view button',
     function(callback){
       helper.world.browser
