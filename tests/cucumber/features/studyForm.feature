@@ -17,6 +17,21 @@ Feature: A form for setting up a ranavirus study
     And I click on the edit button
     Then the form should contain the values for rana_import_complete.csv
 
+  Scenario: Importing an invalid CSV file
+    Given I have logged in
+    And I am on the "study" page
+    When I upload the CSV file rana_invalid.csv
+    Then I should see the text "Error: Binomial species names are required"
+
+  Scenario: Importing and removing a CSV file
+    Given I have logged in
+    And I am on the "study" page
+    And I upload the CSV file rana_import_complete.csv
+    Then I should see 1 report in the table
+    And I should see the text "Unused fields in your data"
+    When I remove the CSV file
+    Then I should not see the text "File: rana_import_complete.csv"
+
   Scenario: Updating a study
     Given I have logged in
     And I am on the "study" page
