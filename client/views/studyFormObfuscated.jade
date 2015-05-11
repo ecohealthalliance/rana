@@ -1,21 +1,15 @@
 template(name="studyFormObfuscated")
 
   if type
-    +autoForm(
-      id="ranavirus-study"
-      collection="collections.Studies"
-      type=type
-      doc=studyDoc
-      redirectOnSubmit=urlQuery.redirectOnSubmit
-    )
-
-      .report-form.study
-        section.rm-pad-btm
-          .container
-            .row
-              .col-sm-4
-                +afQuickField name='name'
-            .row
+    .report-form.study
+      section.rm-pad-btm
+        .container
+          .row
+            .col-sm-8
+              h2 Study:&nbsp;
+                | #{study.name}
+          .row
+            .col-sm-8
               p This study has been shared in obfuscated form, so no further details are available.
   else
     h3 Invalid study id
