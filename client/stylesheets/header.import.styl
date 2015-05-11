@@ -165,8 +165,7 @@ header
   .navbar-nav>li
     float none
   .navbar-nav>li>a
-    padding-top 10px
-    padding-bottom 10px
+    padding 12px 30px
   .collapse.in
     display block !important
     height auto !important
@@ -213,8 +212,16 @@ header
     &.in
       border-top 4px solid secondary-dark
       box-shadow none
+    &.collapse,
+    &.collapsing
+      padding 0
   .dropdown-menu
     padding-top 0
+    position static
+    min-width 100%
+    background none
+    box-shadow none
+    border 0
   .navbar-nav 
     .open
       .dropdown-menu
@@ -225,7 +232,7 @@ header
             border 0
           >a
             color white
-            padding 10px 15px 10px 25px
+            padding 10px 15px 10px 40px
             &:hover
               background primary
     .active a
