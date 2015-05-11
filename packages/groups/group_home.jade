@@ -6,6 +6,9 @@ template(name="groupHome")
         h2 {{group.name}}
         p {{group.description}}
 
+        .default-content
+          {{markdown group.info}}
+
         if isInRole 'admin' group._id
           +groupAdmin
 
