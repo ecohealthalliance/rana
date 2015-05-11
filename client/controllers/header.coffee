@@ -14,4 +14,4 @@ Template.navLinks.events
 
 Template.navLinks.helpers
   groupId: () ->
-  	Groups.findOne({path: 'rana'})._id
+  	Groups.findOne({path: 'rana'})?._id
