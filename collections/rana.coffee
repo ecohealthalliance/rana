@@ -21,7 +21,7 @@ Meteor.startup () ->
   if Meteor.isServer
     unless Groups.findOne {path: 'rana'}
       Groups.insert 
-        name: 'Global Ranavirus Reporting System'
+        name: 'Rana'
         path: 'rana'
         description: 'Global Ranavirus Reporting System'
         info: """

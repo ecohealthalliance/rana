@@ -3,11 +3,8 @@ template(name="groupHome")
     section
       if group
 
-        h2 {{group.name}}
+        h1 {{group.name}}
         p {{group.description}}
-
-        .default-content
-          {{markdown group.info}}
 
         if isInRole 'admin' group._id
           +groupAdmin

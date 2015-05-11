@@ -9,7 +9,8 @@ Router.onRun () ->
     analytics.page @path
   @next()
 
-Router.route('/', ()-> @redirect('/group/rana'))
+Router.route "/",
+  name: 'home'
 
 Router.route('newReport',
   path: '/study/:studyId/report'
@@ -135,7 +136,7 @@ Router.route('/importInstructions',
   where: 'client'
 )
 
-Router.route('/help',
+Router.route('help',
   where: 'client'
 )
 
