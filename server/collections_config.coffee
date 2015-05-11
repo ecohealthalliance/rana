@@ -83,11 +83,12 @@ Meteor.publish 'obfuscatedStudies', (id) ->
 ReactiveTable.publish 'reports', collections.Reports, () ->
   sharedOrCreator @userId
 
-ReactiveTable.publish 'obfuscatedReports', collections.Reports,
+ReactiveTable.publish 'obfuscatedReports', collections.Reports, (() ->
   {
     'dataUsePermissions': "Share obfuscated",
+    'createdBy.userId': { $ne: @userId },
     'consent': true
-  },
+  }),
   { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'eventLocation.country': 1} }
 
 Meteor.publishComposite "reportLocations", () ->
