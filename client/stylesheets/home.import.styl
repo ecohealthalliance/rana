@@ -2,7 +2,7 @@
   background url(images/home-hero.jpg)
   background-size cover
   background-position center center
-  min-height 325px
+  min-height 350px
   position relative
   margin-bottom 25px
   .header
@@ -12,22 +12,24 @@
     left 50%
     centerPosition(-50%,-50%)
     z-index 15
-    h1
-      color white
-      width 50%
-      margin 0
-      span
-        &:first-child
-          font-size 200%
-          display block
-          tent-transform uppercase
-        &:last-child
-          font-weight 700
-          font-size 125%
+.hero-header
+  color white
+  width 50%
+  margin 0
+  font-size 375%
+  span
+    &:first-child
+      font-size 145%
+      display block
+      text-transform uppercase
+    &:last-child
+      font-weight 700
 .mask
   cover()
   background RGBA(157, 83, 42, .5)
   z-index 10
 
-
-@media (m-break)
+@media (max-width: s-break)
+  .hero-header
+    font-size 50%
+    
