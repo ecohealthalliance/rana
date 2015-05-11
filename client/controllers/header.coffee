@@ -1,3 +1,6 @@
+Template.header.events
+  'click a, click button' : (e) ->
+    $(e.currentTarget).blur()
 Template.navLinks.events
   'click a' : (e) ->
     if $('.navbar-toggle').is(':visible') and !$(e.currentTarget).hasClass('dropdown-toggle')
@@ -5,7 +8,6 @@ Template.navLinks.events
     else 
       $(".nav").find(".active").removeClass("active")
       $(e.target).parent().toggleClass("active")
-
 
   'click .sign-out' : () ->
     Meteor.logout()

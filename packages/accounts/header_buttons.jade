@@ -1,10 +1,10 @@
 template(name="accountsHeaderButtons")
   li.account
-    a.profile.navbar-btn(href="{{pathFor route='profile'}}")
+    a.profile(href="{{pathFor route='profile'}}")
       i.fa.fa-user
       span Profile
   li.account
-    a(class="sign-out navbar-btn" href="#")
+    a.sign-out(href="#")
       i.fa.fa-sign-out
       span Sign Out
 

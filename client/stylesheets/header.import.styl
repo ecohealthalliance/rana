@@ -1,6 +1,6 @@
 header
   position relative
-  z-index 100
+  z-index 200
 .navbar
   @extend .dark-shadow
   margin-bottom 0
@@ -20,6 +20,7 @@ header
     buttonHover(nav-hover, trans-white)
     transition()
     &:focus
+      background white
       outline primary
       transition()
       
@@ -36,9 +37,27 @@ header
     color white
     buttonHover(nav-hover)
     font-size 13px
+    &:focus
+      background primary
+      outline 5px auto darken(primary, 10%)
     i
       vAlign()
       font-size 16px
+    &.navbar-btn
+      margin 0
+      padding 9px 10px
+      background trans-white
+      border-radius 5px
+      color #333
+      text-shadow none
+      line-height 100%
+      margin-top 9px
+      transition(background-color)
+      &:hover,
+      &:hover
+        background primary
+        color white
+        transition(background-color)
   .admin-settings
     i
       font-size 20px
@@ -50,6 +69,8 @@ header
       @extend .font-awesome
       padding-left 4px
       line-height 0
+    &:focus
+      outline 0
   
   &.open
     .dropdown-toggle
@@ -61,7 +82,6 @@ header
 
 .dropdown-menu
   background nav-hover
-  padding-top 0
   > li 
     border-bottom 1px solid primary-dark
     &:last-of-type
@@ -77,9 +97,17 @@ header
 .navbar-nav .active a:focus
   background nav-hover
   outline 0
-  
+
 .navbar-brand 
-  padding 5px 0
+  padding 6px 0
+  transition(.2s, color)  
+  &:hover,
+  &:focus
+    span,
+    h1
+      color body-text
+      @extend .light-shadow
+      transition(.2s, color)
   h1
     margin 0
     color white
@@ -89,6 +117,7 @@ header
     font-size 18px
     vAlign()
     padding-left 3px
+    transition(.2s, color)
   span
     @extend .icons
     padding-top 1px
@@ -96,10 +125,8 @@ header
     color white
     line-height 0
     vAlign()
-
-.navbar-btn
-  margin 0
-
+    transition(.2s, color)
+    
 .navbar-toggle
   @extend .icons
   float right
@@ -107,14 +134,15 @@ header
   margin 0
   color white
   font-size 28px
+  &.active,
+  &:focus
+    color black
 
 .main-nav-last
   margin-right 0
 
 .fa-gear
-  font-size 20px
-
-  
+  font-size 18px
      
 @media (max-width: 1000px) 
   .navbar-header
@@ -184,7 +212,8 @@ header
     &.in
       border-top 4px solid secondary-dark
       box-shadow none
-
+  .dropdown-menu
+    padding-top 0
   .navbar-nav 
     .open
       .dropdown-menu
