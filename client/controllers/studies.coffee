@@ -30,7 +30,7 @@ Template.studies.helpers
         if obj.createdBy.userId == Meteor.userId()
           new Spacebars.SafeString(addReportButton(obj) + ' ' + editButton(obj) + ' ' + removeButton(obj))
         else if isAdmin
-          new Spacebars.SafeString(addReportButton(obj) + ' ' + viewButton(obj) + ' ' + removeButton(obj))
+          new Spacebars.SafeString(viewButton(obj) + ' ' + removeButton(obj))
         else if obj.dataUsePermissions == 'Share obfuscated'
           new Spacebars.SafeString(viewButton(obj))
         else
