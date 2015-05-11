@@ -262,6 +262,13 @@
       .call(callback);
     });
 
+    this.When('I click on the view button',
+    function(callback){
+      helper.world.browser
+      .click('.reactive-table td.controls .btn-view')
+      .call(callback);
+    });
+
     this.When('I click on the profile button',
     function(callback){
       helper.world.browser

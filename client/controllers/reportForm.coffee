@@ -40,16 +40,8 @@ AutoForm.addHooks(
   }
 )
 
-Template.reportForm.helpers
-
-  isInsert: ->
-    Template.currentData().type == 'insert'
-
-  isUpdate: ->
-    Template.currentData().type == 'update'
-
-  reportDoc: =>
-    if Template.currentData().report
+Template.registerHelper 'reportDoc', () =>
+  if Template.currentData().report
       Template.currentData().report
     else
       study = _.extend Template.currentData().study, { studyId: Template.currentData().study._id }
@@ -57,10 +49,17 @@ Template.reportForm.helpers
       @mergeObjects study.contact, contactFromUser
       study
 
-Template.reportForm.events
+Template.reportFormComplete.helpers
+
+  isInsert: ->
+    Template.currentData().type == 'insert'
+
+  isUpdate: ->
+    Template.currentData().type == 'update'
+
+Template.reportFormComplete.events
 
   'click .review-panel-header': (e)->
     $(e.target).toggleClass('showing')
     $('.review-content').toggleClass('hidden-panel')
     $('.page-wrap').toggleClass('curtain')
-
