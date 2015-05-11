@@ -8,4 +8,21 @@ template(name="home")
   .container
     p Welcome
     p For help getting started, visit #[a ] a(href="{{pathFor route='help'}}")
-
+    .row
+      .col-sm-1
+      .col-sm-2
+        h2 Add Study          
+      .col-sm-2
+        h2 View Studies
+      .col-sm-2
+        h2 Add Reports       
+      .col-sm-2
+        h2 View Map
+      .col-sm-2
+        h2 About
+      .col-sm-1
+    .row
+      .col-sm-3
+        h2 Need Help?
+      .col-sm-8
+        a(href="{{pathFor route='help'}}") Click here
