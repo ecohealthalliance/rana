@@ -1,8 +1,9 @@
 template(name="study")
-  section.rm-pad-btm
-    .container
-      h2 {{ study.name }}
-      .row
-        .col-sm-3
-          a.btn.btn-primary.btn-block.add-report(href="/study/{{study._id}}/report?redirectOnSubmit=/study/{{study._id}}") Add a report
+  unless obfuscated
+    section.rm-pad-btm
+      .container
+        h2 {{ study.name }}
+        .row
+          .col-sm-3
+            a.btn.btn-primary.btn-block.add-report(href="/study/{{study._id}}/report?redirectOnSubmit=/study/{{study._id}}") Add a report
   +studyForm

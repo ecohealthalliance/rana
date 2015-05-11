@@ -10,7 +10,7 @@
   module.exports = function () {
 
     var helper = this;
-    
+
     this.Then(/^I should see (\d+) (study|studies|report|reports) in the table$/, function (number, studiesOrReports, callback) {
       helper.world.browser
       .waitForExist(".reactive-table tbody tr")
@@ -25,6 +25,9 @@
       helper.world.browser
       .getTextWhenVisible('.reactive-table-columns-dropdown li:last-child label',
       function(err, text){
+        if (typeof(text) == 'object') {
+          text = text[0];
+        }
         assert(!err);
         assert.notEqual(text.trim(), "", "Controls column has visible checkbox.");
       })

@@ -1,0 +1,15 @@
+template(name="studyFormObfuscated")
+
+  if type
+    .report-form.study
+      section.rm-pad-btm
+        .container
+          .row
+            .col-sm-8
+              h2 Study:&nbsp;
+                | #{study.name}
+          .row
+            .col-sm-8
+              p This study has been shared in obfuscated form, so no further details are available.
+  else
+    h3 Invalid study id
