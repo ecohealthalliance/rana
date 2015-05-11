@@ -54,10 +54,11 @@ header
       margin-top 9px
       transition(background-color)
       &:hover,
-      &:hover
+      &:focus
         background primary
         color white
         transition(background-color)
+        @extend .dark-shadow
   .admin-settings
     i
       font-size 20px
@@ -229,6 +230,11 @@ header
               background primary
     .active a
       background none
+    >li>a.navbar-btn 
+      width 50%
+      text-align center
+      margin 15px auto 8px auto
+      padding 15px
         
 @media (min-width: 768px) and (max-width: 1000px) 
   .nav
