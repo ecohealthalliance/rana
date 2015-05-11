@@ -26,6 +26,10 @@ header
 .nav
   float right
 
+.nav .open>a, 
+.nav .open>a:hover
+  background primary
+
 .navbar-nav
   margin-right 10px
   > li > a
@@ -38,6 +42,23 @@ header
   .admin-settings
     i
       font-size 20px
+
+.dropdown
+  .dropdown-toggle
+    &::after
+      content: '\f0d7'
+      @extend .font-awesome
+      padding-left 4px
+      line-height 0
+  
+  &.open
+    .dropdown-toggle
+      background primary
+      &:focus
+        background primary
+      &::after
+        content: '\f0d8'
+
 .dropdown-menu
   background nav-hover
   > li 
@@ -50,7 +71,6 @@ header
       &:hover
         background secondary
         color white
-
 
 .navbar-nav .active a,
 .navbar-nav .active a:focus
@@ -92,6 +112,8 @@ header
 
 .fa-gear
   font-size 20px
+
+  
      
 @media (max-width: 1000px) 
   .navbar-header
@@ -122,7 +144,7 @@ header
   .nav
     float none
     li
-      border-bottom l-gray 1px solid
+      border-bottom 1px solid secondary-light 
       &.account
         margin-left 0
         border 0 
@@ -134,6 +156,11 @@ header
         padding 10px
         display block
         float left
+      &:last-of-type
+        border 0
+      a
+        &:hover
+          background primary
   .navbar-brand
     width 75%
     padding-top 10px
@@ -151,7 +178,28 @@ header
     margin 0
   .navbar-collapse
     padding-right 0
-    
+    border-top 4px solid secondary-dark
+    box-shadow none
+    &.in
+      border-top 4px solid secondary-dark
+      box-shadow none
+
+  .navbar-nav 
+    .open
+      .dropdown-menu
+        border-top 4px solid primary-dark
+        >li
+          border-bottom 1px solid secondary-light
+          &:last-of-type
+            border 0
+          >a
+            color white
+            padding 10px 15px 10px 25px
+            &:hover
+              background primary
+    .active a
+      background none
+        
 @media (min-width: 768px) and (max-width: 1000px) 
   .nav
     li
