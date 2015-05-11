@@ -1,6 +1,6 @@
 Template.navLinks.events
   'click a' : (e) ->
-    if($('.navbar-toggle').is(':visible'))
+    if $('.navbar-toggle').is(':visible') and !$(e.currentTarget).hasClass('dropdown-toggle')
       $('.navbar-collapse').collapse('toggle')
     else
       $(".nav").find(".active").removeClass("active")
