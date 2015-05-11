@@ -104,4 +104,8 @@ Router.route('/importInstructions',
   where: 'client'
 )
 
+Router.route('/help',
+  where: 'client'
+)
+
 Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'newStudy']}
