@@ -1,7 +1,10 @@
 template(name="accountsHeaderButtons")
-  if currentUser
-    li.account
-      a.profile.btn.btn-default.navbar-btn(href="{{pathFor route='profile'}}") Profile
   li.account
-    +atNavButton
+    a.profile(href="{{pathFor route='profile'}}")
+      i.fa.fa-user
+      span Profile
+  li.account
+    a.sign-out(href="#")
+      i.fa.fa-sign-out
+      span Sign Out
 

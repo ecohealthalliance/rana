@@ -37,10 +37,27 @@ template(name="navLinks")
     a(href="/map") Map
   li
     a(href="/table") View Reports
+
   li.main-nav-last
     a(href="/group/rana/info") About Ranavirus
-
-  +accountsHeaderButtons
+  
+  if currentUser
+    li.nav-icon.dropdown
+      a.dropdown-toggle.admin-settings(href="#" data-toggle="dropdown" aria-expanded="false")
+        i.fa.fa-gear
+        span Settings
+      ul.dropdown-menu(role="menu")
+        if isInRole 'admin' groupId
+          li
+            a(href="/group/rana") 
+              i.fa.fa-group
+              span Group Admin
+        +accountsHeaderButtons
+  else
+    li
+      a(href="{{pathFor route='atSignIn'}}" class="sign-in navbar-btn")
+        span Sign In 
+        i.fa.fa-sign-in
 
 template(name="footer")
   footer
