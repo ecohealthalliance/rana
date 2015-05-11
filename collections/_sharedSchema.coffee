@@ -53,6 +53,7 @@
   specifyOtherVertebrateClasses:
     type: [String]
     optional: true
+    minCount: 1
     autoform:
       template: 'afFieldValueContains'
       afFieldValueContains:
@@ -150,6 +151,7 @@
   specifyOtherRanavirusConfirmationMethods:
     type: [String]
     optional: true
+    minCount: 1
     autoform:
       template: 'afFieldValueContains'
       afFieldValueContains:
@@ -176,6 +178,7 @@
   specifyOtherRanavirusSampleTypes:
     type: [String]
     optional: true
+    minCount: 1
     autoform:
       template: 'afFieldValueContains'
       afFieldValueContains:

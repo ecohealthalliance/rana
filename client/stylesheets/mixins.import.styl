@@ -19,9 +19,11 @@ vAlign()
   display inline-block
   vertical-align middle  
   
-makeButton(color, text = white, dark = false, noOutline = false)
-  if dark 
+makeButton(color, text = white, dark = false, noOutline = false, hoverColor = white)
+  if dark
     @extend .light-shadow
+    &:hover
+      color hoverColor
   else 
     @extend .dark-shadow
   background color

@@ -179,7 +179,7 @@ textarea
   padding-left 5px
   
 .add-content
-  makeButton(#f9f9f9, m-gray, true, true)
+  makeButton(#f9f9f9, d-gray, true, true, body-text)
   @extend .light-shadow
   margin-bottom 15px
   display block
@@ -234,9 +234,13 @@ textarea
     margin-bottom 15px
   .list-group
     input
-      width 70%
+      width 100%
+      padding-right 25%
     button
       width 20%
+      border-left 2px solid border-gray
+      border-top-left-radius 0
+      border-bottom-left-radius 0
 
 .publication,
 .form-grp-container
