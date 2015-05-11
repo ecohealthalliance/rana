@@ -70,9 +70,10 @@ ReactiveTable.publish "studies", collections.Studies,
   { fields: { name: 1, createdBy: 1, dataUsePermissions: 1}}
 
 
-Meteor.publish 'obfuscatedStudies', () ->
+Meteor.publish 'obfuscatedStudies', (id) ->
   collections.Studies.find(
     {
+      _id: id,
       'dataUsePermissions': "Share obfuscated",
       'consent': true
     },

@@ -93,7 +93,7 @@ Router.route('editStudy',
   waitOn: ->
     [
       Meteor.subscribe("studies", @params.studyId)
-      Meteor.subscribe("obfuscatedStudies")
+      Meteor.subscribe("obfuscatedStudies", @params.studyId)
       Meteor.subscribe("groupByPath", "rana")
     ]
 )
