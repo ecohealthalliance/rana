@@ -30,11 +30,10 @@ makeButton(color, text = white, dark = false, noOutline = false)
   &:hover,
   &:focus
     background darken(color, 20%)
-    border-color darken(color, 30%)
+    border-color darken(color, 50%)
+    color text
   &:active
     background darken(color, 20%)
-  &:focus
-    outline 5px auto lighten(btn-default, 20%)
   transition()
   if noOutline
     &:focus

@@ -1,6 +1,6 @@
 header
   position relative
-  z-index 100
+  z-index 200
 .navbar
   @extend .dark-shadow
   margin-bottom 0
@@ -20,6 +20,7 @@ header
     buttonHover(trans-white)
     transition()
     &:focus
+      background white
       outline primary
       transition()
   
@@ -32,14 +33,30 @@ header
     color white
     buttonHover()
     font-size 13px
+    &:focus
+      background primary
+      outline 5px auto darken(primary, 10%)
 
-.navbar-nav .active a,
-.navbar-nav .active a:focus
-  background primary
-  outline 0
-  
+.navbar-nav 
+  .active a,
+  .active a:focus
+    background primary
+    outline 0
+  .account.active a
+    background trans-white
+  .account.active a:focus
+    background white
+
 .navbar-brand 
-  padding 5px 0
+  padding 6px 0
+  transition(.2s, color)  
+  &:hover,
+  &:focus
+    span,
+    h1
+      color body-text
+      @extend .light-shadow
+      transition(.2s, color)
   h1
     margin 0
     color white
@@ -49,6 +66,7 @@ header
     font-size 18px
     vAlign()
     padding-left 3px
+    transition(.2s, color)
   span
     @extend .icons
     padding-top 1px
@@ -56,6 +74,8 @@ header
     color white
     line-height 0
     vAlign()
+    transition(.2s, color)
+    
 
 .navbar-toggle
   @extend .icons
@@ -64,6 +84,9 @@ header
   margin 0
   color white
   font-size 28px
+  &.active,
+  &:focus
+    color black
 
 .main-nav-last
   margin-right 5px

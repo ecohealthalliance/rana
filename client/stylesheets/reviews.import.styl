@@ -30,8 +30,8 @@
     cursor pointer
     transition()
     &:hover
-      background trans-strong-primary
-      border-bottom 2px solid darken(trans-strong-primary, 20%)
+      background trans-secondary
+      border-bottom 2px solid darken(trans-secondary, 20%)
       transition()
     &::after
       @extend .icons
@@ -45,7 +45,8 @@
       border-bottom 2px solid darken(trans-secondary, 20%)
       transition()
       &:hover
-        background darken(secondary,5%)
+        border-bottom 2px solid darken(trans-primary, 20%)
+        background primary
       &::after
         content '-'
       

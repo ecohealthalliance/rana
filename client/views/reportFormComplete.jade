@@ -5,12 +5,12 @@ template(name="reportFormComplete")
     section.rm-pad-btm
       .container
         h2
-          if study.name
-            a(href='/study/#{study._id}') #{study.name}&nbsp;
-            if isInsert
-              span - New Report
-            else if isUpdate
-              span - Update Report
+          a.study-link(href='/study/#{study._id}') #{study.name}
+            span.glyphicon.glyphicon-link
+          if isInsert
+            span - New Report
+          else if isUpdate
+            span - Update Report
 
     +autoForm(
       id="ranavirus-report"

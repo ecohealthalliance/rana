@@ -69,6 +69,9 @@ arrow-height = (arrow-width / 2)
 .leaflet-popup-tip
   box-shadow 0 1px 5px rgba(0,0,0,0.3)
 
+.leaflet-top, .leaflet-bottom
+  z-index 100
+
 .leaflet-container .leaflet-control-attribution, 
 .leaflet-container .leaflet-control-scale
   @extend .open-sans  
@@ -105,8 +108,6 @@ arrow-height = (arrow-width / 2)
   @extend .icons
   
 @media (max-width: 768px)
-  .vis-container
-    bottom footer-height-mobile
   .leaflet-container .leaflet-control-attribution, 
   .leaflet-container .leaflet-control-scale
     max-width 70%
