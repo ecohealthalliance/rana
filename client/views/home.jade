@@ -6,23 +6,23 @@ template(name="home")
         span Ranavirus
         span Reporting System
   .container
-    p Welcome
-    p For help getting started, visit #[a ] a(href="{{pathFor route='help'}}")
-    .row
-      .col-sm-1
-      .col-sm-2
-        h2 Add Study          
-      .col-sm-2
-        h2 View Studies
-      .col-sm-2
-        h2 Add Reports       
-      .col-sm-2
-        h2 View Map
-      .col-sm-2
-        h2 About
-      .col-sm-1
-    .row
-      .col-sm-3
-        h2 Need Help?
-      .col-sm-8
-        a(href="{{pathFor route='help'}}") Click here
+    ul.row.simple-nav.list-unstyled
+      li.col-sm-3.col-xs-6
+        a(href="/study")
+          i.fa.fa-plus-square
+          h2 Add a Study          
+      li.col-sm-3.col-xs-6
+        a(href="/studies")
+          i.fa.fa-file-text-o
+          h2 View Studies
+      li.col-sm-3.col-xs-6
+        a(href="/table")
+          i.fa.fa-file-text
+          h2 View Reports  
+      li.col-sm-3.col-xs-6
+        a(href="/map")
+          i.fa.fa-map-marker
+          h2 Map
+    .home-help
+      h2 Need Help?
+      a(href="{{pathFor route='help'}}").btn.btn-default View instructional videos

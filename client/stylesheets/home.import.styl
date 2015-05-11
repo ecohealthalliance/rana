@@ -4,7 +4,6 @@
   background-position center center
   min-height 350px
   position relative
-  margin-bottom 25px
   .header
     position absolute
     left 20px
@@ -26,10 +25,50 @@
       font-weight 700
 .mask
   cover()
-  background RGBA(157, 83, 42, .5)
+  background rgba(157, 83, 42, .5)
   z-index 10
 
+.simple-nav
+  padding 50px 0
+  
+  li
+    text-align center
+  i,
+  h2
+    transition()
+  h2
+    font-size 20px
+    color primary
+  i
+    font-size 80px
+    display block
+    margin-bottom 20px
+    color secondary
+  a
+    transition()
+    &:hover,
+    &:focus
+      text-decoration none
+      outline 0
+      i,
+      h2
+        transition()
+      i
+        color strong-primary
+      h2
+        color darken(primary, 20%)
+      
+.home-help
+  text-align center
+  .btn
+    padding 12px 32px
+
 @media (max-width: s-break)
+  .hero
+    min-height 200px
   .hero-header
-    font-size 50%
-    
+    font-size 200%
+  .simple-nav
+    padding-bottom 20px
+    li
+      margin-bottom 20px
