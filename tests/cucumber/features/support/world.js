@@ -187,7 +187,12 @@
           .call(function(){
             var schema = collections[schemaName].simpleSchema().schema();
             _.each(formData, function (value, key) {
-              if(key === "specifyOtherRanavirusSampleTypes") return;
+              // Specify other fiels are not supported because they might be
+              // hidden depending on what is selected
+              if(key.indexOf("specifyOther") === 0) {
+                console.log("WARNING: Specify other field ignored by setFormFields: " + key);
+                return;
+              }
               if(!schema[key]) {
                 console.log("Bad key: "+ key);
                 return;
@@ -236,8 +241,9 @@
                 throw new Error(error);
               }
             });
-
-            callback();
+            // The browser input calls above do not block future calls to
+            // browser methods, so a pause is used to wait for input to be entered.
+            browser.pause(1000).call(callback);
           });
         });
 

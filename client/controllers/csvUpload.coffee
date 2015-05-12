@@ -8,20 +8,18 @@ Meteor.startup () ->
 fileUploaded = (template) ->
   checkUploaded = () ->
     fileId = Session.get 'fileUpload[csvFile]'
-    Meteor.subscribe "csvfiles", fileId
-    if fileId
-      record = @collections.CSVFiles.findOne fileId
-      if record and record.isUploaded()
-        return Meteor.call 'getCSVData', fileId, (err, data) =>
+    Meteor.call 'getCSVData', fileId, (err, data) =>
+      if err
+        template.csvError.set err.reason
+        Session.set 'fileUpload[csvFile]', false
+      else if data
+        template.csvError.set null
+        updateImportReports data, (err) ->
           if err
-            template.csvError.set err.reason
+            template.csvError.set err
             Session.set 'fileUpload[csvFile]', false
-          else if data
-            template.csvError.set null
-            updateImportReports data
-          else
-            setTimeout checkUploaded, 10
-    setTimeout checkUploaded, 10
+      else
+        setTimeout checkUploaded, 100
 
   checkUploaded()
 
@@ -37,7 +35,7 @@ getReportFieldType = (field) ->
   else
     reportSchema[field].type
 
-updateImportReports = (data) ->
+updateImportReports = (data, errorCallback) ->
 
   clearImportReports()
   matches = headerMatches(data).matched
@@ -61,7 +59,7 @@ updateImportReports = (data) ->
     if 'dataUsePermissions' not in report
       report.dataUsePermissions = 'Share obfuscated'
 
-    ImportReports.insert report
+    ImportReports.insert report, errorCallback
 
 buildReportFromImportData = (importData, report) ->
 
@@ -238,11 +236,7 @@ Template.csvUpload.helpers
     Session.get 'fileUpload[csvFile]'
 
   csvFileName: () ->
-    fileId = Session.get 'fileUpload[csvFile]'
-    if fileId
-      getCollections().CSVFiles.findOne({ _id: Session.get 'fileUpload[csvFile]' }).original.name
-    else
-      null
+    Session.get 'fileUploadSelected[csvFile]'
 
   importReports: () ->
     ImportReports.find()
@@ -250,13 +244,16 @@ Template.csvUpload.helpers
   importFields: () ->
     data = ImportReports.findOne()
     if data
-      res = ( field for field in [ 'eventDate', 'coordinatesAvailable', 'eventLocation', 'eventCountry',
+      keys = ( field for field in [ 'eventDate', 'coordinatesAvailable', 'eventLocation', 'eventCountry',
           'numInvolved', 'totalAnimalsTested', 'totalAnimalsConfirmedInfected',
           'totalAnimalsConfirmedDiseased', 'populationType', 'screeningReason',
           'speciesGenus', 'speciesName', 'speciesNotes', 'sampleType',
           'additionalNotes' ] when field of data
       )
-      res
+      _.map keys, (key, index) ->
+        key: key
+        label: key
+        hidden: index > 5
     else
       []
 

@@ -1,0 +1,32 @@
+template(name="reportFormObfuscated")
+
+  if type
+
+    section.rm-pad-btm
+      .container
+        h2
+          if study.name
+            a(href='/study/#{study._id}') #{study.name} -
+          span Obfuscated Report
+
+    +autoForm(
+      id="ranavirus-report"
+      collection="collections.Reports"
+      type="readonly"
+      doc=reportDoc
+    )
+
+      section.rm-pad-top
+        +contactInfo
+
+      section.date-location.rm-pad-top
+        .container
+          h3 Location
+          .row.form-input-block
+            .col-sm-12
+              .row
+                .col-sm-12
+                  +afQuickField name="eventLocation.country"
+
+  else
+    h3 Invalid form id

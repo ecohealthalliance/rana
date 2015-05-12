@@ -31,11 +31,67 @@ Feature: A form for reporting Ranavirus outbreaks
     When I fill out the study form with some default report values
     And I click submit
     And I navigate to the "studies" page
-    And I click the link for the the study called "Study"
+    And I click the add-report button for the study called "Study"
     Then the information from the study should be prepopulated
 
   Scenario: Uploading an image
     Given I have logged in
     And I am on the "study/fakeid/report" page
     When I upload an image
+    And I click submit
+    And I click the "Edit Report" button
     Then I should see an image preview
+
+  Scenario: Obfuscated reports show only contact information and country
+    Given I have logged in
+    When I navigate to the "study/fakeid/report" page
+    And I fill out a report with obfuscated permissions
+    And I click submit
+    Then the webpage should not display a validation error
+    And I should see a "insert successful" toast
+    When I log out
+    And I register an account
+    And I navigate to the "table" page
+    And I click on the view button
+    Then the webpage should not display the speciesGenus field
+    And the contact.name field should have the value "Fake Name"
+
+  Scenario: Redirecting after report submission
+    Given I have logged in
+    And I am on the "study/fakeid/report" page
+    And I have logged in
+    When I fill out the form
+    And I click submit
+    And I navigate to the "table" page
+    And I click on the edit button
+    And I click submit
+    Then I should be on the "table" page
+
+  Scenario: Redirecting after new report submission
+    Given I have logged in
+    And I am on the "study/fakeid" page
+    And I click the Add a report button
+    And I click submit
+    Then I should be on the "study/fakeid" page
+
+  Scenario: Redirecting after new report submission
+    Given I have logged in
+    And I am on the "study/fakeid" page
+    And I click the Add a report button
+    And I click submit
+    Then I should be on the "study/fakeid" page
+
+  Scenario: Reviews don't appear on report insert forms
+    Given I have logged in
+    And I am on the "study/fakeid" page
+    And I click the Add a report button
+    Then I should not see the review panel header
+
+  Scenario: Reviews appear on reports user has added
+    Given I have logged in
+    And I am on the "study/fakeid" page
+    And I click the Add a report button
+    When I fill out the form
+    And I click submit
+    And I click the "Edit Report" button
+    Then I should see the review panel header

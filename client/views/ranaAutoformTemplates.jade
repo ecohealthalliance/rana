@@ -52,6 +52,7 @@ template(name="afArrayField_rana")
     if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
       button.add-content.autoform-add-item(type="button", data-autoform-field="{{this.atts.name}}", data-autoform-minCount="{{this.atts.minCount}}", data-autoform-maxCount="{{this.atts.maxCount}}" title="Add another")
         span.glyphicon.glyphicon-plus
+        span Add Another
 
 template(name="afCheckboxGroup_rana")
   .af-checkbox-group($dyn=dsk)

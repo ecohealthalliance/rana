@@ -44,8 +44,10 @@ template(name="populationInfo")
         .col-sm-3.input-block
             +afQuickField name="screeningReason"
         .clearfix.visible-xs-block
-        .col-sm-3.input-block
+        .col-sm-3.input-block.check-list
             +afQuickField name="vertebrateClasses"
+            if afFieldValueContains name='vertebrateClasses' value='other'
+                +afQuickField name='specifyOtherVertebrateClasses'
 
 template(name="species")
   section

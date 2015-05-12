@@ -29,23 +29,6 @@
     this.Given('I am on the "$path" page', this.visit);
     this.When('I navigate to the "$path" page', this.visit);
 
-    this.Then('I should be redirected to the "$path" page', function (path, callback) {
-      helper.world.browser
-      .pause(4000)
-      .url(function (err, result) {
-        assert.ifError(err);
-        if(result.value.slice(-path.length) !== path) {
-          helper.world.browser.saveScreenshot(
-            helper.getAppDirectory() +
-            "/tests/screenshots/redirect failure - " +
-            helper.world.scenario.getName() +
-            ".png"
-          );
-        }
-        assert.equal(result.value.slice(-path.length), path);
-      }).call(callback);
-    });
-
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
       helper.world.browser.
         title(function (err, res) {
@@ -54,7 +37,7 @@
         });
     });
 
-    this.When(/^I click submit$/, function (callback) {
+    this.When(/^I click submit(?: again)?$/, function (callback) {
       helper.world.browser
         .saveScreenshot(
           helper.getAppDirectory() +
@@ -70,13 +53,15 @@
     function (buttonName, callback) {
       var buttonNameToSelector = {
         "Columns" : ".reactive-table-columns-dropdown button",
-        "Remove" : "a.remove"
+        "Remove" : "a.remove",
+        "Edit Report" : ".toast-message a"
       };
       var selector = buttonName;
       if(buttonName in buttonNameToSelector) {
         selector = buttonNameToSelector[buttonName];
       }
       helper.world.browser
+        .waitForExist(selector, assert.ifError)
         .click(selector)
         .call(callback);
     });
@@ -252,6 +237,24 @@
         }).call(callback);
     });
 
+    this.Then('I should be on the "$path" page', function (path, callback) {
+      helper.world.browser
+      .pause(4000)
+      .url(function (err, result) {
+        assert.ifError(err);
+        if(result.value.slice(-path.length) !== path) {
+          helper.world.browser.saveScreenshot(
+            helper.getAppDirectory() +
+            "/tests/screenshots/redirect failure - " +
+            helper.world.scenario.getName() +
+            ".png"
+          );
+        }
+        assert.equal(result.value.slice(-path.length), path);
+      }).call(callback);
+    });
+
+
     this.When('I click on the edit button',
     function(callback){
       helper.world.browser
@@ -259,10 +262,31 @@
       .call(callback);
     });
 
+    this.When('I click on the admin settings button',
+    function(callback){
+      helper.world.browser
+      .click('.admin-settings')
+      .call(callback);
+    });
+
+    this.When('I click on the view button',
+    function(callback){
+      helper.world.browser
+      .click('.reactive-table td.controls .btn-view')
+      .call(callback);
+    });
+
     this.When('I click on the profile button',
     function(callback){
       helper.world.browser
       .click('.profile')
+      .call(callback);
+    });
+
+    this.When('I click the Add a report button',
+    function(callback){
+      helper.world.browser
+      .click('.add-report')
       .call(callback);
     });
 

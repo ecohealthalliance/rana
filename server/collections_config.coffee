@@ -14,29 +14,8 @@
   download: (userId)->
     true
 
-# This makes it so it isn't possible to retrieve all the records in the system.
-# It is necessairy to know their id, which should make it necessairy to have
-# access to the record they are attached to.
-onlyById = (collection)->
-  (id)->
-    if _.isArray id
-      ids = id
-    else
-      ids = [id]
-    # It doesn't seem to be possible to pass in RegExps
-    # but we still check for them just incase it becomes possible in
-    # future versions of Meteor.
-    if ids.some(_.isRegExp)
-      return null
-
-    collection.find({_id: {$in: ids}})
-
-Meteor.publish 'files', onlyById(collections.Files)
-
 Meteor.publish 'genera', ->
   collections.Genera.find()
-
-Meteor.publish 'pdfs', onlyById(collections.PDFs)
 
 @collections.PDFs.allow
   insert: (userId, doc) ->
@@ -46,9 +25,6 @@ Meteor.publish 'pdfs', onlyById(collections.PDFs)
   download: (userId)->
     true
 
-Meteor.publish 'csvfiles', onlyById(collections.CSVFiles)
-
-
 sharedOrCreator = (userId) ->
   {
     $or : [
@@ -56,25 +32,64 @@ sharedOrCreator = (userId) ->
         "createdBy.userId": userId
       }
       {
-        dataUsePermissions: "Share full record",
+        dataUsePermissions: "Share full record"
         consent: true
       }
     ]
   }
 
-Meteor.publish 'studies', (id) ->
-  collections.Studies.find {
-    $and: [
-      { _id: id }
-      sharedOrCreator @userId
-    ]
-  }
+Meteor.publishComposite 'studies', (id) ->
+  find: () ->
+    collections.Studies.find {
+      $and: [
+        { _id: id }
+        sharedOrCreator @userId
+      ]
+    }
+  children: [
+    {
+      find: (study) ->
+        collections.PDFs.find
+          _id: study?.publicationInfo?.pdf
+          studyId: study._id
+    }
+  ]
 
-ReactiveTable.publish "studies", collections.Studies, () ->
-  sharedOrCreator @userId
+ReactiveTable.publish "studies", collections.Studies,
+  {
+    $or : [
+      {
+        "createdBy.userId": @userId
+      },
+      {
+        dataUsePermissions: { $in: [ "Share full record", "Share obfuscated" ] },
+        consent: true
+      }
+    ]
+  },
+  { fields: { name: 1, createdBy: 1, dataUsePermissions: 1}}
+
+
+Meteor.publish 'obfuscatedStudies', (id) ->
+  collections.Studies.find(
+    {
+      _id: id,
+      'dataUsePermissions': "Share obfuscated",
+      'consent': true
+    },
+    { fields: {name: 1, dataUsePermissions: 1, createdBy: 1} }
+  )
 
 ReactiveTable.publish 'reports', collections.Reports, () ->
   sharedOrCreator @userId
+
+ReactiveTable.publish 'obfuscatedReports', collections.Reports, (() ->
+  {
+    'dataUsePermissions': "Share obfuscated",
+    'createdBy.userId': { $ne: @userId },
+    'consent': true
+  }),
+  { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'eventLocation.country': 1} }
 
 Meteor.publishComposite "reportLocations", () ->
   find: () ->
@@ -115,14 +130,20 @@ Meteor.publishComposite "reportLocations", () ->
   ]
 
 Meteor.publishComposite 'reportAndStudy', (reportId) ->
+
+  report = collections.Reports.findOne(reportId)
+
   find: () ->
-    collections.Reports.find
-      $and: [
-        {
-          _id: reportId
-        }
-        sharedOrCreator @userId
-      ]
+    collections.Reports.find(
+      {
+        $and: [
+          {
+            _id: reportId
+          }
+          sharedOrCreator @userId
+        ]
+      }
+    )
   children: [
     {
       find: (report) ->
@@ -133,10 +154,60 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
           ]
         }, {fields: {name: 1}}
     }
+    {
+      find: (report) ->
+        ids = _.pluck(report?.images or [], "image")
+        if ids.some(_.isRegExp)
+          return []
+        collections.Files.find
+          _id:
+            $in: ids
+          reportId: report._id
+    }
+    {
+      find: (report) ->
+        ids = _.pluck(report?.pathologyReports or [], "report")
+        if ids.some(_.isRegExp)
+          return []
+        collections.Files.find
+          _id:
+            $in: ids
+          reportId: report._id
+    }
+    {
+      find: (report) ->
+        collections.Reviews.find {reportId : report._id}
+    }
   ]
 
-Meteor.publish 'reviews', (reportId)->
-  collections.Reviews.find({reportId : reportId})
+Meteor.publishComposite 'obfuscatedReportAndStudy', (reportId) ->
+
+  report = collections.Reports.findOne(reportId)
+
+  find: () ->
+    collections.Reports.find(
+      {
+        _id: reportId
+        dataUsePermissions: 'Share obfuscated'
+      }
+      {
+        fields: {
+          studyId: true
+          dataUsePermissions: true
+          createdBy: true
+          contact: true
+          'eventLocation.country': true
+        }
+      }
+    )
+  children: [
+    {
+      find: (report) ->
+        collections.Studies.find {
+          _id: report.studyId
+        }, {fields: {name: 1}}
+    }
+  ]
 
 allowCreator = (userId, doc) ->
   doc.createdBy.userId == userId
