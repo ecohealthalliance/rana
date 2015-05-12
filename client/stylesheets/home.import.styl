@@ -6,7 +6,6 @@
   position relative
   .header
     position absolute
-    left 20px
     top 50%
     left 50%
     centerPosition(-50%,-50%)
@@ -28,8 +27,14 @@
   background rgba(157, 83, 42, .5)
   z-index 10
 
+.intro
+  width 70%
+  font-size 22px
+  text-align center
+  margin 40px auto 50px auto
+
 .simple-nav
-  padding 50px 0
+  margin-bottom 40px
   
   li
     text-align center
@@ -60,17 +65,27 @@
         color darken(primary, 20%)
       
 .home-help
-  margin-bottom 50px
+  margin 50px 0 60px 0
   text-align center
   .btn
     padding 12px 32px
 
-@media (max-width: s-break)
+@media (max-width: 768px)
   .hero
     min-height 200px
+    .header
+      left 0
+      centerPosition(0, -50%)
   .hero-header
     font-size 200%
+  .intro
+    width 100%
+    text-align left
+    font-size 18px
   .simple-nav
     padding-bottom 20px
     li
-      margin-bottom 20px
+      margin-bottom 30px
+  .home-help
+    margin 0
+      

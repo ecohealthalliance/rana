@@ -1,3 +1,5 @@
+# videos = new
+
 videos = [
   {
     title: "Accessing the System"
@@ -48,10 +50,28 @@ You may also choose to import report records from a CSV file that will be associ
 
 Reports can be filtered as in the report table, and they can be sorted into color-coded groups according to their values for various fields."
   }  
-
-
 ]
 
 Template.help.helpers
   'videos' : () ->
-    videos
+    _.map(videos, (v, i) ->
+      _.extend(v, {'index': i+1})
+      )
+
+Template.help.helpers
+  addActive: (i) ->
+    if i is 1
+      'active'
+
+Template.help.events
+  'click .topic': (e) ->
+    $link = $(e.target)
+    $topic = $('.topic-'+$link.attr('id'))
+    $('.topics a').removeClass('active')
+    $link.addClass('active')
+    $('.topic-content').removeClass('active')
+    $topic.addClass('active')
+    if ($(window).width() <= 768)
+      $('html, body').animate({
+          scrollTop: $topic.offset().top
+      }, 1000);

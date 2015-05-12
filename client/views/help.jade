@@ -1,10 +1,15 @@
 template(name="help")
   section
     .container.help
-      h1 Help
-      each videos
-        .help-segment
-          h2 #{title}
-          iframe(width="560" height="315" src="https://www.youtube.com/embed/#{videoID}" frameborder="0" allowfullscreen)
-          .script #{script}
-            
+      .row.help-topics-wrap
+        ul.list-unstyled.topics.col-md-3.col-sm-4.col-xs-12
+          each videos
+            li 
+              a.topic(href="#" id="#{index}" class="{{ addActive index }}" ) #{title}
+        .content.col-md-9.col-sm-8.col-xs-12
+          each videos
+            div(class="topic-content topic-#{index} {{ addActive index }}")
+              h2 #{title}
+              .script #{script}
+              div.embed-responsive.embed-responsive-16by9
+                iframe(src="https://www.youtube.com/embed/#{videoID}" frameborder="0" allowfullscreen)

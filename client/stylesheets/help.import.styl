@@ -1,9 +1,62 @@
+.help-topics-wrap
+  margin-bottom 50px
 .help-segment
   float left
   margin-bottom 40px
   h2
     color secondary
 .script
-  margin-top 20px
-  width 70%
-  
+  margin 20px 0 30px 0
+
+.topic-content
+  display none
+  &.active
+    display block  
+.topics
+  li
+    margin 0
+    border-bottom 2px solid l-gray
+    position relative
+    &:last-of-type
+      border 0
+  a
+    display block
+    padding 10px
+    color body-text
+    font-weight bold
+    &:after
+      position absolute
+      right 10px
+      top 50%
+      centerPosition(0,-50%)
+      content '\f0da'
+      @extend .font-awesome
+      font-size 16px
+      color body-text
+    &:hover,
+    &:focus
+      text-decoration none
+      background lgray
+    &.active
+      background primary
+      color white
+      @extend .dark-shadow
+      &:after
+        color white
+
+iframe
+  width 60
+
+@media (max-width: 768px)
+  .topics
+    padding-left 0
+    padding-right 0
+    a
+      padding-left 15px
+      padding-right 15px
+      &:after
+        display none
+        
+  .help
+    .content
+      margin-top 30px
