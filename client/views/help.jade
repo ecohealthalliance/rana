@@ -9,7 +9,7 @@ template(name="help")
         .content.col-md-9.col-sm-8
           each videos
             div(class="topic-content topic-#{index} {{ addActive index }}")
-              h2 #{title}
+              h1 #{title}
               .script 
                 {{markdown script}}
               div.embed-responsive.embed-responsive-16by9
