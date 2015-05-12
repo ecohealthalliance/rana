@@ -1,8 +1,6 @@
 Template.header.events
   'click a, click button' : (e) ->
-    console.log 'clicked'
-    $(e.currentTarget).blur()
-    $('.navbar-nav li').removeClass('active')
+    $('.navbar-nav li, .navbar-brand').removeClass('active').blur()
 Template.navLinks.events
   'click a' : (e) ->
     if $('.navbar-toggle').is(':visible') and !$(e.currentTarget).hasClass('dropdown-toggle')
