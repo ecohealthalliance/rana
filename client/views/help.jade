@@ -2,14 +2,15 @@ template(name="help")
   section
     .container.help
       .row.help-topics-wrap
-        ul.list-unstyled.topics.col-md-3.col-sm-4.col-xs-12
+        ul.list-unstyled.topics.col-md-3.col-sm-4
           each videos
             li 
               a.topic(href="#" id="#{index}" class="{{ addActive index }}" ) #{title}
-        .content.col-md-9.col-sm-8.col-xs-12
+        .content.col-md-9.col-sm-8
           each videos
             div(class="topic-content topic-#{index} {{ addActive index }}")
               h2 #{title}
-              .script #{script}
+              .script 
+                {{markdown script}}
               div.embed-responsive.embed-responsive-16by9
-                iframe(src="https://www.youtube.com/embed/#{videoID}" frameborder="0" allowfullscreen)
+                iframe(src="https://www.youtube.com/embed/#{videoID}?rel=0&showinfo=0&autohide=1" frameborder="0" allowfullscreen)

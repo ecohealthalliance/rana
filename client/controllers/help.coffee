@@ -1,5 +1,3 @@
-# videos = new
-
 videos = [
   {
     title: "Accessing the System"
@@ -16,12 +14,12 @@ You must enter your email address, a password, and your name. Optionally, you ma
     title: "Adding a Study"
     videoID: "QGqY3ZLs9cA"
     script: "All reports in the Ranavirus Reporting System are associated with a study, so to create a reports you must first create the study they belong to. Start by clicking the Add Study link at the top of the page.
-
-At a minimum, you need to give the study a name, enter the details for the contact person on the study (these will default to your account's contact information if you have provided it), and specify if and how you want to share and publish the records in this study.
-
-You may also specify any of a number of additional fields that will become default values for new reports added to this study. Some fields have helpful explanations which can be shown by placing your cursor over the question mark icon.
-
-You may also choose to import report records from a CSV file that will be associated with your new study. After uploading a CSV file, you will be shown a preview of the values for the fields that will be imported, and a list of fields that will not be imported because they were not known to the system. See the (CSV Import Instructions)[/importInstructions] to learn how to structure your import file."
+    \n\n
+    At a minimum, you need to give the study a name, enter the details for the contact person on the study (these will default to your account's contact information if you have provided it), and specify if and how you want to share and publish the records in this study.
+    \n\n
+    You may also specify any of a number of additional fields that will become default values for new reports added to this study. Some fields have helpful explanations which can be shown by placing your cursor over the question mark icon.
+    \n\n
+    You may also choose to import report records from a CSV file that will be associated with your new study. After uploading a CSV file, you will be shown a preview of the values for the fields that will be imported, and a list of fields that will not be imported because they were not known to the system. See the (CSV Import Instructions)[/importInstructions] to learn how to structure your import file."
   }
   {
     title: "Adding a Report"
@@ -46,9 +44,8 @@ You may also choose to import report records from a CSV file that will be associ
   {
     title: "Report Map"
     videoID: "NSbuPXwiCS4"
-    script: "The map view places markers on a world map for each report that has geographic coordinates associated with it. Clicking on a marker opens a window with more information and a liink to view or edit the report.
-
-Reports can be filtered as in the report table, and they can be sorted into color-coded groups according to their values for various fields."
+    script: "The map view places markers on a world map for each report that has geographic coordinates associated with it. Clicking on a marker opens a window with more information and a liink to view or edit the report. \n\n
+    Reports can be filtered as in the report table, and they can be sorted into color-coded groups according to their values for various fields."
   }  
 ]
 
