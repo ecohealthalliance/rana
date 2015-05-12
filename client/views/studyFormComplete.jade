@@ -13,11 +13,11 @@ template(name="studyFormComplete")
         section.rm-pad-btm
           .container
             h2
-              p #[span *] Indicates required field
               if eq type 'insert'
                 span New Study
               else eq type 'update'
                 span  #{study.name} - Update Study
+            p #[span *] Indicates required field
 
         section.rm-pad-top.rm-pad-btm
           .container
