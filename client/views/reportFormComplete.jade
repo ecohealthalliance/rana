@@ -23,8 +23,8 @@ template(name="reportFormComplete")
       +afQuickField name='studyId'
 
       section.rm-pad-top
-        +contactInfo
-
+        .container
+          +contactInfo
 
       section.date-location.rm-pad-top
         .container
@@ -38,11 +38,17 @@ template(name="reportFormComplete")
                 .col-sm-12
                   +afQuickField name="eventLocation"
 
-      +populationInfo
+      section.odd
+        .container
+          +populationInfo
 
-      +species numInvolved=true
+      section
+        .container
+          +species numInvolved=true
 
-      +classesMethods report=true
+      section.odd.rm-pad-top
+        .container
+          +classesMethods report=true
 
       section
         .container
@@ -60,7 +66,9 @@ template(name="reportFormComplete")
             .col-sm-9
               +afQuickField name='additionalNotes' id='additionalNotes'
 
-      +permissions
+      section.rm-pad-top
+        .container
+          +permissions
 
       unless eq type "readonly"
         +submit

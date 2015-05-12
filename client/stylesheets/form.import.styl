@@ -32,7 +32,7 @@ section
   &.red
     background s-red
   &.odd
-    background s-gray
+    background lighten(secondary, 90%)
   &:first-child
     padding-top 20px
   &.short-padding
@@ -40,17 +40,16 @@ section
   &.instructions
     padding-top 30px
     padding-bottom 20px
-    margin-top 30px
-    border-top 2px solid l-gray
     h2
-      margin-bottom 5px
-    p
-      color d-gray
-      font-size 110%
-      span
-        color strong-primary
-        font-weight bold
-        font-size 15px
+      margin-bottom 0
+    
+.required-text
+  color d-gray
+  font-size 110%
+  span
+    color strong-primary
+    font-weight bold
+    font-size 15px
 
 .form-control
   margin-bottom 15px
@@ -217,8 +216,6 @@ textarea
 .study
   section
     &:first-child
-      padding-top 50px
-      padding-bottom 10px
       h3
         margin-top 0
   .form-group
@@ -228,6 +225,11 @@ textarea
       font-size 15px
   .file-upload
     margin-top 10px
+  .contact
+    padding-top 30px
+
+.study-name
+  margin-top 20px
 
 .check-list
   .list-group-item
@@ -299,9 +301,6 @@ textarea
 .has-error
   label
     color strong-primary
-
-.csvUpload
-  margin-top 15px
 
 .upload-wrap
   margin-bottom 15px

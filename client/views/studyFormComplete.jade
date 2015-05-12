@@ -12,41 +12,47 @@ template(name="studyFormComplete")
       .report-form.study
         section.rm-pad-btm
           .container
-            h2
+            h1
               if eq type 'insert'
-                span New Study
+                span Add a New Study
               else eq type 'update'
                 span  #{study.name} - Update Study
-            p #[span *] Indicates required field
-
-        section.rm-pad-top.rm-pad-btm
-          .container
-            .row
+            p.required-text #[span *] Indicates required field
+            
+            .row.space-top-3
               .col-sm-4
                 +afQuickField name='name'
 
         if showCSV
           +csvUpload
 
-        section
-          +contactInfo
+        section.contact
+          .container
+            +contactInfo
 
-        +permissions
+        section.odd
+          .container
+            +permissions
 
-        section.rm-pad-top.form-grp-container.publication
+        section.form-grp-container.publication
           .container
             +afQuickField name='publicationInfo' id='publicationInfo'
 
         section.instructions
           .container
-            h2 Set default values for the reports in this study.
+            h2.space-top-2 Set default values for the reports in this study.
 
-          +populationInfo
+        section.odd
+          .container
+            +populationInfo
 
-          +species numInvolved=false
+        section
+          .container
+            +species numInvolved=false
 
-        section.rm-pad-top
-          +classesMethods study=true
+        section.odd.space-btm-5
+          .container
+            +classesMethods study=true
 
         unless eq type "readonly"
           +submit
