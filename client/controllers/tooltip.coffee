@@ -10,7 +10,7 @@ popoverOpts =
     padding: 10
   animation: true
   delay:
-    show: 0
+    show: 300
     hide: 100
 
 Template.reportForm.rendered = () ->
