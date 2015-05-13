@@ -5,12 +5,14 @@ template(name="help")
         ul.list-unstyled.topics.col-md-3.col-sm-4
           each videos
             li 
-              a.topic(href="#" id="#{index}" class="{{ addActive index }}" ) #{title}
-        .content.col-md-9.col-sm-8
-          each videos
-            div(class="topic-content topic-#{index} {{ addActive index }}")
-              h1 #{title}
-              .script 
-                {{markdown script}}
-              div.embed-responsive.embed-responsive-16by9
-                iframe(src="https://www.youtube.com/embed/#{videoID}?rel=0&showinfo=0&autohide=1" frameborder="0" allowfullscreen)
+              a.topic(href="/help/{{link title}}" class="{{ addActive title ../video.title}}" ) #{title}
+        +topic video=video
+
+template(name="topic")
+  .content.col-md-9.col-sm-8
+    div(class="topic-content topic-#{video.index}")
+      h1 #{video.title}
+      .script 
+        {{ markdown video.script }}
+      div.embed-responsive.embed-responsive-16by9
+        iframe(src="//youtube.com/embed/#{video.videoID}?rel=0&showinfo=0&autohide=1&VQ=HD720" frameborder="0" allowfullscreen) 
