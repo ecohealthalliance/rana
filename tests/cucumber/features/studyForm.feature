@@ -47,6 +47,7 @@ Feature: A form for setting up a ranavirus study
     And I click the edit button for the study called "Obfuscated study"
     Then the form should contain the different values I entered
 
+  @problematic
   Scenario: Removing a study
     Given I have logged in
     And I am on the "study" page

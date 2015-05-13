@@ -10,13 +10,22 @@ Errors will be reported in the console and in the browser via the velocity html-
 
 To run the tests from the command line without running meteor, use ```meteor run --test```.
 
-
 To run meteor without running tests, stop the selenium server (you'll get errors in the console, but it won't break the app) or use ```meteor run --production``` (note this also minifies the code)
 
+Before running the tests, you will need to install the packages they use.
+In the tests/cucumber directory run `npm install`.
 
-The tests run using a remote selenium server, which must be started separately.
-Make sure you aren't running anything on port 5000 as the mirror app that is used for testing will not work.
-The same goes for port 4444 which selenium uses.
+The tests are intended to be run remote selenium server, which must be started separately.
+The steps for setting it up are documented below.
+Make sure you aren't running anything on port 4444 as selenium uses it.
+To use the selenium server, you will need to add the following environment variables
+to your meteor commands: `SELENIUM_BROWSER=chrome HUB_PORT=4444 CUCUMBER_TAGS=~@ignore`
+I would bet that the environment variables will change in the future. Check the
+cucumber README and the file I linked to below for changes if cucumber is updated beyond 0.8.0:
+
+https://github.com/xolvio/meteor-cucumber/blob/master/README.md
+
+https://github.com/xolvio/meteor-cucumber/blob/master/src/mirror-server.js
 
 #### On a Mac:
 * Download [the selenium standalone server](https://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar)
@@ -25,7 +34,7 @@ The same goes for port 4444 which selenium uses.
 ```
 java -jar selenium-server-standalone-2.43.1.jar -Dwebdriver.chrome.driver=chromedriver
 ```
-* Run the tests: ```meteor run --test```
+* Run the tests: ```SELENIUM_BROWSER=chrome HUB_PORT=4444 CUCUMBER_TAGS=~@ignore meteor run --test```
 
 
 #### On Ubuntu:
@@ -58,7 +67,7 @@ export DISPLAY=:99.5
 ```
 java -jar selenium-server-standalone-2.43.1.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome -Dwebdriver.chrome.driver=chromedriver &
 ```
-* Run the tests: ```meteor run --test```
+* Run the tests: ```SELENIUM_BROWSER=chrome HUB_PORT=4444 CUCUMBER_TAGS=~@ignore meteor run --test```
 
 
 

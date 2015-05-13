@@ -5,13 +5,10 @@
 
   var assert = require('assert');
   var path = require('path');
-
-  var _ = Package["underscore"]._;
+  var _ = require("underscore");
 
   module.exports = function () {
-
-    var helper = this;
-
+    
     var csvImportValues = {};
 
     csvImportValues['rana_import_one.csv'] = [
@@ -75,43 +72,29 @@
       ['dataUsePermissions', 'Do not share']
     ];
 
-    var studyDefaultValues = {
-      'contact.name': 'Fake Name',
-      'contact.email': 'foo@bar.com',
-      'consent': true,
-      'dataUsePermissions': "Share full record",
-      'name': "Study"
-    }
-
+    // This must override all studyDefaultValues defined in fillInStudyForm()
     var studyDifferentValues = {
       'name': 'Obfuscated study',
       'contact.name': 'Another Fake Name',
       'contact.email': 'zap@bop.com',
-      'dataUsePermissions': 'Share obfuscated'
-    }
-
-    this.fillInStudyForm = function (customValues, callback) {
-
-      var values = _.extend({}, studyDefaultValues, customValues);
-
-      helper.world.browser.setFormFields(values, 'Studies', callback);
-
+      'dataUsePermissions': 'Share obfuscated',
+      'consent': true
     };
 
     this.When("I fill out the study form", function(callback){
-      helper.fillInStudyForm({}, callback);
+      this.fillInStudyForm({}, callback);
     });
 
     this.When("I fill out the study form with some default report values", function(callback){
-      helper.fillInStudyForm({'speciesGenus': 'SomeGenus'}, callback);
+      this.fillInStudyForm({'speciesGenus': 'SomeGenus'}, callback);
     });
 
     this.When(/I fill out the study form differently(?: with obfuscated permissions)?/, function(callback){
-      helper.fillInStudyForm(studyDifferentValues, callback);
+      this.fillInStudyForm(studyDifferentValues, callback);
     });
 
     this.When('I click the $buttonType button for the study called "$name"', function(buttonType, name, callback){
-      helper.world.browser
+      this.browser
       .pause(2000)
       .click('a.btn-' + buttonType + '[for="' + name + '"]')
       .call(callback);
@@ -119,11 +102,11 @@
 
     this.When(/^I upload the CSV file (.*)$/, function(filename, callback){
 
-      helper.world.browser
+      this.browser
       .mustExist('[data-schema-key="csvFile"]')
       .chooseFile(
         'input[file-input="csvFile"]',
-        path.join(helper.getAppDirectory(), "tests", "files", "csv", filename),
+        path.join(this.getAppDirectory(), "tests", "files", "csv", filename),
         function(err){
           assert.equal(err, null);
         }
@@ -134,11 +117,11 @@
     this.When(/I upload a (non-)?pdf publication/, function(nonPdf, callback){
       var filepath;
       if(nonPdf) {
-        filepath = path.join(helper.getAppDirectory(), "README.md");
+        filepath = path.join(this.getAppDirectory(), "README.md");
       } else {
-        filepath = path.join(helper.getAppDirectory(), "tests", "files", "NASA.pdf");
+        filepath = path.join(this.getAppDirectory(), "tests", "files", "NASA.pdf");
       }
-      helper.world.browser
+      this.browser
       .click('div[data-schema-key="publicationInfo.dataPublished"] input[value=true]')
       .mustExist('[data-schema-key="publicationInfo.pdf"]')
       .chooseFile(
@@ -153,21 +136,22 @@
 
     // This step is currently unused.
     this.Then(/^the preview table should contain the values for (.*)$/, function(filename, callback){
-      helper.world.browser.checkTableCells(csvImportValues[filename], callback);
+      this.browser.checkTableCells(csvImportValues[filename], callback);
     });
 
     this.Then(/^the form should contain the values for (.*)$/, function(filename, callback){
-      helper.world.browser.checkFormFields('ranavirus-report', csvImportValues[filename], callback);
+      this.browser.checkFormFields('ranavirus-report', csvImportValues[filename], callback);
     });
 
     this.Then(/^the form should contain the different values I entered$/, function (callback) {
-      var values = _.extend({}, studyDefaultValues, studyDifferentValues)
-      var valuesArr = _.map(values, function(val, key) { return [key, val] } )
-      helper.world.browser.checkFormFields('ranavirus-study', valuesArr, callback);
+      var valuesArr = _.map(studyDifferentValues, function(val, key) {
+        return [key, val]
+      });
+      this.browser.checkFormFields('ranavirus-study', valuesArr, callback);
     });
 
     this.Then(/^the publication should( not)? appear/, function(shouldNot, callback){
-      helper.world.browser
+      this.browser
       .waitForExist('.file-upload-clear[file-input="publicationInfo.pdf"]', 1000, Boolean(shouldNot), function(err, indicator){
         assert.ifError(err);
         assert(indicator, "The publication should " + (shouldNot ? "not" : "" ) + " appear");
@@ -176,7 +160,7 @@
     });
 
     this.When("I remove the publication", function(callback){
-      helper.world.browser
+      this.browser
       .pause(500)
       .clickWhenVisible('.file-upload-clear[file-input="publicationInfo.pdf"]')
       .pause(500)
@@ -184,7 +168,7 @@
     });
 
     this.When("I remove the CSV file", function(callback){
-      helper.world.browser
+      this.browser
       .pause(500)
       .clickWhenVisible('.file-upload-clear[file-input="csvFile"]')
       .pause(500)
@@ -192,7 +176,7 @@
     });
 
     this.When("I do not provide text for the reference field", function(callback){
-      helper.world.browser
+      this.browser
       .setValue('[data-schema-key="publicationInfo.reference"]', '')
       .call(callback);
     });
@@ -201,7 +185,7 @@
   this.Then(/^the webpage should( not)? display an? (.+) button for the '(.+)' study$/,
     function(shouldNot, buttonType, studyName, callback){
       var reverse = !!shouldNot;
-      helper.world.browser
+      this.browser
       // custom errors on groups don't create a has-error class
       .waitForExist('a.btn-' + buttonType + '[for="' + studyName + '"]', 1000, reverse,
       function(err, result){

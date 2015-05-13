@@ -4,16 +4,14 @@
   'use strict';
 
   var assert = require('assert');
-
-  var _ = Package["underscore"]._;
+  var _ = require("underscore");
+  var url = require("url");
 
   module.exports = function () {
 
-    var helper = this;
-
     this.Then(/the database should have (\d+) reports linked to my account/,
     function (number, callback) {
-      helper.world.browser
+      this.browser
       .getMyReports({}, function(err, ret){
         assert.ifError(err);
         assert(ret);
@@ -23,12 +21,13 @@
     });
 
     this.When("I register an account", function(callback){
-      helper.world.browser
-      .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
+      var that = this;
+      this.browser
+      .url(url.resolve(process.env.ROOT_URL, "sign-in"))
       .waitForExist("#at-signUp", 3000, function(err, exists){
         assert.ifError(err);
         if(!exists) {
-          helper.world.browser.getHTML("body", console.log.bind(console));
+          that.browser.getHTML("body", console.log.bind(console));
           assert(exists, "Register button missing");
         }
       })
@@ -49,8 +48,8 @@
     this.When(/I log in( as admin)?/, function(admin, callback){
       var email = admin ? "admin@admin.com" : "test@test.com";
       var password = admin ? "adminuser" : "testuser";
-      helper.world.browser
-      .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
+      this.browser
+      .url(url.resolve(process.env.ROOT_URL, "sign-in"))
       .waitForExist(".at-pwd-form", function(err, exists){
         assert.ifError(err);
         assert(exists);
@@ -69,7 +68,7 @@
 
     this.Given(/I have not logged in/,
     function(callback){
-      helper.world.browser.execute(function () {
+      this.browser.execute(function () {
         Meteor.logout();
       }).call(callback);
     });
@@ -77,7 +76,7 @@
     this.Given(/I have logged in( as admin)?/, function (admin, callback) {
       var email = admin ? "admin@admin.com" : "test@test.com";
       var password = admin ? "adminuser" : "testuser";
-      helper.world.browser.executeAsync(function (email, password, done) {
+      this.browser.executeAsync(function (email, password, done) {
         Meteor.loginWithPassword(email, password, function (err) {
           if (err) return done();
           done(Meteor.userId());
@@ -90,7 +89,7 @@
 
     this.When("I log out",
     function (callback) {
-      helper.world.browser
+      this.browser
         .click('.admin-settings')
         .click('.sign-out')
         .pause(500)
@@ -99,7 +98,7 @@
 
     this.Then(/I am( not)? logged in/,
     function(amNot, callback){
-      helper.world.browser
+      this.browser
       .execute(function(){
         return Meteor.userId();
       }, function(err, ret){
@@ -114,7 +113,7 @@
 
     this.Then("I will see a message that requires me to log in",
     function(callback) {
-      helper.world.browser
+      this.browser
       .waitForExist(".at-error", function(err, exists){
         assert.ifError(err);
         assert(exists, "Could not find container element");
