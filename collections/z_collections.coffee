@@ -50,7 +50,7 @@ You must enter your email address, a password, and your name. Optionally, you ma
     \n\n
     You may also specify any of a number of additional fields that will become default values for new reports added to this study. Some fields have helpful explanations which can be shown by placing your cursor over the question mark icon.
     \n\n
-    You may also choose to upload report records from a CSV file that will be associated with your new study. After uploading a CSV file, you will be shown a preview of the values for the fields that will be imported, and a list of fields that will not be imported because they were not known to the system. See the (CSV Import Instructions)[/importInstructions] to learn how to structure your import file."
+    You may also choose to upload report records from a CSV file that will be associated with your new study. After uploading a CSV file, you will be shown a preview of the values for the fields that will be imported, and a list of fields that will not be imported because they were not known to the system. See the [CSV Import Instructions](/importInstructions) to learn how to structure your import file."
   }
   {
     title: "Adding a Report"
