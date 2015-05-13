@@ -1,5 +1,5 @@
 Template.header.events
-  'click .navbar-nav a' : (e) ->
+  'click a' : (e) ->
     $('.navbar-nav li, .navbar-brand').removeClass('active').blur()
     if $('.navbar-toggle').is(':visible') and !$(e.target).hasClass('dropdown-toggle')
       $('.navbar-collapse').collapse('toggle')
