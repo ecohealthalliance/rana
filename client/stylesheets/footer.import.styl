@@ -14,12 +14,20 @@ footer
   width 600px
   margin 0 auto
 
-.logo
+.logo, .contact
   margin 0 15px
   p
     display inline-block
     color l-gray
     font-size 11px   
+
+.contact
+  a
+    display block
+
+.contact, .mantle
+  float left
+  display inline-block
 
 .mantle
   float left
@@ -35,7 +43,7 @@ footer
     centerSmall()
       
 @media (max-width: 765px)
-  .logo
+  .logo, .contact
     padding 0
   .mantle
     text-align left
