@@ -261,12 +261,20 @@
         browser
         .mustExist('.form-group')
         .execute(function(schemaName) {
-          var schameObj = collections[schemaName].simpleSchema().schema(); 
-          return JSON.stringify(schameObj, function(noop, v){
-            for(var key in v) {
-              if(typeof v[key] === "function") v[key] = v[key].name;
+          var schemaObj = collections[schemaName].simpleSchema().schema(); 
+          return JSON.stringify(schemaObj, function (noop, v) {
+            if (!_.isObject(v)) {
+              return v;
             }
-            return v;
+            var output = {};
+            for (var key in v) {
+              if (typeof v[key] === "function") {
+                output[key] = v[key].name;
+              } else {
+                output[key] = v[key];
+              }
+            }
+            return output;
           });
         }, schemaName, function(err, res) {
           assert.ifError(err);
