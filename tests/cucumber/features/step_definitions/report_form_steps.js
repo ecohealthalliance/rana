@@ -134,8 +134,12 @@
       var that = this;
       var reverse = Boolean(shouldNot);
       var chain = this.browser
-      // custom errors on groups don't create a has-error class
-      .waitForExist('.has-error, .help-block:not(:empty)', 2000, reverse,
+      // Custom errors on groups don't create a has-error class.
+      // Also, fields with a uniqueness constraint will not retain their
+      // error message if they are refocused. When testing, I believe
+      // something triggers refocus events causing their has-error
+      // class to be wiped out, so I also check for error toasts.
+      .waitForExist('.has-error, .help-block:not(:empty), .toast-error', 3000, reverse,
       function(err, result){
         assert.ifError(err);
         if(shouldNot) {

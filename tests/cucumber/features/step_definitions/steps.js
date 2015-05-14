@@ -38,7 +38,7 @@
       this.browser
         .mustExist('[type=submit]')
         .click('[type=submit]')
-        .pause(100)
+        .pause(200)
         .saveScreenshot(
           this.getAppDirectory() +
           "/tests/screenshots/submit - " +

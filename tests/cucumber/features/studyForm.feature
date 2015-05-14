@@ -67,6 +67,7 @@ Feature: A form for setting up a ranavirus study
     Then I should see the text "No Studies Found"
 
   @study
+  @problematic
   Scenario: Trying to re-use a study name
     Given I have logged in
     And I am on the "study" page
