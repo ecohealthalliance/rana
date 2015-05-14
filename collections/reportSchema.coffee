@@ -1,5 +1,7 @@
 numInvolvedOptions =
-  '1': '1'
+  # If the option values can be parsed as numbers
+  # they may cause validation errors due to automatic coercions.
+  'one': '1'
   '2_10': '2 to 10'
   '11_50': '11 to 50'
   '51_100': '51 to 100'

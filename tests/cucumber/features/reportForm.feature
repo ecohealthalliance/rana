@@ -87,6 +87,7 @@ Feature: A form for reporting Ranavirus outbreaks
     And I click the Add a report button
     Then I should not see the review panel header
 
+  @problematic
   Scenario: Reviews appear on reports user has added
     Given I have logged in
     And I am on the "study/fakeid" page

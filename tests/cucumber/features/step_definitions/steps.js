@@ -35,14 +35,16 @@
     });
 
     this.When(/^I click submit(?: again)?$/, function (callback) {
+      
       this.browser
+        .click('[type=submit]')
+        .pause(100)
         .saveScreenshot(
           this.getAppDirectory() +
           "/tests/screenshots/submit - " +
           this.scenario.getName() +
           ".png"
         )
-        .click('[type=submit]')
         .call(callback);
     });
 
