@@ -10,7 +10,6 @@ footer
     margin 0
 
 .footer-nav
-  float right
   position absolute
   top 50%
   left 50%
@@ -31,6 +30,8 @@ footer
       
 .logos
   margin-top footer-padding
+  clearFix()
+
 .logo
   p
     display inline-block
@@ -55,8 +56,10 @@ footer
     centerSmall()
       
 @media (max-width: 765px)
+
   .logo
     padding 0
+  
   .mantle
     text-align left
     float left
@@ -73,3 +76,29 @@ footer
       
   .footer
     width 100%
+
+  .footer-nav
+    position static
+    text-align center
+    padding 30px
+    background #3F88A0
+    margin-right -15px
+    margin-left -15px
+    top auto
+    left auto
+    transform initial
+    li
+      border-right 0
+      padding 0
+      margin-right 3px
+      &:last-of-type
+        margin 0
+      a
+        display block
+        background darken(secondary, 8%)
+        padding 12px 18px
+        border-radius 3px
+        &:active
+          background darken(secondary, 15%)
+          
+          

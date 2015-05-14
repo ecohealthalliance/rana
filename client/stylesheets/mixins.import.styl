@@ -1,7 +1,8 @@
 clearFix()
-  clear both
-  display block
-  content ""
+  &::after
+    clear both
+    display block
+    content ""
 
 addFont(fontTitle, allTypes = true, type = '')
   @font-face
