@@ -35,8 +35,8 @@
     });
 
     this.When(/^I click submit(?: again)?$/, function (callback) {
-      
       this.browser
+        .mustExist('[type=submit]')
         .click('[type=submit]')
         .pause(100)
         .saveScreenshot(
