@@ -27,11 +27,11 @@ template(name="groupAdmin")
           h3.panel-title Manage users
         .panel-body
           h4 Admins
-          ul.list-unstyled
+          table.table.table-striped.user-info
             each groupAdmins
               +groupUser
           h4 Users
-          ul.list-unstyled
+          table.table.table-striped.user-info
             each groupUsers
               +groupUser
             else
@@ -40,10 +40,11 @@ template(name="groupAdmin")
           +invite groupId=group._id
 
 template(name="groupUser")
-  ul.user-info.list-unstyled
-    li.name {{profile.name}}
-      if profile.organization
-        li.organization {{profile.organization}}
-    each emails
-      li.email 
-        a(href="mailto:#{address}") {{address}}
+  tr
+    td.name 
+      span {{profile.name}}
+      each emails
+        span.email 
+          a(href="mailto:#{address}") {{address}}
+    if profile.organization
+      td.organization {{profile.organization}}
