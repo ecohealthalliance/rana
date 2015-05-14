@@ -11,7 +11,7 @@ Template.studies.helpers
     editButton = (obj) ->
       """<a class="btn btn-edit btn-primary" for="#{obj.name}" href="/study/#{obj._id}?redirectOnSubmit=/studies">Edit</a>"""
 
-    isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
+    isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})?._id
     schema = @collections.Studies.simpleSchema().schema()
 
     fields = [
