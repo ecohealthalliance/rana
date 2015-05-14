@@ -4,7 +4,6 @@
   'use strict';
 
   var assert = require('assert');
-  
   var _ = require('underscore');
 
   module.exports = function () {
@@ -13,14 +12,6 @@
       'organization': 'A different organization',
       'organizationStreet': 'New street',
       'organizationStreet2': 'Another new street'
-    };
-
-    this.fillInProfileForm = function (customValues, callback) {
-      _.each(customValues, function (value, key) {
-        this.browser.mustExist('.form-group').
-        setValue('input[data-schema-key="' + key + '"]', value);
-      });
-      callback();
     };
 
     this.When("I fill out the profile form differently", function(callback){

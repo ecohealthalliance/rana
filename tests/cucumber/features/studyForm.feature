@@ -3,6 +3,7 @@ Feature: A form for setting up a ranavirus study
   I want to set up a ranavirus study
   So I can add reports individually or import them
 
+  @study
   Scenario: Importing a complete CSV file
     Given I have logged in
     And I am on the "study" page
@@ -17,12 +18,14 @@ Feature: A form for setting up a ranavirus study
     And I click on the edit button
     Then the form should contain the values for rana_import_complete.csv
 
+  @study
   Scenario: Importing an invalid CSV file
     Given I have logged in
     And I am on the "study" page
     When I upload the CSV file rana_invalid.csv
     Then I should see the text "Error: Binomial species names are required"
 
+  @study
   Scenario: Importing and removing a CSV file
     Given I have logged in
     And I am on the "study" page
@@ -32,6 +35,7 @@ Feature: A form for setting up a ranavirus study
     When I remove the CSV file
     Then I should not see the text "File: rana_import_complete.csv"
 
+  @study
   Scenario: Updating a study
     Given I have logged in
     And I am on the "study" page
@@ -47,6 +51,7 @@ Feature: A form for setting up a ranavirus study
     And I click the edit button for the study called "Obfuscated study"
     Then the form should contain the different values I entered
 
+  @study
   @problematic
   Scenario: Removing a study
     Given I have logged in
@@ -56,15 +61,12 @@ Feature: A form for setting up a ranavirus study
     Then the webpage should not display a validation error
     And I should see a "insert successful" toast
     When I navigate to the "studies" page
-    And I click the "Remove" button
-    And I type "delete" into the prompt
-    And I accept the prompt
+    And I delete the study
     Then I should not see the text "No Studies Found"
-    When I click the "Remove" button
-    And I type "delete" into the prompt
-    And I accept the prompt
+    When I delete the study
     Then I should see the text "No Studies Found"
 
+  @study
   Scenario: Trying to re-use a study name
     Given I have logged in
     And I am on the "study" page
@@ -78,6 +80,7 @@ Feature: A form for setting up a ranavirus study
     And I click submit again
     Then the webpage should display a validation error
 
+  @study
   Scenario: Redirecting after editing a study
     Given I have logged in
     And I am on the "studies" page
@@ -85,6 +88,7 @@ Feature: A form for setting up a ranavirus study
     And I click submit
     Then I should be on the "studies" page
 
+  @study
   Scenario: Obfuscated study display
     Given I have logged in
     And I am on the "study" page

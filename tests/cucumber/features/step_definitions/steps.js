@@ -58,7 +58,7 @@
         selector = buttonNameToSelector[buttonName];
       }
       this.browser
-        .waitForExist(selector, assert.ifError)
+        .mustExist(selector)
         .click(selector)
         .call(callback);
     });
