@@ -35,6 +35,7 @@ AutoForm.addHooks(
       toastr.options = {
         closeButton: true
         positionClass: "toast-bottom-center"
+        timeOut: "100000"
       }
       toastr.error(error.message)
   }
