@@ -1,46 +1,6 @@
 template(name="studyForm")
 
-  if type
-    +autoForm(
-      id="ranavirus-study"
-      collection="collections.Studies"
-      type=type
-      doc=studyDoc
-    )
-
-      .report-form.study
-        section.rm-pad-btm
-          .container
-            .row
-              .col-sm-4
-                +afQuickField name='name'
-
-        if showCSV
-          +csvUpload
-
-        section.instructions
-          .container
-            h2 Set default values for the reports in this study.
-            p #[span *] Indicates required field
-
-        section.rm-pad-top
-          +contactInfo
-
-        +populationInfo
-
-        +species numInvolved=false
-
-        +classesMethods study=true
-
-        +notes
-
-        +permissions
-
-        section.rm-pad-top.form-grp-container.publication
-          .container
-            +afQuickField name='publicationInfo' id='publicationInfo'
-
-        +submit
-
+  if obfuscated
+    +studyFormObfuscated
   else
-    h3 Invalid study id
+    +studyFormComplete

@@ -3,12 +3,15 @@
 
 popoverOpts =
   trigger: 'hover'
-  placement: 'right auto'
+  placement: 'bottom auto'
   container: 'body'
   viewport:
     selector: 'body'
     padding: 10
   animation: true
+  delay:
+    show: 350
+    hide: 100
 
 Template.reportForm.rendered = () ->
   @$('[data-toggle="popover"]').popover popoverOpts

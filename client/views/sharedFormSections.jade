@@ -1,16 +1,13 @@
 
 template(name="contactInfo")
-  .container
-    .row
-      .col-md-3.add-space-btm
-
-        +tooltippedHeader name='contactHeader' text='Contact person info'
-        +afQuickField name='contact.name'
-        +afQuickField name='contact.email' placeholder='name@domain.com'
-        +afQuickField name='contact.phone' minor='(Must include the country code)'
-
-      .col-md-8.col-md-offset-1
-        +address
+  .row
+    .col-md-3.add-space-btm
+      +tooltippedHeader name='contactHeader' text='Contact person info'
+      +afQuickField name='contact.name'
+      +afQuickField name='contact.email' placeholder='name@domain.com'
+      +afQuickField name='contact.phone' minor='(Must include the country code)'
+    .col-md-8.col-md-offset-1
+      +address
 
 template(name="address")
   h3 Reporting institution, diagnostic lab or government agency info
@@ -34,48 +31,37 @@ template(name="address")
       +afQuickField name="contact.institutionAddress.country"
 
 template(name="populationInfo")
-  section.odd
-    .container
-      .row.form-input-block
-        .col-sm-3.input-block
-            +afQuickField name="populationType"
-        .col-sm-3.input-block
-            +afQuickField name="speciesAffectedType"
-        .col-sm-3.input-block
-            +afQuickField name="screeningReason"
-        .clearfix.visible-xs-block
-        .col-sm-3.input-block
-            +afQuickField name="vertebrateClasses"
+  .row.form-input-block
+    .col-sm-3.input-block
+        +afQuickField name="populationType"
+    .col-sm-3.input-block
+        +afQuickField name="speciesAffectedType"
+    .col-sm-3.input-block
+        +afQuickField name="screeningReason"
+    .clearfix.visible-xs-block
+    .col-sm-3.input-block.check-list
+        +afQuickField name="vertebrateClasses"
+        if afFieldValueContains name='vertebrateClasses' value='other'
+            +afQuickField name='specifyOtherVertebrateClasses'
 
 template(name="species")
-  section
-    .container
-      h3 Affected Species
-      .row.form-input-block
-        .col-sm-4
-          +afQuickField name="speciesGenus"
-          +afQuickField name="speciesName"
-          if numInvolved
-            +afQuickField name="numInvolved"
-        .col-sm-7.col-sm-offset-1
-          +afQuickField name="speciesNotes"
-
-template(name="notes")
-  section
-    .container
-      .row
-        .col-sm-9
-          +afQuickField name='additionalNotes' id='additionalNotes'
+  h3 Affected Species
+  .row.form-input-block
+    .col-sm-4
+      +afQuickField name="speciesGenus"
+      +afQuickField name="speciesName"
+      if numInvolved
+        +afQuickField name="numInvolved"
+    .col-sm-7.col-sm-offset-1
+      +afQuickField name="speciesNotes"
 
 template(name="permissions")
-  section.rm-pad-top
-    .container
-      h3 Permissions and Consent
-      .row.form-input-block
-        .col-sm-6.input-block
-          +afQuickField name='dataUsePermissions' id='dataUsePermissions'
-        .col-sm-6.input-block
-          +afQuickField name='consent' id='consent'
+  h3 Permissions and Consent
+  .row.form-input-block
+    .col-sm-6.input-block
+      +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+    .col-sm-6.input-block
+      +afQuickField name='consent' id='consent'
 
 template(name="submit")
   section.rm-pad-top
@@ -86,13 +72,11 @@ template(name="submit")
             button.btn-lg.btn.btn-success.btn-block(type='submit') Submit
 
 template(name="classesMethods")
-  section.odd
-    .container
       .row.form-input-block
         if report
-          .col-sm-8.input-block
+          .col-md-8.col-sm-12.input-block
             +classesMethodsInputs
-          .col-sm-4
+          .col-md-4.col-sm-6
               +afQuickField name='totalAnimalsTested'
               +afQuickField name='totalAnimalsConfirmedInfected'
               +afQuickField name='totalAnimalsConfirmedDiseased'

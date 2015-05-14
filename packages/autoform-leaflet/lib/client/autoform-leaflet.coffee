@@ -39,7 +39,15 @@ Template.leaflet.rendered = ->
 
   @setMarker = (location, zoom=0) =>
     @clearMarker()
-    @marker = L.marker(location).addTo(@map)
+    @marker = L.marker(location, 
+      icon: L.divIcon({
+        className: 'map-marker-container'
+        iconSize:null
+        html:"""
+          <div class="map-marker-default">
+          </div>
+        """
+      })).addTo(@map)
 
   @clearMarker = () =>
     if @marker then @map.removeLayer(@marker)
@@ -208,7 +216,7 @@ Template.leaflet.events
     t.updateViewFromLonLat()
 
   'change .northing, change .easting, change .zone': (e, t) ->
-    t.$(t.$('.source')[0]).val 'utm'
+    t.$(t.$('.source')[0]).val 'UTM'
     t.updateLonLatFromUTM()
     t.updateMinSecFromLonLat()
     t.updateViewFromLonLat()

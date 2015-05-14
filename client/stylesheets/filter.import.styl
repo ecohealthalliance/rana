@@ -59,7 +59,7 @@
       top 0
       line-height 0
     &:hover
-      color strong-primary
+      color primary-strong
     
   .autoform-add-item
     text-align center
@@ -112,7 +112,7 @@
   position absolute
   left 50px
   top 10px
-  z-index 200
+  z-index 100
   max-width 400px
   min-width 25%
   border-radius 5px
@@ -129,7 +129,7 @@
   font-size 16px
   font-weight 600
   position relative
-  color body-text
+  color primary
   transition()
   &::after
     @extend .icons
@@ -141,7 +141,7 @@
     line-height 0
     font-size 20px
   &:hover
-    background-color strong-primary
+    background-color primary
     color white
     text-decoration none
     transition()
@@ -161,13 +161,14 @@
     transform translate(-50%, 0)
     line-height 0
   &:hover
-    background-color strong-primary
+    background-color primary
     color white
     text-decoration none
     
 @media (max-width: 900px)
   #control-panel
     bottom 50px
-    right 50px
+    right 10px
+    left 10px
     top auto
     max-width 100%

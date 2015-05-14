@@ -1,0 +1,61 @@
+template(name="studyFormComplete")
+
+  if type
+    +autoForm(
+      id="ranavirus-study"
+      collection="collections.Studies"
+      type=type
+      doc=studyDoc
+      redirectOnSubmit=urlQuery.redirectOnSubmit
+    )
+
+      .study-form.space-btm-3
+        section.rm-pad-btm
+          .container
+            h1
+              if eq type 'insert'
+                span Add a New Study
+              else eq type 'update'
+                span  #{study.name} - Update Study
+            p.required-text #[span *] Indicates required field
+            
+            .row.space-top-3
+              .col-sm-4
+                +afQuickField name='name'
+
+        if showCSV
+          +csvUpload
+
+        section.contact
+          .container
+            +contactInfo
+
+        section.odd
+          .container
+            +permissions
+
+        section.form-grp-container.publication
+          .container
+            +afQuickField name='publicationInfo' id='publicationInfo'
+
+        section.instructions
+          .container
+            h2.space-top-2 Set default values for the reports in this study.
+
+        section.odd
+          .container
+            +populationInfo
+
+        section
+          .container
+            +species numInvolved=false
+
+        section.odd.space-btm-5
+          .container
+            +classesMethods study=true
+
+        unless eq type "readonly"
+          +submit
+
+  else
+    h3 Invalid study id

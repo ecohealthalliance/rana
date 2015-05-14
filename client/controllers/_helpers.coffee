@@ -27,3 +27,5 @@
         @mergeObjects target[prop], source[prop]
       else
         target[prop] = source[prop]
+
+Template.registerHelper 'eq', (a, b) -> a == b

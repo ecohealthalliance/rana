@@ -84,6 +84,7 @@
     }
 
     var studyDifferentValues = {
+      'name': 'Obfuscated study',
       'contact.name': 'Another Fake Name',
       'contact.email': 'zap@bop.com',
       'dataUsePermissions': 'Share obfuscated'
@@ -91,9 +92,9 @@
 
     this.fillInStudyForm = function (customValues, callback) {
 
-      _.extend(studyDefaultValues, customValues);
+      var values = _.extend({}, studyDefaultValues, customValues);
 
-      helper.world.browser.setFormFields(studyDefaultValues, 'Studies', callback);
+      helper.world.browser.setFormFields(values, 'Studies', callback);
 
     };
 
@@ -105,13 +106,14 @@
       helper.fillInStudyForm({'speciesGenus': 'SomeGenus'}, callback);
     });
 
-    this.When("I fill out the study form differently", function(callback){
+    this.When(/I fill out the study form differently(?: with obfuscated permissions)?/, function(callback){
       helper.fillInStudyForm(studyDifferentValues, callback);
     });
 
-    this.When('I click the link for the the study called "$name"', function(name, callback){
+    this.When('I click the $buttonType button for the study called "$name"', function(buttonType, name, callback){
       helper.world.browser
-      .click('a[for="' + name + '"]')
+      .pause(2000)
+      .click('a.btn-' + buttonType + '[for="' + name + '"]')
       .call(callback);
     });
 
@@ -159,7 +161,7 @@
     });
 
     this.Then(/^the form should contain the different values I entered$/, function (callback) {
-      var values = _.extend(studyDefaultValues, studyDifferentValues)
+      var values = _.extend({}, studyDefaultValues, studyDifferentValues)
       var valuesArr = _.map(values, function(val, key) { return [key, val] } )
       helper.world.browser.checkFormFields('ranavirus-study', valuesArr, callback);
     });
@@ -173,10 +175,18 @@
       .call(callback);
     });
 
-    this.Then("I remove the publication", function(callback){
+    this.When("I remove the publication", function(callback){
       helper.world.browser
       .pause(500)
       .clickWhenVisible('.file-upload-clear[file-input="publicationInfo.pdf"]')
+      .pause(500)
+      .call(callback);
+    });
+
+    this.When("I remove the CSV file", function(callback){
+      helper.world.browser
+      .pause(500)
+      .clickWhenVisible('.file-upload-clear[file-input="csvFile"]')
       .pause(500)
       .call(callback);
     });
@@ -185,6 +195,23 @@
       helper.world.browser
       .setValue('[data-schema-key="publicationInfo.reference"]', '')
       .call(callback);
+    });
+
+
+  this.Then(/^the webpage should( not)? display an? (.+) button for the '(.+)' study$/,
+    function(shouldNot, buttonType, studyName, callback){
+      var reverse = !!shouldNot;
+      helper.world.browser
+      // custom errors on groups don't create a has-error class
+      .waitForExist('a.btn-' + buttonType + '[for="' + studyName + '"]', 1000, reverse,
+      function(err, result){
+        assert.equal(err, null);
+        if(shouldNot) {
+          assert(result, buttonType + ' button for ' + studyName + ' should not be displayed');
+        } else {
+          assert(result, buttonType + ' button for ' + studyName + ' is missing');
+        }
+      }).call(callback);
     });
 
   };

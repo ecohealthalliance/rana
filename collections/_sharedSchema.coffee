@@ -38,6 +38,7 @@
         { value: 'fish', label: 'Fish' }
         { value: 'amphibian', label: 'Amphibian' }
         { value: 'reptile', label: 'Reptile', 'tooltip': 'Turtles and tortoises, crocodilians, snakes and lizards' }
+        { value: 'other', label: 'Other' }
       ]
       noselect: true
   'vertebrateClasses.$':
@@ -49,6 +50,15 @@
     autoform:
       afFieldInput:
         noselect: true
+  specifyOtherVertebrateClasses:
+    type: [String]
+    optional: true
+    minCount: 1
+    autoform:
+      template: 'afFieldValueContains'
+      afFieldValueContains:
+        name: 'vertebrateClasses'
+        value: 'other'
   ageClasses:
     type: Array
     optional: true
@@ -141,6 +151,7 @@
   specifyOtherRanavirusConfirmationMethods:
     type: [String]
     optional: true
+    minCount: 1
     autoform:
       template: 'afFieldValueContains'
       afFieldValueContains:
@@ -167,6 +178,7 @@
   specifyOtherRanavirusSampleTypes:
     type: [String]
     optional: true
+    minCount: 1
     autoform:
       template: 'afFieldValueContains'
       afFieldValueContains:

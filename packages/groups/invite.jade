@@ -3,6 +3,4 @@ template(name="invite")
     +autoForm(schema=inviteSchema id="inviteForm" type="method" meteormethod="invite")
       +afQuickField name="email"
       +afQuickField name="group" value=groupId
-      .row
-        .col-sm-4
-          button.btn.btn-primary.btn-block(type="submit") Invite
+      button.btn.btn-primary(type="submit") Invite

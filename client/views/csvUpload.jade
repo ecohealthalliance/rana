@@ -1,19 +1,23 @@
 template(name="csvUpload")
-  section.rm-pad.csvUpload
+  section.csvUpload
     .container
-      h3 CSV file upload
+      .upload-wrap
+        h3.upload-file CSV file upload
+        a.instructions-link(href='/importInstructions' target='_blank')
+          span CSV import instructions
+          span.glyphicon.glyphicon-info-sign
       .csv-error #{csvError}
       if importReports.count
         b File: &nbsp;
         tt #{csvFileName}
       .row
-        .col-md-4
+        .col-md-3
           +afQuickField name='csvFile' id='csvFile'
 
   if importReports.count
     section.rm-pad-top.import-table
       .container
-        +reactiveTable collection=importReports fields=importFields
+        +reactiveTable collection=importReports fields=importFields showColumnToggles=true
 
         if unmatchedHeadersString
           h4 Unused fields in your data

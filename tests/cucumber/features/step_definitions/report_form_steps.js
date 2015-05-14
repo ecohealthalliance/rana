@@ -28,6 +28,7 @@
         var badKeys = [
           'specifyOtherRanavirusSampleTypes',
           'specifyOtherRanavirusConfirmationMethods',
+          'specifyOtherVertebrateClasses',
           'sampleType',
           'ranavirusConfirmationMethods',
           'eventDate',
@@ -69,6 +70,13 @@
     function(callback){
       var customValues = {};
       customValues['consent'] = false;
+      helper.fillInForm(customValues, callback);
+    });
+
+    this.When("I fill out a report with obfuscated permissions",
+    function(callback){
+      var customValues = {};
+      customValues['dataUsePermissions'] = 'Share obfuscated';
       helper.fillInForm(customValues, callback);
     });
 
@@ -226,6 +234,19 @@
       .pause(2000)
       .checkValue('[data-schema-key="speciesGenus"]', "SomeGenus")
       .call(callback);
+    });
+
+    this.Then(/^I should( not)? see the review panel header$/, function(shouldNot, callback){
+      var reverse = !!shouldNot;
+      helper.world.browser.waitForExist('.review-panel-header', 2000, reverse,
+      function(err, result){
+        assert.equal(err, null);
+        if(shouldNot) {
+          assert(result, "Review panel head incorrectly displayed");
+        } else {
+          assert(result, "Missing review panel header");
+        }
+      }).call(callback);
     });
   };
 

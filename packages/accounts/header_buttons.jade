@@ -1,3 +1,10 @@
 template(name="accountsHeaderButtons")
-  a.btn.btn-default.edit-profile(href="{{pathFor route='profile'}}") Edit Profile
-  +atNavButton
+  li.account
+    a.profile(href="{{pathFor route='profile'}}")
+      i.fa.fa-user
+      span Profile
+  li.account
+    a.sign-out(href="#")
+      i.fa.fa-sign-out
+      span Sign Out
+

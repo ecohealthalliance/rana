@@ -19,9 +19,11 @@ vAlign()
   display inline-block
   vertical-align middle  
   
-makeButton(color, text = white, dark = false, noOutline = false)
-  if dark 
+makeButton(color, text = white, dark = false, noOutline = false, hoverColor = white)
+  if dark
     @extend .light-shadow
+    &:hover
+      color hoverColor
   else 
     @extend .dark-shadow
   background color
@@ -29,13 +31,11 @@ makeButton(color, text = white, dark = false, noOutline = false)
   border 1px solid darken(color, 10%)
   &:hover,
   &:focus
-    background darken(color, 10%)
-    color darken(text, 20%)
-    border-color darken(color, 20%)
+    background darken(color, 20%)
+    border-color darken(color, 50%)
+    color text
   &:active
     background darken(color, 20%)
-  &:focus
-    outline 5px auto lighten(btn-default, 20%)
   transition()
   if noOutline
     &:focus
@@ -49,7 +49,7 @@ loading(positioned=false)
       position absolute
       top 50%
       left 45%
-      transform translate(-50%, -50%)
+      centerPosition(-50%,-50%)
       z-index 100
     opacity 1
     font-size 60px
@@ -63,6 +63,48 @@ animate(speed)
   -webkit-animation spin speed infinite linear
   -moz-animation spin speed infinite linear
   -o-animation spin speed infinite linear
+
+bg(path, w, h, type)
+  background url(path + '.' + type) no-repeat
+  background-size w h
+  width w
+  height h
+  text-indent -9999px
+  @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2)
+    background-image: url(path + '-2x.' + type);
+
+centerSmall(margin-bottom=0)
+  @media (max-width:400px)
+    margin 0 auto
+    float none
+    display block
+    if margin-bottom
+      margin-bottom margin-bottom
+
+buttonHover(hoverBG, bg=none)
+  transition()
+  background bg
+  &:hover
+    background hoverBG
+    color white
+    transition()
+
+centerPosition(h,v)
+  transform translate(h,v)
+
+cover()
+  position absolute
+  top 0
+  bottom 0
+  left 0
+  right 0
+  z-index 500
+
+addBorder(w=false, h, c)
+  if w
+    border-{w} unit(h,'px') solid c
+  else 
+    border unit(h, 'px') solid c
 
 @keyframes spin
   from 

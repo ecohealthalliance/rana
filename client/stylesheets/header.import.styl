@@ -1,3 +1,250 @@
+header
+  position relative
+  z-index 200
 .navbar
-  margin-bottom 0
   @extend .dark-shadow
+  margin-bottom 0
+  background header-footer-BG
+  border 0
+  border-radius 0
+  min-height header-height
+  .btn,
+  .btn-default
+    padding 6px 12px
+    border 0
+    margin-left 5px
+    text-shadow none
+    font-size 13px
+    color body-text
+    line-height 1.42857143
+    buttonHover(nav-hover, trans-white)
+    transition()
+    &:focus
+      background white
+      outline primary
+      transition()
+      
+.nav
+  float right
+
+.nav .open>a, 
+.nav .open>a:hover
+  background primary
+
+.navbar-nav
+  margin-right 10px
+  > li > a
+    color white
+    buttonHover(nav-hover)
+    font-size 13px
+    &:focus
+      background primary
+      outline 5px auto darken(primary, 10%)
+    i
+      vAlign()
+      font-size 16px
+    &.navbar-btn
+      margin 0
+      padding 9px 10px
+      background trans-white
+      border-radius 5px
+      color #333
+      text-shadow none
+      line-height 100%
+      margin-top 9px
+      margin-left 15px
+      transition(background-color)
+      &:hover,
+      &:focus
+        background primary
+        color white
+        transition(background-color)
+        @extend .dark-shadow
+  .admin-settings
+    i
+      font-size 18px
+      padding-right 3px
+      
+
+.dropdown
+  .dropdown-toggle
+    &::after
+      content: '\f0d7'
+      @extend .font-awesome
+      padding-left 4px
+      line-height 0
+    &:focus
+      outline 0
+  
+  &.open
+    .dropdown-toggle
+      background primary
+      &:focus
+        background primary
+      &::after
+        content: '\f0d8'
+
+.dropdown-menu
+  background nav-hover
+  > li 
+    border-bottom 1px solid primary-dark
+    &:last-of-type
+      border 0
+    > a
+      color white
+      padding 10px 15px
+      &:hover
+        background secondary
+        color white
+
+.navbar-nav .active a,
+.navbar-nav .active a:focus
+  background nav-hover
+  outline 0
+
+.navbar-brand 
+  padding 6px 0
+  transition(.2s, color)  
+  &:hover,
+  &:focus
+    span,
+    h1
+      color body-text
+      @extend .light-shadow
+      transition(.2s, color)
+  h1
+    margin 0
+    color white
+    font-weight 600
+    text-transform uppercase
+    line-height 18px
+    font-size 18px
+    vAlign()
+    padding-left 3px
+    transition(.2s, color)
+  span
+    @extend .icons
+    padding-top 1px
+    font-size 35px
+    color white
+    line-height 0
+    vAlign()
+    transition(.2s, color)
+    
+.navbar-toggle
+  @extend .icons
+  float right
+  padding 4px
+  margin 0
+  color white
+  font-size 28px
+  &.active,
+  &:focus
+    color black
+
+.main-nav-last
+  margin-right 0
+     
+@media (max-width: 1000px) 
+  .navbar-header
+    float none
+  .navbar-left,
+  .navbar-right
+    float none !important
+  .navbar-toggle
+    display block
+  .navbar-fixed-top
+    top 0
+    border-width 0 0 1px
+  .navbar-collapse.collapse
+    display none !important
+    height 1px !important
+  .navbar-nav
+    float none !important
+    margin-top 7.5px
+  .navbar-nav>li
+    float none
+  .navbar-nav>li>a
+    padding 12px 30px
+  .collapse.in
+    display block !important
+    height auto !important
+
+  .nav
+    float none
+    li
+      border-bottom 1px solid secondary-light 
+      &.account
+        margin-left 0
+        border 0 
+      &.main-nav-last
+        margin 0
+      .btn
+        width 40%
+        margin 15px
+        padding 10px
+        display block
+        float left
+      &:last-of-type
+        border 0
+      a
+        &:hover
+          background primary
+  .navbar-brand
+    width 75%
+    padding-top 10px
+    span
+      font-size 25px
+    h1
+      font-size 14px
+      line-height 14px
+  .navbar-nav
+    margin-right 0
+    margin-top 0
+  .navbar .btn, .navbar .btn-default
+    margin-left auto
+  .container>.navbar-header
+    margin 0
+  .navbar-collapse
+    padding-right 0
+    border-top 4px solid secondary-dark
+    box-shadow none
+    &.in
+      border-top 4px solid secondary-dark
+      box-shadow none
+    &.collapse,
+    &.collapsing
+      padding 0
+  .dropdown-menu
+    padding-top 0
+    position static
+    min-width 100%
+    background none
+    box-shadow none
+    border 0
+  .navbar-nav 
+    .open
+      .dropdown-menu
+        border-top 4px solid primary-dark
+        >li
+          border-bottom 1px solid secondary-light
+          &:last-of-type
+            border 0
+          >a
+            color white
+            padding 10px 15px 10px 40px
+            &:hover
+              background primary
+    .active a
+      background none
+    >li>a.navbar-btn 
+      width 50%
+      text-align center
+      margin 15px auto 8px auto
+      padding 15px
+        
+@media (min-width: 768px) and (max-width: 1000px) 
+  .nav
+    li
+      .btn
+        width 20%

@@ -1,27 +1,70 @@
 head
   title Ranavirus reporting
   meta(name="viewport" content="width=device-width, initial-scale=1")
-  link(href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,800'
-    rel='stylesheet' type='text/css')
+  link(href="//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,800"
+    rel="stylesheet" type="text/css")
+  link(rel="shortcut icon" type="image/png"  href="images/favicon.png")
+
 
 template(name="layout")
-  .navbar.navbar-inverse.navbar-fixed.top
-      .container
-          .navbar-header
-            a.navbar-brand Ranavirus Reporting System
-          ul.nav.navbar-nav
-            li
-              a(href="/study") New Study
-            li
-              a(href="/studies") All Studies
-            li
-              a(href="/map") Report Map
-            li
-              a(href="/table") Report Table
-            li
-              a(href="/group/rana/info") Ranavirus Information
-          .navbar-right
-              +accountsHeaderButtons
+  .page-wrap
+    +header
+    .content-wrap        
+      .fluid-container
+          +yield
+    +footer
 
-  .fluid-container
-      +yield
+template(name="header")
+  header
+    nav.navbar
+      .fluid-container
+        .container
+          .navbar-header
+            button.navbar-toggle.collapsed(type="button", data-toggle="collapse" data-target=".navbar-collapse") =
+            a.navbar-brand(href="/")
+              span M
+              h1 Ranavirus #[br] Reporting System
+          .navbar-collapse.collapse
+            ul.nav.navbar-nav.navbar-right
+              +navLinks
+
+template(name="navLinks")
+  li
+    a(href="/study") Add Study
+  li
+    a(href="/studies") View Studies
+  li
+    a(href="/map") Map
+  li
+    a(href="/table") View Reports
+
+  li.main-nav-last
+    a(href="/group/rana/info") About Ranavirus
+  
+  if currentUser
+    li.nav-icon.dropdown
+      a.dropdown-toggle.admin-settings(href="#" data-toggle="dropdown" aria-expanded="false")
+        i.fa.fa-gear
+        span Settings
+      ul.dropdown-menu(role="menu")
+        if isInRole 'admin' groupId
+          li
+            a(href="/group/rana") 
+              i.fa.fa-group
+              span Group Admin
+        +accountsHeaderButtons
+  else
+    li
+      a(href="{{pathFor route='atSignIn'}}" class="sign-in navbar-btn")
+        span Sign In 
+        i.fa.fa-sign-in
+
+template(name="footer")
+  footer
+    .container.footer
+      .logo.mantle
+        p powered by
+        h1 Mantle
+      .logo.eha
+        a(href="http://ecohealthalliance.org")
+          h2 EcoHealth Alliance

@@ -1,3 +1,7 @@
+html,
+body
+  height 100%
+
 body
   color body-text
   @extend .open-sans
@@ -10,6 +14,7 @@ h4
   font-weight 700
 
 h1
+  font-size 42px
   font-weight 800
 
 h2
@@ -37,6 +42,11 @@ h4
   font-weight 600
   font-size 15px
 
+h5
+  font-size 100%
+  font-weight 600
+  color d-gray
+
 a,
 button,
 .btn
@@ -45,9 +55,11 @@ button,
     transition()
 
 a
-  color primary
-  &:hover
-    color secondary
+  color primary-strong
+  &:hover,
+  &:focus
+    color primary
+
 
 textarea
   display block
@@ -67,6 +79,28 @@ textarea
   -o-transition border-color ease-in-out .15s, box-shadow ease-in-out .15s
   transition border-color ease-in-out .15s, box-shadow ease-in-out .15s
 
+select.form-control,
+input.form-control,
+textarea,
+textarea.form-control
+  border 2px solid m-gray
+
+input,
+textarea,
+.form-control
+  &:focus
+    outline 0
+    box-shadow none
+    webkit-box-shadow none
+    border-color secondary
+
+.page-wrap
+  position relative
+  min-height 100%
+
+.content-wrap
+  padding-bottom footer-height-actual+10
+
 .rm-pad
   padding 0
 
@@ -75,6 +109,16 @@ textarea
   
 .rm-pad-btm
   padding-bottom 0
+
+.btn-primary
+  makeButton(secondary)
+
+.btn-danger
+  makeButton(primary-strong)
+
+.file-upload .btn, 
+.file-upload label.btn
+  makeButton(secondary)
 
 .button-default[disabled]
 .btn[disabled]
@@ -107,28 +151,35 @@ textarea
 .col-sm-0
   width 0%
 
-.space-btm-2
-  margin-bottom 20px
+for num in 2 3 4 5 6
+  
+  .space-btm-{num}
+    margin-bottom num*10px
 
-.space-btm-4
-  margin-bottom 40px
+  .space-top-{num}
+    margin-top num*10px
 
-@media (max-width: 768px)
+for num in 1 2 3
+
+  .border-btm-{num}
+    addBorder('bottom', num, l-gray)
+
+  .border-top-{num}
+    addBorder('top', num, l-gray)
+
+.curtain
+  &::before
+    content ''
+    display block
+    background rgba(0,0,0,.4)
+    cover()
+
+i.fa
+  line-height 0
+    
+@media (max-width: 768px) 
+  .content-wrap
+    padding-bottom footer-height-mobile-actual
   .add-space-btm
     @extend .space-btm-4
-
-select.form-control,
-input.form-control,
-textarea,
-textarea.form-control
-  border 2px solid m-gray
-
-input,
-textarea,
-.form-control
-  &:focus
-    outline 0
-    box-shadow none
-    webkit-box-shadow none
-    border-color secondary
   
