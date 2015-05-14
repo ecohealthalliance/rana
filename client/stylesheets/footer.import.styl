@@ -4,28 +4,40 @@ footer
   z-index 100
   width 100%
   background header-footer-BG
-  padding-top footer-padding
-  height footer-height
+  height footer-height+footer-padding
   h1,
   h2
     margin 0
- 
-.footer
-  width 600px
-  margin 0 auto
 
-.logo, .contact
-  margin 0 15px
+.footer-nav
+  float right
+  position absolute
+  top 50%
+  left 50%
+  li
+    padding-right 10px
+    border-right 1px solid secondary-dark 
+    &:last-of-type
+      border 0
+  centerPosition()
+  a
+    color white
+    @extend .dark-shadow
+    &:hover,
+    &:focus
+      color body-text
+      text-decoration none
+      shadow(255,.1)
+      
+.logos
+  margin-top footer-padding
+.logo
   p
     display inline-block
     color l-gray
-    font-size 11px   
+    font-size 11px
 
-.contact
-  a
-    display block
-
-.contact, .mantle
+.mantle
   float left
   display inline-block
 
@@ -43,7 +55,7 @@ footer
     centerSmall()
       
 @media (max-width: 765px)
-  .logo, .contact
+  .logo
     padding 0
   .mantle
     text-align left
