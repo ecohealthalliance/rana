@@ -198,7 +198,7 @@
     type: Boolean
     label: """
     Do you consent to have this data published and made searchable on
-    the Ranavirus Reporting System website as per the data use permissions?
+    the Global Ranavirus Reporting System website as per the data use permissions?
     """
     autoform:
        type: 'boolean-radios'

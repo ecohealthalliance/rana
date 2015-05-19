@@ -15,7 +15,7 @@ You must enter your email address, a password, and your name. Optionally, you ma
   {
     title: "Adding a Study"
     videoID: "QGqY3ZLs9cA"
-    script: "All reports in the Ranavirus Reporting System are associated with a study, so to create reports you must first create the study they belong to. Start by clicking the Add Study link at the top of the page.
+    script: "All reports in the Global Ranavirus Reporting System are associated with a study, so to create reports you must first create the study they belong to. Start by clicking the Add Study link at the top of the page.
     \n\n
     At a minimum, you need to give the study a name, enter the details for the contact person on the study (these will default to your account's contact information if you have provided it), and specify if and how you want to share and publish the records in the study.
     \n\n
