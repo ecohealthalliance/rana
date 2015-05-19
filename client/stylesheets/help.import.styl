@@ -23,7 +23,7 @@ menu-color = darken(secondary, 15%)
   position absolute
   bottom 0
   top 0
-  background primary-strong-light
+  background lighten(secondary,90%)
   width 275px
   h1
     margin-bottom 10px
@@ -32,11 +32,11 @@ menu-color = darken(secondary, 15%)
     padding 0 15px
     @extend .light-shadow
   ul
-    border-top 2px solid darken(primary-strong-light, 20%)
+    border-top 2px solid lighten(secondary-light, 40%)
   li
     position relative
     border-radius 0
-    border-bottom 1px solid darken(primary-strong-light, 20%)
+    border-bottom 1px solid lighten(secondary-light, 40%)
     &:last-of-type
       border 0
   a
