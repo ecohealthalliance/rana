@@ -80,6 +80,9 @@ Meteor.publish 'obfuscatedStudies', (id) ->
     { fields: {name: 1, dataUsePermissions: 1, createdBy: 1} }
   )
 
+Meteor.publish 'videos', ->
+  collections.Videos.find()
+
 ReactiveTable.publish 'reports', collections.Reports, () ->
   sharedOrCreator @userId
 
