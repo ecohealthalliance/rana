@@ -61,6 +61,8 @@ header
         transition(background-color)
         @extend .dark-shadow
   .admin-settings
+    span
+      display none
     i
       font-size 18px
       padding-right 3px
@@ -239,7 +241,10 @@ header
       text-align center
       margin 15px auto 8px auto
       padding 15px
-        
+    .admin-settings
+      span
+        display inline-block
+          
 @media (min-width: 768px) and (max-width: 1000px) 
   .nav
     li

@@ -9,41 +9,50 @@ template(name="studyFormComplete")
       redirectOnSubmit=urlQuery.redirectOnSubmit
     )
 
-      .report-form.study
+      .study-form.space-btm-3
         section.rm-pad-btm
           .container
-            .row
+            h1
+              if eq type 'insert'
+                span Add a New Study
+              else eq type 'update'
+                span  #{study.name} - Update Study
+            p.required-text #[span *] Indicates required field
+            
+            .row.space-top-3
               .col-sm-4
                 +afQuickField name='name'
 
         if showCSV
           +csvUpload
 
+        section.contact
+          .container
+            +contactInfo
+
+        section.odd
+          .container
+            +permissions
+
+        section.form-grp-container.publication
+          .container
+            +afQuickField name='publicationInfo' id='publicationInfo'
+
         section.instructions
           .container
-            h2 Set default values for the reports in this study.
-            p #[span *] Indicates required field
+            h2.space-top-2 Set default values for the reports in this study.
 
-        section.rm-pad-top
-          +contactInfo
-
-        +populationInfo
-
-        +species numInvolved=false
-
-        +classesMethods study=true
+        section.odd
+          .container
+            +populationInfo
 
         section
           .container
-            .row
-              .col-sm-9
-                +afQuickField name='additionalNotes' id='additionalNotes'
+            +species numInvolved=false
 
-        +permissions
-
-        section.rm-pad-top.form-grp-container.publication
+        section.odd.space-btm-5
           .container
-            +afQuickField name='publicationInfo' id='publicationInfo'
+            +classesMethods study=true
 
         unless eq type "readonly"
           +submit

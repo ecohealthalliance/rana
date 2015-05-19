@@ -1,7 +1,8 @@
 clearFix()
-  clear both
-  display block
-  content ""
+  &::after
+    clear both
+    display block
+    content ""
 
 addFont(fontTitle, allTypes = true, type = '')
   @font-face
@@ -89,7 +90,7 @@ buttonHover(hoverBG, bg=none)
     color white
     transition()
 
-centerPosition(h,v)
+centerPosition(h=-50%,v=-50%)
   transform translate(h,v)
 
 cover()
@@ -99,6 +100,15 @@ cover()
   left 0
   right 0
   z-index 500
+
+addBorder(w=false, h, c)
+  if w
+    border-{w} unit(h,'px') solid c
+  else 
+    border unit(h, 'px') solid c
+
+shadow(c, opacity)
+  text-shadow 0 1px 0 rgba(c,c,c,opacity)
 
 @keyframes spin
   from 

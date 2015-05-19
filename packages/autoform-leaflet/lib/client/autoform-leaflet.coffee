@@ -39,7 +39,15 @@ Template.leaflet.rendered = ->
 
   @setMarker = (location, zoom=0) =>
     @clearMarker()
-    @marker = L.marker(location).addTo(@map)
+    @marker = L.marker(location, 
+      icon: L.divIcon({
+        className: 'map-marker-container'
+        iconSize:null
+        html:"""
+          <div class="map-marker-default">
+          </div>
+        """
+      })).addTo(@map)
 
   @clearMarker = () =>
     if @marker then @map.removeLayer(@marker)

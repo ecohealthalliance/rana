@@ -1,8 +1,7 @@
 Template.header.events
   'click a' : (e) ->
     $('.navbar-nav li, .navbar-brand').removeClass('active').blur()
-    if $('.navbar-toggle').is(':visible') and !$(e.target).hasClass('dropdown-toggle') and !$(e.currentTarget).hasClass('navbar-brand')
-      console.log e
+    if $('.navbar-toggle').is(':visible') and $('.navbar-collapse').hasClass('in') and !$(e.currentTarget).hasClass('dropdown-toggle')
       $('.navbar-collapse').collapse('toggle')
 Template.navLinks.events
   'click .sign-out' : () ->

@@ -13,10 +13,10 @@ Feature: Group information
     And I should see the text "Test Group"
     And I should see the text "Test Description"
     And I should see the text "Edit Group Information"
-    And I should see the text "Manage admins"
+    And I should see the text "Manage Admins"
     When I log out
     And I navigate to the "group/test-group" page
     Then I should see the text "Test Group"
     And I should see the text "Test Description"
     And I should not see the text "Edit Group Information"
-    And I should not see the text "Manage admins"
+    And I should not see the text "Manage Admins"
