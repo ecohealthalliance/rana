@@ -30,7 +30,7 @@ You must enter your email address, a password, and your name. Optionally, you ma
   }
   {
     title: "Viewing Reports"
-    videoID: "mnUs37Bjfro"
+    videoID: "E3QoMFoVXrA"
     script: "There are two ways to view collections of reports that have been submitted to the system: the table views, and the map view. Both views allow you to see all of your own reports, as well as all other reports that have been shared publicly."
   }  
   {
