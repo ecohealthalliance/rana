@@ -13,6 +13,8 @@ Router.onRun () ->
     analytics.page @path
   @next()
 
+Router.route('/', ()-> @redirect BASE_PATH)
+
 Router.route BASE_PATH + "/",
   name: 'home'
 
