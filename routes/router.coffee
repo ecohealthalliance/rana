@@ -11,7 +11,8 @@ Router.onRun () ->
     analytics.page @path
   @next()
 
-Router.route('/', ()-> @redirect('/group/rana'))
+Router.route "/",
+  name: 'home'
 
 Router.route('newReport',
   path: '/study/:studyId/report'
@@ -126,6 +127,29 @@ Router.route('/info',
 
 Router.route('/importInstructions',
   where: 'client'
+)
+
+Router.route('/help',
+  where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe "videos"
+    ]
+  data: ->
+    videos: getCollections().Videos.find()
+    video: getCollections().Videos.find().fetch()[0]
+)
+
+Router.route('/help/:topic',
+  where: 'client'
+  template: 'help'
+  waitOn: ->
+    [
+      Meteor.subscribe "videos"
+    ]
+  data: ->
+    videos: getCollections().Videos.find()
+    video: getCollections().Videos.findOne({title: @params.topic.replace RegExp('-', 'g'), ' ' })
 )
 
 Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'newStudy']}

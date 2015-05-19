@@ -28,3 +28,5 @@
 @collections.Genera = new Mongo.Collection 'genera'
 
 @collections.Reviews = new Mongo.Collection 'reviews'
+
+@collections.Videos = new Mongo.Collection 'videos'
