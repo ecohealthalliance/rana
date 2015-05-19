@@ -2,14 +2,16 @@ template(name="help")
   section
     .container.help
       .row.help-topics-wrap
-        ul.list-unstyled.topics.col-md-3.col-sm-4
-          each videos
-            li 
-              a.topic(href="/help/{{link title}}" class="{{ addActive title ../video.title}}" ) #{title}
+        .topics
+          h1 Help Topics
+          ul.list-unstyled
+            each videos
+              li 
+                a.topic(href="/help/{{link title}}" class="{{ addActive title ../video.title}}" ) #{title}
         +topic video=video
 
 template(name="topic")
-  .content.col-md-9.col-sm-8
+  .content
     div(class="topic-content topic-#{video.index}")
       h1 #{video.title}
       .script 

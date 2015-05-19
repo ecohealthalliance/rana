@@ -1,3 +1,6 @@
+menu-color = darken(secondary, 15%)
+
+
 .help-topics-wrap
   margin-bottom 50px
 .help-segment
@@ -11,21 +14,36 @@
   h1
     margin-top 0
   &.active
-    display block  
+    display block 
+.help
+  .content
+    padding-left 300px
 .topics
-  padding-top 10px
+  padding-top header-height+25
+  position absolute
+  bottom 0
+  top 0
+  background primary-strong-light
+  width 275px
+  h1
+    margin-bottom 10px
+    font-size 200%
+    color menu-color
+    padding 0 15px
+    @extend .light-shadow
+  ul
+    border-top 2px solid darken(primary-strong-light, 20%)
   li
-    margin 0 0 2px 0
     position relative
+    border-radius 0
+    border-bottom 1px solid darken(primary-strong-light, 20%)
     &:last-of-type
       border 0
   a
     display block
-    padding 10px
-    color body-text
+    padding 10px 15px
+    color menu-color
     font-weight bold
-    background-color lighten(secondary, 90%)
-    border-radius 3px
     &:after
       position absolute
       right 10px
@@ -34,7 +52,7 @@
       content '\f0da'
       @extend .font-awesome
       font-size 16px
-      color body-text
+      color menu-color
     &:hover,
     &:focus
       text-decoration none
@@ -56,12 +74,17 @@
   .topics
     padding-left 0
     padding-right 0
+    position static
+    padding-top 10px
+    width 100%
+    margin-top -25px
     a
       padding-left 15px
       padding-right 15px
       &:after
         display none
-        
   .help
     .content
       margin-top 30px
+      width 100%
+      padding 0 15px
