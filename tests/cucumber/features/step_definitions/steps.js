@@ -13,7 +13,7 @@
 
     this.visit = function (path, callback) {
       helper.world.browser
-      .url(helper.world.cucumber.mirror.rootUrl + path)
+      .url(helper.world.cucumber.mirror.rootUrl + 'grrs/' + path)
       .waitForExist(".container", function(err, exists){
         assert(!err);
         assert(exists, "Could not find container element");

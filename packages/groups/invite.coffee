@@ -30,12 +30,14 @@ if Meteor.isServer
         groupName = Groups.findOne(doc.group).name
 
         userEmail = Meteor.users.findOne(@userId).emails[0].address
+        joinPath = Router.path 'join', {inviteId: inviteId}
+        joinPath = joinPath.slice 1 # remove extra slash
 
         Email.send {
           from: "#{groupName} Administrator<no-reply@ecohealth.io>"
           to: doc.email
           subject: "Become an admin of #{groupName}"
-          text: "You have been invited to become an admin of #{groupName} by #{userEmail}. Visit #{Meteor.absoluteUrl()}join/#{inviteId} to accept."
+          text: "You have been invited to become an admin of #{groupName} by #{userEmail}. Visit #{Meteor.absoluteUrl()}#{joinPath} to accept."
         }
       else
         throw new Meteor.Error "403", "user is not a group admin"

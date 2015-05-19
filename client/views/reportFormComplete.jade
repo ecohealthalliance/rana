@@ -5,7 +5,7 @@ template(name="reportFormComplete")
       section.rm-pad-btm.space-btm-3
         .container
           h1
-            a.study-link(href='/study/#{study._id}') #{study.name}
+            a.study-link(href="{{pathFor route='editStudy' data=studyId}}") #{study.name}
               span.glyphicon.glyphicon-link
             if isInsert
               span - New Report

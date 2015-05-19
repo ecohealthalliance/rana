@@ -81,6 +81,10 @@ Template.map.rendered = ->
         color = colors[0]
       studyName = getCollections().Studies.findOne(report.studyId).name
       if report.eventLocation and report.eventLocation isnt "," and report.eventLocation isnt null
+        
+        mapPath = Router.path 'map'
+        editPath = Router.path 'editReport', {reportId: report._id}, {query: "redirectOnSubmit=#{mapPath}"}
+
         L.marker(report.eventLocation.geo.coordinates.reverse(), {
           icon: L.divIcon({
             className: 'map-marker-container'
@@ -109,7 +113,7 @@ Template.map.rendered = ->
             <dt>Reported By</dt>
             <dd>#{report.createdBy.name}</dd>
           </dl>
-          <a class="btn btn-primary btn-block btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">
+          <a class="btn btn-primary btn-block btn-edit" href="#{editPath}">
             View/Edit
           </a>
         </div>
