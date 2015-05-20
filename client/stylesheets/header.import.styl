@@ -68,6 +68,8 @@ header
 
 .dropdown
   .dropdown-toggle
+    span
+      display none
     &::after
       content: '\f0d7'
       @extend .font-awesome
@@ -177,6 +179,11 @@ header
     display block !important
     height auto !important
 
+  .dropdown
+    .dropdown-toggle
+      span
+        display inline-block
+        
   .nav
     float none
     li
