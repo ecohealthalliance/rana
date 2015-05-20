@@ -14,11 +14,11 @@ Template.map.groups = ->
 Template.map.query = ->
   Template.instance().query
 
-bounds = L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
-
 Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
-  lMap = L.map(@$('.vis-map')[0], maxBounds: bounds).setView([10, -0], 3)
+  lMap = L.map(@$('.vis-map')[0], 
+      maxBounds: L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
+    ).setView([10, -0], 3)
   L.tileLayer('//{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
     attribution: """Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.
     <br>
