@@ -3,13 +3,13 @@ Template.studies.helpers
   settings: () =>
 
     viewButton = (obj) ->
-      """<a class="btn btn-primary btn-view" for="#{obj.name}" href="/study/#{obj._id}">View</a>"""
+      """<a class="control view btn-view" for="#{obj.name}" href="/study/#{obj._id}" title="View"></a>"""
     addReportButton = (obj) ->
-      """<a class="btn btn-primary btn-add-report" for="#{obj.name}" href="/study/#{obj._id}/report?redirectOnSubmit=/studies">Add Report</a>"""
+      """<a class="control btn-add-report" for="#{obj.name}" href="/study/#{obj._id}/report?redirectOnSubmit=/studies" title="Add Report"></a>"""
     removeButton = (obj) ->
-      """<a class="btn btn-danger remove remove-form btn-remove" for="#{obj.name}" data-id="#{obj._id}">Remove</a>"""
+      """<a class="control remove remove-form btn-remove" for="#{obj.name}" data-id="#{obj._id}" title="Remove"></a>"""
     editButton = (obj) ->
-      """<a class="btn btn-edit btn-primary" for="#{obj.name}" href="/study/#{obj._id}?redirectOnSubmit=/studies">Edit</a>"""
+      """<a class="control btn-edit" for="#{obj.name}" href="/study/#{obj._id}?redirectOnSubmit=/studies" title="Edit"></a>"""
 
     isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
     schema = @collections.Studies.simpleSchema().schema()

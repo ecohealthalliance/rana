@@ -1,6 +1,13 @@
 .table > tbody > tr > td
   vertical-align middle
 
+.reactive-table
+  font-size 13px
+  th
+    color d-gray
+  .controls
+    width auto
+
 .reactive-table-options
   width 100%
   margin-bottom 10px
@@ -55,6 +62,48 @@
   .form-inline input
     vertical-align initial
 
+.controls
+  text-align right
+  vertical-align middle
+
+.control
+  vAlign()
+  padding 5px 3px   
+  color secondary
+  &:hover
+    color primary
+  &:before,
+  &:after
+    @extend .font-awesome
+    font-size 22px
+    vAlign()    
+    content ''
+    line-height 0
+  &.remove
+    color primary-strong
+    &:before
+      content '\f014'
+  &.view
+    &:before
+      content '\f002'
+  &.btn-edit
+    &:before
+      content '\f044'    
+      padding-top 2px
+  &.btn-add-report
+    position relative
+    &:hover
+      &:before
+        color darken(primary, 10%)
+    &:before
+      content '\f067'
+      font-size 12px
+      position absolute
+      left 7px
+      top 17px
+      color darken(secondary, 10%)
+    &:after
+      content '\f016'
 
 @media (max-width: 768px)
  

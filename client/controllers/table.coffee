@@ -123,17 +123,17 @@ settings = (tableType) =>
     fn: (val, obj) ->
       if obj.createdBy.userId == Meteor.userId()
         new Spacebars.SafeString("""
-          <a class="btn btn-edit btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
-          <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
+          <a class="control edit" href="/report/#{obj._id}?redirectOnSubmit=/table" title="Edit"></a>
+          <a class="control remove remove-form" data-id="#{obj._id}" title="Remove"></a>
         """)
       else if isAdmin
         new Spacebars.SafeString("""
-          <a class="btn btn-primary" href="/report/#{obj._id}">View</a>
-          <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
+          <a class="control view" href="/report/#{obj._id}" title="View"></a>
+          <a class="control remove remove-form" data-id="#{obj._id}" title="Remove"></a>
         """)
       else
         new Spacebars.SafeString("""
-          <a class="btn btn-primary btn-view" href="/report/#{obj._id}">View</a>
+          <a class="control view btn-view" href="/report/#{obj._id}" title="View"></a>
         """)
 
   showColumnToggles: true
