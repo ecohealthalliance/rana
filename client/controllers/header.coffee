@@ -1,14 +1,9 @@
 Template.header.events
-  'click a, click button' : (e) ->
-    $(e.currentTarget).blur()
-Template.navLinks.events
   'click a' : (e) ->
-    if $('.navbar-toggle').is(':visible') and !$(e.currentTarget).hasClass('dropdown-toggle')
+    $('.navbar-nav li, .navbar-brand').removeClass('active').blur()
+    if $('.navbar-toggle').is(':visible') and $('.navbar-collapse').hasClass('in') and !$(e.currentTarget).hasClass('dropdown-toggle')
       $('.navbar-collapse').collapse('toggle')
-    else 
-      $(".nav").find(".active").removeClass("active")
-      $(e.target).parent().toggleClass("active")
-
+Template.navLinks.events
   'click .sign-out' : () ->
     Meteor.logout()
 
@@ -17,3 +12,6 @@ Template.navLinks.helpers
   	Groups.findOne({path: 'rana'})?._id
   groupPath: () ->
     groupPath: 'rana'
+  checkActive: (routeName) ->
+    if Router.path(routeName, {groupPath: 'rana'}) is Router.current().location.get().path
+      'active'
