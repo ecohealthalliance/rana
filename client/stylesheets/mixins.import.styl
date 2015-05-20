@@ -14,7 +14,10 @@ addFont(fontTitle, allTypes = true, type = '')
     font-family fontTitle
 
 transition(time = .2s, prop = )
-  transition: time prop
+  -webkit-transition time prop
+  -moz-transition time prop
+  -o-transition time prop
+  transition time prop
 
 vAlign()
   display inline-block
@@ -49,7 +52,7 @@ loading(positioned=false)
     position absolute
     top 50%
     left 45%
-    transform translate(-50%, -50%)
+    centerPosition()
     z-index 100
   opacity 1
   font-size 200px
@@ -86,8 +89,10 @@ buttonHover(hoverBG, bg=none)
     transition()
 
 centerPosition(h=-50%,v=-50%)
+  -webkit-transform translate(h,v)
+  -moz-transform time prop
+  -o-transform time prop
   transform translate(h,v)
-
 cover()
   position absolute
   top 0
