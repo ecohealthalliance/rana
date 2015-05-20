@@ -3,6 +3,9 @@ Template.header.events
     $('.navbar-nav li, .navbar-brand').removeClass('active').blur()
     if $('.navbar-toggle').is(':visible') and $('.navbar-collapse').hasClass('in') and !$(e.currentTarget).hasClass('dropdown-toggle')
       $('.navbar-collapse').collapse('toggle')
+  'click button' : (e) ->
+    if $('.navbar-collapse').hasClass('in')
+      $(e.target).blur()
 Template.navLinks.events
   'click .sign-out' : () ->
     Meteor.logout()
