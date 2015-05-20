@@ -24,7 +24,7 @@
 
     this.When("I register an account", function(callback){
       helper.world.browser
-      .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
+      .url(helper.world.cucumber.mirror.rootUrl + "grrs/sign-in")
       .waitForExist("#at-signUp", 3000, function(err, exists){
         assert.ifError(err);
         if(!exists) {
