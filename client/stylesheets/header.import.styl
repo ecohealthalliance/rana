@@ -134,17 +134,20 @@ header
 .navbar-toggle
   border 1px solid white
   float right
-  padding 15px 10px
-  margin 8px 0 0 0
+  padding 13px 10px
+  margin 10px 0 0 0
   color white
   font-size 28px
   border-radius 4px
   font-size 14px
   line-height 0
-  &.active,
+  transition()
+  &:hover,
+  &:active,
   &:focus
     color black
     background trans-white
+    transition()
 
 .main-nav-last
   margin-right 0

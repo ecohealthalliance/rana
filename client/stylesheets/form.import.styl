@@ -354,21 +354,32 @@ textarea
   padding 0 5px
   font-size 80%
 
-.add-report
-  margin-bottom 10px
+.btn-inline
+  vAlign()
+  margin-left 20px
+  
+.name-action
+  span
+    vAlign()
+  span.action
+    font-size 70%
+    color #3F88A0
+    margin-left 15px
 
 @media (max-width: 992px)
   .panel
     .btn,
     button,
       padding 12px
-    input
-      min-height 47px
   .input-block
     margin-bottom 45px
     &:last-child
       margin-bottom 0
-      
+  .btn-inline
+    margin 20px 0 20px 0
+    width 25%
+    padding 12px
+    display block
 @media (max-width: 765px)
   .input-block
     .panel
@@ -380,6 +391,9 @@ textarea
       border-radius 0
       .panel-heading
         background #ebebeb
+  input[type="radio"], 
+  input[type="checkbox"]
+    margin 2px 0 0 0
   .tall-block
     min-height 0
   .short-block
@@ -398,3 +412,5 @@ textarea
   h3
     margin-top
 
+  .btn-inline
+    width 100%
