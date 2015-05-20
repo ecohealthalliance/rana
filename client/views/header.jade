@@ -13,27 +13,25 @@ template(name="header")
               +navLinks
 
 template(name="navLinks")
-  li
+  li(class="{{checkActive '/study'}}")
     a(href="/study") Add Study
-  li
+  li(class="{{checkActive '/studies'}}")
     a(href="/studies") View Studies
-  li
+  li(class="{{checkActive '/map'}}")
     a(href="/map") Map
-  li
+  li(class="{{checkActive '/table'}}")
     a(href="/table") View Reports
-
-  li.main-nav-last
+  li(class="main-nav-last {{checkActive '/group/rana/info'}}")
     a(href="/group/rana/info") About Ranavirus
+  li(class="{{checkActive '/help'}}")
+    a(href="/help") Help
   
   if currentUser
     li.nav-icon.dropdown
       a.dropdown-toggle.admin-settings(href="#" data-toggle="dropdown" aria-expanded="false")
         i.fa.fa-gear
+        span Settings
       ul.dropdown-menu(role="menu")
-        li
-          a(href="/help")
-            i.fa.fa-info-circle
-            span Help
         if isInRole 'admin' groupId
           li
             a(href="/group/rana") 
@@ -41,8 +39,6 @@ template(name="navLinks")
               span Group Admin
         +accountsHeaderButtons
   else
-    li
-      a(href="/help") Help
     li
       a(href="{{pathFor route='atSignIn'}}" class="sign-in navbar-btn")
         span Sign In 
