@@ -8,16 +8,39 @@ footer
   h1,
   h2
     margin 0
- 
-.footer
-  width 600px
-  margin 0 auto
+
+.footer-nav
+  position absolute
+  top 50%
+  left 50%
+  li
+    padding-right 10px
+    border-right 1px solid secondary-dark 
+    &:last-of-type
+      border 0
+  centerPosition()
+  a
+    color white
+    @extend .dark-shadow
+    &:hover,
+    &:focus
+      color body-text
+      text-decoration none
+      shadow(255,.1)
+      
+.logos
+  margin-top footer-padding
+  clearFix()
 
 .logo
   p
     display inline-block
     color l-gray
-    font-size 11px   
+    font-size 11px
+
+.mantle
+  float left
+  display inline-block
 
 .mantle
   float left
@@ -34,8 +57,10 @@ footer
     centerSmall()
       
 @media (max-width: 765px)
+
   .logo
     padding 0
+  
   .mantle
     text-align left
     float left
@@ -52,3 +77,29 @@ footer
       
   .footer
     width 100%
+
+  .footer-nav
+    position static
+    text-align center
+    padding 30px
+    background #3F88A0
+    margin-right -15px
+    margin-left -15px
+    top auto
+    left auto
+    transform initial
+    li
+      border-right 0
+      padding 0
+      margin-right 3px
+      &:last-of-type
+        margin 0
+      a
+        display block
+        background darken(secondary, 8%)
+        padding 12px 18px
+        border-radius 3px
+        &:active
+          background darken(secondary, 15%)
+          
+          

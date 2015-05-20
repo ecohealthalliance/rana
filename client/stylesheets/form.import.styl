@@ -32,25 +32,26 @@ section
   &.red
     background s-red
   &.odd
-    background s-gray
+    background lighten(secondary, 90%)
   &:first-child
-    padding-top 20px
+    padding-top 25px
+    h1
+      margin-top 0
   &.short-padding
     padding 30px 0
   &.instructions
     padding-top 30px
     padding-bottom 20px
-    margin-top 30px
-    border-top 2px solid l-gray
     h2
-      margin-bottom 5px
-    p
-      color d-gray
-      font-size 110%
-      span
-        color strong-primary
-        font-weight bold
-        font-size 15px
+      margin-bottom 0
+    
+.required-text
+  color d-gray
+  font-size 110%
+  span
+    color primary-strong
+    font-weight bold
+    font-size 15px
 
 .form-control
   margin-bottom 15px
@@ -194,7 +195,7 @@ textarea
   cursor pointer
   &:hover
     .infoIcon
-      color strong-primary
+      color primary-strong
 
 .padded-block
   padding 15px
@@ -217,8 +218,6 @@ textarea
 .study
   section
     &:first-child
-      padding-top 50px
-      padding-bottom 10px
       h3
         margin-top 0
   .form-group
@@ -228,6 +227,34 @@ textarea
       font-size 15px
   .file-upload
     margin-top 10px
+  .contact
+    padding-top 30px
+
+.study-name
+  margin-top 20px
+
+.study-link
+  &:hover,
+  &:focus
+    text-decoration none
+  .glyphicon
+    font-size 70%
+
+.csvUpload
+  padding-bottom 20px
+  
+.csv-file a.btn
+    display none
+
+.csv-error
+    color primary-strong
+    
+.controls
+    width 160px
+    text-align right
+
+.studies .controls
+    width 255px
 
 .check-list
   .list-group-item
@@ -261,7 +288,7 @@ textarea
 .file-upload
   .btn,
   label.btn
-    makeButton(btn-default, white, false, true)
+    makeButton(secondary, white, false, true)
     font-weight normal
     width 60%
 
@@ -287,22 +314,19 @@ textarea
   &::after
     content '*'
     display inline-block
-    color strong-primary
+    color primary-strong
     padding-left 2px
 
 .has-error .form-control
-  border-color strong-primary
+  border-color primary-strong
   margin-bottom 0
   
 .has-error .help-block
-  color strong-primary
+  color primary-strong
 
 .has-error
   label
-    color strong-primary
-
-.csvUpload
-  margin-top 15px
+    color primary-strong
 
 .upload-wrap
   margin-bottom 15px
@@ -311,9 +335,9 @@ textarea
   vAlign()
   margin-bottom 0
 
-.instructions-link
+.instructions-link,
+.instructions-link-icon
   color d-gray
-  vAlign()
   &:hover,
   &:focus
     text-decoration none
@@ -325,13 +349,13 @@ textarea
   span.glyphicon
     font-size 120%
     top 0
+    
+.instructions-link-icon
+  padding 0 5px
+  font-size 80%
 
-.study-link
-  &:hover,
-  &:focus
-    text-decoration none
-  .glyphicon
-    font-size 70%
+.add-report
+  margin-bottom 10px
 
 @media (max-width: 992px)
   .panel

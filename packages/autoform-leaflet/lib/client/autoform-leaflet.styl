@@ -74,7 +74,7 @@ animate(speed)
   margin-bottom 25px
 
 .leaflet-locate
-  makeButton(#377BB5, white)
+  makeButton(#3F88A0, white)
   
 .leaflet-clear
   makeButton(#ebebeb, #333, 255)
@@ -98,6 +98,26 @@ animate(speed)
     margin-right 5px
     font-size 20px
   
+
+marker-width = 22px
+marker-height = 40px
+arrow-top = (marker-height * 4 / 5)
+arrow-width = (marker-width * 3 / 4)
+arrow-height = (marker-height / 2)
+
+.map-marker-default
+  position relative
+  text-align center
+  // Shift marker position so it points to the correct location
+  margin-top (-(arrow-top + arrow-height))
+  margin-left (-(marker-width / 2))
+  text-shadow 0px 2px 5px rgba(0,0,0,.1)
+  &::before
+    content 'm'
+    display block
+    font-family icons
+    font-size marker-height
+    color #9D532A
 
 @media (max-width: 992px)
   .leaflet-canvas
