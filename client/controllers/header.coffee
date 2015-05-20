@@ -10,6 +10,8 @@ Template.navLinks.events
 Template.navLinks.helpers
   groupId: () ->
   	Groups.findOne({path: 'rana'})?._id
-  checkActive: (path) ->
-    if path is Router.current().location.get().path
+  groupPath: () ->
+    groupPath: 'rana'
+  checkActive: (routeName) ->
+    if Router.path(routeName, {groupPath: 'rana'}) is Router.current().location.get().path
       'active'

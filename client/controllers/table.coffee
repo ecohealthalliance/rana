@@ -122,18 +122,22 @@ settings = (tableType) =>
     hideToggle: true
     fn: (val, obj) ->
       if obj.createdBy.userId == Meteor.userId()
+        tablePath = Router.path 'table'
+        editPath = Router.path 'editReport', {reportId: obj._id}, {query: "redirectOnSubmit=#{tablePath}"}
         new Spacebars.SafeString("""
-          <a class="btn btn-edit btn-primary" href="/report/#{obj._id}?redirectOnSubmit=/table">Edit</a>
+          <a class="btn btn-edit btn-primary" href="#{editPath}">Edit</a>
           <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
         """)
       else if isAdmin
+        viewPath = Router.path 'editReport', {reportId: obj._id}
         new Spacebars.SafeString("""
-          <a class="btn btn-primary" href="/report/#{obj._id}">View</a>
+          <a class="btn btn-primary" href="#{viewPath}">View</a>
           <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
         """)
       else
+        viewPath = Router.path 'editReport', {reportId: obj._id}
         new Spacebars.SafeString("""
-          <a class="btn btn-primary btn-view" href="/report/#{obj._id}">View</a>
+          <a class="btn btn-primary btn-view" href="#{viewPath}">View</a>
         """)
 
   showColumnToggles: true

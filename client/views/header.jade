@@ -5,7 +5,7 @@ template(name="header")
         .container
           .navbar-header
             button.navbar-toggle.collapsed(type="button", data-toggle="collapse" data-target=".navbar-collapse") =
-            a.navbar-brand(href="/")
+            a.navbar-brand(href="{{pathFor route='home'}}")
               span M
               h1 Global Ranavirus #[br] Reporting System
           .navbar-collapse.collapse
@@ -13,18 +13,20 @@ template(name="header")
               +navLinks
 
 template(name="navLinks")
-  li(class="{{checkActive '/study'}}")
-    a(href="/study") Add Study
-  li(class="{{checkActive '/studies'}}")
-    a(href="/studies") View Studies
-  li(class="{{checkActive '/map'}}")
-    a(href="/map") Map
-  li(class="{{checkActive '/table'}}")
-    a(href="/table") View Reports
-  li(class="main-nav-last {{checkActive '/group/rana/info'}}")
-    a(href="/group/rana/info") About Ranavirus
-  li(class="{{checkActive '/help'}}")
-    a(href="/help") Help
+  li(class="{{checkActive 'newStudy'}}")
+    a(href="{{pathFor route='newStudy'}}") Add Study
+  li(class="{{checkActive 'studies'}}")
+    a(href="{{pathFor route='studies'}}") View Studies
+  li(class="{{checkActive 'map'}}")
+    a(href="{{pathFor route='map'}}") Map
+  li(class="{{checkActive 'table'}}")
+    a(href="{{pathFor route='table'}}") View Reports
+
+  li.main-nav-last(class="{{checkActive 'groupInfo'}}")
+    a(href="{{pathFor route='groupInfo' data=groupPath}}") About Ranavirus
+
+  li(class="{{checkActive 'help'}}")
+    a(href="{{pathFor route='help'}}") Help
   
   if currentUser
     li.nav-icon.dropdown
@@ -34,7 +36,7 @@ template(name="navLinks")
       ul.dropdown-menu(role="menu")
         if isInRole 'admin' groupId
           li
-            a(href="/group/rana") 
+            a(href="{{pathFor route='groupHome' data=groupPath}}") 
               i.fa.fa-group
               span Group Admin
         +accountsHeaderButtons
