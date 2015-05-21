@@ -10,19 +10,19 @@ template(name="home")
       p The Global Ranavirus Reporting System allows you to create and manage records for Ranavirus studies and reports, import and export data, view tables and maps of reports, and leave reviews and comments on reports.
     ul.row.simple-nav.list-unstyled
       li.col-sm-3.col-xs-6
-        a(href="/study")
+        a(href="{{pathFor route='newStudy'}}")
           i.fa.fa-plus-square
           h2 Add a Study          
       li.col-sm-3.col-xs-6
-        a(href="/studies")
+        a(href="{{pathFor route='studies'}}")
           i.fa.fa-file-text-o
           h2 View Studies
       li.col-sm-3.col-xs-6
-        a(href="/table")
+        a(href="{{pathFor route='table'}}")
           i.fa.fa-file-text
           h2 View Reports  
       li.col-sm-3.col-xs-6
-        a(href="/map")
+        a(href="{{pathFor route='map'}}")
           i.fa.fa-map-marker
           h2 Map
     .home-help

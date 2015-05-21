@@ -61,7 +61,7 @@
           height: 1024
         }).
         timeoutsAsyncScript(2000).
-        url(helper.world.cucumber.mirror.rootUrl).
+        url(helper.world.cucumber.mirror.rootUrl + 'grrs').
         call(function(){
           helper.resetTestDB([], next);
         });

@@ -3,13 +3,18 @@ Template.studies.helpers
   settings: () =>
 
     viewButton = (obj) ->
-      """<a class="control view btn-view" for="#{obj.name}" href="/study/#{obj._id}" title="View"></a>"""
+      studyPath = Router.path 'editStudy', {studyId: obj._id}
+      """<a class="control view btn-view" for="#{obj.name}" href="study/#{obj._id}" title="View"></a>"""
     addReportButton = (obj) ->
-      """<a class="control btn-add-report" for="#{obj.name}" href="/study/#{obj._id}/report?redirectOnSubmit=/studies" title="Add Report"></a>"""
+      studiesPath = Router.path 'studies'
+      addReportPath = Router.path 'newReport', {studyId: obj._id}, {query: "redirectOnSubmit=#{studiesPath}"}
+      """<a class="control btn-add-report" for="#{obj.name}" href="study/#{obj._id}/report?redirectOnSubmit=/studies" title="Add Report"></a>"""
     removeButton = (obj) ->
       """<a class="control remove remove-form btn-remove" for="#{obj.name}" data-id="#{obj._id}" title="Remove"></a>"""
     editButton = (obj) ->
-      """<a class="control btn-edit" for="#{obj.name}" href="/study/#{obj._id}?redirectOnSubmit=/studies" title="Edit"></a>"""
+      studiesPath = Router.path 'studies'
+      editPath = Router.path 'editStudy', {studyId: obj._id}, {query: "redirectOnSubmit=#{studiesPath}"}
+      """<a class="control btn-edit" for="#{obj.name}" href="study/#{obj._id}?redirectOnSubmit=/studies" title="Edit"></a>"""
 
     isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
     schema = @collections.Studies.simpleSchema().schema()
