@@ -1,8 +1,12 @@
 template(name="table")
   section
     .container.reports-table
-      button.toggle-filter.btn.btn-primary(href="#") Filter Tables
-      button.export.btn.btn-primary(href="#") Export
+      button.toggle-filter.btn.btn-primary(href="#") 
+        span Filter Tables
+        i.fa.fa-filter
+      button.export.btn.btn-primary.btn-inline(href="#") 
+        span Export
+        i.fa.fa-download
       .filter-controls.table-filters.hidden
         +filterControls query=query
 
