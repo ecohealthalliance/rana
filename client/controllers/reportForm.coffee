@@ -63,3 +63,10 @@ Template.reportFormComplete.events
     $(e.target).toggleClass('showing')
     $('.review-content').toggleClass('hidden-panel')
     $('.page-wrap').toggleClass('curtain')
+
+Template.reportFormComplete.created = () ->
+  $('#ranavirus-report').hide()
+  reset = () ->
+    AutoForm.resetForm('ranavirus-report')
+    $('#ranavirus-report').show()
+  setTimeout reset, 0
