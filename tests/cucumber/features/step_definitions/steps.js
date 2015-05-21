@@ -45,6 +45,7 @@
           helper.world.scenario.getName() +
           ".png"
         )
+        .waitForExist('[type=submit]', assert.ifError)
         .click('[type=submit]')
         .call(callback);
     });
