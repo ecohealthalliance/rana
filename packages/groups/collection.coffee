@@ -41,7 +41,8 @@ GroupSchema.messages {
 }
 
 Groups.before.insert (userId, doc) ->
-  doc.path = doc.name.toLowerCase().replace /[^a-z0-9]+/g, '-'
+  unless doc.path
+    doc.path = doc.name.toLowerCase().replace /[^a-z0-9]+/g, '-'
 
 Groups.after.insert (userId, doc) ->
   if @._id

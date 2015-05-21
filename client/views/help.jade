@@ -7,7 +7,7 @@ template(name="help")
           ul.list-unstyled
             each videos
               li 
-                a.topic(href="/help/{{link title}}" class="{{ addActive title ../video.title}}" ) #{title}
+                a.topic(href="{{pathFor route='helpTopic' data=link}}" class="{{ addActive title ../video.title}}" ) #{title}
         +topic video=video
 
 template(name="topic")

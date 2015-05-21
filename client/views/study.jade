@@ -5,5 +5,5 @@ template(name="study")
         h2 {{ study.name }}
         .row
           .col-sm-3
-            a.btn.btn-primary.btn-block.add-report(href="/study/{{study._id}}/report?redirectOnSubmit=/study/{{study._id}}") Add a report
+            a.btn.btn-primary.btn-block.add-report(href="{{pathFor route='newReport' data=studyId query=redirectOnSubmit}}") Add a report
   +studyForm

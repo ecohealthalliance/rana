@@ -3,5 +3,5 @@ Template.help.helpers
     if navTitle is vidTitle
       'active'
 
-  link : (title) ->
-    title.replace RegExp(' ', 'g'), '-'
+  link : () ->
+    topic: @title.replace RegExp(' ', 'g'), '-'
