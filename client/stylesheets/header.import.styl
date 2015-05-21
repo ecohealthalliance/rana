@@ -109,7 +109,6 @@ header
 .navbar-brand 
   padding 6px 0
   transition(.2s, color)  
-  &:hover,
   &:focus
     span,
     h1
@@ -154,6 +153,17 @@ header
 
 .main-nav-last
   margin-right 0
+
+
+@media (max-width: 768px) 
+  .navbar-brand 
+    transition(.2s, color)
+    &:hover,
+    &:focus
+      span,
+      h1
+        color lighten(secondary,80%)
+        transition(.2s, color)
      
 @media (max-width: 1000px) 
   .navbar-header
