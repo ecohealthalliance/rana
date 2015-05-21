@@ -68,3 +68,10 @@ AutoForm.hooks
 
           if study and study.csvFile
             @loadCSVData study.csvFile, study, res
+
+Template.studyFormComplete.created = () ->
+  $('#ranavirus-study').hide()
+  reset = () ->
+    AutoForm.resetForm('ranavirus-study')
+    $('#ranavirus-study').show()
+  setTimeout reset, 0
