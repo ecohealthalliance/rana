@@ -125,19 +125,19 @@ settings = (tableType) =>
         tablePath = Router.path 'table'
         editPath = Router.path 'editReport', {reportId: obj._id}, {query: "redirectOnSubmit=#{tablePath}"}
         new Spacebars.SafeString("""
-          <a class="control edit" href="report/#{obj._id}?redirectOnSubmit=/table" title="Edit"></a>
+          <a class="control edit" href="#{editPath}" title="Edit"></a>
           <a class="control remove remove-form" data-id="#{obj._id}" title="Remove"></a>
         """)
       else if isAdmin
         viewPath = Router.path 'editReport', {reportId: obj._id}
         new Spacebars.SafeString("""
-          <a class="control view" href="report/#{obj._id}" title="View"></a>
+          <a class="control view" href="#{editPath}" title="View"></a>
           <a class="control remove remove-form" data-id="#{obj._id}" title="Remove"></a>
         """)
       else
         viewPath = Router.path 'editReport', {reportId: obj._id}
         new Spacebars.SafeString("""
-          <a class="control view btn-view" href="report/#{obj._id}" title="View"></a>
+          <a class="control view btn-view" href="#{viewPath}" title="View"></a>
         """)
 
   showColumnToggles: true
