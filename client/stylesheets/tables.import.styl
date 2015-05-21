@@ -68,7 +68,7 @@
 
 .control
   vAlign()
-  padding 5px 3px   
+  padding 5px   
   color secondary
   &:hover
     color primary
@@ -81,6 +81,8 @@
     line-height 0
   &.remove
     color primary-strong
+    &:hover
+      color darken(primary-strong, 10%)
     &:before
       content '\f014'
   &.view
@@ -99,7 +101,7 @@
       content '\f067'
       font-size 12px
       position absolute
-      left 7px
+      left 8px
       top 17px
       color darken(secondary, 10%)
     &:after
