@@ -1,6 +1,24 @@
 .table > tbody > tr > td
   vertical-align middle
 
+.table-striped > tbody > tr:nth-of-type(odd)
+  background lighten(secondary-subtle,50%)
+
+.table-hover>tbody>tr
+  transition()
+
+.table-hover>tbody>tr:hover
+  background lighten(primary-subtle,50%)
+  transition()
+
+.table>thead>tr>th, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>tbody>tr>td, 
+.table>tfoot>tr>td
+  border-color darken(secondary-subtle, 10%)
+
 .reactive-table
   font-size 13px
   th
@@ -74,15 +92,16 @@
     color primary
   &:before,
   &:after
-    @extend .font-awesome
-    font-size 22px
     vAlign()    
+    @extend .font-awesome
     content ''
+    font-size 22px
     line-height 0
   &.remove
-    color primary-strong
+    color d-gray
+    font-size 24px
     &:hover
-      color darken(primary-strong, 10%)
+      color primary-strong
     &:before
       content '\f014'
   &.view
@@ -92,6 +111,7 @@
     &:before
       content '\f044'    
       padding-top 2px
+      font-size 24px
   &.btn-add-report
     position relative
     &:hover
@@ -101,8 +121,8 @@
       content '\f067'
       font-size 12px
       position absolute
-      left 8px
-      top 17px
+      left 9px
+      top 18px
       color darken(secondary, 10%)
     &:after
       content '\f016'
