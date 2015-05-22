@@ -18,7 +18,7 @@ template(name="studyFormComplete")
               else eq type 'update'
                 span.name  #{study.name} 
                 span.action Update Study
-                a.btn.btn-primary.btn-inline.add-report(href="/study/{{study._id}}/report?redirectOnSubmit=/study/{{study._id}}") Add a report
+                a.btn.btn-primary.btn-inline.add-report(href="{{pathFor route='newReport' data=studyId query=redirectOnSubmit}}") Add a report
             p.required-text #[span *] Indicates required field
             
             .row.space-top-3

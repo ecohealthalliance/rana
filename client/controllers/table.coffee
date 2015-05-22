@@ -131,7 +131,7 @@ settings = (tableType) =>
       else if isAdmin
         viewPath = Router.path 'editReport', {reportId: obj._id}
         new Spacebars.SafeString("""
-          <a class="control view" href="#{editPath}" title="View"></a>
+          <a class="control view" href="#{viewPath}" title="View"></a>
           <a class="control remove remove-form" data-id="#{obj._id}" title="Remove"></a>
         """)
       else

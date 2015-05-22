@@ -10,7 +10,7 @@ template(name="reportFormComplete")
               span.action New Report
             else if isUpdate
               span.action Update Report
-            a.btn.btn-primary.btn-inline.study-link(href='/study/#{study._id}') View Study
+            a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
 
       +autoForm(
         id="ranavirus-report"

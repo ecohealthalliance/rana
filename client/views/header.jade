@@ -5,7 +5,7 @@ template(name="header")
         .container
           .navbar-header
             button.navbar-toggle.collapsed(type="button", data-toggle="collapse" data-target=".navbar-collapse") Menu
-            a.navbar-brand(href="/")
+            a.navbar-brand(href="{{pathFor route='home'}}")
               span M
               h1 Global Ranavirus #[br] Reporting System
           .navbar-collapse.collapse

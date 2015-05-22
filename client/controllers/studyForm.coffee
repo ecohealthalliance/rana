@@ -1,14 +1,13 @@
 getCollections = () -> @collections
 
-Template.study.helpers
+Template.studyFormComplete.helpers
+
   studyId: ->
     studyId: @study._id
 
   redirectOnSubmit: ->
     editPath = Router.path 'editStudy', {studyId: @study._id}
     "redirectOnSubmit=#{editPath}"
-
-Template.studyFormComplete.helpers
 
   studyDoc: =>
     Template.currentData()?.study or { contact: @contactFromUser() }
