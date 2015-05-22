@@ -18,7 +18,7 @@ Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
   lMap = L.map(@$('.vis-map')[0], 
       maxBounds: L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
-    ).setView([10, -0], 3)
+    ).setView([10, -0], 2)
   L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
     attribution: """Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.
     <br>
