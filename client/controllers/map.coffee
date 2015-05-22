@@ -19,7 +19,7 @@ Template.map.rendered = ->
   lMap = L.map(@$('.vis-map')[0], 
       maxBounds: L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
     ).setView([10, -0], 3)
-  L.tileLayer('//{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
     attribution: """Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.
     <br>
     CRS:
@@ -85,6 +85,10 @@ Template.map.rendered = ->
         color = colors[0]
       studyName = getCollections().Studies.findOne(report.studyId).name
       if report.eventLocation and report.eventLocation isnt "," and report.eventLocation isnt null
+        
+        mapPath = Router.path 'map'
+        editPath = Router.path 'editReport', {reportId: report._id}, {query: "redirectOnSubmit=#{mapPath}"}
+
         L.marker(report.eventLocation.geo.coordinates.reverse(), {
           icon: L.divIcon({
             className: 'map-marker-container'
@@ -113,7 +117,7 @@ Template.map.rendered = ->
             <dt>Reported By</dt>
             <dd>#{report.createdBy.name}</dd>
           </dl>
-          <a class="btn btn-primary btn-block btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">
+          <a class="btn btn-primary btn-block btn-edit" href="#{editPath}">
             View/Edit
           </a>
         </div>

@@ -17,9 +17,10 @@ AutoForm.addHooks(
         # This is the timeout after a mouseover event
         extendedTimeOut: "100000"
       }
+      editPath = Router.path 'editReport', {reportId: @docId}
       toastr.success("""
       <div>#{operation} successful!</div>
-      <a href="/report/#{@docId}">Edit Report</a>
+      <a href="#{editPath}">Edit Report</a>
       """)
       window.scrollTo(0, 0)
       if template.data.redirectOnSubmit
@@ -57,9 +58,23 @@ Template.reportFormComplete.helpers
   isUpdate: ->
     Template.currentData().type == 'update'
 
+  studyId: ->
+    studyId: @study._id
+
+Template.reportFormObfuscated.helpers
+  studyId: ->
+    studyId: @study._id
+
 Template.reportFormComplete.events
 
   'click .review-panel-header': (e)->
     $(e.target).toggleClass('showing')
     $('.review-content').toggleClass('hidden-panel')
     $('.page-wrap').toggleClass('curtain')
+
+Template.reportFormComplete.created = () ->
+  $('#ranavirus-report').hide()
+  reset = () ->
+    AutoForm.resetForm('ranavirus-report')
+    $('#ranavirus-report').show()
+  setTimeout reset, 0
