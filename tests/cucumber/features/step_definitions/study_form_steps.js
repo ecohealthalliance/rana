@@ -214,6 +214,14 @@
       }).call(callback);
     });
 
+  this.Then('I should see the study form', function(callback){
+    helper.world.browser.waitForVisible('#ranavirus-study', 2000,
+    function(err, result){
+      assert.equal(err, null);
+      assert(result, "Missing study form");
+    }).call(callback);
+  });
+
   };
 
 })();
