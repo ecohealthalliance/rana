@@ -248,6 +248,15 @@
         }
       }).call(callback);
     });
+
+    this.Then('I should see the report form', function(callback){
+      helper.world.browser.waitForVisible('#ranavirus-report', 2000,
+      function(err, result){
+        assert.equal(err, null);
+        assert(result, "Missing report form");
+      }).call(callback);
+    });
+
   };
 
 })();
