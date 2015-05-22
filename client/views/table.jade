@@ -1,6 +1,6 @@
 template(name="table")
-  section
-    .container.reports-table
+  section.rm-pad-btm
+    .container
       button.toggle-filter.btn.btn-primary(href="#") 
         span Filter Tables
         i.fa.fa-filter
@@ -11,13 +11,15 @@ template(name="table")
         +filterControls query=query
 
   section.rm-pad-top
-    .container.reports-table
+    .container
       h1 Full Reports
-      +reactiveTable collection="reports" settings=settings filters=filters
+      .reports-table
+        +reactiveTable collection="reports" settings=settings filters=filters
   section.rm-pad-top
-    .container.reports-table
+    .container
       h1 Obfuscated Reports
-      +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
+      .reports-table
+        +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
 
 template(name="noReports")
   h3 No Reports Found
