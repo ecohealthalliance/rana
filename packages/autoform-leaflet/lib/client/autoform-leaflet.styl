@@ -10,7 +10,6 @@ makeButton(color, text, shadow = 0)
   &:hover,
   &:focus
     background darker
-    color white
     transition .2s
     border-color darker
   &:active
@@ -22,11 +21,11 @@ loading(positioned=false)
   if positioned
     position absolute
     top 50%
-    left 45%
+    left 43%
     transform translate(-50%, -50%)
     z-index 100
   opacity 1
-  font-size 100px
+  font-size 180px
   line-height 0
 
 animate(speed)
@@ -37,7 +36,7 @@ animate(speed)
 
 .leaflet-canvas
   min-width 100%
-  min-height 500px
+  min-height 550px
 
 .leaflet-search
   margin-top 16px
@@ -69,6 +68,14 @@ animate(speed)
 .form-group label
   width 300px
 
+.location-details-wrap
+  position relative
+
+.location-details
+  .form-group-header
+    &:first-of-type
+      margin-top 0
+
 .location-btns
   margin-top 15px
   margin-bottom 25px
@@ -90,7 +97,12 @@ animate(speed)
     opacity .7
     transition .2s
 
+.button-default[disabled], 
+.btn[disabled]
+  background #EBEBEB
+
 .btn-loading
+  background #CCC
   .loader
     display inline-block
     vertical-align middle
@@ -121,8 +133,18 @@ arrow-height = (marker-height / 2)
 
 @media (max-width: 992px)
   .leaflet-canvas
-    margin-top 20px
+    margin-top 0
   .location-btns
     button
       margin-bottom 10px
       padding 15px
+  .location-details
+    margin-top 30px
+  .leaflet-canvas
+    min-height 400px
+  .loading .loader
+    left 36%
+
+@media (max-width: 768px)
+  .leaflet-canvas
+    min-height 350px
