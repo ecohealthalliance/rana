@@ -1,5 +1,13 @@
 getCollections = () -> @collections
 
+Template.study.helpers
+  studyId: ->
+    studyId: @study._id
+
+  redirectOnSubmit: ->
+    editPath = Router.path 'editStudy', {studyId: @study._id}
+    "redirectOnSubmit=#{editPath}"
+
 Template.studyFormComplete.helpers
 
   studyDoc: =>
@@ -30,14 +38,16 @@ AutoForm.hooks
         timeOut: "100000"
         # This is the timeout after a mouseover event
         extendedTimeOut: "100000"
+      editPath = Router.path 'editStudy', {studyId: @docId}
       toastr.success("""
       <div>#{operation} successful!</div>
-      <a href="/study/#{@docId}">Edit Study</a>
+      <a href="#{editPath}">Edit Study</a>
       """)
       if template.data.redirectOnSubmit
         Router.go template.data.redirectOnSubmit
       else
         window.scrollTo(0, 0)
+        $('#ranavirus-study').show()
 
     onError: (operation, error) ->
       errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")
@@ -61,3 +71,10 @@ AutoForm.hooks
 
           if study and study.csvFile
             @loadCSVData study.csvFile, study, res
+
+Template.studyFormComplete.created = () ->
+  $('#ranavirus-study').hide()
+  reset = () ->
+    AutoForm.resetForm('ranavirus-study')
+    $('#ranavirus-study').show()
+  setTimeout reset, 0

@@ -10,7 +10,7 @@
   module.exports = function () {
     this.visit = function (path, callback) {
       this.browser
-      .url(url.resolve(process.env.ROOT_URL, path))
+      .url(url.resolve(process.env.ROOT_URL, 'grrs/' + path))
       .waitForExist(".container", function(err, exists){
         assert(!err);
         assert(exists, "Could not find container element");

@@ -61,6 +61,8 @@ header
         transition(background-color)
         @extend .dark-shadow
   .admin-settings
+    span
+      display none
     i
       font-size 18px
       padding-right 3px
@@ -109,8 +111,7 @@ header
   &:focus
     span,
     h1
-      color body-text
-      @extend .light-shadow
+      color lighten(secondary,80%)
       transition(.2s, color)
   h1
     margin 0
@@ -235,14 +236,15 @@ header
             padding 10px 15px 10px 40px
             &:hover
               background primary
-    .active a
-      background none
     >li>a.navbar-btn 
       width 50%
       text-align center
       margin 15px auto 8px auto
       padding 15px
-        
+    .admin-settings
+      span
+        display inline-block
+          
 @media (min-width: 768px) and (max-width: 1000px) 
   .nav
     li

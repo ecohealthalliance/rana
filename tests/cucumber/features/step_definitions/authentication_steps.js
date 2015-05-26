@@ -23,7 +23,7 @@
     this.When("I register an account", function(callback){
       var that = this;
       this.browser
-      .url(url.resolve(process.env.ROOT_URL, "sign-in"))
+      .url(url.resolve(process.env.ROOT_URL, "grrs/sign-in"))
       .waitForExist("#at-signUp", 3000, function(err, exists){
         assert.ifError(err);
         if(!exists) {

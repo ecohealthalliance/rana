@@ -1,9 +1,9 @@
 template(name="csvUpload")
-  section.rm-pad.csvUpload
+  section.csvUpload
     .container
       .upload-wrap
         h3.upload-file CSV file upload
-        a.instructions-link(href='/importInstructions' target='_blank')
+        a.instructions-link(href="{{pathFor route='importInstructions'}}" target='_blank')
           span CSV import instructions
           span.glyphicon.glyphicon-info-sign
       .csv-error #{csvError}

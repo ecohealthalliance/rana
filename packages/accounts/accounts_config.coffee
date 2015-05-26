@@ -9,7 +9,8 @@ keyToLabel = (key)->
       label += c
   return label
 
-AccountsTemplates.configureRoute "signIn"
+AccountsTemplates.configureRoute "signIn",
+  path: '/grrs/sign-in'
 
 schema = UserProfileSchema.schema()
 for key in _.keys schema

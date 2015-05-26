@@ -6,13 +6,13 @@ template(name="table")
       .filter-controls.table-filters.hidden
         +filterControls query=query
 
-  section
+  section.rm-pad-top
     .container.reports-table
-      h2 Full Reports
+      h1 Full Reports
       +reactiveTable collection="reports" settings=settings filters=filters
-  section
+  section.rm-pad-top
     .container.reports-table
-      h2 Obfuscated Reports
+      h1 Obfuscated Reports
       +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
 
 template(name="noReports")

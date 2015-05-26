@@ -1,5 +1,7 @@
 getCollections = => @collections
 
+BASE_PATH = '/grrs'
+
 Router.configure
   layoutTemplate: "layout"
   loadingTemplate: "loading"
@@ -11,10 +13,13 @@ Router.onRun () ->
     analytics.page @path
   @next()
 
-Router.route('/', ()-> @redirect('/group/rana'))
+Router.route('/', ()-> @redirect BASE_PATH)
+
+Router.route BASE_PATH + "/",
+  name: 'home'
 
 Router.route('newReport',
-  path: '/study/:studyId/report'
+  path: BASE_PATH + '/study/:studyId/report'
   template: 'reportForm'
   where: 'client',
   data: ->
@@ -30,7 +35,7 @@ Router.route('newReport',
 )
 
 Router.route('editReport',
-  path: '/report/:reportId'
+  path: BASE_PATH + '/report/:reportId'
   template: 'reportForm'
   where: 'client'
   data: ->
@@ -64,7 +69,7 @@ Router.route('editReport',
 )
 
 Router.route('newStudy',
-  path: '/study'
+  path: BASE_PATH + '/study'
   template: 'studyForm'
   where: 'client'
   data: ->
@@ -74,7 +79,7 @@ Router.route('newStudy',
 )
 
 Router.route('editStudy',
-  path: '/study/:studyId'
+  path: BASE_PATH + '/study/:studyId'
   template: 'study'
   where: 'client'
 
@@ -104,15 +109,26 @@ Router.route('editStudy',
     ]
 )
 
-Router.route('/studies',
+Router.route('studies',
+  path: BASE_PATH + '/studies'
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe "groupByPath", "rana"
+    ]
 )
 
-Router.route('/table',
+Router.route('table',
+  path: BASE_PATH + '/table'
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe "groupByPath", "rana"
+    ]
 )
 
-Router.route('/map',
+Router.route('map',
+  path: BASE_PATH + '/map'
   where: 'client'
   waitOn: ->
     [
@@ -120,12 +136,39 @@ Router.route('/map',
     ]
 )
 
-Router.route('/info',
+Router.route('info',
+  path: BASE_PATH + '/info'
   where: 'client'
 )
 
-Router.route('/importInstructions',
+Router.route('importInstructions',
+  path: BASE_PATH + '/importInstructions'
   where: 'client'
+)
+
+Router.route('help',
+  path: BASE_PATH + '/help'
+  where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe "videos"
+    ]
+  data: ->
+    videos: getCollections().Videos.find()
+    video: getCollections().Videos.find().fetch()[0]
+)
+
+Router.route('helpTopic',
+  path: BASE_PATH + '/help/:topic'
+  where: 'client'
+  template: 'help'
+  waitOn: ->
+    [
+      Meteor.subscribe "videos"
+    ]
+  data: ->
+    videos: getCollections().Videos.find()
+    video: getCollections().Videos.findOne({title: @params.topic.replace RegExp('-', 'g'), ' ' })
 )
 
 Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'newStudy']}

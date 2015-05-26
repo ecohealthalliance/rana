@@ -1,0 +1,90 @@
+menu-color = darken(secondary, 15%)
+
+
+.help-topics-wrap
+  margin-bottom 50px
+.help-segment
+  float left
+  margin-bottom 40px
+  h2
+    color secondary
+.script
+  margin 20px 0 30px 0
+.topic-content
+  h1
+    margin-top 0
+  &.active
+    display block 
+.help
+  .content
+    padding-left 300px
+.topics
+  padding-top header-height+25
+  position absolute
+  bottom 0
+  top 0
+  background lighten(secondary,90%)
+  width 275px
+  h1
+    margin-bottom 10px
+    font-size 200%
+    color menu-color
+    padding 0 15px
+    @extend .light-shadow
+  ul
+    border-top 2px solid lighten(secondary-light, 40%)
+  li
+    position relative
+    border-radius 0
+    border-bottom 1px solid lighten(secondary-light, 40%)
+    &:last-of-type
+      border 0
+  a
+    display block
+    padding 10px 15px
+    color menu-color
+    font-weight bold
+    &:after
+      position absolute
+      right 10px
+      top 50%
+      centerPosition(0,-50%)
+      content '\f0da'
+      @extend .font-awesome
+      font-size 16px
+      color menu-color
+    &:hover,
+    &:focus
+      text-decoration none
+      background lgray
+    &.active
+      background primary
+      color white
+      @extend .dark-shadow
+      &:after
+        color white
+
+.embed-responsive.embed-responsive-16by9
+  padding-bottom 55.25%
+
+.html5-video-container
+  background white
+
+@media (max-width: 768px)
+  .topics
+    padding-left 0
+    padding-right 0
+    position static
+    padding-top 10px
+    width 100%
+    margin-top -25px
+    a
+      padding-left 15px
+      padding-right 15px
+      &:after
+        display none
+  .help
+    .content
+      margin-top 30px
+      width 100%
+      padding 0 15px

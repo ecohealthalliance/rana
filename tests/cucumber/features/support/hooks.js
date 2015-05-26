@@ -416,7 +416,7 @@
           height: 1024
         }).
         timeoutsAsyncScript(2000).
-        url(process.env.ROOT_URL).
+        url(process.env.ROOT_URL + 'grrs').
         call(function(){
           that.resetTestDB([], beforeDone);
         });

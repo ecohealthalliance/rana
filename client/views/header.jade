@@ -1,0 +1,47 @@
+template(name="header")
+  header
+    nav.navbar
+      .fluid-container
+        .container
+          .navbar-header
+            button.navbar-toggle.collapsed(type="button", data-toggle="collapse" data-target=".navbar-collapse") =
+            a.navbar-brand(href="{{pathFor route='home'}}")
+              span M
+              h1 Global Ranavirus #[br] Reporting System
+          .navbar-collapse.collapse
+            ul.nav.navbar-nav.navbar-right
+              +navLinks
+
+template(name="navLinks")
+  li(class="{{checkActive 'newStudy'}}")
+    a(href="{{pathFor route='newStudy'}}") Add Study
+  li(class="{{checkActive 'studies'}}")
+    a(href="{{pathFor route='studies'}}") View Studies
+  li(class="{{checkActive 'map'}}")
+    a(href="{{pathFor route='map'}}") Map
+  li(class="{{checkActive 'table'}}")
+    a(href="{{pathFor route='table'}}") View Reports
+
+  li.main-nav-last(class="{{checkActive 'groupInfo'}}")
+    a(href="{{pathFor route='groupInfo' data=groupPath}}") About Ranavirus
+
+  li(class="{{checkActive 'help'}}")
+    a(href="{{pathFor route='help'}}") Help
+  
+  if currentUser
+    li.nav-icon.dropdown
+      a.dropdown-toggle.admin-settings(href="#" data-toggle="dropdown" aria-expanded="false")
+        i.fa.fa-gear
+        span Settings
+      ul.dropdown-menu(role="menu")
+        if isInRole 'admin' groupId
+          li
+            a(href="{{pathFor route='groupHome' data=groupPath}}") 
+              i.fa.fa-group
+              span Group Admin
+        +accountsHeaderButtons
+  else
+    li
+      a(href="{{pathFor route='atSignIn'}}" class="sign-in navbar-btn")
+        span Sign In 
+        i.fa.fa-sign-in
