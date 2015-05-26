@@ -66,7 +66,6 @@ header
     i
       font-size 18px
       padding-right 3px
-      
 
 .dropdown
   .dropdown-toggle
@@ -82,24 +81,34 @@ header
   
   &.open
     .dropdown-toggle
-      background primary
-      &:focus
-        background primary
       &::after
-        content: '\f0d8'
+        content: '\f0d7'
+        @extend .font-awesome
+        padding-left 4px
+        line-height 0
+      &:focus
+        outline 0
+    
+    &.open
+      .dropdown-toggle
+        background primary
+        &:focus
+          background primary
+        &::after
+          content: '\f0d8'
 
-.dropdown-menu
-  background nav-hover
-  > li 
-    border-bottom 1px solid primary-dark
-    &:last-of-type
-      border 0
-    > a
-      color white
-      padding 10px 15px
-      &:hover
-        background secondary
+  .dropdown-menu
+    background nav-hover
+    > li 
+      border-bottom 1px solid primary-dark
+      &:last-of-type
+        border 0
+      > a
         color white
+        padding 10px 15px
+        &:hover
+          background secondary
+          color white
 
 .navbar-nav .active a,
 .navbar-nav .active a:focus
@@ -223,9 +232,6 @@ header
     h1
       font-size 14px
       line-height 14px
-  .navbar-nav
-    margin-right 0
-    margin-top 0
   .navbar .btn, .navbar .btn-default
     margin-left auto
   .container>.navbar-header
@@ -241,14 +247,10 @@ header
     &.collapse,
     &.collapsing
       padding 0
-  .dropdown-menu
-    padding-top 0
-    position static
-    min-width 100%
-    background none
-    box-shadow none
-    border 0
+
   .navbar-nav 
+    margin-right 0
+    margin-top 0
     .open
       .dropdown-menu
         border-top 4px solid primary-dark
@@ -269,7 +271,14 @@ header
     .admin-settings
       span
         display inline-block
-          
+
+    .dropdown-menu
+      padding-top 0
+      position static
+      min-width 100%
+      background none
+      box-shadow none
+      border 0
 @media (min-width: 768px) and (max-width: 1000px) 
   .nav
     li

@@ -46,6 +46,7 @@ AutoForm.hooks
         Router.go template.data.redirectOnSubmit
       else
         window.scrollTo(0, 0)
+        $('#ranavirus-study').show()
 
     onError: (operation, error) ->
       errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")
