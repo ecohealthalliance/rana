@@ -6,7 +6,7 @@ template(name="importInstructions")
 
         p Rather than individually adding records to a study one at a time through the web interface, you may wish to perform a bulk upload of records when you create a new study. To do so, you must transform your data to match the import format expected by the system.
 
-        p When filling out the #[a(href="{{pathFor route='study'}}") New Study form], any report fields you choose to fill out will become default values for all reports associated with that study. These will be pre-filled on the form for new reports, and they will also be default values for reports added via imports. If no data is specified for a field in the import file, any value specified for the entire study will be used. If a value is specified in the import however, it will override any defaults set on the study.
+        p When filling out the #[a(href="{{pathFor route='newStudy'}}") New Study form], any report fields you choose to fill out will become default values for all reports associated with that study. These will be pre-filled on the form for new reports, and they will also be default values for reports added via imports. If no data is specified for a field in the import file, any value specified for the entire study will be used. If a value is specified in the import however, it will override any defaults set on the study.
 
         p Below is a description of each field and the values it may take. Unless otherwise specified, values may be arbitrary strings. The variable names correspond to column names in the header row of a spreadsheet. Data must be exported in the comma-separated value (CSV) format prior to being imported into the system.
 
@@ -14,7 +14,7 @@ template(name="importInstructions")
 
         a.btn.btn-primary(href="/sample_csv_import.csv") 
           span Download a Sample CSV import file
-          span.glyphicon.glyphicon-download
+          i.fa.fa-download
 
     .container
       section#content

@@ -74,9 +74,22 @@ Template.reportFormComplete.events
     $('.review-content').toggleClass('hidden-panel')
     $('.page-wrap').toggleClass('curtain')
 
+popoverOpts =
+  trigger: 'hover'
+  placement: 'bottom auto'
+  container: 'body'
+  viewport:
+    selector: 'body'
+    padding: 10
+  animation: true
+  delay:
+    show: 350
+    hide: 100
+
 Template.reportFormComplete.created = () ->
   $('#ranavirus-report').hide()
   reset = () ->
     AutoForm.resetForm('ranavirus-report')
     $('#ranavirus-report').show()
+    @$('[data-toggle="popover"]').popover popoverOpts
   setTimeout reset, 0

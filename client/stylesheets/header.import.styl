@@ -17,7 +17,7 @@ header
     font-size 13px
     color body-text
     line-height 1.42857143
-    buttonHover(nav-hover, trans-white)
+    buttonHover(nav-hover, white-trans)
     transition()
     &:focus
       background white
@@ -46,7 +46,7 @@ header
     &.navbar-btn
       margin 0
       padding 9px 10px
-      background trans-white
+      background white-trans
       border-radius 5px
       color #333
       text-shadow none
@@ -66,8 +66,20 @@ header
     i
       font-size 18px
       padding-right 3px
-    
-  .dropdown
+
+.dropdown
+  .dropdown-toggle
+    span
+      display none
+    &::after
+      content: '\f0d7'
+      @extend .font-awesome
+      padding-left 4px
+      line-height 0
+    &:focus
+      outline 0
+  
+  &.open
     .dropdown-toggle
       &::after
         content: '\f0d7'
@@ -106,7 +118,6 @@ header
 .navbar-brand 
   padding 6px 0
   transition(.2s, color)  
-  &:hover,
   &:focus
     span,
     h1
@@ -132,18 +143,36 @@ header
     transition(.2s, color)
     
 .navbar-toggle
-  @extend .icons
+  border 1px solid white
   float right
-  padding 4px
-  margin 0
+  padding 13px 10px
+  margin 10px 0 0 0
   color white
   font-size 28px
-  &.active,
+  border-radius 4px
+  font-size 14px
+  line-height 0
+  transition()
+  &:hover,
+  &:active,
   &:focus
     color black
+    background white-trans
+    transition()
 
 .main-nav-last
   margin-right 0
+
+
+@media (max-width: 768px) 
+  .navbar-brand 
+    transition(.2s, color)
+    &:hover,
+    &:focus
+      span,
+      h1
+        color lighten(secondary,80%)
+        transition(.2s, color)
      
 @media (max-width: 1000px) 
   .navbar-header
@@ -170,6 +199,11 @@ header
     display block !important
     height auto !important
 
+  .dropdown
+    .dropdown-toggle
+      span
+        display inline-block
+        
   .nav
     float none
     li
@@ -204,6 +238,7 @@ header
     margin 0
   .navbar-collapse
     padding-right 0
+    padding-bottom 15px
     border-top 4px solid secondary-dark
     box-shadow none
     &.in

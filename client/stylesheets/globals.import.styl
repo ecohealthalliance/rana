@@ -110,6 +110,13 @@ textarea,
 .rm-pad-btm
   padding-bottom 0
 
+.btn
+  .fa
+    padding 0 0 0 5px
+    font-size 110%
+    line-height 0
+    vAlign()
+
 .btn-primary
   makeButton(secondary)
 
@@ -122,25 +129,20 @@ textarea,
 
 .button-default[disabled]
 .btn[disabled]
-  background ll-gray
-  color m-gray
-  @extend .light-shadow
+  background lighten(secondary-light, 20%)
+  color body-text
+  text-shadow none
 
-.btn-loading
-  &::before
-    @extend .icon
-    animate(1.5s)
-    content '\e031'
-    display inline-block
-    margin-right 10px
-    font-size 12px
+.btn-primary
+  makeButton(secondary)
+
+.btn-success,
+.at-btn
+  makeButton(#72b473)
 
 .jumbotron
   margin-top 60px
   background #FFF
-    
-.loading
-  loading(true)
 
 .hidden
   display none
@@ -182,8 +184,17 @@ for num in 1 2 3
 
 i.fa
   line-height 0
-    
+  
+#toast-container 
+  > div
+    -moz-border-radius 3px 3px 0px 0px
+    -webkit-border-radius 3px 3px 0px 0px
+    border-radius 3px 3px 0px 0px
+ 
 @media (max-width: 768px) 
+
+  h1
+    font-size 32px
   .content-wrap
     padding-bottom footer-height-mobile-actual
   .add-space-btm

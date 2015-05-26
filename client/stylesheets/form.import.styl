@@ -248,13 +248,6 @@ textarea
 
 .csv-error
     color primary-strong
-    
-.controls
-    width 160px
-    text-align right
-
-.studies .controls
-    width 255px
 
 .check-list
   .list-group-item
@@ -290,6 +283,7 @@ textarea
   label.btn
     makeButton(secondary, white, false, true)
     font-weight normal
+    width 60%
 
 .import-table
   .reactive-table-options > div
@@ -353,22 +347,49 @@ textarea
   padding 0 5px
   font-size 80%
 
-.add-report
-  margin-bottom 10px
+.btn-inline
+  vAlign()
+  margin-left 20px
+  
+.name-action
+  span
+    vAlign()
+  span.action
+    font-size 70%
+    color #3F88A0
+    margin-left 15px
 
-@media (max-width: 992px)
+#ranavirus-study
+  display none
+
+#ranavirus-report
+  display none
+
+#ranavirus-report.obfuscated
+  display block
+
+@media (max-width: 1000px)
   .panel
     .btn,
     button,
       padding 12px
-    input
-      min-height 47px
   .input-block
     margin-bottom 45px
     &:last-child
       margin-bottom 0
-      
-@media (max-width: 765px)
+  .btn-inline
+    margin 20px 0 20px 0
+    width 25%
+    padding 12px
+    display block
+  .export.btn-inline
+    padding 6px 12px
+    margin 0 0 0 10px
+    display inline-block
+    width auto
+    
+    
+@media (max-width: 768px)
   .input-block
     .panel
       margin-left -15px
@@ -379,6 +400,9 @@ textarea
       border-radius 0
       .panel-heading
         background #ebebeb
+  input[type="radio"], 
+  input[type="checkbox"]
+    margin 2px 0 0 0
   .tall-block
     min-height 0
   .short-block
@@ -397,8 +421,16 @@ textarea
   h3
     margin-top
 
-#ranavirus-study
-  display none
-
-#ranavirus-report
-  display none
+  .btn-inline
+    width 100%
+  
+  .name-action
+    span.action
+      margin-left 0
+      display block
+      
+  .export.btn-inline
+    margin 20px 0 20px 0
+    padding 12px
+    display block
+    width 100%
