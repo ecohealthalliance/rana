@@ -137,7 +137,7 @@ settings = (tableType) =>
       else
         viewPath = Router.path 'editReport', {reportId: obj._id}
         new Spacebars.SafeString("""
-          <a class="control view btn-view" href="#{viewPath}" title="View"></a>
+          <a class="control view" href="#{viewPath}" title="View"></a>
         """)
 
   showColumnToggles: true
