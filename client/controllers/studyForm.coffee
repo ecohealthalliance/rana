@@ -68,9 +68,22 @@ AutoForm.hooks
           if study and study.csvFile
             @loadCSVData study.csvFile, study, res
 
+popoverOpts =
+  trigger: 'hover'
+  placement: 'bottom auto'
+  container: 'body'
+  viewport:
+    selector: 'body'
+    padding: 10
+  animation: true
+  delay:
+    show: 350
+    hide: 100
+
 Template.studyFormComplete.created = () ->
   $('#ranavirus-study').hide()
   reset = () ->
     AutoForm.resetForm('ranavirus-study')
     $('#ranavirus-study').show()
+    @$('[data-toggle="popover"]').popover popoverOpts
   setTimeout reset, 0
