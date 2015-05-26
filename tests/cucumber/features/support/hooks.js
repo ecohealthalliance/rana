@@ -21,10 +21,6 @@
       var that = this;
       
       this.resetTestDB = function(reports, next) {
-        // The docs currently claim that call takes an array of args,
-        // but that is not true.
-        // Also, the callback arguement doesn't return a value,
-        // so be sure to use the promise callbacks.
         that.mirror.call('/fixtures/resetDB', reports)
         .then(_.partial(next, null)).catch(assert.ifError);
       };
@@ -45,7 +41,7 @@
         return path.join(cwd, '../..');
       };
 
-      this.fillInForm = function (customValues, callback) {
+      this.fillInReportForm = function (customValues, callback) {
         var defaultValues = {};
         defaultValues['studyId'] = 'fakeid';
         defaultValues['contact.name'] = 'Fake Name';

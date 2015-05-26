@@ -39,12 +39,12 @@
         .mustExist('[type=submit]')
         .click('[type=submit]')
         .pause(200)
-        .saveScreenshot(
-          this.getAppDirectory() +
-          "/tests/screenshots/submit - " +
-          this.scenario.getName() +
-          ".png"
-        )
+        // .saveScreenshot(
+        //   this.getAppDirectory() +
+        //   "/tests/screenshots/submit - " +
+        //   this.scenario.getName() +
+        //   ".png"
+        // )
         .call(callback);
     });
 

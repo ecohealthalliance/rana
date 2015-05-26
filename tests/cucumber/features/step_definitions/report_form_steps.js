@@ -13,11 +13,11 @@
     function(prop, value, callback){
       var customValues = {};
       customValues[prop] = value;
-      this.fillInForm(customValues, callback);
+      this.fillInReportForm(customValues, callback);
     });
 
     this.When("I fill out the form", function(callback){
-      this.fillInForm({}, callback);
+      this.fillInReportForm({}, callback);
     });
 
     this.Then("the data I filled out the form with should be in the database",
@@ -32,14 +32,14 @@
     function(callback){
       var customValues = {};
       customValues['consent'] = false;
-      this.fillInForm(customValues, callback);
+      this.fillInReportForm(customValues, callback);
     });
 
     this.When("I fill out a report with obfuscated permissions",
     function(callback){
       var customValues = {};
       customValues['dataUsePermissions'] = 'Share obfuscated';
-      this.fillInForm(customValues, callback);
+      this.fillInReportForm(customValues, callback);
     });
 
     this.When('I fill out the $field field with "$value"',
