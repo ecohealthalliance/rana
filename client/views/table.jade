@@ -13,13 +13,13 @@ template(name="table")
   section.rm-pad-top
     .container
       h1 Full Reports
-      .table-wrap.reports-table
-        +reactiveTable collection="reports" settings=settings filters=filters
+    .table-wrap.reports-table.container
+      +reactiveTable collection="reports" settings=settings filters=filters
   section.rm-pad-top
     .container
       h1 Obfuscated Reports
-      .table-wrap.reports-table
-        +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
+    .table-wrap.reports-table.container
+      +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
 
 template(name="noReports")
   h3 No Reports Found
