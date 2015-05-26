@@ -1,7 +1,8 @@
 template(name="studies")
   section
-    .container.studies
-      +reactiveTable collection="studies" settings=settings
+    .container
+      .table-wrap.studies
+        +reactiveTable collection="studies" settings=settings
 
 template(name="noStudies")
   h2 No Studies Found

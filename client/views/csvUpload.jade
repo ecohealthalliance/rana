@@ -17,7 +17,8 @@ template(name="csvUpload")
   if importReports.count
     section.rm-pad-top.import-table
       .container
-        +reactiveTable collection=importReports fields=importFields showColumnToggles=true
+        .table-wrap
+          +reactiveTable collection=importReports fields=importFields showColumnToggles=true
 
         if unmatchedHeadersString
           h4 Unused fields in your data
