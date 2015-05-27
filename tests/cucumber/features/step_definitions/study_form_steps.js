@@ -6,7 +6,19 @@
   var assert = require('assert');
   var path = require('path');
   var _ = require("underscore");
-
+  
+  var fillInStudyForm = function (context, customValues, callback) {
+    var studyDefaultValues = {
+      'contact.name': 'Fake Name',
+      'contact.email': 'foo@bar.com',
+      'consent': true,
+      'dataUsePermissions': "Share full record",
+      'name': "Study"
+    };
+    var values = _.extend(studyDefaultValues, customValues);
+    context.browser.setFormFields(values, 'Studies', callback);
+  };
+  
   module.exports = function () {
     
     var csvImportValues = {};
@@ -82,15 +94,15 @@
     };
 
     this.When("I fill out the study form", function(callback){
-      this.fillInStudyForm({}, callback);
+      fillInStudyForm(this, {}, callback);
     });
 
     this.When("I fill out the study form with some default report values", function(callback){
-      this.fillInStudyForm({'speciesGenus': 'SomeGenus'}, callback);
+      fillInStudyForm(this, {'speciesGenus': 'SomeGenus'}, callback);
     });
 
     this.When(/I fill out the study form differently(?: with obfuscated permissions)?/, function(callback){
-      this.fillInStudyForm(studyDifferentValues, callback);
+      fillInStudyForm(this, studyDifferentValues, callback);
     });
 
     this.When('I click the $buttonType button for the study called "$name"', function(buttonType, name, callback){

@@ -6,18 +6,53 @@
   var assert = require('assert');
   var path = require('path');
   var _ = require('underscore');
-
+  
+  var fillInReportForm = function (context, customValues, callback) {
+    var defaultValues = {};
+    defaultValues['studyId'] = 'fakeid';
+    defaultValues['contact.name'] = 'Fake Name';
+    defaultValues['contact.email'] = 'foo@bar.com';
+    defaultValues['images'] = [];
+    defaultValues['pathologyReports'] = [];
+    defaultValues['consent'] = true;
+    defaultValues['dataUsePermissions'] = "Share full record";
+    defaultValues['speciesName'] = "genus x";
+    context.browser.generateFormData("Reports", function(generatedValues){
+      defaultValues = _.extend(generatedValues, defaultValues);
+      // These fields are deleted because setFormFields does not support them.
+      var badKeys = [
+        'specifyOtherRanavirusSampleTypes',
+        'specifyOtherRanavirusConfirmationMethods',
+        'specifyOtherVertebrateClasses',
+        'sampleType',
+        'ranavirusConfirmationMethods',
+        'eventDate',
+        'genBankAccessionNumbers',
+        'eventLocation',
+        'sourceFile',
+        'studyId'
+      ];
+      defaultValues = _.omit(defaultValues, badKeys);
+      if(!_.isEmpty(_.pick(customValues, badKeys))) {
+        throw Error("Bad keys: " + _.pick(customValues, badKeys));
+      }
+      var formData = _.extend(defaultValues, customValues);
+      context.lastFormData = formData;
+      context.browser.setFormFields(formData, 'Reports', callback);
+    });
+  };
+  
   module.exports = function () {
 
     this.When(/^I fill out the form with the (eventDate) "([^"]*)"$/,
     function(prop, value, callback){
       var customValues = {};
       customValues[prop] = value;
-      this.fillInReportForm(customValues, callback);
+      fillInReportForm(this, customValues, callback);
     });
 
     this.When("I fill out the form", function(callback){
-      this.fillInReportForm({}, callback);
+      fillInReportForm(this, {}, callback);
     });
 
     this.Then("the data I filled out the form with should be in the database",
@@ -32,14 +67,14 @@
     function(callback){
       var customValues = {};
       customValues['consent'] = false;
-      this.fillInReportForm(customValues, callback);
+      fillInReportForm(this, customValues, callback);
     });
 
     this.When("I fill out a report with obfuscated permissions",
     function(callback){
       var customValues = {};
       customValues['dataUsePermissions'] = 'Share obfuscated';
-      this.fillInReportForm(customValues, callback);
+      fillInReportForm(this, customValues, callback);
     });
 
     this.When('I fill out the $field field with "$value"',

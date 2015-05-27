@@ -6,6 +6,14 @@
   var assert = require('assert');
   var _ = require('underscore');
 
+  var fillInProfileForm = function (context, customValues, callback) {
+    _.each(customValues, function (value, key) {
+      context.browser.mustExist('.form-group').
+      setValue('input[data-schema-key="' + key + '"]', value);
+    });
+    callback();
+  };
+
   module.exports = function () {
 
     var profileDifferentValues = {
@@ -15,7 +23,7 @@
     };
 
     this.When("I fill out the profile form differently", function(callback){
-      this.fillInProfileForm(profileDifferentValues, callback);
+      fillInProfileForm(this, profileDifferentValues, callback);
     });
 
     this.Then(/^the form should contain the different profile values I entered$/, function (callback) {

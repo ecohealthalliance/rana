@@ -41,63 +41,6 @@
         return path.join(cwd, '../..');
       };
 
-      this.fillInReportForm = function (customValues, callback) {
-        var defaultValues = {};
-        defaultValues['studyId'] = 'fakeid';
-        defaultValues['contact.name'] = 'Fake Name';
-        defaultValues['contact.email'] = 'foo@bar.com';
-        defaultValues['images'] = [];
-        defaultValues['pathologyReports'] = [];
-        defaultValues['consent'] = true;
-        defaultValues['dataUsePermissions'] = "Share full record";
-        defaultValues['speciesName'] = "genus x";
-        that.browser.generateFormData("Reports", function(generatedValues){
-          defaultValues = _.extend(generatedValues, defaultValues);
-          // These fields are deleted because setFormFields does not support them.
-          var badKeys = [
-            'specifyOtherRanavirusSampleTypes',
-            'specifyOtherRanavirusConfirmationMethods',
-            'specifyOtherVertebrateClasses',
-            'sampleType',
-            'ranavirusConfirmationMethods',
-            'eventDate',
-            'genBankAccessionNumbers',
-            'eventLocation',
-            'sourceFile',
-            'studyId'
-          ];
-          defaultValues = _.omit(defaultValues, badKeys);
-          if(!_.isEmpty(_.pick(customValues, badKeys))) {
-            throw Error("Bad keys: " + _.pick(customValues, badKeys));
-          }
-          var formData = _.extend(defaultValues, customValues);
-          that.lastFormData = formData;
-          that.browser.setFormFields(formData, 'Reports', callback);
-        });
-      };
-
-      this.fillInStudyForm = function (customValues, callback) {
-        var studyDefaultValues = {
-          'contact.name': 'Fake Name',
-          'contact.email': 'foo@bar.com',
-          'consent': true,
-          'dataUsePermissions': "Share full record",
-          'name': "Study"
-        };
-        
-        var values = _.extend(studyDefaultValues, customValues);
-  
-        that.browser.setFormFields(values, 'Studies', callback);
-      };
-
-      this.fillInProfileForm = function (customValues, callback) {
-        _.each(customValues, function (value, key) {
-          that.browser.mustExist('.form-group').
-          setValue('input[data-schema-key="' + key + '"]', value);
-        });
-        callback();
-      };
-
       var browser = this.browser;
       
       this.scenario = scenario;
