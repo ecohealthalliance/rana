@@ -16,7 +16,7 @@ Template.studies.helpers
       editPath = Router.path 'editStudy', {studyId: obj._id}, {query: "redirectOnSubmit=#{studiesPath}"}
       """<a class="control edit" for="#{obj.name}" href="#{editPath}" title="Edit"></a>"""
 
-    isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
+    isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})?._id
     schema = @collections.Studies.simpleSchema().schema()
 
     fields = [
