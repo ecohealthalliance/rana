@@ -107,7 +107,7 @@ Template.leaflet.rendered = ->
       @map.panTo location
 
   @toggleLoader = (e) =>
-    details = $('.location-details')
+    details = $('.location-details-wrap')
     if(e)
       $(e.target).attr('disabled', true).addClass('btn-loading')
       details.addClass('loading')

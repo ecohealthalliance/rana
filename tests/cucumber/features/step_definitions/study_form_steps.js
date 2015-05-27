@@ -108,7 +108,7 @@
     this.When('I click the $buttonType button for the study called "$name"', function(buttonType, name, callback){
       this.browser
       .pause(2000)
-      .click('a.btn-' + buttonType + '[for="' + name + '"]')
+      .click('a.' + buttonType + '[for="' + name + '"]')
       .call(callback);
     });
 
@@ -199,7 +199,7 @@
       var reverse = !!shouldNot;
       this.browser
       // custom errors on groups don't create a has-error class
-      .waitForExist('a.btn-' + buttonType + '[for="' + studyName + '"]', 1000, reverse,
+      .waitForExist('a.' + buttonType + '[for="' + studyName + '"]', 1000, reverse,
       function(err, result){
         assert.equal(err, null);
         if(shouldNot) {

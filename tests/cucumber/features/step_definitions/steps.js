@@ -260,7 +260,7 @@
     this.When('I click on the edit button',
     function(callback){
       this.browser
-      .click('.reactive-table td.controls .btn-edit')
+      .click('.reactive-table td.controls .edit')
       .call(callback);
     });
 
@@ -274,7 +274,7 @@
     this.When('I click on the view button',
     function(callback){
       this.browser
-      .click('.reactive-table td.controls .btn-view')
+      .click('.reactive-table td.controls .view')
       .call(callback);
     });
 

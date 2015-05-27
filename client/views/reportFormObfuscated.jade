@@ -3,30 +3,31 @@ template(name="reportFormObfuscated")
   if type
 
     section.rm-pad-btm
-      .container
-        h2
-          if study.name
-            a(href="{{pathFor route='editStudy' data=studyId}}") #{study.name} -
-          span Obfuscated Report
+      .container.name-action
+        if study.name
+          h1 
+            span.name #{study.name}
+            span.action Obfuscated Report
+            a.btn.btn-primary(href="{{pathFor route='editStudy' data=studyId}}") View Study
 
     +autoForm(
       id="ranavirus-report"
+      class="obfuscated"
       collection="collections.Reports"
       type="readonly"
       doc=reportDoc
     )
 
-      section.rm-pad-top
-        +contactInfo
+      section.space-top-3
+        .container
+          +contactInfo
 
       section.date-location.rm-pad-top
         .container
           h3 Location
           .row.form-input-block
-            .col-sm-12
-              .row
-                .col-sm-12
-                  +afQuickField name="eventLocation.country"
+            .col-sm-4
+              +afQuickField name="eventLocation.country"
 
   else
     h3 Invalid form id

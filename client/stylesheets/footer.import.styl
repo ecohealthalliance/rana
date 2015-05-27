@@ -4,7 +4,7 @@ footer
   z-index 100
   width 100%
   background header-footer-BG
-  height footer-height+footer-padding
+  height footer-height
   h1,
   h2
     margin 0
@@ -29,7 +29,6 @@ footer
       shadow(255,.1)
       
 .logos
-  margin-top footer-padding
   clearFix()
 
 .logo
@@ -44,13 +43,14 @@ footer
 
 .mantle
   float left
+  margin-top footer-padding
   h1
     bg('images/mantle-logo', 130px, 32px,'png')
     centerSmall(10px)
 
 .eha
   float right
-  margin-top 8px
+  margin-top footer-padding+8px
   h2
     bg('images/eha-logo', 220px, 54px,'png')
     centerSmall()
@@ -63,21 +63,24 @@ footer
   .mantle
     text-align left
     float left
+    margin 0
     h1
-      bg('images/mantle-logo', 90px, 23px,'png')
+      changeBGSize(90px, 23px)
       margin 0
 
   .eha
     margin-top 12px
     float right
     h2
-      bg('images/eha-logo', 150px, 38px,'png')
+      changeBGSize(150px, 38px)
       margin 0
       
   .footer
     width 100%
+    padding-top 10px
 
   .footer-nav
+    centerPosition(0,0)
     position static
     text-align center
     padding 30px

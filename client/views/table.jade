@@ -1,18 +1,24 @@
 template(name="table")
-  section
-    .container.reports-table
-      button.toggle-filter.btn.btn-primary(href="#") Filter Tables
-      button.export.btn.btn-primary(href="#") Export
+  section.rm-pad-btm
+    .container
+      button.toggle-filter.btn.btn-primary(href="#") 
+        span Filter Tables
+        i.fa.fa-filter
+      button.export.btn.btn-primary.btn-inline(href="#") 
+        span Export
+        i.fa.fa-download
       .filter-controls.table-filters.hidden
         +filterControls query=query
 
   section.rm-pad-top
-    .container.reports-table
+    .container
       h1 Full Reports
+    .table-wrap.reports-table.container
       +reactiveTable collection="reports" settings=settings filters=filters
   section.rm-pad-top
-    .container.reports-table
+    .container
       h1 Obfuscated Reports
+    .table-wrap.reports-table.container
       +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
 
 template(name="noReports")

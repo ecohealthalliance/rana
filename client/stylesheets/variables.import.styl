@@ -2,24 +2,25 @@
 primary = rgba(157, 83, 42, 1)
 primary-dark = darken(primary, 20%)
 primary-light = lighten(primary, 20%)
-trans-primary = rgba(primary, 0.9)
+primary-trans = rgba(primary, 0.9)
 primary-strong = rgba(232, 95, 64, 1)
 primary-strong-light = rgba(248, 237, 230, 1)
-trans-primary-strong = rgba(primary-strong, 0.9)
-primary-subtle = rgba(158, 100, 68, 1)
+primary-trans-strong = rgba(primary-strong, 0.9)
+primary-subtle = lighten(primary, 90%)
 primary-dark = darken(primary, 20%)
 primary-light = lighten(primary, 20%)
 secondary = rgba(63, 136, 160, 1)
+secondary-subtle = lighten(secondary, 90%)
 secondary-dark = darken(secondary, 20%)
-secondary-light = lighten(secondary ,20%)
-trans-secondary = rgba(secondary, 0.9)
+secondary-light = lighten(secondary, 20%)
+secondary-trans = rgba(secondary, 0.9)
 dd-gray = #333
 d-gray = #999
 ll-gray = #f9f9f9
 l-gray = #e7e7e7
 m-gray = #CCC
 btn-default = secondary
-trans-white = rgba(255,255,255,.7)
+white-trans = rgba(255,255,255,.7)
 
 header-footer-BG = secondary
 
@@ -30,11 +31,11 @@ mapBG = #CDD2D4
 // HEADER / FOOTER
 header-height = 50px
 footer-height = 75px
-footer-logo-height = 55px
-footer-padding = (75px - footer-logo-height) / 2
+footer-logo-height = 60px
+footer-padding = (footer-height - footer-logo-height) / 2
 footer-height-actual = footer-height
 footer-height-mobile-actual = footer-height*2
-footer-height = footer-height+footer-padding
+footer-height = footer-height+footer-padding+5
 footer-height-mobile = footer-height*2
 
 nav-hover = primary
