@@ -52,4 +52,5 @@ Router.route(BASE_PATH + '/group/:groupPath/info',
     Meteor.subscribe "groupByPath", @params.groupPath
 )
 
-Router.plugin "ensureSignedIn", {only: ["newGroup", "join"]}
+if Meteor.isClient
+  Router.plugin "ensureSignedIn", {only: ["newGroup", "join"]}

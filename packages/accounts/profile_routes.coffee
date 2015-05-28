@@ -6,8 +6,9 @@ Router.route BASE_PATH + '/profile',
   name: 'currentUserProfile'
   action: () ->
     @redirect Router.path 'profile', {_id: Meteor.userId()}
-    
-Router.plugin "ensureSignedIn", {only: ["profile"]}
+
+if Meteor.isClient    
+  Router.plugin "ensureSignedIn", {only: ["profile"]}
 
 
 Router.route BASE_PATH + '/profile/:_id',

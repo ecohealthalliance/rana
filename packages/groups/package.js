@@ -45,3 +45,9 @@ Package.onUse(function(api) {
 
 });
 
+Package.onTest(function(api) {
+  api.use('sanjo:jasmine');
+  api.use('rana:groups');
+  api.use('coffeescript');
+  api.addFiles('tests/jasmine/client/spec.coffee', 'client');
+});
