@@ -28,9 +28,7 @@
 
 .filter-wrap
   margin 5px
-  &::after
-    clearFix()
-
+  clearFix()
   .autoform-array-item,
   .autoform-add-item
     position relative
@@ -68,7 +66,7 @@
       position absolute
       top 50%
       left 50%
-      transform translate(-50%, -50%)
+      centerPosition()
       font-size 40px    
       color m-gray
       transition()
@@ -137,7 +135,7 @@
     position absolute
     right 5px
     top 50%
-    transform translate(-50%, 0)
+    centerPosition(-50%,0)
     line-height 0
     font-size 20px
   &:hover
@@ -158,7 +156,7 @@
     position absolute
     right 5px
     top 50%
-    transform translate(-50%, 0)
+    centerPosition(-50%,0)
     line-height 0
   &:hover
     background-color primary
@@ -166,9 +164,38 @@
     text-decoration none
     
 @media (max-width: 900px)
+  .filter-wrap
+    .autoform-array-item,
+    .autoform-add-item
+      width 48%  
   #control-panel
     bottom 50px
     right 10px
     left 10px
     top auto
     max-width 100%
+    
+@media (max-width: 768px)
+  .filter-controls
+    padding 0
+    background none
+    border 0
+    .autoform-array-item,
+    .autoform-add-item
+      width 100%
+    .autoform-add-item
+      min-height 80px
+      margin-top 10px
+      margin-bottom 20px
+      font-size 30px
+    .filter-buttons
+      width 100%
+      .btn
+        width 100%
+        float none
+        margin-bottom 10px
+    .filter
+      border 0
+      margin 10px 0 20px 0
+      padding 0
+        

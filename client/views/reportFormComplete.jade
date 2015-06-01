@@ -3,14 +3,14 @@ template(name="reportFormComplete")
   if type
     .report-form.space-btm-3
       section.rm-pad-btm.space-btm-3
-        .container
+        .container.name-action
           h1
-            a.study-link(href="{{pathFor route='editStudy' data=studyId}}") #{study.name}
-              span.glyphicon.glyphicon-link
+            span.name #{study.name}
             if isInsert
-              span - New Report
+              span.action New Report
             else if isUpdate
-              span - Update Report
+              span.action Update Report
+            a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
 
       +autoForm(
         id="ranavirus-report"

@@ -2,7 +2,7 @@
   position fixed
   left 50% 
   bottom 0px
-  transform translate(-50%,0)
+  centerPosition(-50%,0)
   min-width 30%
   max-width 600px
   z-index 1000
@@ -20,18 +20,18 @@
   .review-panel-header
     position relative
     padding 8px 10px
-    background-color trans-primary
+    background-color primary-trans
     color white
     line-height 26px
-    border-bottom 2px solid darken(trans-primary, 20%)
+    border-bottom 2px solid darken(primary-trans, 20%)
     border-radius 5px 5px 0 0
     font-weight bold
     font-size 1.2em
     cursor pointer
     transition()
     &:hover
-      background trans-secondary
-      border-bottom 2px solid darken(trans-secondary, 20%)
+      background secondary-trans
+      border-bottom 2px solid darken(secondary-trans, 20%)
       transition()
     &::after
       @extend .icons
@@ -42,10 +42,10 @@
       centerPosition(0,-50%)
     &.showing
       background secondary
-      border-bottom 2px solid darken(trans-secondary, 20%)
+      border-bottom 2px solid darken(secondary-trans, 20%)
       transition()
       &:hover
-        border-bottom 2px solid darken(trans-primary, 20%)
+        border-bottom 2px solid darken(primary-trans, 20%)
         background primary
       &::after
         content '-'

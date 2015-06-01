@@ -1,14 +1,13 @@
 getCollections = () -> @collections
 
-Template.study.helpers
+Template.studyFormComplete.helpers
+
   studyId: ->
     studyId: @study._id
 
   redirectOnSubmit: ->
     editPath = Router.path 'editStudy', {studyId: @study._id}
     "redirectOnSubmit=#{editPath}"
-
-Template.studyFormComplete.helpers
 
   studyDoc: =>
     Template.currentData()?.study or { contact: @contactFromUser() }
@@ -47,6 +46,7 @@ AutoForm.hooks
         Router.go template.data.redirectOnSubmit
       else
         window.scrollTo(0, 0)
+        $('#ranavirus-study').show()
 
     onError: (operation, error) ->
       errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")
@@ -57,6 +57,8 @@ AutoForm.hooks
       toastr.options = {
         closeButton: true
         positionClass: "toast-bottom-center"
+        timeOut: "100000"
+        extendedTimeOut: "100000"
       }
       toastr.error(error.message)
 
@@ -69,9 +71,22 @@ AutoForm.hooks
           if study and study.csvFile
             @loadCSVData study.csvFile, study, res
 
+popoverOpts =
+  trigger: 'hover'
+  placement: 'bottom auto'
+  container: 'body'
+  viewport:
+    selector: 'body'
+    padding: 10
+  animation: true
+  delay:
+    show: 350
+    hide: 100
+
 Template.studyFormComplete.created = () ->
   $('#ranavirus-study').hide()
   reset = () ->
     AutoForm.resetForm('ranavirus-study')
     $('#ranavirus-study').show()
+    @$('[data-toggle="popover"]').popover popoverOpts
   setTimeout reset, 0

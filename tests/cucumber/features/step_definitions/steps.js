@@ -4,16 +4,13 @@
   'use strict';
 
   var assert = require('assert');
-
-  var _ = Package["underscore"]._;
+  var _ = require("underscore");
+  var url = require("url");
 
   module.exports = function () {
-
-    var helper = this;
-
     this.visit = function (path, callback) {
-      helper.world.browser
-      .url(helper.world.cucumber.mirror.rootUrl + 'grrs/' + path)
+      this.browser
+      .url(url.resolve(process.env.ROOT_URL, 'grrs/' + path))
       .waitForExist(".container", function(err, exists){
         assert(!err);
         assert(exists, "Could not find container element");
@@ -30,7 +27,7 @@
     this.When('I navigate to the "$path" page', this.visit);
 
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
-      helper.world.browser.
+      this.browser.
         title(function (err, res) {
           assert.equal(res.value, expectedTitle);
           callback();
@@ -38,15 +35,16 @@
     });
 
     this.When(/^I click submit(?: again)?$/, function (callback) {
-      helper.world.browser
-        .saveScreenshot(
-          helper.getAppDirectory() +
-          "/tests/screenshots/submit - " +
-          helper.world.scenario.getName() +
-          ".png"
-        )
-        .waitForExist('[type=submit]', assert.ifError)
+      this.browser
+        .mustExist('[type=submit]')
         .click('[type=submit]')
+        .pause(200)
+        // .saveScreenshot(
+        //   this.getAppDirectory() +
+        //   "/tests/screenshots/submit - " +
+        //   this.scenario.getName() +
+        //   ".png"
+        // )
         .call(callback);
     });
 
@@ -61,33 +59,33 @@
       if(buttonName in buttonNameToSelector) {
         selector = buttonNameToSelector[buttonName];
       }
-      helper.world.browser
-        .waitForExist(selector, assert.ifError)
+      this.browser
+        .mustExist(selector)
         .click(selector)
         .call(callback);
     });
 
     this.When('I type "$word" into the prompt',
     function (word, callback) {
-      helper.world.browser.alertText(word)
+      this.browser.alertText(word)
         .call(callback);
     });
 
     this.When('I accept the prompt',
     function (callback) {
-      helper.world.browser.alertAccept()
+      this.browser.alertAccept()
       .call(callback);
     });
 
     this.When('I dismiss the toast',
     function (callback) {
-      helper.world.browser.clickWhenVisible('.toast').pause(1000).call(callback);
+      this.browser.clickWhenVisible('.toast').pause(1000).call(callback);
     });
 
     // This is broken. Webdriver complains that another element would receive the click.
     this.When('I click on the edit link in the toast',
     function (callback) {
-      helper.world.browser
+      this.browser
         .click('.toast-message a')
         .call(callback);
     });
@@ -97,7 +95,7 @@
     function (shouldNot, prop, value, callback) {
       var query = {};
       query[prop] = value;
-      helper.checkForReports(query, function (reports) {
+      this.checkForReports(query, function (reports) {
         if (shouldNot) {
           assert(!reports.length, "Report found");
         } else {
@@ -109,6 +107,7 @@
 
     this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,
     function(withGeo, someoneElse, callback) {
+      var that = this;
       var report = {
         studyId: 'fakeid',
         consent: true,
@@ -140,9 +139,9 @@
           name: "Someone Else"
         };
       }
-      helper.addReports([report], function(err){
+      this.addReports([report], function(err){
         assert.ifError(err);
-        helper.world.browser
+        that.browser
         .waitForReport(report)
         .call(callback);
       });
@@ -161,9 +160,10 @@
           name: "Someone Else"
         };
       }
-      helper.addStudies([study], function(err){
+      var that = this;
+      this.addStudies([study], function(err){
         assert.ifError(err);
-        helper.world.browser
+        that.browser
         .waitForStudy(study)
         .call(callback);
       });
@@ -206,7 +206,7 @@
           }
         };
       });
-      helper.addReports(reports, function(err){
+      this.addReports(reports, function(err){
         assert.ifError(err);
         callback();
       }, 200 * number);
@@ -214,13 +214,13 @@
 
     this.Given(/^there are no reports in the database$/,
     function (callback) {
-      helper.resetTestDB([], callback);
+      this.resetTestDB([], callback);
     });
 
     this.Then(/^I should( not)? see the text "([^"]*)"/,
     function (shouldNot, text, callback) {
 
-      helper.world.browser
+      this.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
           assert(!err);
@@ -239,15 +239,16 @@
     });
 
     this.Then('I should be on the "$path" page', function (path, callback) {
-      helper.world.browser
+      var that = this;
+      this.browser
       .pause(4000)
       .url(function (err, result) {
         assert.ifError(err);
         if(result.value.slice(-path.length) !== path) {
-          helper.world.browser.saveScreenshot(
-            helper.getAppDirectory() +
+          that.browser.saveScreenshot(
+            that.getAppDirectory() +
             "/tests/screenshots/redirect failure - " +
-            helper.world.scenario.getName() +
+            that.scenario.getName() +
             ".png"
           );
         }
@@ -258,35 +259,35 @@
 
     this.When('I click on the edit button',
     function(callback){
-      helper.world.browser
-      .click('.reactive-table td.controls .btn-edit')
+      this.browser
+      .click('.reactive-table td.controls .edit')
       .call(callback);
     });
 
     this.When('I click on the admin settings button',
     function(callback){
-      helper.world.browser
+      this.browser
       .click('.admin-settings')
       .call(callback);
     });
 
     this.When('I click on the view button',
     function(callback){
-      helper.world.browser
-      .click('.reactive-table td.controls .btn-view')
+      this.browser
+      .click('.reactive-table td.controls .view')
       .call(callback);
     });
 
     this.When('I click on the profile button',
     function(callback){
-      helper.world.browser
+      this.browser
       .click('.profile')
       .call(callback);
     });
 
     this.When('I click the Add a report button',
     function(callback){
-      helper.world.browser
+      this.browser
       .click('.add-report')
       .call(callback);
     });

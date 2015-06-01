@@ -4,27 +4,25 @@
   'use strict';
 
   var assert = require('assert');
-
-  var _ = Package["underscore"]._;
+  var _ = require("underscore");
 
   module.exports = function () {
 
-    var helper = this;
-
     this.Then(/^I should see (\d+) (study|studies|report|reports) in the table$/, function (number, studiesOrReports, callback) {
-      helper.world.browser
+      this.browser
       .waitForExist(".reactive-table tbody tr")
       .elements(".reactive-table tbody tr", function(err, resp){
         assert.ifError(err);
-        assert.equal(resp.value.length, parseInt(number));
+        assert.equal(resp.value.length, parseInt(number, 10));
       })
       .call(callback);
     });
 
     this.Then("I should not see a checkbox for the edit column", function (callback) {
-      helper.world.browser
+      this.browser
       .getTextWhenVisible('.reactive-table-columns-dropdown li:last-child label',
       function(err, text){
+        assert.ifError(err);
         if (typeof(text) == 'object') {
           text = text[0];
         }
@@ -35,7 +33,7 @@
     });
 
     this.When(/^I delete the (report|study)$/, function(reportOrStudy, callback){
-      helper.world.browser
+      this.browser
         .clickWhenVisible(".remove-form")
         .alertText("delete", assert.ifError)
         .alertAccept(assert.ifError)
@@ -44,7 +42,7 @@
 
     this.Then(/^there should be no delete button for the (report|study) by someone else$/,
     function(reportOrStudy, callback){
-      helper.world.browser
+      this.browser
         .mustExist('.reactive-table tr')
         .execute(function() {
           return $('.reactive-table tr').map(function(idx, element){

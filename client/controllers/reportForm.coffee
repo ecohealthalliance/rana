@@ -27,6 +27,8 @@ AutoForm.addHooks(
         Router.go template.data.redirectOnSubmit
       else
         window.scrollTo(0, 0)
+        $('#ranavirus-report').show()
+
     onError: (operation, error) ->
       errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")
         .parent()
@@ -36,6 +38,8 @@ AutoForm.addHooks(
       toastr.options = {
         closeButton: true
         positionClass: "toast-bottom-center"
+        timeOut: "100000"
+        extendedTimeOut: "100000"
       }
       toastr.error(error.message)
   }
@@ -72,9 +76,22 @@ Template.reportFormComplete.events
     $('.review-content').toggleClass('hidden-panel')
     $('.page-wrap').toggleClass('curtain')
 
+popoverOpts =
+  trigger: 'hover'
+  placement: 'bottom auto'
+  container: 'body'
+  viewport:
+    selector: 'body'
+    padding: 10
+  animation: true
+  delay:
+    show: 350
+    hide: 100
+
 Template.reportFormComplete.created = () ->
   $('#ranavirus-report').hide()
   reset = () ->
     AutoForm.resetForm('ranavirus-report')
     $('#ranavirus-report').show()
+    @$('[data-toggle="popover"]').popover popoverOpts
   setTimeout reset, 0

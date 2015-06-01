@@ -31,7 +31,7 @@ Template.table.obfuscatedSettings = () =>
 
 settings = (tableType) =>
 
-  isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
+  isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})?._id
   schema = @collections.Reports.simpleSchema().schema()
 
   fields = []
@@ -125,19 +125,19 @@ settings = (tableType) =>
         tablePath = Router.path 'table'
         editPath = Router.path 'editReport', {reportId: obj._id}, {query: "redirectOnSubmit=#{tablePath}"}
         new Spacebars.SafeString("""
-          <a class="btn btn-edit btn-primary" href="#{editPath}">Edit</a>
-          <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
+          <a class="control edit" href="#{editPath}" title="Edit"></a>
+          <a class="control remove remove-form" data-id="#{obj._id}" title="Remove"></a>
         """)
       else if isAdmin
         viewPath = Router.path 'editReport', {reportId: obj._id}
         new Spacebars.SafeString("""
-          <a class="btn btn-primary" href="#{viewPath}">View</a>
-          <a class="btn btn-danger remove remove-form" data-id="#{obj._id}">Remove</a>
+          <a class="control view" href="#{viewPath}" title="View"></a>
+          <a class="control remove remove-form" data-id="#{obj._id}" title="Remove"></a>
         """)
       else
         viewPath = Router.path 'editReport', {reportId: obj._id}
         new Spacebars.SafeString("""
-          <a class="btn btn-primary btn-view" href="#{viewPath}">View</a>
+          <a class="control view" href="#{viewPath}" title="View"></a>
         """)
 
   showColumnToggles: true
@@ -155,6 +155,9 @@ Template.table.events(
   'click .toggle-filter': () ->
     $('.filter-controls').toggleClass('hidden')
     $('.toggle-filter').toggleClass('showingOpts')
+  "click .next-page, click .previous-page" : () ->
+    if (window.scrollY > 0)
+      $('body').animate({scrollTop:0,400})
 
   'click .export:not(.disabled)': (event, template) ->
     $(event.target).addClass('disabled')
