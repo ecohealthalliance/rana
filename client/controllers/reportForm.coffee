@@ -66,7 +66,8 @@ Template.reportFormComplete.helpers
     Meteor.user().approval
 
   isOwner: ->
-    Meteor.userId() == Template.currentData().report.createdBy.userId
+    ( (Meteor.userId() == Template.currentData().report.createdBy.userId) and not
+      (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) )
 
   isPending: ->
     # console.log 'currentData', Template.currentData()

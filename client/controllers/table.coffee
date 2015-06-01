@@ -171,6 +171,13 @@ settings = (tableType) =>
   showFilter: false
   fields: fields
   noDataTmpl: noDataTmpl
+  rowClass: (val) ->
+    if !isAdmin
+      status = val.approval
+      switch status
+        when 'approved' then 'approved'
+        when 'rejected' then 'rejected'
+        when 'pending' then 'pending'
 
 events =
   'click .remove-form': (evt)->
