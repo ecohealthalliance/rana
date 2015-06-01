@@ -50,7 +50,7 @@
       var email = admin ? "admin@admin.com" : "test@test.com";
       var password = admin ? "adminuser" : "testuser";
       helper.world.browser
-      .url(helper.world.cucumber.mirror.rootUrl + "sign-in")
+      .url(helper.world.cucumber.mirror.rootUrl + "grrs/sign-in")
       .waitForExist(".at-pwd-form", function(err, exists){
         assert.ifError(err);
         assert(exists);
