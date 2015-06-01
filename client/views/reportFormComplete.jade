@@ -2,23 +2,34 @@ template(name="reportFormComplete")
 
   if type
     .report-form.space-btm-3
-      section.rm-pad-btm.space-btm-3
+      section.title.rm-pad-btm.odd
         .container.name-action
           h1
+            {{log report}}
             span.name #{study.name}
             if isInsert
               span.action New Report
             else if isUpdate
               span.action Update Report
             a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
-          if isPending
-            | Approval:
-            a#approve-report.btn.btn-primary.btn-inline.approve Approve Report
-            a#approve-user.btn.btn-primary.btn-inline.approve Approve User
-            a#reject-report.btn.btn-primary.btn-inline.reject Reject Report
-          if isOwner
-            span.approvalCtn Approval:
-              span.approvalStatus(class=report.approval) #{report.approval}
+      if isPending
+        section.approval.rm-pad.space-btm-3.gray
+          .container
+            a#approve-report.btn.btn-success.btn-inline.approve 
+              span Approve Report
+              i.fa.fa-check
+            a#approve-user.btn.btn-success.btn-inline.approve 
+              span Approve User
+              i.fa.fa-user-plus
+            a#reject-report.btn.btn-danger.btn-inline.reject 
+              span Reject Report
+              i.fa.fa-times
+      if isOwner
+        section.approval.rm-pad.space-btm-3(class="#{report.approval}-wrap")
+          .container
+            span.approvalStatus(class=report.approval) #{report.approval}
+      else 
+        .space-btm-3
 
 
       +autoForm(

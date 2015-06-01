@@ -33,6 +33,8 @@ section
     background s-red
   &.odd
     background lighten(secondary, 90%)
+  &.gray
+    background ll-gray
   &:first-child
     padding-top 25px
     h1
@@ -359,6 +361,48 @@ textarea
     color #3F88A0
     margin-left 15px
 
+.report-form
+  section
+    &:first-child
+      padding-bottom 10px
+
+.approval
+  padding-top 10px
+  padding-bottom 10px
+  border-top 2px solid l-gray
+  .btn
+    &:first-of-type
+      margin-left 0
+  &.approved-wrap
+    background lighten(confirm, 65%)
+    border-top 2px solid lighten(confirm, 30%)
+    color darken(confirm,30%)
+  &.pending-wrap
+    border-top 2px solid lighten(pending, 30%)
+    background lighten(pending, 65%)
+    color darken(pending,30%)
+  &.rejected-wrap
+    border-top 2px solid lighten(deny, 30%)
+    background lighten(deny, 65%)
+    color darken(deny,30%)
+
+.approvalStatus
+  text-transform capitalize
+  font-weight 700
+  &::before
+    @extend .font-awesome
+    display inline-block
+    padding-right 5px
+  &.approved
+    &::before
+      content '\f00c'
+  &.pending
+    &::before
+      content '\f017'    
+  &.rejected
+    &::before
+      content '\f00d'
+    
 #ranavirus-study
   display none
 
@@ -434,12 +478,3 @@ textarea
     padding 12px
     display block
     width 100%
-
-.pending
-  color: orange
-
-.approved
-  color: green
-
-.rejected
-  color: red

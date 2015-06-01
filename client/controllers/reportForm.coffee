@@ -53,7 +53,8 @@ Template.registerHelper 'reportDoc', () =>
       study
 
 Template.reportFormComplete.helpers
-
+  log: (l) ->
+    console.log l
   isInsert: ->
     Template.currentData().type == 'insert'
 
@@ -70,7 +71,7 @@ Template.reportFormComplete.helpers
     Meteor.userId() == Template.currentData().report.createdBy.userId
 
   isPending: ->
-    console.log 'currentData', currentData
+    # console.log 'currentData', Template.currentData()
     ( (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
       (Template.currentData().report.approval == 'pending') )
 
