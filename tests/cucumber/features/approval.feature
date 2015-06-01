@@ -56,9 +56,9 @@ Feature: Report approval
 
   Scenario: Visiting the pending page without logging in
     When I am on the "pending" page
-    Then I should be on the "table" page
+    Then I should be on the "grrs/" page
 
   Scenario: Visiting the pending page when logged in as a non-admin
     When I have logged in
     And I am on the "pending" page
-    Then I should be on the "table" page
+    Then I should be on the "grrs/" page
