@@ -132,6 +132,11 @@ Router.route('pending',
   path: BASE_PATH + '/pending'
   where: 'client'
   template: 'pendingTable'
+  onBeforeAction: () ->
+    if not Meteor.user() or not (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id)
+      @redirect BASE_PATH + '/sign-in'
+    else
+      @next()
   waitOn: ->
     [
       Meteor.subscribe "groupByPath", "rana"

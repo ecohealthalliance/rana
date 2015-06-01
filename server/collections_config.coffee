@@ -119,6 +119,8 @@ ReactiveTable.publish 'reports', collections.Reports, () ->
 ReactiveTable.publish 'pendingReports', collections.Reports, () ->
   if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
     {'approval': 'pending'}
+  else
+    @stop()
 
 ReactiveTable.publish 'obfuscatedReports', collections.Reports, (() ->
   {
