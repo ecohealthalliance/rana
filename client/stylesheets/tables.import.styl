@@ -71,6 +71,13 @@
     z-index 200
   .filter-controls
     margin 10px 0
+.table-striped>tbody>tr
+  &.approved
+    background none
+  &.rejected
+    background lighten(deny,90%)
+  &.pending
+    background lighten(pending,90%)
 
 .showingOpts
   &::before

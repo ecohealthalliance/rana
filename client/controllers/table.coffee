@@ -173,8 +173,7 @@ settings = (tableType) =>
   noDataTmpl: noDataTmpl
   rowClass: (val) ->
     if !isAdmin
-      status = val.approval
-      switch status
+      switch val.approval
         when 'approved' then 'approved'
         when 'rejected' then 'rejected'
         when 'pending' then 'pending'
