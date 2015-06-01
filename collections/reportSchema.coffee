@@ -135,9 +135,9 @@ numInvolvedOptions =
     type: String
   approval:
     type: String
-    label: """Is the report approved for public display?"""
     allowedValues: ['pending', 'rejected', 'approved']
     defaultValue: 'pending'
     autoform:
       type: 'hidden'
+      label: false
 ]
