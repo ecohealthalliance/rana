@@ -87,27 +87,33 @@
 .controls
   text-align right
   vertical-align middle
+  white-space nowrap
 
 .control
   vAlign()
+  linkColor(secondary)
   padding 5px   
-  color secondary
-  &:hover
-    color primary
   &:before,
   &:after
     vAlign()    
     @extend .font-awesome
     content ''
-    font-size 22px
+    font-size 24px
     line-height 0
+
+  &.view,
+  &.add-report
+    &:before
+      font-size 22px
+            
+  &.approve-report,
+  &.approve-user
+    linkColor(confirm)
+
   &.remove
-    color d-gray
-    &:hover
-      color primary-strong
+    linkColor(d-gray, primary-strong)
     &:before
       content '\f014'
-      font-size 24px
   &.view
     &:before
       content '\f002'
@@ -115,7 +121,6 @@
     &:before
       content '\f044'    
       padding-top 2px
-      font-size 24px
   &.add-report
     position relative
     &:hover
@@ -131,26 +136,15 @@
     &:after
       content '\f016'
   &.approve-report
-    color green
-    &:hover
-      color primary-strong
     &:before
       content '\f00c'
-      font-size 24px
   &.approve-user
-    color green
-    &:hover
-      color primary-strong
     &:before
       content '\f234'
-      font-size 24px
   &.reject-report
-    color red
-    &:hover
-      color primary-strong
+    linkColor(deny)
     &:before
       content '\f00d'
-      font-size 24px
 
 
 @media (max-width: 768px)

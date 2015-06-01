@@ -116,6 +116,11 @@ addBorder(w=false, h, c)
 shadow(c, opacity)
   text-shadow 0 1px 0 rgba(c,c,c,opacity)
 
+linkColor(color, hover = darken(color, 25%))
+  color color
+  &:hover
+    color hover
+
 @keyframes spin
   from 
     transform rotate(0deg)
