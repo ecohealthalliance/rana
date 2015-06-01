@@ -38,6 +38,36 @@ sharedOrCreator = (userId) ->
     ]
   }
 
+sharedAndApprovedOrCreator = (userId) ->
+  {
+    $or : [
+      {
+        "createdBy.userId": userId
+      }
+      {
+        dataUsePermissions: "Share full record"
+        approval: "approved"
+        consent: true
+      }
+    ]
+  }
+
+sharedOrCreatorOrSharedRanaAdmin = (userId) ->
+  if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+    {
+      $or : [
+        {
+          "createdBy.userId": userId
+        }
+        {
+          dataUsePermissions: "Share full record"
+          consent: true
+        }
+      ]
+    }
+  else
+    sharedOrCreator userId
+
 Meteor.publishComposite 'studies', (id) ->
   find: () ->
     collections.Studies.find {
@@ -84,7 +114,11 @@ Meteor.publish 'videos', ->
   collections.Videos.find()
 
 ReactiveTable.publish 'reports', collections.Reports, () ->
-  sharedOrCreator @userId
+  sharedAndApprovedOrCreator @userId
+
+ReactiveTable.publish 'pendingReports', collections.Reports, () ->
+  if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
+    {'approval': 'pending'}
 
 ReactiveTable.publish 'obfuscatedReports', collections.Reports, (() ->
   {
@@ -102,7 +136,7 @@ Meteor.publishComposite "reportLocations", () ->
           {
             "eventLocation.source": {"$exists": true}
           }
-          sharedOrCreator @userId
+          sharedAndApprovedOrCreator @userId
         ]
       }
       {
@@ -143,7 +177,7 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
           {
             _id: reportId
           }
-          sharedOrCreator @userId
+          sharedOrCreatorOrSharedRanaAdmin @userId
         ]
       }
     )
@@ -153,7 +187,7 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
         collections.Studies.find {
           $and: [
             {_id: report.studyId}
-            sharedOrCreator @userId
+            sharedOrCreatorOrSharedRanaAdmin @userId
           ]
         }, {fields: {name: 1}}
     }
@@ -222,8 +256,13 @@ allowCreatorAndAdmin = (userId, doc) ->
     allowCreator userId, doc
 
 @collections.Reports.allow
-  insert: allowCreator
-  update: allowCreator
+  insert: (userId, doc) ->
+    doc.createdBy.userId == userId and doc.approval == Meteor.user().approval
+  update: (userId, doc) ->
+    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+      return true
+    else
+      (doc.createdBy.userId == userId) and (not 'approval' of doc)
   remove: allowCreatorAndAdmin
 
 @collections.Studies.allow

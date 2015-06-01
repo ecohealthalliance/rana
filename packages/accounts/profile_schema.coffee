@@ -31,3 +31,11 @@ share.UserProfileSchema = new SimpleSchema
     type: String
     label: 'ZIP'
     optional: true
+  approval:
+    type: String
+    label: """Is the report approved for public display?"""
+    allowedValues: ['pending', 'rejected', 'approved']
+    defaultValue: 'pending'
+    autoform:
+      type: 'hidden'
+    optional: true

@@ -1,0 +1,17 @@
+template(name="pendingTable")
+  section.rm-pad-btm
+    .container
+      button.toggle-filter.btn.btn-primary(href="#")
+        span Filter Table
+        i.fa.fa-filter
+      .filter-controls.table-filters.hidden
+        +filterControls query=query
+
+  section.rm-pad-top
+    .container
+      h1 Pending Reports
+    .table-wrap.reports-table.container
+      +reactiveTable collection="pendingReports" settings=settings filters=filters
+
+template(name="noPendingReports")
+  h3 No Pending Reports Found

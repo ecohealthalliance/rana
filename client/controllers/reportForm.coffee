@@ -63,6 +63,17 @@ Template.reportFormComplete.helpers
   studyId: ->
     studyId: @study._id
 
+  userApproval: ->
+    Meteor.user().approval
+
+  isOwner: ->
+    Meteor.userId() == Template.currentData().report.createdBy.userId
+
+  isPending: ->
+    console.log 'currentData', currentData
+    ( (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
+      (Template.currentData().report.approval == 'pending') )
+
 Template.reportFormObfuscated.helpers
   studyId: ->
     studyId: @study._id
@@ -73,6 +84,29 @@ Template.reportFormComplete.events
     $(e.target).toggleClass('showing')
     $('.review-content').toggleClass('hidden-panel')
     $('.page-wrap').toggleClass('curtain')
+
+  'click #approve-report': (e) ->
+    if Meteor.call 'setReportApproval', Template.currentData().report._id, 'approved'
+      toastr.options = {
+        positionClass: "toast-bottom-center"
+        timeOut: "5"
+      }
+      toastr.success("""Report approved""")
+      if template.data.redirectOnSubmit
+        Router.go template.data.redirectOnSubmit
+
+  'click #approve-user': (e) ->
+    if Meteor.call 'setUserApproval', Template.currentData().report.createdBy.userId, 'approved'
+      toastr.success("""User and all pending reports approved""")
+      if template.data.redirectOnSubmit
+        Router.go template.data.redirectOnSubmit
+
+  'click #reject-report': (e) ->
+    if Meteor.call 'setReportApproval', Template.currentData().report._id, 'rejected'
+      toastr.success("""Report rejected""")
+      if template.data.redirectOnSubmit
+        Router.go template.data.redirectOnSubmit
+
 
 popoverOpts =
   trigger: 'hover'

@@ -42,6 +42,18 @@
         .call(callback);
     });
 
+    this.When(/^I approve the report$/, function(callback){
+      helper.world.browser
+        .clickWhenVisible(".approve-report")
+        .call(callback);
+    });
+
+    this.When(/^I approve the user$/, function(callback){
+      helper.world.browser
+        .clickWhenVisible(".approve-user")
+        .call(callback);
+    });
+
     this.Then(/^there should be no delete button for the (report|study) by someone else$/,
     function(reportOrStudy, callback){
       helper.world.browser

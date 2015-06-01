@@ -21,3 +21,11 @@ for key in _.keys schema
     type: 'text'
     displayName: field.label or keyToLabel(key)
     required: if field.optional then false else true
+
+if Meteor.isServer
+  Accounts.onCreateUser (options, user) ->
+    # TODO how to make the first rana admin approved by default?
+    user.approval = 'pending'
+    user.profile = options.profile
+    user
+

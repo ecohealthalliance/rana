@@ -1,4 +1,4 @@
-template(name="table")
+template(name="approvalTable")
   section.rm-pad-btm
     .container
       button.toggle-filter.btn.btn-primary(href="#")
@@ -21,5 +21,5 @@ template(name="table")
     .table-wrap.reports-table.container
       +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
 
-template(name="noReports")
-  h3 No Reports Found
+template(name="noPending")
+  h3 No Pending Found

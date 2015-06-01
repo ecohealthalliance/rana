@@ -197,6 +197,10 @@
                 console.log("Bad key: "+ key);
                 return;
               }
+              // Don't set the hidden approval field that is based on user status
+              if(key == 'approval') {
+                return;
+              }
               if (schema[key].autoform && schema[key].autoform.rows) { //textarea
                 browser.setValue('textarea[data-schema-key="' + key + '"]', value);
               } else if (schema[key].type === Boolean) {

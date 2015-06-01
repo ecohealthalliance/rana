@@ -1,14 +1,18 @@
 getCollections = => @collections
 
-Template.table.created = ->
+created = ->
   @query = new ReactiveVar()
+Template.table.created = created
+Template.pendingTable.created = created
 
-Template.table.query = ->
+query = ->
   Template.instance().query
+Template.table.query = query
+Template.pendingTable.query = query
 
-Template.table.filters = =>
+filters = =>
   filters = []
-  query = Template.instance().query.get() or {}
+  query = Template.instance().query?.get() or {}
 
   # reactive-table filters don't support arbitrary queries yet
   if ! _.isEmpty query
@@ -23,11 +27,17 @@ Template.table.filters = =>
 
   filters
 
+Template.table.filters = filters
+Template.pendingTable.filters = filters
+
 Template.table.settings = () =>
   settings 'full'
 
 Template.table.obfuscatedSettings = () =>
   settings 'obfuscated'
+
+Template.pendingTable.settings = () =>
+  settings 'pending'
 
 settings = (tableType) =>
 
@@ -55,7 +65,7 @@ settings = (tableType) =>
     fn: (val, obj) ->
       getStudyNameVar(val).get()
 
-  if tableType is 'full'
+  if tableType in ['full', 'pending']
     fields.push
       key: "eventLocation"
       label: "Event Location"
@@ -69,7 +79,7 @@ settings = (tableType) =>
       key: "eventLocation.country"
       label: "Event Location Country"
 
-  if tableType is 'full'
+  if tableType in ['full', 'pending']
     columns = [
       "speciesGenus"
       "speciesName"
@@ -140,12 +150,29 @@ settings = (tableType) =>
           <a class="control view" href="#{viewPath}" title="View"></a>
         """)
 
+  if tableType is 'pending'
+    fields.push
+      key: "controls"
+      label: ""
+      hideToggle: true
+      fn: (val, obj) ->
+        new Spacebars.SafeString("""
+          <a class="control approve-report"  data-id="#{obj._id}" title="Approve report"></a>
+          <a class="control approve-user" data-id="#{obj.createdBy.userId}" title="Approve User"></a>
+          <a class="control reject-report" data-id="#{obj._id}" title="Reject Report"></a>
+        """)
+
+  if tableType is 'pending'
+    noDataTmpl = Template.noPendingReports
+  else
+    noDataTmpl = Template.noReports
+
   showColumnToggles: true
   showFilter: false
   fields: fields
-  noDataTmpl: Template.noReports
+  noDataTmpl: noDataTmpl
 
-Template.table.events(
+events =
   'click .remove-form': (evt)->
     reportId = $(evt.target).data("id")
     reply = prompt('Type "delete" to confirm that this report should be removed.')
@@ -169,4 +196,33 @@ Template.table.events(
       else
         window.open "data:text/csv;charset=utf-8," + encodeURIComponent(result)
       $(event.target).removeClass('disabled')
-)
+
+Template.table.events events
+Template.pendingTable.events events
+
+Template.pendingTable.events
+
+  'click .approve-report': (e) ->
+    Meteor.call 'setReportApproval', $(e.target).data('id'), 'approved'
+    toastr.options = {
+      positionClass: "toast-bottom-center"
+      timeOut: "3000"
+    }
+    toastr.success("""Report approved""")
+
+  'click .approve-user': (e) ->
+    Meteor.call 'setUserApproval', $(e.target).data('id'), 'approved'
+    toastr.options = {
+      positionClass: "toast-bottom-center"
+      timeOut: "3000"
+    }
+    toastr.success("""User and all pending reports approved""")
+
+  'click .reject-report': (e) ->
+    Meteor.call 'setReportApproval', $(e.target).data('id'), 'rejected'
+    toastr.options = {
+      positionClass: "toast-bottom-center"
+      timeOut: "3000"
+    }
+    toastr.success("""Report rejected""")
+

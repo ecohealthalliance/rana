@@ -11,6 +11,15 @@ template(name="reportFormComplete")
             else if isUpdate
               span.action Update Report
             a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
+          if isPending
+            | Approval:
+            a#approve-report.btn.btn-primary.btn-inline.approve Approve Report
+            a#approve-user.btn.btn-primary.btn-inline.approve Approve User
+            a#reject-report.btn.btn-primary.btn-inline.reject Reject Report
+          if isOwner
+            span.approvalCtn Approval:
+              span.approvalStatus(class=report.approval) #{report.approval}
+
 
       +autoForm(
         id="ranavirus-report"
@@ -21,6 +30,9 @@ template(name="reportFormComplete")
       )
 
         +afQuickField name='studyId'
+
+        if isInsert
+          +afQuickField name='approval' value=userApproval
 
         section.rm-pad-top
           .container

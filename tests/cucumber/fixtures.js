@@ -12,7 +12,8 @@
         Groups.remove({ path: { $ne: "rana" } });
         var adminUserId = Accounts.createUser({
           email: "admin@admin.com",
-          password: "adminuser"
+          password: "adminuser",
+          approval: "approved"
         });
         __SpeciesCollection.remove({});
         __SpeciesCollection.insert({
@@ -50,6 +51,7 @@
         var userId = Accounts.createUser({
           email: "test@test.com",
           password: "testuser",
+          approval: "approved",
           profile: {
             name: "Test User",
             organization : "EHA",
@@ -75,6 +77,7 @@
           '_id': 'fakeid',
           'name': 'Test Study',
           'dataUsePermissions': 'Share full record',
+          'approval': 'approved',
           'consent': true,
           'csvFile': 'fakefile',
           'contact': {
@@ -94,6 +97,7 @@
           report = _.extend({
             dataUsePermissions: 'Share full record',
             consent: true,
+            approval: 'approved',
             createdBy: {
               userId: userId,
               name: "Test User"

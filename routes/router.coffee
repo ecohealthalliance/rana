@@ -31,6 +31,7 @@ Router.route('newReport',
   waitOn: ->
     [
       Meteor.subscribe("studies", @params.studyId)
+      Meteor.subscribe("userInfo", Meteor.userId())
     ]
 )
 
@@ -121,6 +122,16 @@ Router.route('studies',
 Router.route('table',
   path: BASE_PATH + '/table'
   where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe "groupByPath", "rana"
+    ]
+)
+
+Router.route('pending',
+  path: BASE_PATH + '/pending'
+  where: 'client'
+  template: 'pendingTable'
   waitOn: ->
     [
       Meteor.subscribe "groupByPath", "rana"
