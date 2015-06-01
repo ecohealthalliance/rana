@@ -53,8 +53,6 @@ Template.registerHelper 'reportDoc', () =>
       study
 
 Template.reportFormComplete.helpers
-  log: (l) ->
-    console.log l
   isInsert: ->
     Template.currentData().type == 'insert'
 
