@@ -86,26 +86,43 @@ Template.reportFormComplete.events
     $('.page-wrap').toggleClass('curtain')
 
   'click #approve-report': (e) ->
-    if Meteor.call 'setReportApproval', Template.currentData().report._id, 'approved'
-      toastr.options = {
-        positionClass: "toast-bottom-center"
-        timeOut: "5"
-      }
-      toastr.success("""Report approved""")
-      if template.data.redirectOnSubmit
-        Router.go template.data.redirectOnSubmit
+    Meteor.call 'setReportApproval', Template.currentData().report._id, 'approved', (error, data) ->
+      if error
+        toastr.error(error.message)
+      else
+        toastr.options = {
+          positionClass: "toast-bottom-center"
+          timeOut: "5"
+        }
+        toastr.success("""Report approved""")
+        if template.data.redirectOnSubmit
+          Router.go template.data.redirectOnSubmit
 
   'click #approve-user': (e) ->
-    if Meteor.call 'setUserApproval', Template.currentData().report.createdBy.userId, 'approved'
-      toastr.success("""User and all pending reports approved""")
-      if template.data.redirectOnSubmit
-        Router.go template.data.redirectOnSubmit
+    if error
+        toastr.error(error.message)
+    else
+      Meteor.call 'setUserApproval', Template.currentData().report.createdBy.userId, 'approved', (err, data) ->
+        toastr.options = {
+          positionClass: "toast-bottom-center"
+          timeOut: "5"
+        }
+        toastr.success("""User and all pending reports approved""")
+        if template.data.redirectOnSubmit
+          Router.go template.data.redirectOnSubmit
 
   'click #reject-report': (e) ->
-    if Meteor.call 'setReportApproval', Template.currentData().report._id, 'rejected'
-      toastr.success("""Report rejected""")
-      if template.data.redirectOnSubmit
-        Router.go template.data.redirectOnSubmit
+    if error
+        toastr.error(error.message)
+    else
+      Meteor.call 'setReportApproval', Template.currentData().report._id, 'rejected', (err, data) ->
+        toastr.options = {
+          positionClass: "toast-bottom-center"
+          timeOut: "5"
+        }
+        toastr.success("""Report rejected""")
+        if template.data.redirectOnSubmit
+          Router.go template.data.redirectOnSubmit
 
 
 popoverOpts =
