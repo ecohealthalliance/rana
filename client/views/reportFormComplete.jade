@@ -23,11 +23,12 @@ template(name="reportFormComplete")
             a#reject-report.btn.btn-danger.btn-inline.reject 
               span Reject Report
               i.fa.fa-times
-      if isOwner
-        section.approval.rm-pad.space-btm-3(class="#{report.approval}-wrap")
-          .container
-            span.approvalStatus(class=report.approval) #{report.approval}
-      else 
+      if isUpdate
+        if isOwner
+          section.approval.rm-pad.space-btm-3(class="#{report.approval}-wrap")
+            .container
+              span.approvalStatus(class=report.approval) #{report.approval}
+      else
         .space-btm-3
 
 
