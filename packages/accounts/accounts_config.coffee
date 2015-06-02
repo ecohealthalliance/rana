@@ -12,12 +12,6 @@ keyToLabel = (key)->
 AccountsTemplates.configureRoute "signIn",
   path: '/grrs/sign-in'
 
-AccountsTemplates.configure
-  showPlaceholders: false
-  continuousValidation: true
-  texts:
-    optionalField: ''
-
 AccountsTemplates.removeField 'email'
 AccountsTemplates.removeField 'password'
 AccountsTemplates.addFields ([
