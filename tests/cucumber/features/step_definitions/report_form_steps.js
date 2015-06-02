@@ -47,6 +47,13 @@
       });
     };
 
+    this.When(/^I fill out the form setting "([^"]+)" to "([^"]+)"$/,
+    function(field, value, callback){
+      var customValues = {};
+      customValues[field] = value;
+      helper.fillInForm(customValues, callback);
+    });
+
     this.When(/^I fill out the form with the (eventDate) "([^"]*)"$/,
     function(prop, value, callback){
       var customValues = {};

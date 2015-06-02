@@ -1,3 +1,5 @@
+collections = @collections
+
 reportHook = (userId, doc)=>
   ids = _.pluck(doc.pathologyReports, "report").concat(
     _.pluck(doc.images, "image")
@@ -12,6 +14,12 @@ reportHook = (userId, doc)=>
     })
 @collections.Reports.after.insert reportHook
 @collections.Reports.after.update reportHook
+
+@collections.Reports.after.update (userId, doc) ->
+  if @previous.dataUsePermissions != doc.dataUsePermissions
+    userApproval = Meteor.users.findOne({_id: userId}).approval
+    if userApproval != 'approved' and @previous.approval == 'approved'
+      collections.Reports.update {_id: doc._id}, {$set: {approval: 'pending'}}
 
 studyHook = (userId, doc)=>
   @collections.PDFs.update({

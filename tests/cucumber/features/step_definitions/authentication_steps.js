@@ -46,9 +46,22 @@
       .call(callback);
     });
 
-    this.When(/I log in( as admin)?/, function(admin, callback){
-      var email = admin ? "admin@admin.com" : "test@test.com";
-      var password = admin ? "adminuser" : "testuser";
+    this.When(/^I log in(?: as (admin|pending))?$/, function(user, callback){
+      if (! user) {
+        user = 'test';
+      }
+      var emails = {
+        admin: 'admin@admin.com',
+        test: 'test@test.com',
+        pending: 'pending@test.com'
+      }
+      var passwords = {
+        admin: 'adminuser',
+        test: 'testuser',
+        pending: 'pendinguser'
+      }
+      var email = emails[user];
+      var password = passwords[user];
       helper.world.browser
       .url(helper.world.cucumber.mirror.rootUrl + "grrs/sign-in")
       .waitForExist(".at-pwd-form", function(err, exists){

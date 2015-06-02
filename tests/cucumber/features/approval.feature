@@ -62,3 +62,41 @@ Feature: Report approval
     When I have logged in
     And I am on the "pending" page
     Then I should be on the "grrs/" page
+
+  Scenario: Changing the sharing of an approved report by pending user
+    When I log in as pending
+    And I am on the "study/fakeid/report" page
+    And I fill out the form setting "dataUsePermissions" to "Share obfuscated"
+    And I click submit
+    And I log out
+    And I have logged in as admin
+    And I am on the "pending" page
+    And I approve the report
+    And I log out
+    And I am on the "table" page
+    Then I should see 1 report in the table
+    When I log in as pending
+    And I am on the "table" page
+    And I click on the edit button
+    And I fill out the form setting "dataUsePermissions" to "Share full record"
+    And I click submit
+    And I log out
+    And I am on the "table" page
+    Then I should see 0 reports in the table
+
+  Scenario: Changing the sharing of an approved report by approved user
+    When I log in
+    And I am on the "study/fakeid/report" page
+    And I fill out the form setting "dataUsePermissions" to "Share obfuscated"
+    And I click submit
+    And I log out
+    And I am on the "table" page
+    Then I should see 1 report in the table
+    When I log in
+    And I am on the "table" page
+    And I click on the edit button
+    And I fill out the form setting "dataUsePermissions" to "Share full record"
+    And I click submit
+    And I log out
+    And I am on the "table" page
+    Then I should see 1 report in the table

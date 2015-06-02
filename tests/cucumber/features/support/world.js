@@ -204,7 +204,10 @@
               if (schema[key].autoform && schema[key].autoform.rows) { //textarea
                 browser.setValue('textarea[data-schema-key="' + key + '"]', value);
               } else if (schema[key].type === Boolean) {
-                browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
+                // Hack to scroll past the review covering up the permissions
+                // radio buttons
+                browser.scroll(0, 4000)
+                .click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
               } else if (schema[key].type === Array) {
                 _.each(value, function (element) {
                   if(!_.isString(element)) {

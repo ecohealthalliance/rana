@@ -12,9 +12,9 @@
         Groups.remove({ path: { $ne: "rana" } });
         var adminUserId = Accounts.createUser({
           email: "admin@admin.com",
-          password: "adminuser",
-          approval: "approved"
+          password: "adminuser"
         });
+        Meteor.users.update({_id: adminUserId}, {$set: {approval: 'approved'}});
         __SpeciesCollection.remove({});
         __SpeciesCollection.insert({
           "genera" : [  "Lithobates" ],
@@ -62,6 +62,7 @@
             organizationPostalCode : "10001"
           }
         });
+        Meteor.users.update({_id: userId}, {$set: {approval: 'approved'}});
         _.each(reports, function (report) {
           report = _.extend({
             createdBy: {
@@ -88,6 +89,20 @@
               userId: userId,
               name: "Test User"
             }
+        });
+
+        var unapprovedUserId = Accounts.createUser({
+          email: "pending@test.com",
+          password: "pendinguser",
+          profile: {
+            name: "Pending User",
+            organization : "EHA",
+            organizationStreet : "460 West 34th Street – 17th floor",
+            organizationCity: "New York",
+            organizationStateOrProvince: "NY",
+            organizationCountry: "USA",
+            organizationPostalCode : "10001"
+          }
         });
         return reports;
       },
