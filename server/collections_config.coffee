@@ -126,7 +126,8 @@ ReactiveTable.publish 'obfuscatedReports', collections.Reports, (() ->
   {
     'dataUsePermissions': "Share obfuscated",
     'createdBy.userId': { $ne: @userId },
-    'consent': true
+    'consent': true,
+    'approval': 'approved'
   }),
   { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'eventLocation.country': 1} }
 
@@ -228,6 +229,7 @@ Meteor.publishComposite 'obfuscatedReportAndStudy', (reportId) ->
       {
         _id: reportId
         dataUsePermissions: 'Share obfuscated'
+        approval: 'approved'
       }
       {
         fields: {
