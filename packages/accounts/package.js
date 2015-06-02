@@ -16,7 +16,6 @@ Package.onUse(function(api) {
   api.use('aldeed:autoform@4.2.2');
   api.use('accounts-password');
   api.use('useraccounts:core@1.7.0');
-  api.use('aldeed:template-extension');
   api.use('stylus');
   
   api.addFiles('user_publication.coffee', 'server');
