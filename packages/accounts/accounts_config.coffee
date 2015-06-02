@@ -20,30 +20,32 @@ AccountsTemplates.configure
 
 AccountsTemplates.removeField 'email'
 AccountsTemplates.removeField 'password'
-AccountsTemplates.addField ([
+AccountsTemplates.addFields ([
   {  
-  _id: 'email'
-        type: 'email'
-        displayName: "Email"
-        required: true
-        template: 'registerCustom'
-        options:
-          beginRequired: true
-      }    
-  {  _id: 'password'
+    '_id': 'email'
+    type: 'email'
+    displayName: "Email"
+    required: true
+    template: 'registerCustom'
+    options:
+      beginRequired: true
+  },
+  {  
+    '_id': 'password'
     type: 'password'
     displayName: "Password"
     re: /(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
     required: true
     template: 'registerCustom'
   },
-  {  _id: 'password_again'
+  {  
+    '_id': 'password_again'
     type: 'password'
     displayName: "Password (again)"
     re: /(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
     required: true
     template: 'registerCustom'
-}
+  }
 ])
 
 schema = UserProfileSchema.schema()
