@@ -16,6 +16,8 @@ Package.onUse(function(api) {
   api.use('aldeed:autoform@4.2.2');
   api.use('accounts-password');
   api.use('useraccounts:core@1.7.0');
+  api.use('aldeed:template-extension');
+  api.use('stylus');
   
   api.addFiles('user_publication.coffee', 'server');
   
@@ -23,10 +25,14 @@ Package.onUse(function(api) {
   
   api.addFiles('header_buttons.jade', 'client');
   api.addFiles('profile.jade', 'client');
+  api.addFiles('register.jade', 'client');
   
   api.addFiles('profile.coffee', 'client');
+
+  api.addFiles('main.styl', 'client');
   
   api.addFiles('accounts_config.coffee', ['client', 'server']);
   api.addFiles('profile_routes.coffee', ['client', 'server']);
+
 });
 
