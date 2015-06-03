@@ -65,7 +65,7 @@ Template.map.rendered = ->
             _.contains(result, option.value)
           )
           readableResult = _.map(readableResult, (schemaOption) ->
-            schemaOption['label']
+            schemaOption.label
           )
           readableResult.sort().join(", ")
         else
