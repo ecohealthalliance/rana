@@ -5,7 +5,7 @@
 
   var assert = require('assert');
 
-  var _ = Package["underscore"]._;
+  var _ = require("underscore");
 
   module.exports = function () {
 

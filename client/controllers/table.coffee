@@ -41,7 +41,7 @@ Template.pendingTable.settings = () =>
 
 settings = (tableType) =>
 
-  isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})._id
+  isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})?._id
   schema = @collections.Reports.simpleSchema().schema()
 
   fields = []

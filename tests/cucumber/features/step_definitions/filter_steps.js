@@ -5,14 +5,13 @@
 
   var assert = require('assert');
 
-  var _ = Package["underscore"]._;
+  var _ = require("underscore");
 
   module.exports = function () {
 
-    var helper = this;
-
     this.Given(/^there is a report with "([^"]*)" "([^"]*)" in the database$/,
     function (property, value, callback) {
+      var that = this;
       var report = {
         eventLocation: {
           source: 'LonLat',
@@ -33,9 +32,9 @@
         }
       };
       report[property] = value;
-      helper.addReports([report], function(err){
+      this.addReports([report], function(err){
         assert.ifError(err);
-        helper.world.browser
+        that.browser
         .waitForReport(report)
         .call(callback);
       });
@@ -43,23 +42,24 @@
     
     this.When(/^I add a filter where "([^"]*)" is "([^"]*)"$/,
     function (property, value, callback) {
-      helper.world.browser
+      var that = this;
+      this.browser
       .isVisible('#filter-panel', function(err, isVisible) {
         assert.ifError(err);
         if (!isVisible) {
-          helper.world.browser
+          that.browser
           .click('.toggle-filter')
-          .waitForVisible('#filter-panel')
+          .waitForVisible('#filter-panel');
         }
 
-        helper.world.browser
+        that.browser
         .elements(".autoform-array-item", function(err, resp){
           assert.ifError(err);
           var currentIdx = resp.value.length - 1;
           var propKey = "filters." + currentIdx + ".property";
           var predKey = "filters." + currentIdx + ".predicate";
           var valKey = "filters." + currentIdx + ".value";
-          helper.world.browser
+          that.browser
           .click(".autoform-add-item")
           .selectByValue('select[data-schema-key="' + propKey + '"]', property)
           .selectByValue('select[data-schema-key="' + predKey + '"]', "=")
@@ -72,7 +72,7 @@
     });
     
     this.When(/^I remove the filters$/, function (callback) {
-      helper.world.browser
+      this.browser
       .click(".clear")
       .call(callback);
     });

@@ -49,6 +49,7 @@
           Groups.findOne({path:"rana"})._id
         );
         var userId = Accounts.createUser({
+          _id: 'fakeId',
           email: "test@test.com",
           password: "testuser",
           approval: "approved",
@@ -78,7 +79,6 @@
           '_id': 'fakeid',
           'name': 'Test Study',
           'dataUsePermissions': 'Share full record',
-          'approval': 'approved',
           'consent': true,
           'csvFile': 'fakefile',
           'contact': {
