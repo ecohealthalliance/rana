@@ -1,14 +1,20 @@
 template(name="reportFormObfuscated")
 
   if type
-
-    section.rm-pad-btm
-      .container.name-action
-        if study.name
-          h1 
-            span.name #{study.name}
-            span.action Obfuscated Report
-            a.btn.btn-primary(href="{{pathFor route='editStudy' data=studyId}}") View Study
+    .report-form.space-btm-3
+      section.title.rm-pad-btm.odd
+        .container.name-action
+          if study.name
+            h1
+              span.name #{study.name}
+              a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
+      if showApproval
+        +approvalBar
+        section.approval.rm-pad.space-btm-3.gray
+          .container
+            +approvalButtons
+      else
+        .space-btm-3
 
     +autoForm(
       id="ranavirus-report"

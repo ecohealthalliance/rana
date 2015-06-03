@@ -52,6 +52,10 @@ Template.registerHelper 'reportDoc', () =>
       @mergeObjects study.contact, contactFromUser
       study
 
+showApproval = ->
+  (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
+  (Template.currentData().type == 'readonly' or Template.currentData().type == 'update')
+
 Template.reportFormComplete.helpers
   isInsert: ->
     Template.currentData().type == 'insert'
@@ -59,9 +63,7 @@ Template.reportFormComplete.helpers
   isUpdate: ->
     Template.currentData().type == 'update'
 
-  showApproval: ->
-    (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
-    (Template.currentData().type == 'readonly' or Template.currentData().type == 'update')
+  showApproval: showApproval
 
   studyId: ->
     studyId: @study._id
@@ -78,6 +80,9 @@ Template.reportFormComplete.helpers
       (Template.currentData().report.approval == 'pending') )
 
 Template.reportFormObfuscated.helpers
+
+  showApproval: showApproval
+
   studyId: ->
     studyId: @study._id
 

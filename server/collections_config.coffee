@@ -68,6 +68,19 @@ sharedOrCreatorOrSharedRanaAdmin = (userId) ->
   else
     sharedOrCreator userId
 
+obfuscatedApprovedOrRanaAdmin = (userId) ->
+  if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+    {
+      dataUsePermissions: "Share obfuscated"
+      consent: true
+    }
+  else
+    {
+        dataUsePermissions: "Share obfuscated"
+        approval: "approved"
+        consent: true
+    }
+
 Meteor.publishComposite 'studies', (id) ->
   find: () ->
     collections.Studies.find {
@@ -226,11 +239,7 @@ Meteor.publishComposite 'obfuscatedReportAndStudy', (reportId) ->
 
   find: () ->
     collections.Reports.find(
-      {
-        _id: reportId
-        dataUsePermissions: 'Share obfuscated'
-        approval: 'approved'
-      }
+      obfuscatedApprovedOrRanaAdmin @userId
       {
         fields: {
           studyId: true
@@ -238,6 +247,7 @@ Meteor.publishComposite 'obfuscatedReportAndStudy', (reportId) ->
           createdBy: true
           contact: true
           'eventLocation.country': true
+          approval: true
         }
       }
     )

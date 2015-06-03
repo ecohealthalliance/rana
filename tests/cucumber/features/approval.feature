@@ -147,3 +147,28 @@ Feature: Report approval
     And I should see the "approve-report" approval button
     And I should see the "approve-user" approval button
     And I should see the "reject-user" approval button
+
+  Scenario: Approving an obfuscated report from report page
+    When I log in as pending
+    And I am on the "study/fakeid/report" page
+    And I fill out the form setting "dataUsePermissions" to "Share obfuscated"
+    And I click submit
+    And I log out
+    And I have logged in as admin
+    And I am on the "pending" page
+    And I click on the view button
+    Then I should see the "reject-report" approval button
+    And I should see the "approve-report" approval button
+    And I should see the "approve-user" approval button
+    And I should see the "reject-user" approval button
+    When I click on the "reject-report" approval button
+    Then I should see the "approve-report" approval button
+    And I should see the "pend-report" approval button
+    And I should see the "approve-user" approval button
+    And I should see the "reject-user" approval button
+    When I click on the "pend-report" approval button
+    And I click on the "approve-user" approval button
+    Then I should see the "pend-report" approval button
+    And I should see the "reject-report" approval button
+    And I should see the "reject-user" approval button
+    And I should see the "pend-user" approval button
