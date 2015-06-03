@@ -273,10 +273,7 @@ allowCreatorAndAdmin = (userId, doc) ->
   insert: (userId, doc) ->
     doc.createdBy.userId == userId
   update: (userId, doc, fields, modifier) ->
-    if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
-      return true
-    else
-      (doc.createdBy.userId == userId) and (not ('approval' of fields)) and (not ('approval' of modifier.$set))
+    (doc.createdBy.userId == userId) and (not ('approval' of fields)) and (not ('approval' of modifier.$set))
   remove: allowCreatorAndAdmin
 
 @collections.Studies.allow
