@@ -271,7 +271,7 @@ allowCreatorAndAdmin = (userId, doc) ->
 
 @collections.Reports.allow
   insert: (userId, doc) ->
-    doc.createdBy.userId == userId and doc.approval == Meteor.user().approval
+    doc.createdBy.userId == userId
   update: (userId, doc, fields, modifier) ->
     if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
       return true
