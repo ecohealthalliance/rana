@@ -58,7 +58,16 @@ Template.map.rendered = ->
         for key in keys
           result = result?[key]
         if _.isArray result
-          result.sort().join(", ")
+          # Combine array keys into a human readable string using the schema
+          reportSchema = collections.Reports.simpleSchema().schema()
+          schemaOptions = reportSchema[curGroupBy].autoform.options
+          readableResult = _.filter(schemaOptions, (option) ->
+            _.contains(result, option.value)
+          )
+          readableResult = _.map(readableResult, (schemaOption) ->
+            schemaOption['label']
+          )
+          readableResult.sort().join(", ")
         else
           result
       groups = _.uniq(data.map((report)->
