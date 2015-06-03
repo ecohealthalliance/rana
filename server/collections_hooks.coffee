@@ -16,7 +16,8 @@ reportHook = (userId, doc)=>
 @collections.Reports.after.update reportHook
 
 @collections.Reports.before.insert (userId, doc) ->
-  doc.approval = Meteor.users.findOne({_id: userId}).approval
+  if userId
+    doc.approval = Meteor.users.findOne({_id: userId}).approval
 
 @collections.Reports.after.update (userId, doc) ->
   if @previous.dataUsePermissions != doc.dataUsePermissions
