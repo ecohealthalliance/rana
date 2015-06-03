@@ -65,6 +65,7 @@ Router.route('editReport',
     [
       Meteor.subscribe("reportAndStudy", @params.reportId)
       Meteor.subscribe("obfuscatedReportAndStudy", @params.reportId)
+      Meteor.subscribe('userInfo')
     ]
 
 )

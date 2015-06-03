@@ -100,3 +100,50 @@ Feature: Report approval
     And I log out
     And I am on the "table" page
     Then I should see 1 report in the table
+
+  Scenario: Changing approval status from the report page
+    When I log in
+    And I am on the "study/fakeid/report" page
+    And I fill out the form
+    And I click submit
+    And I log out
+    And I log in as admin
+    And I navigate to the "table" page
+    And I click on the view button
+    Then I should see the "reject-report" approval button
+    And I should see the "pend-report" approval button
+    And I should see the "reject-user" approval button
+    And I should see the "pend-user" approval button
+    When I click on the "reject-report" approval button
+    Then I should see the "approve-report" approval button
+    And I should see the "pend-report" approval button
+    And I should see the "pend-user" approval button
+    And I should see the "reject-user" approval button
+    When I click on the "pend-report" approval button
+    Then I should see the "approve-report" approval button
+    And I should see the "reject-report" approval button
+    And I should see the "reject-user" approval button
+    And I should see the "pend-user" approval button
+    When I click on the "approve-report" approval button
+    Then I should see the "pend-report" approval button
+    And I should see the "reject-report" approval button
+    And I should see the "reject-user" approval button
+    And I should see the "pend-user" approval button
+    When I click on the "pend-report" approval button
+    And I click on the "reject-user" approval button
+    Then I should see the "approve-report" approval button
+    And I should see the "pend-report" approval button
+    And I should see the "approve-user" approval button
+    And I should see the "pend-user" approval button
+    When I click on the "pend-report" approval button
+    And I click on the "approve-user" approval button
+    Then I should see the "pend-report" approval button
+    And I should see the "reject-report" approval button
+    And I should see the "reject-user" approval button
+    And I should see the "pend-user" approval button
+    When I click on the "reject-report" approval button
+    And I click on the "pend-user" approval button
+    Then I should see the "pend-report" approval button
+    And I should see the "approve-report" approval button
+    And I should see the "approve-user" approval button
+    And I should see the "reject-user" approval button

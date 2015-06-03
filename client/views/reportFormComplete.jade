@@ -1,3 +1,8 @@
+template(name="approvalBar")
+  section.approval.rm-pad(class="#{report.approval}-wrap")
+    .container
+      span.approvalStatus(class=report.approval) #{report.approval}
+
 template(name="reportFormComplete")
 
   if type
@@ -11,23 +16,14 @@ template(name="reportFormComplete")
             else if isUpdate
               span.action Update Report
             a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
-      if isPending
-        section.approval.rm-pad.space-btm-3.gray
-          .container
-            a#approve-report.btn.btn-success.btn-inline.approve 
-              span Approve Report
-              i.fa.fa-check
-            a#approve-user.btn.btn-success.btn-inline.approve 
-              span Approve User
-              i.fa.fa-user-plus
-            a#reject-report.btn.btn-danger.btn-inline.reject 
-              span Reject Report
-              i.fa.fa-times
       if isUpdate
         if isOwner
-          section.approval.rm-pad.space-btm-3(class="#{report.approval}-wrap")
-            .container
-              span.approvalStatus(class=report.approval) #{report.approval}
+          +approvalBar
+      if showApproval
+        +approvalBar
+        section.approval.rm-pad.space-btm-3.gray
+          .container
+            +approvalButtons
       else
         .space-btm-3
 

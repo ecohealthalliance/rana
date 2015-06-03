@@ -23,6 +23,22 @@
         .call(callback);
     });
 
+    this.Then(/^I should see the "(.*)" approval button$/, function(buttonId, callback){
+      helper.world.browser.waitForExist('#' + buttonId, 3000,
+      function(err, result){
+        assert.equal(err, null);
+        assert(result, "Missing #" + buttonId + ' button');
+      }).call(callback);
+    });
+
+    this.When(/^I click on the "(.*)" approval button$/,
+      function(buttonId, callback){
+        helper.world.browser
+        .click('#' + buttonId)
+        .call(callback);
+      });
+
+
   };
 
 })();

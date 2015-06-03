@@ -141,21 +141,24 @@
   &.approve-report
     &:before
       content '\f00c'
-  &.approve-user
-    &:before
-      content '\f234'
   &.reject-report
     linkColor(deny)
     &:before
       content '\f00d'
-
+  &.approve-user
+    &:before
+      content '\f234'
+  &.reject-user
+    linkColor(deny)
+    &:before
+      content '\f235'
 
 @media (max-width: 768px)
- 
+
   .reactive-table-filter
     width 40%
     padding 0
-    
+
 @media (max-width: 768px)
   .table>tbody>tr>td
     padding 0

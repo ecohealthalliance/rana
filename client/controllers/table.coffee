@@ -158,8 +158,9 @@ settings = (tableType) =>
       fn: (val, obj) ->
         new Spacebars.SafeString("""
           <a class="control approve-report"  data-id="#{obj._id}" title="Approve report"></a>
-          <a class="control approve-user" data-id="#{obj.createdBy.userId}" title="Approve User"></a>
           <a class="control reject-report" data-id="#{obj._id}" title="Reject Report"></a>
+          <a class="control approve-user" data-id="#{obj.createdBy.userId}" title="Approve User"></a>
+          <a class="control reject-user" data-id="#{obj.createdBy.userId}" title="Reject User`"></a>
         """)
 
   if tableType is 'pending'
@@ -208,27 +209,14 @@ Template.pendingTable.events events
 
 Template.pendingTable.events
 
-  'click .approve-report': (e) ->
-    Meteor.call 'setReportApproval', $(e.target).data('id'), 'approved'
-    toastr.options = {
-      positionClass: "toast-bottom-center"
-      timeOut: "3000"
-    }
-    toastr.success("""Report approved""")
+  'click .approve-report': (e) =>
+    @setApproval 'setReportApproval', $(e.target).data('id'), 'approved', "Report approved"
 
-  'click .approve-user': (e) ->
-    Meteor.call 'setUserApproval', $(e.target).data('id'), 'approved'
-    toastr.options = {
-      positionClass: "toast-bottom-center"
-      timeOut: "3000"
-    }
-    toastr.success("""User and all pending reports approved""")
+  'click .reject-report': (e) =>
+    @setApproval 'setReportApproval', $(e.target).data('id'), 'rejected', "Report rejected"
 
-  'click .reject-report': (e) ->
-    Meteor.call 'setReportApproval', $(e.target).data('id'), 'rejected'
-    toastr.options = {
-      positionClass: "toast-bottom-center"
-      timeOut: "3000"
-    }
-    toastr.success("""Report rejected""")
+  'click .approve-user': (e) =>
+    @setApproval 'setUserApproval', $(e.target).data('id'), 'approved', "User approved"
 
+  'click .reject-user': (e) =>
+    @setApproval 'setUserApproval', $(e.target).data('id'), 'rejected', "User rejected"

@@ -1,0 +1,43 @@
+template(name="approveReport")
+  a#approve-report.btn.btn-success.btn-inline.approve
+    span Approve Report
+    i.fa.fa-check
+
+template(name="pendReport")
+  a#pend-report.btn.btn-warning.btn-inline.pend
+    span Pend Report
+    i.fa.fa-question
+
+template(name="rejectReport")
+  a#reject-report.btn.btn-danger.btn-inline.reject
+    span Reject Report
+    i.fa.fa-times
+
+template(name="approveUser")
+  a#approve-user.btn.btn-success.btn-inline.approve
+    span Approve User
+    i.fa.fa-user-plus
+
+template(name="pendUser")
+  a#pend-user.btn.btn-warning.btn-inline.pend
+    span Pend User
+    i.fa.fa-user-secret
+
+template(name="rejectUser")
+  a#reject-user.btn.btn-danger.btn-inline.reject
+    span Reject User
+    i.fa.fa-user-times
+
+template(name="approvalButtons")
+  if notApproved
+    +approveReport
+  if notPending
+    +pendReport
+  if notRejected
+    +rejectReport
+  if notUserApproved
+    +approveUser
+  if notUserPending
+    +pendUser
+  if notUserRejected
+    +rejectUser
