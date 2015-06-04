@@ -64,7 +64,7 @@ Feature: Report approval
     Then I should be on the "grrs/" page
 
   Scenario: Changing the sharing of an approved report by pending user
-    When I log in as pending
+    When I have logged in as pending
     And I am on the "study/fakeid/report" page
     And I fill out the form setting "dataUsePermissions" to "Share obfuscated"
     And I click submit
@@ -75,7 +75,7 @@ Feature: Report approval
     And I log out
     And I am on the "table" page
     Then I should see 1 report in the table
-    When I log in as pending
+    When I have logged in as pending
     And I am on the "table" page
     And I click on the edit button
     And I fill out the form setting "dataUsePermissions" to "Share full record"
@@ -85,14 +85,14 @@ Feature: Report approval
     Then I should see 0 reports in the table
 
   Scenario: Changing the sharing of an approved report by approved user
-    When I log in
+    When I have logged in
     And I am on the "study/fakeid/report" page
     And I fill out the form setting "dataUsePermissions" to "Share obfuscated"
     And I click submit
     And I log out
     And I am on the "table" page
     Then I should see 1 report in the table
-    When I log in
+    When I have logged in
     And I am on the "table" page
     And I click on the edit button
     And I fill out the form setting "dataUsePermissions" to "Share full record"
@@ -102,12 +102,12 @@ Feature: Report approval
     Then I should see 1 report in the table
 
   Scenario: Changing approval status from the report page
-    When I log in
+    When I have logged in
     And I am on the "study/fakeid/report" page
     And I fill out the form
     And I click submit
     And I log out
-    And I log in as admin
+    And I have logged in as admin
     And I navigate to the "table" page
     And I click on the view button
     Then I should see the "reject-report" approval button
@@ -149,7 +149,7 @@ Feature: Report approval
     And I should see the "reject-user" approval button
 
   Scenario: Approving an obfuscated report from report page
-    When I log in as pending
+    When I have logged in as pending
     And I am on the "study/fakeid/report" page
     And I fill out the form setting "dataUsePermissions" to "Share obfuscated"
     And I click submit

@@ -48,7 +48,7 @@
     function(field, value, callback){
       var customValues = {};
       customValues[field] = value;
-      helper.fillInForm(customValues, callback);
+      fillInReportForm(this, customValues, callback);
     });
 
     this.When(/^I fill out the form with the (eventDate) "([^"]*)"$/,

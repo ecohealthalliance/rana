@@ -9,22 +9,20 @@
 
   module.exports = function () {
 
-    var helper = this;
-
     this.When(/^I approve the report$/, function(callback){
-      helper.world.browser
+      this.browser
         .clickWhenVisible(".approve-report")
         .call(callback);
     });
 
     this.When(/^I approve the user$/, function(callback){
-      helper.world.browser
+      this.browser
         .clickWhenVisible(".approve-user")
         .call(callback);
     });
 
     this.Then(/^I should see the "(.*)" approval button$/, function(buttonId, callback){
-      helper.world.browser.waitForExist('#' + buttonId, 3000,
+      this.browser.waitForExist('#' + buttonId, 3000,
       function(err, result){
         assert.equal(err, null);
         assert(result, "Missing #" + buttonId + ' button');
@@ -33,7 +31,7 @@
 
     this.When(/^I click on the "(.*)" approval button$/,
       function(buttonId, callback){
-        helper.world.browser
+        this.browser
         .click('#' + buttonId)
         .call(callback);
       });
