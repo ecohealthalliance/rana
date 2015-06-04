@@ -24,13 +24,13 @@ Template.approvalButtons.helpers
 Template.approvalButtons.events
 
   'click #approve-report': (e) =>
-    @setApproval 'setReportApproval', Template.parentData().report._id, 'approved', "User approved", Template.parentData().redirectOnSubmit
+    @setApproval 'setReportApproval', Template.parentData().report._id, 'approved', "Report approved", Template.parentData().redirectOnSubmit
 
   'click #reject-report': (e) =>
-    @setApproval 'setReportApproval', Template.parentData().report._id, 'rejected', "User rejected", Template.parentData().redirectOnSubmit
+    @setApproval 'setReportApproval', Template.parentData().report._id, 'rejected', "Report rejected", Template.parentData().redirectOnSubmit
 
   'click #pend-report': (e) =>
-    @setApproval 'setReportApproval', Template.parentData().report._id, 'pending', "User made pending", Template.parentData().redirectOnSubmit
+    @setApproval 'setReportApproval', Template.parentData().report._id, 'pending', "Report made pending", Template.parentData().redirectOnSubmit
 
   'click #approve-user': (e) =>
     @setApproval 'setUserApproval', Template.parentData().report.createdBy.userId, 'approved', "User approved", Template.parentData().redirectOnSubmit
