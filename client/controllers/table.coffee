@@ -13,13 +13,16 @@ Template.table.filters = =>
   # reactive-table filters don't support arbitrary queries yet
   if ! _.isEmpty query
     queries = if '$and' of query then query['$and'] else [query]
+    filterCount = 0
     for q in queries
       key = Object.keys(q)[0]
       value = q[key] or ""
-      filter = new ReactiveTable.Filter('reports-' + key, [key])
+      filterId = 'reports-' + key + filterCount
+      filter = new ReactiveTable.Filter(filterId, [key])
       if value isnt filter.get()
         filter.set(value)
-      filters.push 'reports-' + key
+      filters.push filterId
+      filterCount++
 
   filters
 
