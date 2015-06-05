@@ -54,7 +54,11 @@ Template.registerHelper 'reportDoc', () =>
       @mergeObjects study.contact, contactFromUser
       study
 
-showApproval = ->
+showApprovalBar = ->
+  (Meteor.userId() == Template.currentData().report.createdBy.userId) or
+  (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id)
+
+showApprovalControls = ->
   (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
   (Template.currentData().type == 'readonly' or Template.currentData().type == 'update')
 
@@ -65,7 +69,9 @@ Template.reportFormComplete.helpers
   isUpdate: ->
     Template.currentData().type == 'update'
 
-  showApproval: showApproval
+  showApprovalBar: showApprovalBar
+
+  showApprovalControls: showApprovalControls
 
   studyId: ->
     studyId: @study._id
@@ -73,17 +79,15 @@ Template.reportFormComplete.helpers
   userApproval: ->
     Meteor.user().approval
 
-  isOwner: ->
-    ( (Meteor.userId() == Template.currentData().report.createdBy.userId) and not
-      (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) )
-
   isPending: ->
     ( (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
       (Template.currentData().report.approval == 'pending') )
 
 Template.reportFormObfuscated.helpers
 
-  showApproval: showApproval
+  showApprovalBar: showApprovalBar
+
+  showApprovalControls: showApprovalControls
 
   studyId: ->
     studyId: @study._id

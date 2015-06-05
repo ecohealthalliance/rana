@@ -16,11 +16,9 @@ template(name="reportFormComplete")
             else if isUpdate
               span.action Update Report
             a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
-      if isUpdate
-        if isOwner
-          +approvalBar
-      if showApproval
+      if showApprovalBar
         +approvalBar
+      if showApprovalControls
         section.approval.rm-pad.space-btm-3.gray
           .container
             +approvalButtons

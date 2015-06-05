@@ -8,8 +8,9 @@ template(name="reportFormObfuscated")
             h1
               span.name #{study.name}
               a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
-      if showApproval
+      if showApprovalBar
         +approvalBar
+      if showApprovalControls
         section.approval.rm-pad.space-btm-3.gray
           .container
             +approvalButtons
