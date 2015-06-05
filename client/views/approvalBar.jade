@@ -1,0 +1,6 @@
+template(name="approvalBar")
+  section.approval.rm-pad(class="#{report.approval}-wrap")
+    .container
+      span.approvalStatus(class=report.approval,  data-toggle="popover" data-content=approvalTooltip tooltip="true" class="tooltipped") #{report.approval}
+        span.infoIcon.approvalInfo ?
+
