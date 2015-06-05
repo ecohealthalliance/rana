@@ -9,9 +9,15 @@ template(name="pendingTable")
 
   section.rm-pad-top
     .container
-      h1 Pending Reports
+      h1 Pending Full Reports
     .table-wrap.reports-table.pending-reports.container
       +reactiveTable collection="pendingReports" settings=settings filters=filters
+
+  section.rm-pad-top
+    .container
+      h1 Pending Obfuscated Reports
+    .table-wrap.reports-table.pending-reports.container
+      +reactiveTable collection="pendingReportsObfuscated" settings=settings filters=filters
 
 template(name="noPendingReports")
   h3 No Pending Reports Found

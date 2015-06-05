@@ -131,9 +131,17 @@ ReactiveTable.publish 'reports', collections.Reports, () ->
 
 ReactiveTable.publish 'pendingReports', collections.Reports, () ->
   if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
-    {'approval': 'pending'}
+    {'approval': 'pending', 'dataUsePermissions': 'Share full record', 'consent': true}
   else
     @stop()
+
+ReactiveTable.publish 'pendingReportsObfuscated', collections.Reports, (() ->
+  if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
+    {'approval': 'pending', 'dataUsePermissions': 'Share obfuscated', 'consent': true}
+  else
+    @stop()
+  ),
+  { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'eventLocation.country': 1} }
 
 ReactiveTable.publish 'obfuscatedReports', collections.Reports, (() ->
   {
