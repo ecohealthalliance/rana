@@ -34,10 +34,25 @@ Feature: A map that plots ranavirus reports
     Then I should see 1 reports on the map
     When I add a filter where "studyName" is "Something other than test study"
     Then I should see 0 reports on the map
-    
+
+  Scenario: Filtering by ranavirus confirmation method
+    Given I am on the "map" page
+    And there is a report with "ranavirusConfirmationMethods" "['immunohistochemistry', 'electron_microscopy']" in the database
+    When I add a filter where "ranavirusConfirmationMethods" is "Electron Microscopy"
+    Then I should see 1 reports on the map
+    When I add a filter where "ranavirusConfirmationMethods" is "Traditional PCR"
+    Then I should see 0 reports on the map
+
   Scenario: Grouping reports
     Given I am on the "map" page
     And there is a report with "populationType" "zoological" in the database
     And there is a report with "populationType" "wild" in the database
     When I group the reports by "populationType"
+    Then I should see 2 pins with different colors
+
+  Scenario: Grouping reports by ranavirus confirmation method
+    Given I am on the "map" page
+    And there is a report with "ranavirusConfirmationMethods" "['immunohistochemistry', 'electron_microscopy']" in the database
+    And there is a report with "ranavirusConfirmationMethods" "['immunohistochemistry']" in the database
+    When I group the reports by "ranavirusConfirmationMethods"
     Then I should see 2 pins with different colors

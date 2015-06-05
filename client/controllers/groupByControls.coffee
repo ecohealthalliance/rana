@@ -6,6 +6,7 @@ Template.groupByControls.groups = ->
     "speciesGenus"
     "populationType"
     "vertebrateClasses"
+    "ranavirusConfirmationMethods"
     "ageClasses"
     "createdBy.name"
   ].map((item)->

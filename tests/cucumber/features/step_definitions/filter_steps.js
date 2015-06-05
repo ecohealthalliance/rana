@@ -31,6 +31,10 @@
           country: 'USA'
         }
       };
+      // Parse array values
+      if (value.match(/\[.*\]/)) {
+        value = value.replace(/\[|\]|\'/g, '').split(', ')
+      }
       report[property] = value;
       this.addReports([report], function(err){
         assert.ifError(err);

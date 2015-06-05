@@ -61,6 +61,7 @@ Template.filterControls.created = ->
             "eventDate"
             "totalAnimalsConfirmedInfected"
             "totalAnimalsConfirmedDiseased"
+            "ranavirusConfirmationMethods"
             "eventLocation.country"
             {label: "Creator", value: "createdBy.name"}
             {label: "Study Name", value: "studyName"}
@@ -126,6 +127,12 @@ Template.filterControls.rendered = ->
         value = new Date(value)
         if ("" + value) == "Invalid Date"
           return $.Deferred(-> @reject "Invalid Date Format").promise()
+      if value and reportSchema[property].type == Array
+        # Try to match search terms to the property option labels
+        schemaOptions = reportSchema[property].autoform.options
+        selectedOption = _.findWhere(schemaOptions, {label: value})
+        if selectedOption
+          value = selectedOption.value
       if filterSpecification['predicate'] == 'defined'
         filter[property] = {
           $exists: true
