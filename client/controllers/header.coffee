@@ -9,8 +9,7 @@ Template.header.events
 Template.navLinks.events
   'click .sign-out' : () ->
     Meteor.logout () ->
-      if Router.current().lookupTemplate() == 'profile'
-        Router.go '/grrs'
+      Router.go 'home'
 
 Template.navLinks.helpers
   groupId: () ->
