@@ -134,7 +134,6 @@ Router.route('pending',
   where: 'client'
   template: 'pendingTable'
   onBeforeAction: () ->
-    console.log 'Meteor.userId()', Meteor.userId()
     if not Meteor.user() or not (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id)
       @redirect BASE_PATH + '/'
     else
