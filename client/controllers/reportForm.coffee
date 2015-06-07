@@ -79,10 +79,6 @@ Template.reportFormComplete.helpers
   userApproval: ->
     Meteor.user().approval
 
-  isPending: ->
-    ( (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
-      (Template.currentData().report.approval == 'pending') )
-
 Template.reportFormObfuscated.helpers
 
   showApprovalBar: showApprovalBar
