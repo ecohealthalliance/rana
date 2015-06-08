@@ -44,9 +44,28 @@ reject = darken(deny,30%)
   vAlign()
   &.report-approval
     margin-left 10px
-  .btn
+  &.user-approval
+    float right
+  .btn-inline
     margin-left 5px
-    @extend .dark-shadow
+    shadow(0, .2)
+    
     
 .approvalLabel
   padding-right 5px
+
+@media (max-width: 768px)
+  .approval-group
+    display block
+    margin-bottom 10px
+    text-align center
+    &:first-of-type
+      margin-bottom 20px
+    .btn
+      margin 0 0 10px 0
+      padding 12px
+    &.report-approval
+      margin-left 0
+    &.user-approval
+      float none
+      margin-top 20px

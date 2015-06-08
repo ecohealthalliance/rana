@@ -2,8 +2,8 @@ template(name="reportFormComplete")
 
   if type
     .report-form.space-btm-3
-      section.title.rm-pad-btm.odd
-        .container.name-action
+      section.rm-pad-btm.odd
+        .container.name-action.title
           h1
             span.name #{study.name}
             if isInsert
@@ -15,6 +15,9 @@ template(name="reportFormComplete")
         +approvalBar
       else
         .space-btm-3
+
+      .container
+        p.required-text #[span *] Indicates required field
 
       +autoForm(
         id="ranavirus-report"

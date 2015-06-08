@@ -49,6 +49,7 @@ section
   
 .title
   position relative
+  padding-bottom 20px
 
 .required-text
   color d-gray
@@ -214,22 +215,6 @@ textarea
       border-top-left-radius 0
       border-bottom-left-radius 0
 
-.publication,
-.form-grp-container
-  .form-group
-    margin-bottom 30px
-.publication
-  .form-group
-    float left
-    width 40%
-    &:last-child
-      clear both
-      float none
-      width 75%
-      margin-bottom 0
-    .form-group
-      width 100%
-
 #toast-container
   pointer-events none
 
@@ -252,106 +237,6 @@ textarea
 .btn-inline
   vAlign()
   margin-left 20px
-  
-
-// Studies
-
-#ranavirus-study
-  display none
-
-.study
-  section
-    &:first-child
-      h3
-        margin-top 0
-  .form-group
-    > label
-      color #333
-      font-weight 600
-      font-size 15px
-  .file-upload
-    margin-top 10px
-  .contact
-    padding-top 30px
-
-.study-name
-  margin-top 20px
-
-.study-link
-  float 
-  &:hover,
-  &:focus
-    text-decoration none
-  .glyphicon
-    font-size 70%
-
-.csvUpload
-  padding-bottom 20px
-  
-.csv-file a.btn
-    display none
-
-.csv-error
-    color primary-strong
-
-.instructions-link,
-.instructions-link-icon
-  color d-gray
-  &:hover,
-  &:focus
-    text-decoration none
-    outline 0
-  span
-    vAlign()
-    &:first-child
-      margin-left 5px
-  span.glyphicon
-    font-size 120%
-    top 0
-    
-.instructions-link-icon
-  padding 0 5px
-  font-size 80%
-
-.has-error .form-control
-  border-color primary-strong
-  margin-bottom 0
-  
-.has-error .help-block
-  color primary-strong
-
-.has-error
-  label
-    color primary-strong
-
-.upload-wrap
-  margin-bottom 15px
-
-.upload-file
-  vAlign()
-  margin-bottom 0
-
-.file-upload
-  .btn,
-  label.btn
-    makeButton(secondary, white, false, true)
-    font-weight normal
-    width 60%
-
-.import-table
-  .reactive-table-options > div
-    margin-top -30px
-  table
-    margin 20px 0
-
-
-//Reports
-
-#ranavirus-report
-  display none
-
-#ranavirus-report.obfuscated
-  display block
 
 .name-action
   span
@@ -359,14 +244,11 @@ textarea
   span.action
     font-size 70%
     color #3F88A0
-    margin-left 15px
-
-.report-form
-  .title
-    padding-bottom 20px
-
+    margin-left 15px  
 
 // IMPORTS
+@import 'form-study.import'
+@import 'form-report.import'
 @import 'approval.import'
 
 
@@ -379,11 +261,12 @@ textarea
     margin-bottom 45px
     &:last-child
       margin-bottom 0
-  .btn-inline
-    margin 20px 0 20px 0
-    width 25%
-    padding 12px
-    display block
+  .title
+    .btn-inline
+      margin 20px 0 20px 0
+      width 25%
+      padding 12px
+      display block
   .export.btn-inline
     padding 6px 12px
     margin 0 0 0 10px
@@ -420,9 +303,14 @@ textarea
     label.btn
       width 100%
       padding 12px
+  h1
+    .name
+      margin-bottom 5px
   h3
     margin-top
-
+  .title
+    .btn-inline
+      width 100%
   .btn-inline
     width 100%
   

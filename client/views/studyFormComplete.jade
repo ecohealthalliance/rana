@@ -10,8 +10,8 @@ template(name="studyFormComplete")
     )
 
       .study-form.space-btm-3
-        section.rm-pad-btm
-          .container.name-action
+        section.rm-pad-btm.odd
+          .container.name-action.title
             h1
               if eq type 'insert'
                 span Add a New Study
@@ -20,7 +20,9 @@ template(name="studyFormComplete")
                 span.action Update Study
                 a.btn.btn-primary.btn-inline.add-report(href="{{pathFor route='newReport' data=studyId query=redirectOnSubmit}}") Add a report
             p.required-text #[span *] Indicates required field
-            
+        
+        section.rm-pad
+          .container
             .row.space-top-3
               .col-sm-4
                 +afQuickField name='name'
