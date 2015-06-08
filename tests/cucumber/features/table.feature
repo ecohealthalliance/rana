@@ -24,3 +24,11 @@ Feature: A table with data from all the ranavirus reports
     Then I should see 2 reports in the table
     When I add a filter where "populationType" is "production"
     Then I should see 0 reports in the table
+
+  Scenario: Adding the same filter twice
+    Given I am on the "table" page
+    And there is a report with "populationType" "zoological" in the database
+    And there is a report with "populationType" "wild" in the database
+    When I add a filter where "populationType" is "wild"
+    And I add a second filter where "populationType" is "production"
+    Then I should see 0 reports in the table
