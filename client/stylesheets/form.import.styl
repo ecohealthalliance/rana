@@ -46,7 +46,10 @@ section
     padding-bottom 20px
     h2
       margin-bottom 0
-    
+  
+.title
+  position relative
+
 .required-text
   color d-gray
   font-size 110%
@@ -236,6 +239,7 @@ textarea
   margin-top 20px
 
 .study-link
+  float 
   &:hover,
   &:focus
     text-decoration none
@@ -362,9 +366,12 @@ textarea
     margin-left 15px
 
 .report-form
-  section
-    &:first-child
-      padding-bottom 10px
+  .title
+    padding-bottom 20px
+
+approve = darken(confirm,30%)
+pending = darken(pending,30%)
+reject = darken(deny,30%)
 
 .approval
   padding-top 10px
@@ -376,15 +383,15 @@ textarea
   &.approved-wrap
     background lighten(confirm, 65%)
     border-top 2px solid lighten(confirm, 30%)
-    color darken(confirm,30%)
+    color approve
   &.pending-wrap
     border-top 2px solid lighten(pending, 30%)
     background lighten(pending, 65%)
-    color darken(pending,30%)
+    color pending
   &.rejected-wrap
     border-top 2px solid lighten(deny, 30%)
     background lighten(deny, 65%)
-    color darken(deny,30%)
+    color reject
 
 .approvalStatus
   text-transform capitalize
@@ -402,8 +409,13 @@ textarea
   &.rejected
     &::before
       content '\f00d'
-    
 
+.approval-group
+  vAlign()
+  &.report-approval
+    margin-left 10px
+  .btn
+    margin-left 5px
 .approvalLabel
   padding-right 5px
 

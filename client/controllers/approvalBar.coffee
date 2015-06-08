@@ -7,3 +7,7 @@ Template.approvalBar.helpers
       "This report is under review by GRRS administrators and is not yet publicly viewable."
     else if Template.currentData().report.approval is 'rejected'
       "This report has been rejected by GRRS administrators and is not publicly viewable."
+
+  showApprovalControls: =>
+    (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
+    (Template.currentData().type == 'readonly' or Template.currentData().type == 'update')

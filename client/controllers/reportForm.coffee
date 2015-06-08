@@ -58,10 +58,6 @@ showApprovalBar = ->
   (Meteor.userId() == Template.currentData().report.createdBy.userId) or
   (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id)
 
-showApprovalControls = ->
-  (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id) and
-  (Template.currentData().type == 'readonly' or Template.currentData().type == 'update')
-
 Template.reportFormComplete.helpers
   isInsert: ->
     Template.currentData().type == 'insert'
@@ -70,8 +66,6 @@ Template.reportFormComplete.helpers
     Template.currentData().type == 'update'
 
   showApprovalBar: showApprovalBar
-
-  showApprovalControls: showApprovalControls
 
   studyId: ->
     studyId: @study._id
@@ -82,8 +76,6 @@ Template.reportFormComplete.helpers
 Template.reportFormObfuscated.helpers
 
   showApprovalBar: showApprovalBar
-
-  showApprovalControls: showApprovalControls
 
   studyId: ->
     studyId: @study._id

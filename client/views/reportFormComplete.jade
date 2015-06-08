@@ -13,10 +13,6 @@ template(name="reportFormComplete")
             a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
       if showApprovalBar
         +approvalBar
-      if showApprovalControls
-        section.approval.rm-pad.space-btm-3.gray
-          .container
-            +approvalButtons
       else
         .space-btm-3
 
