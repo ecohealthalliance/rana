@@ -1,40 +1,42 @@
 template(name="approveReport")
   a#approve-report.btn.btn-success.btn-inline.approve
-    span Approve Report
+    span Approved
     i.fa.fa-check
 
 template(name="pendReport")
   a#pend-report.btn.btn-warning.btn-inline.pend
-    span Pend Report
+    span Pending
     i.fa.fa-clock-o
 
 template(name="rejectReport")
   a#reject-report.btn.btn-danger.btn-inline.reject
-    span Reject Report
+    span Rejected
     i.fa.fa-times
 
 template(name="approveUser")
   a#approve-user.btn.btn-success.btn-inline.approve
-    span Approve User
+    span Approved
     i.fa.fa-user-plus
 
 template(name="pendUser")
   a#pend-user.btn.btn-warning.btn-inline.pend
-    span Pend User
+    span Pending
     i.fa.fa-clock-o
 
 template(name="rejectUser")
   a#reject-user.btn.btn-danger.btn-inline.reject
-    span Reject User
+    span Rejected
     i.fa.fa-user-times
 
 template(name="approvalButtons")
+  span.approvalLabel Set Report:
   if notApproved
     +approveReport
   if notPending
     +pendReport
   if notRejected
     +rejectReport
+  span.approvalLabel Set User:
   if notUserApproved
     +approveUser
   if notUserPending
