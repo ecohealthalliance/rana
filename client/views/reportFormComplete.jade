@@ -9,7 +9,7 @@ template(name="reportFormComplete")
               span New
             else if isUpdate
               span Update
-            span.name Report
+            span Report
             span.preposition of
             span.study-name #{study.name}
             a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
