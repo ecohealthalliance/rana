@@ -97,25 +97,6 @@ textarea
 .form-group.file-upload .btn
   width 100%
 
-.location-info
-  .form-group-header,
-  .form-group-subHeader
-    margin-bottom 12px
-    font-size 14px
-    font-weight bold
-    color #444
-  .form-group-subHeader
-    color #666
-  .form-group
-    margin-bottom 15px
-  label
-    font-size 13px
-  .row:last-child,
-  .form-group:last-child
-      margin-bottom 0
-  h5
-    color #666
-
 .content-panel
   @extend .no-padding
   border 2px solid border-gray
@@ -220,6 +201,64 @@ textarea
     &:last-child
       margin-bottom 0
 
+.check-list
+  .list-group-item
+    margin-bottom 15px
+  .list-group
+    input
+      width 100%
+      padding-right 25%
+    button
+      width 20%
+      border-left 2px solid border-gray
+      border-top-left-radius 0
+      border-bottom-left-radius 0
+
+.publication,
+.form-grp-container
+  .form-group
+    margin-bottom 30px
+.publication
+  .form-group
+    float left
+    width 40%
+    &:last-child
+      clear both
+      float none
+      width 75%
+      margin-bottom 0
+    .form-group
+      width 100%
+
+#toast-container
+  pointer-events none
+
+#toast-container > .toast
+  opacity 1.0
+  pointer-events auto
+  a
+    color lightblue
+  a:hover
+    color lightblue
+    text-decoration underline
+
+.required
+  &::after
+    content '*'
+    display inline-block
+    color primary-strong
+    padding-left 2px
+
+.btn-inline
+  vAlign()
+  margin-left 20px
+  
+
+// Studies
+
+#ranavirus-study
+  display none
+
 .study
   section
     &:first-child
@@ -255,85 +294,6 @@ textarea
 .csv-error
     color primary-strong
 
-.check-list
-  .list-group-item
-    margin-bottom 15px
-  .list-group
-    input
-      width 100%
-      padding-right 25%
-    button
-      width 20%
-      border-left 2px solid border-gray
-      border-top-left-radius 0
-      border-bottom-left-radius 0
-
-.publication,
-.form-grp-container
-  .form-group
-    margin-bottom 30px
-.publication
-  .form-group
-    float left
-    width 40%
-    &:last-child
-      clear both
-      float none
-      width 75%
-      margin-bottom 0
-    .form-group
-      width 100%
-
-.file-upload
-  .btn,
-  label.btn
-    makeButton(secondary, white, false, true)
-    font-weight normal
-    width 60%
-
-.import-table
-  .reactive-table-options > div
-    margin-top -30px
-  table
-    margin 20px 0
-
-#toast-container
-  pointer-events none
-
-#toast-container > .toast
-  opacity 1.0
-  pointer-events auto
-  a
-    color lightblue
-  a:hover
-    color lightblue
-    text-decoration underline
-
-.required
-  &::after
-    content '*'
-    display inline-block
-    color primary-strong
-    padding-left 2px
-
-.has-error .form-control
-  border-color primary-strong
-  margin-bottom 0
-  
-.has-error .help-block
-  color primary-strong
-
-.has-error
-  label
-    color primary-strong
-
-.upload-wrap
-  margin-bottom 15px
-
-.upload-file
-  vAlign()
-  margin-bottom 0
-
 .instructions-link,
 .instructions-link-icon
   color d-gray
@@ -353,10 +313,46 @@ textarea
   padding 0 5px
   font-size 80%
 
-.btn-inline
-  vAlign()
-  margin-left 20px
+.has-error .form-control
+  border-color primary-strong
+  margin-bottom 0
   
+.has-error .help-block
+  color primary-strong
+
+.has-error
+  label
+    color primary-strong
+
+.upload-wrap
+  margin-bottom 15px
+
+.upload-file
+  vAlign()
+  margin-bottom 0
+
+.file-upload
+  .btn,
+  label.btn
+    makeButton(secondary, white, false, true)
+    font-weight normal
+    width 60%
+
+.import-table
+  .reactive-table-options > div
+    margin-top -30px
+  table
+    margin 20px 0
+
+
+//Reports
+
+#ranavirus-report
+  display none
+
+#ranavirus-report.obfuscated
+  display block
+
 .name-action
   span
     vAlign()
@@ -369,64 +365,10 @@ textarea
   .title
     padding-bottom 20px
 
-approve = darken(confirm,30%)
-pending = darken(pending,30%)
-reject = darken(deny,30%)
 
-.approval
-  padding-top 10px
-  padding-bottom 10px
-  border-top 2px solid l-gray
-  .btn
-    &:first-of-type
-      margin-left 0
-  &.approved-wrap
-    background lighten(confirm, 65%)
-    border-top 2px solid lighten(confirm, 30%)
-    color approve
-  &.pending-wrap
-    border-top 2px solid lighten(pending, 30%)
-    background lighten(pending, 65%)
-    color pending
-  &.rejected-wrap
-    border-top 2px solid lighten(deny, 30%)
-    background lighten(deny, 65%)
-    color reject
+// IMPORTS
+@import 'approval.import'
 
-.approvalStatus
-  text-transform capitalize
-  font-weight 700
-  &::before
-    @extend .font-awesome
-    display inline-block
-    padding-right 5px
-  &.approved
-    &::before
-      content '\f00c'
-  &.pending
-    &::before
-      content '\f017'    
-  &.rejected
-    &::before
-      content '\f00d'
-
-.approval-group
-  vAlign()
-  &.report-approval
-    margin-left 10px
-  .btn
-    margin-left 5px
-.approvalLabel
-  padding-right 5px
-
-#ranavirus-study
-  display none
-
-#ranavirus-report
-  display none
-
-#ranavirus-report.obfuscated
-  display block
 
 @media (max-width: 1000px)
   .panel
