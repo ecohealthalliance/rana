@@ -20,6 +20,8 @@ AccountsTemplates.addFields ([
     type: 'email'
     displayName: "Email"
     required: true
+    re: /.+@(.+){2,}\.(.+){2,}/
+    errStr: 'Invalid email'
     template: 'registerCustom'
     options:
       beginRequired: true
@@ -31,6 +33,7 @@ AccountsTemplates.addFields ([
     re: /(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
     required: true
     template: 'registerCustom'
+    minLength: 6
   },
   {
     '_id': 'password_again'
@@ -39,6 +42,7 @@ AccountsTemplates.addFields ([
     re: /(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
     required: true
     template: 'registerCustom'
+    minLength: 6
   }
 ])
 
