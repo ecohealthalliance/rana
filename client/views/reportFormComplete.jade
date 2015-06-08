@@ -2,8 +2,8 @@ template(name="reportFormComplete")
 
   if type
     .report-form.space-btm-3
-      section.rm-pad-btm.space-btm-3
-        .container.name-action
+      section.rm-pad-btm.odd
+        .container.name-action.title
           h1
             span.name #{study.name}
             if isInsert
@@ -11,6 +11,13 @@ template(name="reportFormComplete")
             else if isUpdate
               span.action Update Report
             a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
+      if showApprovalBar
+        +approvalBar
+      else
+        .space-btm-2
+
+      .container
+        p.required-text #[span *] Indicates required field
 
       +autoForm(
         id="ranavirus-report"
@@ -21,6 +28,9 @@ template(name="reportFormComplete")
       )
 
         +afQuickField name='studyId'
+
+        if isInsert
+          +afQuickField name='approval' value=userApproval
 
         section.rm-pad-top
           .container

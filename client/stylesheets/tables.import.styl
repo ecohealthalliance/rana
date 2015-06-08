@@ -71,6 +71,13 @@
     z-index 200
   .filter-controls
     margin 10px 0
+.table-striped>tbody>tr
+  &.approved
+    background none
+  &.rejected
+    background lighten(deny,90%)
+  &.pending
+    background lighten(pending,90%)
 
 .showingOpts
   &::before
@@ -87,27 +94,33 @@
 .controls
   text-align right
   vertical-align middle
+  white-space nowrap
 
 .control
   vAlign()
+  linkColor(secondary)
   padding 5px   
-  color secondary
-  &:hover
-    color primary
   &:before,
   &:after
     vAlign()    
     @extend .font-awesome
     content ''
-    font-size 22px
+    font-size 24px
     line-height 0
+
+  &.view,
+  &.add-report
+    &:before
+      font-size 22px
+            
+  &.approve-report,
+  &.approve-user
+    linkColor(confirm)
+
   &.remove
-    color d-gray
-    &:hover
-      color primary-strong
+    linkColor(d-gray, primary-strong)
     &:before
       content '\f014'
-      font-size 24px
   &.view
     &:before
       content '\f002'
@@ -115,28 +128,37 @@
     &:before
       content '\f044'    
       padding-top 2px
-      font-size 24px
   &.add-report
     position relative
-    &:hover
-      &:before
-        color darken(primary, 10%)
     &:before
       content '\f067'
       font-size 12px
       position absolute
       left 9px
       top 18px
-      color darken(secondary, 10%)
     &:after
       content '\f016'
+  &.approve-report
+    &:before
+      content '\f00c'
+  &.reject-report
+    linkColor(deny)
+    &:before
+      content '\f00d'
+  &.approve-user
+    &:before
+      content '\f234'
+  &.reject-user
+    linkColor(deny)
+    &:before
+      content '\f235'
 
 @media (max-width: 768px)
- 
+
   .reactive-table-filter
     width 40%
     padding 0
-    
+
 @media (max-width: 768px)
   .table>tbody>tr>td
     padding 0

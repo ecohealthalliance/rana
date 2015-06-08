@@ -39,6 +39,10 @@ template(name="navLinks")
             a(href="{{pathFor route='groupHome' data=groupPath}}") 
               i.fa.fa-group
               span Group Admin
+          li
+            a(href="{{pathFor route='pending'}}")
+              i.fa.fa-files-o
+              span Pending Reports
         +accountsHeaderButtons
   else
     li
