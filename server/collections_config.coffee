@@ -38,6 +38,49 @@ sharedOrCreator = (userId) ->
     ]
   }
 
+sharedAndApprovedOrCreator = (userId) ->
+  {
+    $or : [
+      {
+        "createdBy.userId": userId
+      }
+      {
+        dataUsePermissions: "Share full record"
+        approval: "approved"
+        consent: true
+      }
+    ]
+  }
+
+sharedOrCreatorOrSharedRanaAdmin = (userId) ->
+  if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+    {
+      $or : [
+        {
+          "createdBy.userId": userId
+        }
+        {
+          dataUsePermissions: "Share full record"
+          consent: true
+        }
+      ]
+    }
+  else
+    sharedOrCreator userId
+
+obfuscatedApprovedOrRanaAdmin = (userId) ->
+  if Roles.userIsInRole userId, 'admin', Groups.findOne({path:"rana"})._id
+    {
+      dataUsePermissions: "Share obfuscated"
+      consent: true
+    }
+  else
+    {
+        dataUsePermissions: "Share obfuscated"
+        approval: "approved"
+        consent: true
+    }
+
 Meteor.publishComposite 'studies', (id) ->
   find: () ->
     collections.Studies.find {
@@ -84,13 +127,28 @@ Meteor.publish 'videos', ->
   collections.Videos.find()
 
 ReactiveTable.publish 'reports', collections.Reports, () ->
-  sharedOrCreator @userId
+  sharedAndApprovedOrCreator @userId
+
+ReactiveTable.publish 'pendingReports', collections.Reports, () ->
+  if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
+    {'approval': 'pending', 'dataUsePermissions': 'Share full record', 'consent': true}
+  else
+    @stop()
+
+ReactiveTable.publish 'pendingReportsObfuscated', collections.Reports, (() ->
+  if Roles.userIsInRole @userId, 'admin', Groups.findOne({path:"rana"})._id
+    {'approval': 'pending', 'dataUsePermissions': 'Share obfuscated', 'consent': true}
+  else
+    @stop()
+  ),
+  { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'eventLocation.country': 1} }
 
 ReactiveTable.publish 'obfuscatedReports', collections.Reports, (() ->
   {
     'dataUsePermissions': "Share obfuscated",
     'createdBy.userId': { $ne: @userId },
-    'consent': true
+    'consent': true,
+    'approval': 'approved'
   }),
   { fields: {'studyId': 1, 'dataUsePermissions': 1, 'createdBy.name': 1, 'eventLocation.country': 1} }
 
@@ -102,7 +160,7 @@ Meteor.publishComposite "reportLocations", () ->
           {
             "eventLocation.source": {"$exists": true}
           }
-          sharedOrCreator @userId
+          sharedAndApprovedOrCreator @userId
         ]
       }
       {
@@ -118,6 +176,7 @@ Meteor.publishComposite "reportLocations", () ->
           eventDate: 1
           totalAnimalsConfirmedInfected: 1
           totalAnimalsConfirmedDiseased: 1
+          ranavirusConfirmationMethods: 1
       }
     )
   children: [
@@ -143,7 +202,7 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
           {
             _id: reportId
           }
-          sharedOrCreator @userId
+          sharedOrCreatorOrSharedRanaAdmin @userId
         ]
       }
     )
@@ -153,7 +212,7 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
         collections.Studies.find {
           $and: [
             {_id: report.studyId}
-            sharedOrCreator @userId
+            sharedOrCreatorOrSharedRanaAdmin @userId
           ]
         }, {fields: {name: 1}}
     }
@@ -189,10 +248,7 @@ Meteor.publishComposite 'obfuscatedReportAndStudy', (reportId) ->
 
   find: () ->
     collections.Reports.find(
-      {
-        _id: reportId
-        dataUsePermissions: 'Share obfuscated'
-      }
+      obfuscatedApprovedOrRanaAdmin @userId
       {
         fields: {
           studyId: true
@@ -200,6 +256,7 @@ Meteor.publishComposite 'obfuscatedReportAndStudy', (reportId) ->
           createdBy: true
           contact: true
           'eventLocation.country': true
+          approval: true
         }
       }
     )
@@ -222,8 +279,10 @@ allowCreatorAndAdmin = (userId, doc) ->
     allowCreator userId, doc
 
 @collections.Reports.allow
-  insert: allowCreator
-  update: allowCreator
+  insert: (userId, doc) ->
+    doc.createdBy.userId == userId
+  update: (userId, doc, fields, modifier) ->
+    (doc.createdBy.userId == userId) and (not ('approval' of fields)) and (not ('approval' of modifier.$set))
   remove: allowCreatorAndAdmin
 
 @collections.Studies.allow

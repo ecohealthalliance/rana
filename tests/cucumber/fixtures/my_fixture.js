@@ -14,6 +14,7 @@
           email: "admin@admin.com",
           password: "adminuser"
         });
+        Meteor.users.update({_id: adminUserId}, {$set: {approval: 'approved'}});
         __SpeciesCollection.remove({});
         __SpeciesCollection.insert({
           "genera" : [  "Lithobates" ],
@@ -48,8 +49,10 @@
           Groups.findOne({path:"rana"})._id
         );
         var userId = Accounts.createUser({
+          _id: 'fakeId',
           email: "test@test.com",
           password: "testuser",
+          approval: "approved",
           profile: {
             name: "Test User",
             organization : "EHA",
@@ -60,6 +63,7 @@
             organizationPostalCode : "10001"
           }
         });
+        Meteor.users.update({_id: userId}, {$set: {approval: 'approved'}});
         _.each(reports, function (report) {
           report = _.extend({
             createdBy: {
@@ -86,6 +90,20 @@
               name: "Test User"
             }
         });
+
+        var unapprovedUserId = Accounts.createUser({
+          email: "pending@test.com",
+          password: "pendinguser",
+          profile: {
+            name: "Pending User",
+            organization : "EHA",
+            organizationStreet : "460 West 34th Street – 17th floor",
+            organizationCity: "New York",
+            organizationStateOrProvince: "NY",
+            organizationCountry: "USA",
+            organizationPostalCode : "10001"
+          }
+        });
         return reports;
       },
       '/fixtures/addReports': function (reports) {
@@ -94,6 +112,7 @@
           report = _.extend({
             dataUsePermissions: 'Share full record',
             consent: true,
+            approval: 'approved',
             createdBy: {
               userId: userId,
               name: "Test User"

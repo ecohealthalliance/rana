@@ -3,3 +3,6 @@ window.utils =
   # source: http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript/3561711#3561711
   regexEscape: (s)->
     s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+
+Template.registerHelper 'isRanaAdmin', () ->
+  Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id

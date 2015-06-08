@@ -1,0 +1,71 @@
+approve = darken(confirm,30%)
+pending = darken(pending,30%)
+reject = darken(deny,30%)
+
+.approval
+  padding-top 10px
+  padding-bottom 10px
+  border-top 2px solid l-gray
+  .btn
+    &:first-of-type
+      margin-left 0
+  &.approved-wrap
+    background lighten(confirm, 85%)
+    border-color lighten(confirm, 30%)
+    color approve
+  &.pending-wrap
+    border-color lighten(pending, 30%)
+    background lighten(pending, 85%)
+    color pending
+  &.rejected-wrap
+    border-color lighten(deny, 30%)
+    background lighten(deny, 85%)
+    color reject
+
+.approvalStatus
+  text-transform capitalize
+  font-weight 700
+  font-size 16px
+  &::before
+    @extend .font-awesome
+    display inline-block
+    padding-right 5px
+  &.approved
+    &::before
+      content '\f00c'
+  &.pending
+    &::before
+      content '\f017'    
+  &.rejected
+    &::before
+      content '\f00d'
+
+.approval-group
+  vAlign()
+  &.report-approval
+    margin-left 10px
+  &.user-approval
+    float right
+  .btn-inline
+    margin-left 5px
+    shadow(0, .2)
+    
+    
+.approvalLabel
+  padding-right 5px
+
+@media (max-width: 768px)
+  .approval-group
+    display block
+    margin-bottom 10px
+    text-align center
+    &:first-of-type
+      margin-bottom 20px
+    .btn
+      margin 0 0 10px 0
+      padding 12px
+    &.report-approval
+      margin-left 0
+    &.user-approval
+      float none
+      margin-top 20px

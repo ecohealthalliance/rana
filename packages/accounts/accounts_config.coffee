@@ -15,7 +15,7 @@ AccountsTemplates.configureRoute "signIn",
 AccountsTemplates.removeField 'email'
 AccountsTemplates.removeField 'password'
 AccountsTemplates.addFields ([
-  {  
+  {
     '_id': 'email'
     type: 'email'
     displayName: "Email"
@@ -24,7 +24,7 @@ AccountsTemplates.addFields ([
     options:
       beginRequired: true
   },
-  {  
+  {
     '_id': 'password'
     type: 'password'
     displayName: "Password"
@@ -32,7 +32,7 @@ AccountsTemplates.addFields ([
     required: true
     template: 'registerCustom'
   },
-  {  
+  {
     '_id': 'password_again'
     type: 'password'
     displayName: "Password (again)"
@@ -53,13 +53,13 @@ for key in _.keys schema
     template = 'registerSmallSolo'
   else if key is 'organization' or  key is 'organizationCountry' or key is 'organizationCity' or key is 'organizationStreet2'
     template = 'registerMed'
-  else 
+  else
     template = 'registerCustom'
 
   if key is 'organization'
     options =
       optionalInfo: true
-  else 
+  else
     options = {}
 
   AccountsTemplates.addField
@@ -70,3 +70,9 @@ for key in _.keys schema
     template: template
     options: options
 
+if Meteor.isServer
+  Accounts.onCreateUser (options, user) ->
+    # TODO how to make the first rana admin approved by default?
+    user.approval = 'pending'
+    user.profile = options.profile
+    user

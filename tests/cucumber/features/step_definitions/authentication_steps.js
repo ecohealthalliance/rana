@@ -45,27 +45,6 @@
       .call(callback);
     });
 
-    this.When(/I log in( as admin)?/, function(admin, callback){
-      var email = admin ? "admin@admin.com" : "test@test.com";
-      var password = admin ? "adminuser" : "testuser";
-      this.browser
-      .url(url.resolve(process.env.ROOT_URL, "sign-in"))
-      .waitForExist(".at-pwd-form", function(err, exists){
-        assert.ifError(err);
-        assert(exists);
-      })
-      .setValue('#at-field-email', email)
-      .setValue('#at-field-password', password)
-      .submitForm('#at-field-email', function(err){
-        assert.ifError(err);
-      })
-      .waitForExist(".at-pwd-form", 1000, true, function(err, dne){
-        assert.ifError(err);
-        assert(dne);
-      })
-      .call(callback);
-    });
-
     this.Given(/I have not logged in/,
     function(callback){
       this.browser.execute(function () {
@@ -73,9 +52,22 @@
       }).call(callback);
     });
 
-    this.Given(/I have logged in( as admin)?/, function (admin, callback) {
-      var email = admin ? "admin@admin.com" : "test@test.com";
-      var password = admin ? "adminuser" : "testuser";
+    this.Given(/^I have logged in(?: as (admin|pending))?$/, function(user, callback){
+      if (! user) {
+        user = 'test';
+      }
+      var emails = {
+        admin: 'admin@admin.com',
+        test: 'test@test.com',
+        pending: 'pending@test.com'
+      }
+      var passwords = {
+        admin: 'adminuser',
+        test: 'testuser',
+        pending: 'pendinguser'
+      }
+      var email = emails[user];
+      var password = passwords[user];
       this.browser.executeAsync(function (email, password, done) {
         Meteor.loginWithPassword(email, password, function (err) {
           if (err) return done();

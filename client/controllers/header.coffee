@@ -8,7 +8,8 @@ Template.header.events
       $(e.target).blur()
 Template.navLinks.events
   'click .sign-out' : () ->
-    Meteor.logout()
+    Meteor.logout () ->
+      Router.go 'home'
 
 Template.navLinks.helpers
   groupId: () ->

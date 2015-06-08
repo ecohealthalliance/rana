@@ -1,33 +1,46 @@
 getCollections = => @collections
 
-Template.table.created = ->
+created = ->
   @query = new ReactiveVar()
+Template.table.created = created
+Template.pendingTable.created = created
 
-Template.table.query = ->
+query = ->
   Template.instance().query
+Template.table.query = query
+Template.pendingTable.query = query
 
-Template.table.filters = =>
+filters = =>
   filters = []
-  query = Template.instance().query.get() or {}
+  query = Template.instance().query?.get() or {}
 
   # reactive-table filters don't support arbitrary queries yet
   if ! _.isEmpty query
     queries = if '$and' of query then query['$and'] else [query]
+    filterCount = 0
     for q in queries
       key = Object.keys(q)[0]
       value = q[key] or ""
-      filter = new ReactiveTable.Filter('reports-' + key, [key])
+      filterId = 'reports-' + key + filterCount
+      filter = new ReactiveTable.Filter(filterId, [key])
       if value isnt filter.get()
         filter.set(value)
-      filters.push 'reports-' + key
+      filters.push filterId
+      filterCount++
 
   filters
+
+Template.table.filters = filters
+Template.pendingTable.filters = filters
 
 Template.table.settings = () =>
   settings 'full'
 
 Template.table.obfuscatedSettings = () =>
   settings 'obfuscated'
+
+Template.pendingTable.settings = () =>
+  settings 'pending'
 
 settings = (tableType) =>
 
@@ -55,7 +68,7 @@ settings = (tableType) =>
     fn: (val, obj) ->
       getStudyNameVar(val).get()
 
-  if tableType is 'full'
+  if tableType in ['full', 'pending']
     fields.push
       key: "eventLocation"
       label: "Event Location"
@@ -69,7 +82,7 @@ settings = (tableType) =>
       key: "eventLocation.country"
       label: "Event Location Country"
 
-  if tableType is 'full'
+  if tableType in ['full', 'pending']
     columns = [
       "speciesGenus"
       "speciesName"
@@ -140,12 +153,36 @@ settings = (tableType) =>
           <a class="control view" href="#{viewPath}" title="View"></a>
         """)
 
+  if tableType is 'pending'
+    fields.push
+      key: "controls"
+      label: ""
+      hideToggle: true
+      fn: (val, obj) ->
+        new Spacebars.SafeString("""
+          <a class="control approve-report"  data-id="#{obj._id}" title="Approve report"></a>
+          <a class="control reject-report" data-id="#{obj._id}" title="Reject Report"></a>
+          <a class="control approve-user" data-id="#{obj.createdBy.userId}" title="Approve User"></a>
+          <a class="control reject-user" data-id="#{obj.createdBy.userId}" title="Reject User`"></a>
+        """)
+
+  if tableType is 'pending'
+    noDataTmpl = Template.noPendingReports
+  else
+    noDataTmpl = Template.noReports
+
   showColumnToggles: true
   showFilter: false
   fields: fields
-  noDataTmpl: Template.noReports
+  noDataTmpl: noDataTmpl
+  rowClass: (val) ->
+    if !isAdmin
+      switch val.approval
+        when 'approved' then 'approved'
+        when 'rejected' then 'rejected'
+        when 'pending' then 'pending'
 
-Template.table.events(
+events =
   'click .remove-form': (evt)->
     reportId = $(evt.target).data("id")
     reply = prompt('Type "delete" to confirm that this report should be removed.')
@@ -169,4 +206,20 @@ Template.table.events(
       else
         window.open "data:text/csv;charset=utf-8," + encodeURIComponent(result)
       $(event.target).removeClass('disabled')
-)
+
+Template.table.events events
+Template.pendingTable.events events
+
+Template.pendingTable.events
+
+  'click .approve-report': (e) =>
+    @setApproval 'setReportApproval', $(e.target).data('id'), 'approved', "Report approved"
+
+  'click .reject-report': (e) =>
+    @setApproval 'setReportApproval', $(e.target).data('id'), 'rejected', "Report rejected"
+
+  'click .approve-user': (e) =>
+    @setApproval 'setUserApproval', $(e.target).data('id'), 'approved', "User approved"
+
+  'click .reject-user': (e) =>
+    @setApproval 'setUserApproval', $(e.target).data('id'), 'rejected', "User rejected"

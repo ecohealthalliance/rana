@@ -19,22 +19,22 @@
 
     this.Before(function(scenario, beforeDone) {
       var that = this;
-      
+
       this.resetTestDB = function(reports, next) {
         that.mirror.call('/fixtures/resetDB', reports)
         .then(_.partial(next, null)).catch(assert.ifError);
       };
-    
+
       this.addReports = function(reports, next, timeout) {
         that.mirror.call('/fixtures/addReports', reports)
         .then(_.partial(next, null)).catch(assert.ifError);
       };
-    
+
       this.addStudies = function(studies, next, timeout) {
         that.mirror.call('/fixtures/addStudies', studies)
         .then(_.partial(next, null)).catch(assert.ifError);
       };
-      
+
       this.getAppDirectory = function () {
         var cwd = process.cwd();
         assert.equal(cwd.split('/').slice(-2).join("/"), "tests/cucumber");
@@ -42,9 +42,9 @@
       };
 
       var browser = this.browser;
-      
+
       this.scenario = scenario;
-      
+
       browser.addCommand("mustExist", function(selector, callback){
         browser.waitForExist(selector, function(err, exists){
           assert.ifError(err);
@@ -200,7 +200,7 @@
         browser
         .mustExist('.form-group')
         .execute(function(schemaName) {
-          var schemaObj = collections[schemaName].simpleSchema().schema(); 
+          var schemaObj = collections[schemaName].simpleSchema().schema();
           return JSON.stringify(schemaObj, function (noop, v) {
             if (!_.isObject(v)) {
               return v;
@@ -231,10 +231,17 @@
               console.log("Bad key: "+ key);
               return;
             }
+            // Don't set the hidden approval field that is based on user status
+            if (key == 'approval') {
+                return;
+            }
             if (schema[key].autoform && schema[key].autoform.rows) { //textarea
               browser.setValue('textarea[data-schema-key="' + key + '"]', value);
             } else if (schema[key].type === "Boolean") {
-              browser.click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
+                // Hack to scroll past the review covering up the permissions
+                // radio buttons
+                browser.scroll(0, 4000)
+                .click('div[data-schema-key="' + key + '"] input[value="' + value + '"]');
             } else if (schema[key].type === "Array") {
               _.each(value, function (element) {
                 if(!_.isString(element)) {
@@ -352,7 +359,7 @@
         browser
         .timeoutsAsyncScript(1000000);
       });
-      
+
       this.browser.
         setViewportSize({
           width: 1280,

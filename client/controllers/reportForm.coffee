@@ -54,18 +54,29 @@ Template.registerHelper 'reportDoc', () =>
       @mergeObjects study.contact, contactFromUser
       study
 
-Template.reportFormComplete.helpers
+showApprovalBar = ->
+  (Meteor.userId() == Template.currentData().report.createdBy.userId) or
+  (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id)
 
+Template.reportFormComplete.helpers
   isInsert: ->
     Template.currentData().type == 'insert'
 
   isUpdate: ->
     Template.currentData().type == 'update'
 
+  showApprovalBar: showApprovalBar
+
   studyId: ->
     studyId: @study._id
 
+  userApproval: ->
+    Meteor.user().approval
+
 Template.reportFormObfuscated.helpers
+
+  showApprovalBar: showApprovalBar
+
   studyId: ->
     studyId: @study._id
 
@@ -93,5 +104,10 @@ Template.reportFormComplete.created = () ->
   reset = () ->
     AutoForm.resetForm('ranavirus-report')
     $('#ranavirus-report').show()
+    @$('[data-toggle="popover"]').popover popoverOpts
+  setTimeout reset, 0
+
+Template.reportFormObfuscated.created = () ->
+  reset = () ->
     @$('[data-toggle="popover"]').popover popoverOpts
   setTimeout reset, 0

@@ -33,6 +33,7 @@ makeButton(color, text = white, dark = false, noOutline = false, hoverColor = wh
   background color
   color text
   border 1px solid darken(color, 10%)
+  border-width 2px
   &:hover,
   &:focus
     background darken(color, 20%)
@@ -115,6 +116,11 @@ addBorder(w=false, h, c)
 
 shadow(c, opacity)
   text-shadow 0 1px 0 rgba(c,c,c,opacity)
+
+linkColor(color, hover = darken(color, 35%))
+  color color
+  &:hover
+    color hover
 
 @keyframes spin
   from 

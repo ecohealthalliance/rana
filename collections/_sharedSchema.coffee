@@ -117,26 +117,26 @@
     optional: true
     autoform:
       options: [
-        { value: 'traditional_pcr', 'label': 'Traditional PCR', tooltip: 'Polymerase chain reaction assay where the products are quantified using gel electrophoresis.' }
-        { value: 'qrt_pcr', 'label': 'Quantitative Real Time PCR', tooltip: """Polymerase chain reaction assay where the amount of product is measured throughout the assay.
+        { value: 'traditional_pcr', label: 'Traditional PCR', tooltip: 'Polymerase chain reaction assay where the products are quantified using gel electrophoresis.' }
+        { value: 'qrt_pcr', label: 'Quantitative Real Time PCR', tooltip: """Polymerase chain reaction assay where the amount of product is measured throughout the assay.
           Often referred to as TaqMan PCR.""" }
-        { value: 'virus_isolation', 'label': 'Virus Isolation', tooltip: """Ranavirus particles were isolated from infected tissue,
+        { value: 'virus_isolation', label: 'Virus Isolation', tooltip: """Ranavirus particles were isolated from infected tissue,
           grown in tissue culture and the cytopathic effect observed in the cells.
           The cells were then subsequently harvested and the presence of
           ranavirus virions was confirmed through other methods
           (e.g. PCR or electron microscopy).""" }
-        { value: 'sequencing', 'label': 'Sequencing', tooltip: """After the presence of the ranavirus is determined,
+        { value: 'sequencing', label: 'Sequencing', tooltip: """After the presence of the ranavirus is determined,
           analysis of the viral sequence is performed and the sequences
           are similar to one or more ranavirus isolates available on GenBank.""" }
-        { value: 'electron_microscopy', 'label': 'Electron Microscopy', tooltip: """The presence of pox-like (i.e. icosahedral virus particles)
+        { value: 'electron_microscopy', label: 'Electron Microscopy', tooltip: """The presence of pox-like (i.e. icosahedral virus particles)
           particles in tissue samples taken directly from an infected animal
           or samples of virus isolate obtained through virus isolation and culture.""" }
-        { value: 'in_situ_hybridization', 'label': 'In Situ Hybridization', tooltip: """A labeled (generally florescent or color) complementary DNA strand is used to
+        { value: 'in_situ_hybridization', label: 'In Situ Hybridization', tooltip: """A labeled (generally florescent or color) complementary DNA strand is used to
           highlight the DNA of the pathogen within tissue sections or cells on a glass
           slide for microscopic viewing.""" }
-        { value: 'immunohistochemistry', 'label': 'Immunohistochemistry', tooltip: """A color-labeled antibody is used to highlight the pathogen (antigen) within
+        { value: 'immunohistochemistry', label: 'Immunohistochemistry', tooltip: """A color-labeled antibody is used to highlight the pathogen (antigen) within
           tissue sections on a glass slide for microscopic viewing.""" }
-        { value: 'other', 'label': 'Other', tooltip: """Any other molecular diagnostic tests, not listed here (e.g. ELISA or LUMINEX)
+        { value: 'other', label: 'Other', tooltip: """Any other molecular diagnostic tests, not listed here (e.g. ELISA or LUMINEX)
           that has been shown to be a reliable method for determining the presence of live
           or preserved ranavirus particles.""" }
       ]

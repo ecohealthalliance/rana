@@ -6,7 +6,7 @@
   var assert = require('assert');
   var path = require('path');
   var _ = require('underscore');
-  
+
   var fillInReportForm = function (context, customValues, callback) {
     var defaultValues = {};
     defaultValues['studyId'] = 'fakeid';
@@ -41,8 +41,15 @@
       context.browser.setFormFields(formData, 'Reports', callback);
     });
   };
-  
+
   module.exports = function () {
+
+    this.When(/^I fill out the form setting "([^"]+)" to "([^"]+)"$/,
+    function(field, value, callback){
+      var customValues = {};
+      customValues[field] = value;
+      fillInReportForm(this, customValues, callback);
+    });
 
     this.When(/^I fill out the form with the (eventDate) "([^"]*)"$/,
     function(prop, value, callback){
