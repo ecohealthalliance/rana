@@ -44,8 +44,8 @@
       });
     });
     
-    this.When(/^I add a filter where "([^"]*)" is "([^"]*)"$/,
-    function (property, value, callback) {
+    this.When(/^I add a( second)? filter where "([^"]*)" is "([^"]*)"$/,
+    function (second, property, value, callback) {
       var that = this;
       this.browser
       .isVisible('#filter-panel', function(err, isVisible) {
@@ -55,23 +55,23 @@
           .click('.toggle-filter')
           .waitForVisible('#filter-panel');
         }
+        var currentIdx = second ? '1' : '0';
 
-        that.browser
-        .elements(".autoform-array-item", function(err, resp){
-          assert.ifError(err);
-          var currentIdx = resp.value.length - 1;
-          var propKey = "filters." + currentIdx + ".property";
-          var predKey = "filters." + currentIdx + ".predicate";
-          var valKey = "filters." + currentIdx + ".value";
+        if (second) {
           that.browser
-          .click(".autoform-add-item")
-          .selectByValue('select[data-schema-key="' + propKey + '"]', property)
-          .selectByValue('select[data-schema-key="' + predKey + '"]', "=")
-          .setValue('input[data-schema-key="' + valKey + '"]', value)
-          .click('button[type="submit"]')
-          .pause(500)
-          .call(callback);
-        });
+          .click(".autoform-add-item");
+        }
+        
+        var propKey = "filters." + currentIdx + ".property";
+        var predKey = "filters." + currentIdx + ".predicate";
+        var valKey = "filters." + currentIdx + ".value";
+        that.browser
+        .selectByValue('select[data-schema-key="' + propKey + '"]', property)
+        .selectByValue('select[data-schema-key="' + predKey + '"]', "=")
+        .setValue('input[data-schema-key="' + valKey + '"]', value)
+        .click('button[type="submit"]')
+        .pause(500)
+        .call(callback);
       });
     });
     
