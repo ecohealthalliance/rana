@@ -106,3 +106,8 @@ Template.reportFormComplete.created = () ->
     $('#ranavirus-report').show()
     @$('[data-toggle="popover"]').popover popoverOpts
   setTimeout reset, 0
+
+Template.reportFormObfuscated.created = () ->
+  reset = () ->
+    @$('[data-toggle="popover"]').popover popoverOpts
+  setTimeout reset, 0
