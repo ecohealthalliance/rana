@@ -55,8 +55,10 @@ Template.registerHelper 'reportDoc', () =>
       study
 
 showApprovalBar = ->
-  (Meteor.userId() == Template.currentData().report.createdBy.userId) or
-  (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id)
+  (Template.currentData().type in ['update', 'readonly']) and
+  ((Meteor.userId() == Template.currentData().report.createdBy.userId) or
+   (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id))
+
 
 Template.reportFormComplete.helpers
   isInsert: ->
