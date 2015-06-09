@@ -39,7 +39,7 @@ Template.leaflet.rendered = ->
 
   @setMarker = (location, zoom=0) =>
     @clearMarker()
-    @marker = L.marker(location, 
+    @marker = L.marker(location,
       icon: L.divIcon({
         className: 'map-marker-container'
         iconSize:null
@@ -139,7 +139,7 @@ Template.leaflet.rendered = ->
 
   @marker = null
 
-  @map = L.map(@$('.leaflet-canvas')[0], 
+  @map = L.map(@$('.leaflet-canvas')[0],
     scrollWheelZoom: false
     maxBounds: L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
     ).setView [0, -0], 2
@@ -205,6 +205,8 @@ Template.leaflet.rendered = ->
 
   @$('.leaflet-canvas').closest('form').on 'reset', =>
     @reset()
+
+  @$('.leaflet-canvas').data { map: @map }
 
 Template.leaflet.events
 
