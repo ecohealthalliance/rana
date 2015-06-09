@@ -106,6 +106,7 @@ Template.reportFormComplete.created = () ->
   reset = () ->
     AutoForm.resetForm('ranavirus-report')
     $('#ranavirus-report').show()
+    $($('.leaflet-container')[0]).data('map').invalidateSize()
     @$('[data-toggle="popover"]').popover popoverOpts
   setTimeout reset, 0
 
