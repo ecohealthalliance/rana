@@ -21,4 +21,4 @@ Template.navLinks.helpers
       'active'
 
 Template.header.rendered = () ->
-  setTimeout () -> $('.banner').toggleClass('demo-hidden demo-showing') 0
+  setTimeout (-> $('.banner').toggleClass 'demo-hidden demo-showing'), 0
