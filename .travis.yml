@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - 0.10
+before_install:
+  - curl https://install.meteor.com/ | sh
+  - sh -e /etc/init.d/xvfb start :99 -screen 5 1024x768x8 &
+  - export DISPLAY=:99.5
+  - wget http://chromedriver.storage.googleapis.com/2.14/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
+  - java -jar /data/ecohealth/selenium-server-standalone-2.46.0.jar &
+install:
+  - cd tests/cucumber && npm install && cd -
+script:
+  - SELENIUM_BROWSER=firefox HUB_PORT=4444 CUCUMBER_TAGS=~@ignore meteor run --test
+
