@@ -64,6 +64,30 @@ animate(speed)
   -moz-animation spin speed infinite linear
   -o-animation spin speed infinite linear
 
+@keyframes spin
+  from 
+    transform rotate(0deg)
+  to 
+    transform rotate(360deg)
+    
+@-webkit-keyframes spin
+  from 
+    -webkit-transform rotate(0deg)
+  to 
+    -webkit-transform rotate(360deg)
+    
+@-moz-keyframes spin
+  from 
+    -moz-transform rotate(0deg)
+  to 
+    -moz-transform rotate(360deg)
+    
+@-o-keyframes spin
+  from 
+    -o-transform rotate(0deg)
+  to 
+    -o-transform rotate(360deg)
+
 bg(path, w, h, type)
   background-image url(path + '.' + type)
   background-repeat no-repeat
@@ -100,6 +124,7 @@ centerPosition(h=-50%,v=-50%)
   -moz-transform duration prop
   -o-transform duration prop
   transform translate(h,v)
+  
 cover()
   position absolute
   top 0
@@ -121,27 +146,3 @@ linkColor(color, hover = darken(color, 35%))
   color color
   &:hover
     color hover
-
-@keyframes spin
-  from 
-    transform rotate(0deg)
-  to 
-    transform rotate(360deg)
-    
-@-webkit-keyframes spin
-  from 
-    -webkit-transform rotate(0deg)
-  to 
-    -webkit-transform rotate(360deg)
-    
-@-moz-keyframes spin
-  from 
-    -moz-transform rotate(0deg)
-  to 
-    -moz-transform rotate(360deg)
-    
-@-o-keyframes spin
-  from 
-    -o-transform rotate(0deg)
-  to 
-    -o-transform rotate(360deg)
