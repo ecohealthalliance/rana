@@ -139,7 +139,10 @@ Template.leaflet.rendered = ->
 
   @marker = null
 
-  @map = L.map(@$('.leaflet-canvas')[0]).setView [0, -0], 2
+  @map = L.map(@$('.leaflet-canvas')[0], 
+    scrollWheelZoom: false
+    maxBounds: L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
+    ).setView [0, -0], 2
   L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
     attribution: """Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.
     <br>
@@ -153,6 +156,12 @@ Template.leaflet.rendered = ->
     maxZoom: 18
   }).addTo(@map)
   L.control.scale().addTo(@map)
+
+  that = @
+  @map.on 'click', () ->
+    that.map.scrollWheelZoom.enable()
+  @map.on 'mouseout', () ->
+    that.map.scrollWheelZoom.disable()
 
   if @data.value
     $(@$('.leaflet-search')[0]).val ''
