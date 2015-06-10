@@ -35,7 +35,7 @@ Feature: A form for reporting Ranavirus outbreaks
     And I click the add-report button for the study called "Study"
     Then the information from the study should be prepopulated
 
-  @chrome
+  @chrome @CI_exclude
   Scenario: Uploading an image
     Given I have logged in
     And I am on the "study/fakeid/report" page
