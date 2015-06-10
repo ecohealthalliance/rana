@@ -3,7 +3,7 @@ Feature: A form for setting up a ranavirus study
   I want to set up a ranavirus study
   So I can add reports individually or import them
 
-  @study
+  @study @chrome
   Scenario: Importing a complete CSV file
     Given I have logged in
     And I am on the "study" page
@@ -18,14 +18,14 @@ Feature: A form for setting up a ranavirus study
     And I click on the edit button
     Then the form should contain the values for rana_import_complete.csv
 
-  @study
+  @study @chrome
   Scenario: Importing an invalid CSV file
     Given I have logged in
     And I am on the "study" page
     When I upload the CSV file rana_invalid.csv
     Then I should see the text "Error: Binomial species names are required"
 
-  @study
+  @study @chrome
   Scenario: Importing and removing a CSV file
     Given I have logged in
     And I am on the "study" page
