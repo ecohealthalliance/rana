@@ -7,7 +7,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start :99 -screen 5 1024x768x8 &
   - export DISPLAY=:99.5
   - wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
-  - java -jar /data/ecohealth/selenium-server-standalone-2.46.0.jar &
+  - java -jar selenium-server-standalone-2.46.0.jar &
 install:
   - cd tests/cucumber && npm install && cd -
 env:
