@@ -1,16 +1,11 @@
 sudo: required
-git:
-  depth: 1
 language: node_js
 node_js:
   - 0.10
 before_install:
-  - curl https://install.meteor.com/ | sh
-  - sh -e /etc/init.d/xvfb start :99 -screen 5 1024x768x8 &
-  - wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
+  - Xvfb :99 -screen scrn 1024x768x8 &
+  - "[[ -f selenium-server-standalone-2.46.0.jar ]] || wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar"
   - java -jar selenium-server-standalone-2.46.0.jar &
-install:
-  - cd tests/cucumber && npm install && cd -
 script:
-  - export DISPLAY=":99.5" && SELENIUM_BROWSER=firefox HUB_PORT=4444 CUCUMBER_TAGS=~@CI_exclude travis_wait meteor run --test 2>&1
-  - cat /home/travis/build/ecohealthalliance/rana/.meteor/local/log/cucumber.log
+  - export DISPLAY=":99" && SELENIUM_BROWSER=firefox HUB_PORT=4444 CUCUMBER_TAGS=~@CI_exclude meteor run --test 2>&1
+  - cat $WORKSPACE/build/ecohealthalliance/rana/.meteor/local/log/cucumber.log
