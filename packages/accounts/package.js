@@ -27,6 +27,7 @@ Package.onUse(function(api) {
   api.addFiles('register.jade', 'client');
   
   api.addFiles('profile.coffee', 'client');
+  api.addFiles('registerCustom.coffee', 'client');
 
   api.addFiles('main.styl', 'client');
   
