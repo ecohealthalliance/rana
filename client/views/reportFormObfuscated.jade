@@ -6,7 +6,9 @@ template(name="reportFormObfuscated")
         .container.name-action
           if study.name
             h1
-              span.name #{study.name}
+              span Report
+              span.preposition of
+              span.study-name #{study.name}
               a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
       if showApprovalBar
         +approvalBar

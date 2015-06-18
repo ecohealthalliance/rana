@@ -5,11 +5,13 @@ template(name="reportFormComplete")
       section.rm-pad-btm.odd
         .container.name-action.title
           h1
-            span.name #{study.name}
             if isInsert
-              span.action New Report
+              span New
             else if isUpdate
-              span.action Update Report
+              span Update
+            span Report
+            span.preposition of
+            span.study-name #{study.name}
             a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
       if showApprovalBar
         +approvalBar
