@@ -92,12 +92,18 @@ Template.map.rendered = ->
         }).color
       else
         color = colors[0]
-      studyName = getCollections().Studies.findOne(report.studyId).name
       if report.eventLocation and report.eventLocation isnt "," and report.eventLocation isnt null
         
         mapPath = Router.path 'map'
         editPath = Router.path 'editReport', {reportId: report._id}, {query: "redirectOnSubmit=#{mapPath}"}
-
+        numInvolvedOpts = getCollections().Reports
+          .simpleSchema()
+          .schema()
+          .numInvolved.autoform.afFieldInput.options
+        formattedNumInvolved = _.findWhere(numInvolvedOpts, {
+          value: report.numInvolved
+        })?.label
+        
         L.marker(report.eventLocation.geo.coordinates.reverse(), {
           icon: L.divIcon({
             className: 'map-marker-container'
@@ -107,31 +113,15 @@ Template.map.rendered = ->
             </div>
             """
           })
-        })
-        .addTo(markers)
-        .bindPopup("""
-        <div class="map-popup">
-          <h2>#{studyName}</h2>
-          <dl>
-            <dt>Date</dt>
-            <dd>#{report.eventDate}</dd>
-            <dt>Type of population</dt>
-            <dd>#{report.populationType}</dd>
-            <dt>Vertebrate classes</dt>
-            <dd>#{report.vertebrateClasses}</dd>
-            <dt>Species affected name</dt>
-            <dd>#{report.speciesName}</dd>
-            <dt>Number of individuals involved</dt>
-            <dd>#{report.numInvolved}</dd>
-            <dt>Reported By</dt>
-            <dd>#{report.createdBy.name}</dd>
-          </dl>
-          <a class="btn btn-primary btn-block btn-edit" href="#{editPath}">
-            View/Edit
-          </a>
-        </div>
-        """)
-      )
+        }).addTo(markers).bindPopup(
+          Blaze.toHTMLWithData(Template.mapPopup, {
+            studyName: getCollections().Studies.findOne(report.studyId).name
+            report: report
+            editPath: editPath
+            formattedNumInvolved: formattedNumInvolved
+          })
+        )
+    )
     markers.addTo(lMap)
 
 Template.map.events

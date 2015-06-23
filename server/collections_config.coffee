@@ -177,6 +177,7 @@ Meteor.publishComposite "reportLocations", () ->
           totalAnimalsConfirmedInfected: 1
           totalAnimalsConfirmedDiseased: 1
           ranavirusConfirmationMethods: 1
+          numInvolved: 1
       }
     )
   children: [
