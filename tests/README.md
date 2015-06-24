@@ -23,10 +23,10 @@ To run meteor without running tests use one of these commands:
 #### On a Mac:
 * Run the tests: ```SELENIUM_BROWSER=chrome CUCUMBER_TAGS=~@ignore meteor run --test```
 
-#### On Ubuntu:
-* Install Xvfb, the JRE, and unzip: 
+#### On Ubuntu (without a display):
+* Install Xvfb and the JRE: 
 ```
-sudo apt-get install xvfb default-jre unzip
+sudo apt-get install xvfb default-jre
 ```
 * Install Chrome:
 ```
@@ -35,27 +35,16 @@ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /et
 sudo apt-get update 
 sudo apt-get install google-chrome-stable 
 ```
-* Download the selenium standalone server:
-```
-wget https://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar
-```
-* Download chromedriver: 
-```
-wget http://chromedriver.storage.googleapis.com/2.14/chromedriver_linux64.zip
-unzip chromedriver_linux64.zip
-```
 * Start Xvfb: 
 ```
-Xvfb :99 -screen 5 1024x768x8 &
+Xvfb :99 -screen 5 1280x1024x8 &
+# Make sure the DISPLAY environement variable is defined in the terminal
+# you run meteor from. I suggest adding it to your .bashrc
 export DISPLAY=:99.5
-```
-* Start the selenium server (Make sure you aren't running anything on port 4444 as selenium uses it.): 
-```
-java -jar selenium-server-standalone-2.43.1.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome -Dwebdriver.chrome.driver=chromedriver &
 ```
 * Run the tests:
 ```
-SELENIUM_BROWSER=chrome HUB_PORT=4444 CUCUMBER_TAGS=~@ignore meteor run --test
+SELENIUM_BROWSER=chrome CUCUMBER_TAGS=~@ignore meteor run --test
 ```
 
 The cucumber environment variables may change in the future.
