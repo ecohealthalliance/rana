@@ -55,7 +55,7 @@ Template.registerHelper 'reportDoc', () =>
       study
 
 showApprovalBar = ->
-  (Template.currentData().type in ['update', 'readonly']) and
+  (Template.currentData().type in ['update', 'disabled']) and
   ((Meteor.userId() == Template.currentData().report.createdBy.userId) or
    (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id))
 
