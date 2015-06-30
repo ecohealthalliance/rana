@@ -89,6 +89,12 @@ Template.reportFormComplete.events
     $('.review-content').toggleClass('hidden-panel')
     $('.page-wrap').toggleClass('curtain')
 
+  'keypress': (e, t) ->
+    # stop "enter" press from triggering map geolocation
+    if e.which is 13
+      e.preventDefault()
+
+
 popoverOpts =
   trigger: 'hover'
   placement: 'bottom auto'
