@@ -88,7 +88,6 @@
 
     this.When("I remove the CSV file", function(callback){
       this.browser
-      .pause(500)
       .clickWhenVisible('.file-upload-clear[file-input="csvFile"]')
       .pause(500)
       .call(callback);

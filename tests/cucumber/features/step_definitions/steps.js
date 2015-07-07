@@ -62,8 +62,7 @@
         selector = buttonNameToSelector[buttonName];
       }
       this.browser
-        .mustExist(selector)
-        .click(selector)
+        .clickWhenVisible(selector)
         .call(callback);
     });
 
