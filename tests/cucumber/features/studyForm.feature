@@ -4,38 +4,6 @@ Feature: A form for setting up a ranavirus study
   So I can add reports individually or import them
 
   @study
-  Scenario: Importing a complete CSV file
-    Given I have logged in
-    And I am on the "study" page
-    When I fill out the study form
-    And I upload the CSV file rana_import_complete.csv
-    And I click submit
-    Then the webpage should not display a validation error
-    And I should see a "insert successful" toast
-    And the database should have 1 reports linked to my account
-    When I dismiss the toast
-    And I navigate to the "table" page
-    And I click on the edit button
-    Then the form should contain the values for rana_import_complete.csv
-
-  @study
-  Scenario: Importing an invalid CSV file
-    Given I have logged in
-    And I am on the "study" page
-    When I upload the CSV file rana_invalid.csv
-    Then I should see the text "Error: Binomial species names are required"
-
-  @study
-  Scenario: Importing and removing a CSV file
-    Given I have logged in
-    And I am on the "study" page
-    And I upload the CSV file rana_import_complete.csv
-    Then I should see 1 report in the table
-    And I should see the text "Unused fields in your data"
-    When I remove the CSV file
-    Then I should not see the text "File: rana_import_complete.csv"
-
-  @study
   Scenario: Updating a study
     Given I have logged in
     And I am on the "study" page

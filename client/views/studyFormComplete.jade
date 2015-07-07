@@ -19,7 +19,7 @@ template(name="studyFormComplete")
                 span.name  #{study.name}
                 span.action Update Study
                 a.btn.btn-primary.btn-inline.add-report(href="{{pathFor route='newReport' data=studyId query=redirectOnSubmit}}") Add a report
-                a.btn.btn-primary.btn-inline.add-report(href="{{pathFor route='importReports' data=studyId query=redirectOnSubmit}}") Import CSV reports
+                a.btn.btn-primary.btn-inline.import-reports(href="{{pathFor route='importReports' data=studyId query=redirectOnSubmit}}") Import CSV reports
             p.required-text #[span *] Indicates required field
 
         section.rm-pad
