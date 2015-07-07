@@ -72,20 +72,6 @@
       ['dataUsePermissions', 'Do not share']
     ];
 
-    this.When('I click the "Import CSV Reports" button', function(callback){
-      this.browser
-      .pause(1000)
-      .click('a.import-reports')
-      .call(callback);
-    });
-
-    this.When('I click the "Import reports" button', function(callback){
-      this.browser
-      .pause(1000)
-      .click('#import-submit')
-      .call(callback);
-    });
-
     this.When(/^I upload the CSV file (.*)$/, function(filename, callback){
 
       this.browser

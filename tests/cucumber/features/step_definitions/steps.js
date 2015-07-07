@@ -53,7 +53,9 @@
       var buttonNameToSelector = {
         "Columns" : ".reactive-table-columns-dropdown button",
         "Remove" : "a.remove",
-        "Edit Report" : ".toast-message a"
+        "Edit Report" : ".toast-message a",
+        "Import CSV Reports": "a.import-reports",
+        "Import reports": "#import-submit"
       };
       var selector = buttonName;
       if(buttonName in buttonNameToSelector) {
