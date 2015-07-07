@@ -1,0 +1,34 @@
+template(name="registerCustom")
+  if options.beginRequired
+    .space-btm-2
+      p.required-text
+        span.required
+        | Indicates required field
+  .form-group.at-input
+    +input
+
+template(name="registerMed")
+  .solo
+    .form-group.at-input.col-sm-8.custom-input-med
+      +input
+
+template(name="registerSmallRow")
+  .form-group.at-input.col-sm-6.custom-input-small
+    +input
+
+template(name="registerSmallSolo")
+  .solo
+    .form-group.at-input.col-sm-6.custom-input-small
+      +input
+
+template(name="input")
+  if options.optionalInfo
+    .space-top-3
+      h3 Optional Information
+  if required
+    label 
+      span #{displayName} 
+      span.required
+  else 
+    label #{displayName}:
+  input.form-control(type="#{type}" id="at-field-#{_id}" name="at-field-#{_id}")
