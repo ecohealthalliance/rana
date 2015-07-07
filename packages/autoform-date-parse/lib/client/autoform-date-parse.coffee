@@ -5,3 +5,9 @@ AutoForm.addInputType 'date-parse',
   valueOut: ->
     node = $(@context)
     if node.val() then new Date(node.val()) else null
+
+Template.dateParse.events
+
+  'blur .form-control': (e,t) ->
+    val = new Date(e.target.value)
+    $(e.target).val val.toLocaleDateString()
