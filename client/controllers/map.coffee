@@ -16,7 +16,7 @@ Template.map.query = ->
 
 Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
-  lMap = L.map(@$('.vis-map')[0], 
+  lMap = L.map(@$('.vis-map')[0],
       maxBounds: L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
     ).setView([10, -0], 2)
   L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
@@ -93,7 +93,7 @@ Template.map.rendered = ->
       else
         color = colors[0]
       if report.eventLocation and report.eventLocation isnt "," and report.eventLocation isnt null
-        
+
         mapPath = Router.path 'map'
         editPath = Router.path 'editReport', {reportId: report._id}, {query: "redirectOnSubmit=#{mapPath}"}
         numInvolvedOpts = getCollections().Reports
@@ -131,4 +131,5 @@ Template.map.events
   'click .toggle-filter': () ->
     $('.map-filters').toggleClass('hidden showing')
     $('.toggle-filter').toggleClass('active')
-
+  'click .btn-edit': () ->
+    toastr.remove()
