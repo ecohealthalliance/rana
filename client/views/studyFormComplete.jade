@@ -19,6 +19,7 @@ template(name="studyFormComplete")
                 span.name  #{study.name}
                 span.action Update Study
                 a.btn.btn-primary.btn-inline.add-report(href="{{pathFor route='newReport' data=studyId query=redirectOnSubmit}}") Add a report
+                a.btn.btn-primary.btn-inline.add-report(href="{{pathFor route='importReports' data=studyId query=redirectOnSubmit}}") Import CSV reports
             p.required-text #[span *] Indicates required field
 
         section.rm-pad
@@ -26,9 +27,6 @@ template(name="studyFormComplete")
             .row.space-top-3
               .col-sm-4
                 +afQuickField name='name'
-
-        if showCSV
-          +csvUpload
 
         section.contact
           .container
@@ -45,6 +43,7 @@ template(name="studyFormComplete")
         section.instructions
           .container
             h2.space-top-2 Set default values for the reports in this study.
+            p Optional. Any values provided will be used as defaults for future reports added to this study.
 
         section.odd
           .container

@@ -111,6 +111,21 @@ Router.route('editStudy',
     ]
 )
 
+Router.route('importReports',
+  path: BASE_PATH + '/study/:studyId/import'
+  template: 'importForm'
+  where: 'client',
+  data: ->
+    study: getCollections().Studies.findOne(@params.studyId)
+    urlQuery: @params.query
+  waitOn: ->
+    [
+      Meteor.subscribe("studies", @params.studyId)
+      Meteor.subscribe("userInfo", Meteor.userId())
+    ]
+)
+
+
 Router.route('studies',
   path: BASE_PATH + '/studies'
   where: 'client'

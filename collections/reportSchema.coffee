@@ -12,13 +12,15 @@ numInvolvedOptions =
     autoform:
       type: 'hidden'
       label: false
-  sourceFile:
-    label: """The id of the CSV file from which the event was imported, if any"""
+  csvFile:
     type: String
+    label: """csvFile"""
     optional: true
     autoform:
-      type: 'hidden'
       label: false
+      afFieldInput:
+        type: 'fileUpload'
+        collection: 'csvfiles'
   contact:
     type: @contactSchema
   eventDate:
