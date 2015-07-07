@@ -24,7 +24,6 @@ Feature: The ability to import CSV records into an existing study
   @import
   Scenario: Importing an invalid CSV file
     Given I have logged in
-    Given I have logged in
     And I am on the "study" page
     When I fill out the study form
     And I click submit
@@ -36,7 +35,6 @@ Feature: The ability to import CSV records into an existing study
 
   @import
   Scenario: Importing and removing a CSV file
-    Given I have logged in
     Given I have logged in
     And I am on the "study" page
     When I fill out the study form
