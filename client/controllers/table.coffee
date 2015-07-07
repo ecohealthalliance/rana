@@ -207,6 +207,9 @@ events =
         window.open "data:text/csv;charset=utf-8," + encodeURIComponent(result)
       $(event.target).removeClass('disabled')
 
+  'click .edit': () ->
+    toastr.remove()
+
 Template.table.events events
 Template.pendingTable.events events
 
