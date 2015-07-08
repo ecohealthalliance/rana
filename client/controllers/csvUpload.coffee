@@ -254,6 +254,13 @@ Template.csvUpload.helpers
         key: key
         label: key
         hidden: index > 5
+        fn: (val)->
+          if key == 'eventDate'
+            val.toLocaleDateString()
+          else if key == 'eventLocation'
+            "#{val.degreesLat}, #{val.degreesLon}"
+          else
+            val
     else
       []
 
