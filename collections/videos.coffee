@@ -56,11 +56,11 @@ Meteor.startup () ->
     {
       title: "Consent, permissions and approval"
       script: """
-        Each report has three properties that affect the reports visibility to other users within the system: consent, permissions and approval. The settings for these three properties determine who can see a report on the site, and how much report detail they can view.
+        Each report has three properties that affect the report's visibility to other users within the system: consent, permissions and approval. The settings for these three properties determine who can see a report on the site, and how much report detail they can view.
 
         ## Consent
 
-        The report creator is asked `Do you consent to have this data published and made searchable on the Global Ranavirus Reporting System website as per the data use permissions?` If the answer is `No`, the report will only be viewable by the report creator, regardless of what permissions are selected or administrator approval. If the answer is `Yes`, the report will be made publicly viewable subject to permissions and approval.
+        The report creator is asked `Do you consent to have this data published and made searchable on the Global Ranavirus Reporting System website as per the data use permissions?` If the answer is `No`, the report will only be viewable by the report creator, regardless of what permissions are selected or whether there is administrator approval. If the answer is `Yes`, the report will be made publicly viewable subject to permissions and approval.
 
         ## Permissions
 
