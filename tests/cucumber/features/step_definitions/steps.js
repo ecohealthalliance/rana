@@ -133,6 +133,11 @@
             coordinates: [ 121.55189514218364, 25.046919772516173 ]
           }
         };
+        report["numInvolved"] = "1";
+        report["vertebrateClasses"] = ["amphibian"];
+        report["populationType"] = "production";
+        report["speciesName"] = "A B";
+        report["eventDate"] = "1/2/2010";
       }
       if(someoneElse) {
         report['createdBy'] = {

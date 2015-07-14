@@ -52,7 +52,7 @@ Router.route('editReport',
       type = if Meteor.userId() and Meteor.userId() == report.createdBy.userId
           'update'
         else
-          'readonly'
+          'disabled'
 
     type: type
     report: report
@@ -95,7 +95,7 @@ Router.route('editStudy',
       type = if Meteor.userId() and Meteor.userId() == study.createdBy.userId
           'update'
         else
-          'readonly'
+          'disabled'
 
     type: type
     study: getCollections().Studies.findOne(@params.studyId)

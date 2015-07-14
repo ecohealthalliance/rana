@@ -10,6 +10,7 @@ AutoForm.addHooks(
       }
       return doc
     onSuccess: (operation, result, template)->
+      toastr.remove()
       toastr.options = {
         closeButton: true
         positionClass: "toast-bottom-center"
@@ -30,6 +31,7 @@ AutoForm.addHooks(
         $('#ranavirus-report').show()
 
     onError: (operation, error) ->
+      toastr.remove()
       errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")
         .parent()
         .offset()
@@ -55,7 +57,7 @@ Template.registerHelper 'reportDoc', () =>
       study
 
 showApprovalBar = ->
-  (Template.currentData().type in ['update', 'readonly']) and
+  (Template.currentData().type in ['update', 'disabled']) and
   ((Meteor.userId() == Template.currentData().report.createdBy.userId) or
    (Roles.userIsInRole Meteor.userId(), 'admin', Groups.findOne({path:"rana"})._id))
 

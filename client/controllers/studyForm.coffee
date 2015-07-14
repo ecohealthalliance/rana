@@ -27,6 +27,7 @@ AutoForm.hooks
       doc
 
     onSuccess: (operation, result, template) ->
+      toastr.remove()
       toastr.options =
         closeButton: true
         positionClass: "toast-bottom-center"
@@ -45,6 +46,7 @@ AutoForm.hooks
         $('#ranavirus-study').show()
 
     onError: (operation, error) ->
+      toastr.remove()
       errorLocation = $("""[data-schema-key="#{error.invalidKeys[0].name}"]""")
         .parent()
         .offset()

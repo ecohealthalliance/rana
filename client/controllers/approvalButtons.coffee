@@ -44,6 +44,7 @@ Template.approvalButtons.events
 @setApproval = (call, id, status, successMessage, template, redirect) ->
 
   Meteor.call call, id, status, (error, data) ->
+    toastr.remove()
     if error
       toastr.error(error.message)
     else

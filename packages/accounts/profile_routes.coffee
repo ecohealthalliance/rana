@@ -23,4 +23,3 @@ Router.route BASE_PATH + '/profile/:_id',
   waitOn: () ->
     Meteor.subscribe "userInfo", @params._id
 
-    
