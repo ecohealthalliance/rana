@@ -12,14 +12,10 @@ Template.studyFormComplete.helpers
   studyDoc: =>
     Template.currentData()?.study or { contact: @contactFromUser() }
 
-  showCSV: ->
-    not Template.currentData().study
-
 Template.studyFormObfuscated.helpers
 
   studyDoc: =>
     Template.currentData()?.study
-
 
 AutoForm.hooks
   'ranavirus-study':
@@ -63,15 +59,6 @@ AutoForm.hooks
         extendedTimeOut: "100000"
       }
       toastr.error(error.message)
-
-    after:
-      insert: (err, res, template) =>
-
-        Meteor.subscribe "studies", res, () =>
-          study = getCollections().Studies.findOne { _id: res }
-
-          if study and study.csvFile
-            @loadCSVData study.csvFile, study, res
 
 popoverOpts =
   trigger: 'hover'

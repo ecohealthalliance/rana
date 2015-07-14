@@ -1,0 +1,47 @@
+template(name="importForm")
+
+  +autoForm(
+    id="ranavirus-import"
+    collection="collections.Reports"
+    redirectOnSubmit=urlQuery.redirectOnSubmit
+  )
+
+    .study-form.space-btm-3
+      section.rm-pad-btm.odd
+        .container.name-action.title
+          h1
+            span Import reports to
+            span.name #{study.name}
+
+      section.csvUpload
+        .container
+          .upload-wrap
+            h3.upload-file CSV file upload
+            a.instructions-link(href="{{pathFor route='importInstructions'}}" target='_blank')
+              span CSV import instructions
+              span.glyphicon.glyphicon-info-sign
+          .csv-error #{csvError}
+          if importReports.count
+            b File: &nbsp;
+            tt #{csvFileName}
+          .row
+            .col-md-3
+              +afQuickField name='csvFile' id='csvFile'
+
+      if importReports.count
+        section.rm-pad-top.import-table
+          .table-wrap.container
+            +reactiveTable collection=importReports fields=importFields showColumnToggles=true
+
+          if unmatchedHeadersString
+            .container
+              h4 Unused fields in your data
+              tt #{unmatchedHeadersString}
+
+      if showSubmit
+        .rm-pad-top
+          .container
+            .row
+              .col-sm-4
+                .form-group
+                  button#import-submit.btn-lrg.btn.btn-success.btn-block(type='button') Import reports
