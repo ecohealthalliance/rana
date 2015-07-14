@@ -29,15 +29,6 @@
     optional: true
     autoform:
       rows: 3
-  csvFile:
-    type: String
-    label: """csvFile"""
-    optional: true
-    autoform:
-      label: false
-      afFieldInput:
-        type: 'fileUpload'
-        collection: 'csvfiles'
 ]
 
 @studySchema.messages {

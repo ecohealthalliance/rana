@@ -1,3 +1,62 @@
+Template.importForm.created = ->
+  clearImportReports()
+  @csvError = new ReactiveVar
+  @csvError.set(null)
+
+Template.importForm.helpers
+
+  csvError: () ->
+    UI._templateInstance().csvError.get() or ''
+
+  csvFileId: () ->
+    Session.get 'fileUpload[csvFile]'
+
+  csvFileName: () ->
+    Session.get 'fileUploadSelected[csvFile]'
+
+  importReports: () ->
+    ImportReports.find()
+
+  importFields: () ->
+    data = ImportReports.findOne()
+    if data
+      keys = ( field for field in [ 'eventDate', 'coordinatesAvailable', 'eventLocation', 'eventCountry',
+          'numInvolved', 'totalAnimalsTested', 'totalAnimalsConfirmedInfected',
+          'totalAnimalsConfirmedDiseased', 'populationType', 'screeningReason',
+          'speciesGenus', 'speciesName', 'speciesNotes', 'sampleType',
+          'additionalNotes' ] when field of data
+      )
+      _.map keys, (key, index) ->
+        key: key
+        label: key
+        hidden: index > 5
+    else
+      []
+
+  unmatchedHeadersString: () ->
+    Session.get('unmatchedHeaders').join ', '
+
+  showSubmit: =>
+    Session.get 'fileUpload[csvFile]'
+
+Template.importForm.events
+
+  'change .file-upload': (e, t) ->
+    Session.set 'csvError', null
+    fileUploaded(Template.instance())
+
+  'click .file-upload-clear': (e, t) ->
+
+    if $(e.currentTarget).attr('file-input') is 'csvFile'
+      clearImportReports()
+      Session.set 'fileUpload[csvFile]', false
+
+  'click #import-submit': (e, t) =>
+    study = Template.currentData().study
+    redirect = Template.currentData().redirectOnSubmit
+
+    loadCSVData Session.get('fileUpload[csvFile]'), study, t.data.urlQuery?.redirectOnSubmit
+
 getCollections = () -> @collections
 
 ImportReports = null
@@ -34,6 +93,42 @@ getReportFieldType = (field) ->
     null
   else
     reportSchema[field].type
+
+loadCSVData = (csvFile, study, redirect) ->
+  Meteor.call 'getCSVData', csvFile, (err, data) ->
+    reportSchema = collections.Reports.simpleSchema()._schema
+    reportFields = Object.keys reportSchema
+    report = {}
+    for studyField in Object.keys study
+      if studyField != '_id' and studyField in reportFields
+        report[studyField] = _.clone study[studyField]
+
+    for importData in data
+      importReport = buildReportFromImportData importData, report
+      _.extend report, importReport
+      report.createdBy =
+        userId: Meteor.user()._id
+        name: Meteor.user().profile.name
+      report.studyId = study._id
+      report.csvFile = csvFile
+      getCollections().Reports.insert report
+
+    toastr.options = {
+        closeButton: true
+        positionClass: "toast-bottom-center"
+        timeOut: "100000"
+        extendedTimeOut: "100000"
+      }
+    editPath = Router.path 'editStudy', {studyId: study._id}
+    toastr.success("""
+    <div>Added #{data.length} reports to study #{study.name}</div>
+    <a href="#{editPath}">Edit Study</a>
+    """)
+    window.scrollTo(0, 0)
+    if redirect
+      Router.go redirect
+    else
+      Router.go editPath
 
 updateImportReports = (data, errorCallback) ->
 
@@ -184,25 +279,6 @@ buildReportFromImportData = (importData, report) ->
             report[field] = value
 
   report
-
-@loadCSVData = (csvFile, study, studyId) ->
-  Meteor.call 'getCSVData', csvFile, (err, data) =>
-    reportSchema = getCollections().Reports.simpleSchema()._schema
-    reportFields = Object.keys reportSchema
-    report = {}
-    for studyField in Object.keys study
-      if studyField != '_id' and studyField in reportFields
-        report[studyField] = _.clone study[studyField]
-
-    for importData in data
-      importReport = buildReportFromImportData importData, report
-      _.extend report, importReport
-      report.createdBy =
-        userId: Meteor.user()._id
-        name: Meteor.user().profile.name
-      report.studyId = studyId
-      getCollections().Reports.insert report
-
 
 headerMatches = (data) ->
   headers = _.keys data[0]
