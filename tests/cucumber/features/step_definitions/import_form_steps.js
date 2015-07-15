@@ -72,6 +72,33 @@
       ['dataUsePermissions', 'Do not share']
     ];
 
+    csvImportValues['rana_import_utm.csv'] = [
+      ['screeningReason', 'mortality'],
+      ['speciesGenus', 'lizardo'],
+      ['speciesName', 'lizardo bizarro'],
+      ['eventDate', '3/4/2003'],
+      ['eventLocation', {
+        "source" : "utm",
+        "northing" : 5698366.5771494,
+        "easting" : 705619.99432907,
+        "zone" : 30,
+        "degreesLon" : -1,
+        "minutesLon" : 57,
+        "secondsLon" : 21.796884000000105,
+        "degreesLat" : 51,
+        "minutesLat" : 23,
+        "secondsLat" : 57.14033999999619,
+        "country" : "UK",
+        "geo" : {
+          "type" : "Point",
+          "coordinates" : [
+            -0.04394531,
+            51.39920565
+          ]
+        }
+      }]
+    ];
+
     this.When(/^I upload the CSV file (.*)$/, function(filename, callback){
 
       this.browser
