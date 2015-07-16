@@ -3,3 +3,4 @@ tests/screenshots/
 tests/cucumber/.screenshots/
 tests/*.png
 tests/cucumber/node_modules
+npm-debug.log
