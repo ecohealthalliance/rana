@@ -98,7 +98,7 @@ Meteor.publishComposite 'studies', (id) ->
     }
   ]
 
-ReactiveTable.publish "studies", collections.Studies,
+ReactiveTable.publish "studies", collections.Studies, (()->
   {
     $or : [
       {
@@ -109,7 +109,7 @@ ReactiveTable.publish "studies", collections.Studies,
         consent: true
       }
     ]
-  },
+  }),
   { fields: { name: 1, createdBy: 1, dataUsePermissions: 1}}
 
 
