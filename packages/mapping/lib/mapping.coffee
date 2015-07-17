@@ -1,7 +1,8 @@
 Mapping = {}
 
 round = (num) ->
-  parseFloat(num).toFixed(8)
+  parseFloat(parseFloat(num).toFixed(8))
+
 
 Mapping.utmFromLonLat = (lon, lat) ->
   zone = Mapping.lon2UTMZone lon
@@ -26,7 +27,9 @@ Mapping.decimal2MinSec = (decimal) ->
 
   degrees: degrees
   minutes: minutes
-  seconds: seconds
+  seconds: round(seconds)
 
 Mapping.minSec2Decimal = (degrees, min, sec) ->
-  degrees + min / 60 + sec / 3600
+  a = degrees + min / 60 + sec / 3600
+  r = round(degrees + min / 60 + sec / 3600)
+  round(degrees + min / 60 + sec / 3600)
