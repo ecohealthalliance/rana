@@ -66,7 +66,7 @@ Meteor.startup () ->
 
         Reports can be shared with three levels of permissions. These permissions determine what level of visibility the information in the report has on the site, subject to administrator approval.
 
-        `Do not share`: Anonyomous users, other logged in users, and even adminstrators, will not see the report anywhere on the site. Only the report creator will be able to view the report details and see the report in the table and map. After adding an unshared report, you can return later and choose to share the report.
+        `Do not share`: Anonymous users, other logged in users, and even administrators, will not see the report anywhere on the site. Only the report creator will be able to view the report details and see the report in the table and map. After adding an unshared report, you can return later and choose to share the report.
 
         `Share obfuscated`: All users will be able to see that a report exists, but will only be able see the contact information for the user that created the report, and the country the report is located in (if specified). The report will show up in Full Reports table and on the map for the report owner, and in the Obfuscated Reports table for all other users. If other users wish to get more information about a report, they can contact the report creator.
 
@@ -80,7 +80,7 @@ Meteor.startup () ->
 
         `approved`: Visible to anyone (subject to consent and permissions settings).
 
-        `rejected`: Visible only to the creator, or to an admin visitng the report directly.
+        `rejected`: Visible only to the creator, or to an admin visiting the report directly.
 
         Every user also has one of these three statuses. Any report created by a user is automatically assigned the status of the user. For example, reports created by approved users are automatically approved and visible immediately. New users are assigned pending status by default, and must be approved by administrators. Administrators can approve or reject any user or any individual report.
 
