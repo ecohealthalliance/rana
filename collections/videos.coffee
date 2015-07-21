@@ -54,7 +54,7 @@ Meteor.startup () ->
       Reports can be filtered as in the report table, and they can be sorted into color-coded groups according to their values for various fields."
     }
     {
-      title: "Consent, permissions and approval"
+      title: "Consent, Permissions and Approval"
       script: """
         Each report has three properties that affect the report's visibility to other users within the system: consent, permissions and approval. The settings for these three properties determine who can see a report on the site, and how much report detail they can view.
 
