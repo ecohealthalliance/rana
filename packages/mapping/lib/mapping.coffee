@@ -30,6 +30,4 @@ Mapping.decimal2MinSec = (decimal) ->
   seconds: round(seconds)
 
 Mapping.minSec2Decimal = (degrees, min, sec) ->
-  a = degrees + min / 60 + sec / 3600
-  r = round(degrees + min / 60 + sec / 3600)
   round(degrees + min / 60 + sec / 3600)
