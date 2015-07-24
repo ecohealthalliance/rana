@@ -203,4 +203,9 @@ Router.route('helpTopic',
     video: getCollections().Videos.findOne({title: @params.topic.replace RegExp('-', 'g'), ' ' })
 )
 
+Router.route('terms',
+  path: BASE_PATH + '/terms'
+  where: 'client'
+)
+
 Router.plugin 'ensureSignedIn', {only: ['newReport', 'editReport', 'newStudy']}
