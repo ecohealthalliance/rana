@@ -6,7 +6,7 @@ template(name="help")
           h1 Help Topics
           ul.list-unstyled
             each videos
-              li 
+              li
                 a.topic(href="{{pathFor route='helpTopic' data=link}}" class="{{ addActive title ../video.title}}" ) #{title}
         +topic video=video
 
@@ -14,8 +14,9 @@ template(name="topic")
   .content
     div(class="topic-content topic-#{video.index}")
       h1 #{video.title}
-      .script 
-        +markdown 
+      .script
+        +markdown
           #{video.script}
-      div.embed-responsive.embed-responsive-16by9
-        iframe(src="//youtube.com/embed/#{video.videoID}?rel=0&showinfo=0&autohide=1&vq=hd720" frameborder="0" allowfullscreen) 
+      if video.videoID
+        div.embed-responsive.embed-responsive-16by9
+          iframe(src="//youtube.com/embed/#{video.videoID}?rel=0&showinfo=0&autohide=1&vq=hd720" frameborder="0" allowfullscreen)
