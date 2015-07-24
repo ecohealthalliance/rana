@@ -7,6 +7,24 @@
   var path = require('path');
   var _ = require("underscore");
 
+  var eventLocation =
+    { 'source': 'LonLat',
+      'northing': 5410809.438552289,
+      'easting': 452694.4771719082,
+      'zone': 31,
+      'geo': {
+        'type': 'Point',
+        'coordinates': [2.355194091796875, 48.84845083589778]
+      },
+      'degreesLon': 2,
+      'minutesLon': 21,
+      'secondsLon': 18.698730468750078,
+      'degreesLat': 48,
+      'minutesLat': 50,
+      'secondsLat': 54.42300923200478,
+      'country': 'USA'
+    }
+
   var fillInStudyForm = function (context, customValues, callback) {
     var studyDefaultValues = {
       'contact.name': 'Fake Name',
@@ -35,7 +53,7 @@
     });
 
     this.When("I fill out the study form with some default report values", function(callback){
-      fillInStudyForm(this, {'speciesGenus': 'SomeGenus'}, callback);
+      fillInStudyForm(this, {'speciesGenus': 'SomeGenus', 'eventLocation': eventLocation}, callback);
     });
 
     this.When(/I fill out the study form differently(?: with obfuscated permissions)?/, function(callback){

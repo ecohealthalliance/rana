@@ -108,3 +108,14 @@ template(name="confirmMethods")
   +afQuickField name='ranavirusConfirmationMethods'
   if afFieldValueContains name='ranavirusConfirmationMethods' value='other'
     +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+
+template(name="dateAndLocation")
+  h3 Date and Location
+  .row.form-input-block
+    .col-sm-12
+      .row
+        .col-sm-4
+          +afQuickField name="eventDate"
+      .row
+        .col-sm-12
+          +afQuickField name="eventLocation"
