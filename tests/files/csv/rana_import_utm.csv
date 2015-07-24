@@ -1,0 +1,2 @@
+screeningReason,speciesGenus,speciesName,eventDate,unknownField,someOtherField,eventLocation.northing,eventLocation.easting,eventLocation.zone,eventLocation.country
+mortality,lizardo,lizardo bizarro,3/4/2003,blah,blah,5698366.57714940,705619.99432907,30,UK

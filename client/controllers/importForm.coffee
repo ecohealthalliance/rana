@@ -212,7 +212,7 @@ buildReportFromImportData = (importData, report) ->
     minSecLat = Mapping.decimal2MinSec coords.lat
 
     report['eventLocation'] =
-      source: 'UTM'
+      source: 'utm'
       northing: northing
       easting: easting
       zone: zone
