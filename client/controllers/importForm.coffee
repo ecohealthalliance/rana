@@ -292,17 +292,6 @@ headerMatches = (data) ->
 
   res
 
-Template.csvUpload.events
-  'change .file-upload': (e, t) ->
-    Session.set 'csvError', null
-    fileUploaded(Template.instance())
-
-  'click .file-upload-clear': (e, t) ->
-
-    if $(e.currentTarget).attr('file-input') is 'csvFile'
-      clearImportReports()
-      Session.set 'fileUpload[csvFile]', false
-
 Template.csvUpload.helpers
 
   csvError: () ->
