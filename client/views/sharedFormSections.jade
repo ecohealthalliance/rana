@@ -45,14 +45,20 @@ template(name="populationInfo")
             +afQuickField name='specifyOtherVertebrateClasses'
 
 template(name="species")
-  h3 Affected Species
   .row.form-input-block
     .col-sm-4
+      h3 Ranavirus Species
+      +afQuickField name='ranaSpecies'
+      if afFieldValueIs name='ranaSpecies' value='other'
+          +afQuickField name='specifyOtherRanaSpecies'
+      +afQuickField name='ranaSpeciesFiles'
+    .col-sm-4
+      h3 Affected Species
       +afQuickField name="speciesGenus"
       +afQuickField name="speciesName"
       if numInvolved
         +afQuickField name="numInvolved"
-    .col-sm-7.col-sm-offset-1
+    .col-sm-4
       +afQuickField name="speciesNotes"
 
 template(name="permissions")

@@ -84,6 +84,47 @@
     autoform:
       afFieldInput:
         noselect: true
+  ranaSpecies:
+    type: String
+    label: "Species"
+    optional: true
+    autoform:
+      options: [
+        { value: 'FV3', label: 'Frog virus 3 (FV3)' }
+        { value: 'ATV', label: 'Ambystoma tigrinum virus (ATV)' }
+        { value: 'BIV', label: 'Bohle iridovirus (BIV)' }
+        { value: 'ECV', label: 'European catfish virus (ECV)' }
+        { value: 'SCRV', label: 'Santee-Cooper ranavirus (SCRV)' }
+        { value: 'Other', label: 'other' }
+      ]
+  'ranaSpecies.$':
+    type: String
+    optional: true
+    autoform:
+      afFieldInput:
+        noselect: true
+  ranaSpeciesFiles:
+    type: Array
+    label: "Evidence of classification"
+    optional: true
+    autoform:
+      tooltip: """You can upload supporting files for
+      the Ranavirus species identification."""
+  'ranaSpeciesFiles.$':
+    type: Object
+    optional: true
+  'ranaSpeciesFiles.$.file':
+    type: String
+    label: ''
+    optional: true
+    autoform:
+      afFieldInput:
+        type: 'fileUpload'
+        collection: 'files'
+  specifyOtherRanaSpecies:
+    label: 'Other type'
+    type: String
+    optional: true
   speciesGenus:
     label: 'Genus'
     type: String

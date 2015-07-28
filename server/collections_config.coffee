@@ -92,6 +92,15 @@ Meteor.publishComposite 'studies', (id) ->
   children: [
     {
       find: (study) ->
+        ids = _.pluck(study?.ranaSpeciesFiles or [], "file")
+        if ids.some(_.isRegExp)
+          return []
+        collections.Files.find
+          _id:
+            $in: ids
+    }
+    {
+      find: (study) ->
         collections.PDFs.find
           _id: study?.publicationInfo?.pdf
           studyId: study._id
@@ -240,6 +249,15 @@ Meteor.publishComposite 'reportAndStudy', (reportId) ->
     {
       find: (report) ->
         collections.Reviews.find {reportId : report._id}
+    }
+    {
+      find: (report) ->
+        ids = _.pluck(report?.ranaSpeciesFiles or [], "file")
+        if ids.some(_.isRegExp)
+          return []
+        collections.Files.find
+          _id:
+            $in: ids
     }
   ]
 
