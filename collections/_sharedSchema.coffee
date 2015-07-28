@@ -106,7 +106,7 @@
     type: Array
     optional: true
     autoform:
-      tooltip: """You can upload (MS Word or PDF) copies of supporting files for
+      tooltip: """You can upload supporting files for
       the Ranavirus species identification."""
   'ranaSpeciesFiles.$':
     type: Object
