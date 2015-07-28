@@ -40,15 +40,7 @@ template(name="reportFormComplete")
 
         section.date-location.rm-pad-top
           .container
-            h3 Date and Location
-            .row.form-input-block
-              .col-sm-12
-                .row
-                  .col-sm-4
-                    +afQuickField name="eventDate"
-                .row
-                  .col-sm-12
-                    +afQuickField name="eventLocation"
+            +dateAndLocation
 
         section.odd
           .container

@@ -239,6 +239,26 @@
     type: String
     autoform:
       omit: true
+  eventLocation:
+    label: 'Event Location'
+    type: @locationSchema
+    optional: true
+    autoform:
+      type: 'leaflet'
+      afFieldInput:
+        type: 'leaflet'
+      tooltip: """Where were the carcasses actually collected or animals sampled?
+        Please provide the highest resolution data possible (using UTM or DD coordinates)."""
+  eventDate:
+    label: 'Event date'
+    type: Date
+    optional: true
+    autoform:
+      afFieldInput:
+        type: 'date-parse'
+      tooltip: """Enter the date when the ranavirus event being reported occurred or was discovered.
+        This may be the date that carcasses were collected.
+        If this date is unavailable or unknown, then the date that the diagnostic tests were performed can be used."""
 
 SimpleSchema.messages(
   "notBinomial": "Binomial species names are required."
