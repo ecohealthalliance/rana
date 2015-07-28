@@ -86,6 +86,7 @@
         noselect: true
   ranaSpecies:
     type: String
+    label: "Species"
     optional: true
     autoform:
       options: [
@@ -94,7 +95,7 @@
         { value: 'BIV', label: 'Bohle iridovirus (BIV)' }
         { value: 'ECV', label: 'European catfish virus (ECV)' }
         { value: 'SCRV', label: 'Santee-Cooper ranavirus (SCRV)' }
-        { value: 'other', label: 'other' }
+        { value: 'Other', label: 'other' }
       ]
   'ranaSpecies.$':
     type: String
@@ -104,6 +105,7 @@
         noselect: true
   ranaSpeciesFiles:
     type: Array
+    label: "Evidence of classification"
     optional: true
     autoform:
       tooltip: """You can upload supporting files for

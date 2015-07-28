@@ -92,9 +92,7 @@ Meteor.publishComposite 'studies', (id) ->
   children: [
     {
       find: (study) ->
-        console.log 'study', study
         ids = _.pluck(study?.ranaSpeciesFiles or [], "file")
-        console.log 'ids', ids
         if ids.some(_.isRegExp)
           return []
         collections.Files.find
