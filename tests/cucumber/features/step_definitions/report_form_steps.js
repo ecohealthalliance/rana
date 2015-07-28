@@ -24,6 +24,8 @@
         'specifyOtherRanavirusSampleTypes',
         'specifyOtherRanavirusConfirmationMethods',
         'specifyOtherVertebrateClasses',
+        'ranaSpeciesFiles',
+        'specifyOtherRanaSpecies',
         'sampleType',
         'ranavirusConfirmationMethods',
         'eventDate',
