@@ -20,6 +20,3 @@ Template.navLinks.helpers
   checkActive: (routeName) ->
     if Router.path(routeName, {groupPath: 'rana'}) is Router.current().location.get().path
       'active'
-
-Template.header.rendered = () ->
-  setTimeout (-> $('.banner').toggleClass 'demo-hidden demo-showing'), 0
