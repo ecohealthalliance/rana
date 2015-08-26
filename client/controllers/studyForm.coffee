@@ -39,6 +39,11 @@ AutoForm.hooks
       <div>#{operation} successful!</div>
       <a href="#{editPath}">Edit Study</a>
       """)
+      reportPath = Router.path 'newReport', {studyId: @docId}
+      toastr.info("""
+      <div>Please specify details about the testing performed.</div>
+      <a href="#{reportPath}">Add a report to the study you created.</a>
+      """)
       if template.data.redirectOnSubmit
         Router.go template.data.redirectOnSubmit
       else
