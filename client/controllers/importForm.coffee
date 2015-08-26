@@ -283,6 +283,9 @@ buildReportFromImportData = (importData, report) ->
 headerMatches = (data) ->
   headers = _.keys data[0]
   fields = Object.keys @collections.Reports.simpleSchema()._schema
+  # these fields are different in the schema but are converted during import
+  fields.push 'eventLocation.latitude'
+  fields.push 'eventLocation.longitude'
 
   res =
     matched: ( header for header in headers when header in fields )
