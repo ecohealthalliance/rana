@@ -39,10 +39,12 @@ AutoForm.hooks
       <div>#{operation} successful!</div>
       <a href="#{editPath}">Edit Study</a>
       """)
-      reportPath = Router.path 'newReport', {studyId: @docId}
+      reportFormPath = Router.path 'newReport', {studyId: @docId}
+      importReportsPath = Router.path 'importReports', {studyId: @docId}
       toastr.info("""
-      <div>Please specify details about the testing performed.</div>
-      <a href="#{reportPath}">Add a report to the study you created.</a>
+      <div>Please add reports about the Ranavirus cases in this study.</div>
+      You can <a href="#{reportFormPath}">add individual reports via form</a>
+      or <a href="#{importReportsPath}">import a csv</a> with multiple reports.
       """)
       if template.data.redirectOnSubmit
         Router.go template.data.redirectOnSubmit
