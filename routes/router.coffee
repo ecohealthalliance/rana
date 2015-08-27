@@ -135,6 +135,15 @@ Router.route('studies',
     ]
 )
 
+Router.route('selectImportStudy',
+  path: BASE_PATH + '/selectImportStudy'
+  where: 'client'
+  waitOn: ->
+    [
+      Meteor.subscribe "groupByPath", "rana"
+    ]
+)
+
 Router.route('table',
   path: BASE_PATH + '/table'
   where: 'client'

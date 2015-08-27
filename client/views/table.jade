@@ -7,6 +7,9 @@ template(name="table")
       button.export.btn.btn-primary.btn-inline(href="#")
         span Export
         i.fa.fa-download
+      a.btn.btn-primary.btn-inline(href="{{pathFor route='selectImportStudy'}}")
+        span Import
+        i.fa.fa-upload
       .filter-controls.table-filters.hidden
         +filterControls query=query
 
