@@ -14,7 +14,6 @@ Template.selectImportStudy.helpers
       """<a class="btn btn-success" href="#{addReportPath}">Import Reports</a>"""
 
     isAdmin = Roles.userIsInRole Meteor.user(), "admin", Groups.findOne({path: 'rana'})?._id
-    schema = @collections.Studies.simpleSchema().schema()
 
     fields = [
         key: "name"
