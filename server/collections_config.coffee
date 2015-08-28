@@ -121,6 +121,12 @@ ReactiveTable.publish "studies", collections.Studies, (()->
   }),
   { fields: { name: 1, createdBy: 1, dataUsePermissions: 1}}
 
+ReactiveTable.publish "studiesCreatedByUser", collections.Studies, (()->
+  {
+    "createdBy.userId": @userId
+  }),
+  { fields: { name: 1, createdBy: 1, dataUsePermissions: 1}}
+
 
 Meteor.publish 'obfuscatedStudies', (id) ->
   collections.Studies.find(
@@ -299,7 +305,9 @@ allowCreatorAndAdmin = (userId, doc) ->
 
 @collections.Reports.allow
   insert: (userId, doc) ->
-    doc.createdBy.userId == userId
+    isStudyCreator = (userId == collections.Studies.findOne({_id: doc.studyId}).createdBy.userId)
+    isReportCreator = allowCreator userId, doc
+    isStudyCreator and isReportCreator 
   update: (userId, doc, fields, modifier) ->
     (doc.createdBy.userId == userId) and (not ('approval' of fields)) and (not ('approval' of modifier.$set))
   remove: allowCreatorAndAdmin

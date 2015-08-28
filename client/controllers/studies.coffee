@@ -35,14 +35,9 @@ Template.studies.helpers
         if obj.createdBy.userId == Meteor.userId()
           new Spacebars.SafeString(addReportButton(obj) + ' ' + editButton(obj) + ' ' + removeButton(obj))
         else if isAdmin
-          if obj.dataUsePermissions == 'Share obfuscated'
-            new Spacebars.SafeString(viewButton(obj) + ' ' + removeButton(obj))
-          else
-            new Spacebars.SafeString(addReportButton(obj) + ' ' + viewButton(obj) + ' ' + removeButton(obj))
-        else if obj.dataUsePermissions == 'Share obfuscated'
-          new Spacebars.SafeString(viewButton(obj))
+          new Spacebars.SafeString(viewButton(obj) + ' ' + removeButton(obj))
         else
-          new Spacebars.SafeString(addReportButton(obj) + ' ' + viewButton(obj))
+          new Spacebars.SafeString(viewButton(obj))
 
     showColumnToggles: true
     fields: fields,

@@ -116,8 +116,12 @@ Router.route('importReports',
   template: 'importForm'
   where: 'client',
   data: ->
-    study: getCollections().Studies.findOne(@params.studyId)
+    study = getCollections().Studies.findOne(@params.studyId)
+    canImport = Meteor.userId() and Meteor.userId() == study.createdBy.userId
+
+    study: study
     urlQuery: @params.query
+    canImport: canImport
   waitOn: ->
     [
       Meteor.subscribe("studies", @params.studyId)
