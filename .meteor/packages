@@ -12,7 +12,6 @@ underscore
 iron:router
 twbs:bootstrap
 aldeed:autoform
-yogiben:autoform-file
 aldeed:collection2
 cfs:standard-packages
 cfs:gridfs
@@ -35,3 +34,8 @@ sebdah:autocompletion
 fuatsengul:leaflet
 reactive-var
 rana:mapping
+reywood:publish-composite
+eha:autoform-file
+fortawesome:fontawesome
+natestrauser:analyticsjs
+autoform-date-parse

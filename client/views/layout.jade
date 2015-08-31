@@ -1,24 +1,16 @@
 head
   title Ranavirus reporting
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+  link(href="//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,800"
+    rel="stylesheet" type="text/css")
+  link(rel="shortcut icon" type="image/png"  href="/images/favicon.png")
+
 
 template(name="layout")
-  body
-    .navbar.navbar-inverse.navbar-fixed.top
-        .container
-            .navbar-header
-              a.navbar-brand Ranavirus Reporting System
-            ul.nav.navbar-nav
-              li
-                a(href="/study") New Study
-              li
-                a(href="/report") New Report
-              li
-                a(href="/map") Report Map
-              li
-                a(href="/table") Report Table
-              li
-                a(href="/group/rana/info") Ranavirus Information
-            .navbar-right
-                +accountsHeaderButtons
-    .container
-        +yield
+  .page-wrap
+    +header
+    .content-wrap
+      .fluid-container
+          +yield
+    +footer
+

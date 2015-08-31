@@ -21,9 +21,12 @@
 @collections.Reports = new Mongo.Collection 'reports'
 @collections.Reports.attachSchema @reportSchema
 
+
 @collections.Studies = new Mongo.Collection 'studies'
 @collections.Studies.attachSchema @studySchema
-
+  
 @collections.Genera = new Mongo.Collection 'genera'
 
 @collections.Reviews = new Mongo.Collection 'reviews'
+
+@collections.Videos = new Mongo.Collection 'videos'

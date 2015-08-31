@@ -5,14 +5,13 @@
 
   var assert = require('assert');
 
-  var _ = Package["underscore"]._;
+  var _ = require("underscore");
 
   module.exports = function () {
 
-    var helper = this;
-
     this.Given(/^there is a report with "([^"]*)" "([^"]*)" in the database$/,
     function (property, value, callback) {
+      var that = this;
       var report = {
         eventLocation: {
           source: 'LonLat',
@@ -32,39 +31,53 @@
           country: 'USA'
         }
       };
+      // Parse array values
+      if (value.match(/\[.*\]/)) {
+        value = value.replace(/\[|\]|\'/g, '').split(', ')
+      }
       report[property] = value;
-      helper.addReports([report], function(err){
+      this.addReports([report], function(err){
         assert.ifError(err);
-        helper.world.browser
+        that.browser
         .waitForReport(report)
         .call(callback);
       });
     });
     
-    this.When(/^I add a filter where "([^"]*)" is "([^"]*)"$/,
-    function (property, value, callback) {
-      helper.world.browser
-      .elements(".autoform-array-item", function(err, resp){
+    this.When(/^I add a( second)? filter where "([^"]*)" is "([^"]*)"$/,
+    function (second, property, value, callback) {
+      var that = this;
+      this.browser
+      .isVisible('#filter-panel', function(err, isVisible) {
         assert.ifError(err);
-        var currentIdx = resp.value.length;
+        if (!isVisible) {
+          that.browser
+          .click('.toggle-filter')
+          .waitForVisible('#filter-panel');
+        }
+        var currentIdx = second ? '1' : '0';
+
+        if (second) {
+          that.browser
+          .click(".autoform-add-item");
+        }
+        
         var propKey = "filters." + currentIdx + ".property";
         var predKey = "filters." + currentIdx + ".predicate";
         var valKey = "filters." + currentIdx + ".value";
-        helper.world.browser
-        .click(".autoform-add-item")
-        .pause(200)
+        that.browser
         .selectByValue('select[data-schema-key="' + propKey + '"]', property)
         .selectByValue('select[data-schema-key="' + predKey + '"]', "=")
         .setValue('input[data-schema-key="' + valKey + '"]', value)
         .click('button[type="submit"]')
+        .pause(500)
         .call(callback);
       });
-
     });
     
     this.When(/^I remove the filters$/, function (callback) {
-      helper.world.browser
-      .click(".reset")
+      this.browser
+      .click(".clear")
       .call(callback);
     });
   };

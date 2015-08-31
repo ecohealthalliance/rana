@@ -1,0 +1,8 @@
+template(name="approvalBar")
+  section.approval.rm-pad.space-btm-2(class="#{report.approval}-wrap")
+    .container
+      .approval-group
+        span.approvalStatus(class=report.approval,  data-toggle="popover" data-content=approvalTooltip tooltip="true" class="tooltipped") Report #{report.approval}
+          span.infoIcon.approvalInfo ?
+      if showApprovalControls
+          +approvalButtons

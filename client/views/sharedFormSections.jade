@@ -1,0 +1,127 @@
+
+template(name="contactInfo")
+  .row
+    .col-md-3.add-space-btm
+      +tooltippedHeader name='contactHeader' text='Contact person info'
+      +afQuickField name='contact.name'
+      +afQuickField name='contact.email' placeholder='name@domain.com'
+      +afQuickField name='contact.phone' minor='(Must include the country code)'
+    .col-md-8.col-md-offset-1
+      +address
+
+template(name="address")
+  h3 Reporting institution, diagnostic lab or government agency info
+  .row
+    .col-sm-6
+      +afQuickField name="contact.institutionAddress.name"
+  .row
+    .col-sm-6
+      +afQuickField name="contact.institutionAddress.street"
+    .col-sm-6
+      +afQuickField name="contact.institutionAddress.street2"
+  .row
+    .col-sm-4
+      +afQuickField name="contact.institutionAddress.city"
+    .col-sm-4
+      +afQuickField name="contact.institutionAddress.stateOrProvince"
+    .col-sm-2
+      +afQuickField name="contact.institutionAddress.postalCode"
+  .row
+    .col-sm-6
+      +afQuickField name="contact.institutionAddress.country"
+
+template(name="populationInfo")
+  .row.form-input-block
+    .col-sm-3.input-block
+        +afQuickField name="populationType"
+    .col-sm-3.input-block
+        +afQuickField name="speciesAffectedType"
+    .col-sm-3.input-block
+        +afQuickField name="screeningReason"
+    .clearfix.visible-xs-block
+    .col-sm-3.input-block.check-list
+        +afQuickField name="vertebrateClasses"
+        if afFieldValueContains name='vertebrateClasses' value='other'
+            +afQuickField name='specifyOtherVertebrateClasses'
+
+template(name="species")
+  .row.form-input-block
+    .col-sm-4
+      h3 Ranavirus Species
+      +afQuickField name='ranaSpecies'
+      if afFieldValueIs name='ranaSpecies' value='other'
+          +afQuickField name='specifyOtherRanaSpecies'
+      +afQuickField name='ranaSpeciesFiles'
+    .col-sm-4
+      h3 Affected Species
+      +afQuickField name="speciesGenus"
+      +afQuickField name="speciesName"
+      if numInvolved
+        +afQuickField name="numInvolved"
+    .col-sm-4
+      +afQuickField name="speciesNotes"
+
+template(name="permissions")
+  h3 Permissions and Consent
+  .row.form-input-block
+    .col-sm-6.input-block
+      +afQuickField name='dataUsePermissions' id='dataUsePermissions'
+    .col-sm-6.input-block
+      +afQuickField name='consent' id='consent'
+
+template(name="submit")
+  section.rm-pad-top
+    .container
+      .row
+        .col-sm-4
+          .form-group
+            button.btn-lg.btn.btn-success.btn-block(type='submit') Submit
+
+template(name="classesMethods")
+      .row.form-input-block
+        if report
+          .col-md-8.col-sm-12.input-block
+            +classesMethodsInputs
+          .col-md-4.col-sm-6
+              +afQuickField name='totalAnimalsTested'
+              +afQuickField name='totalAnimalsConfirmedInfected'
+              +afQuickField name='totalAnimalsConfirmedDiseased'
+        else
+          .col-sm-12.input-block
+            +classesMethodsInputs
+
+template(name="classesMethodsInputs")
+  .row
+    if report
+      .col-sm-3.input-block.check-list
+        +afQuickField name='ageClasses'
+    else
+      .col-sm-4.input-block.check-list
+        +afQuickField name='ageClasses'
+    if report
+      .col-sm-5.input-block.check-list
+        +confirmMethods
+    else
+      .col-sm-4.input-block.check-list
+        +confirmMethods
+
+    .col-sm-4.input-block.check-list
+        +afQuickField name='sampleType'
+        if afFieldValueContains name='sampleType' value='other'
+          +afQuickField name='specifyOtherRanavirusSampleTypes'
+
+template(name="confirmMethods")
+  +afQuickField name='ranavirusConfirmationMethods'
+  if afFieldValueContains name='ranavirusConfirmationMethods' value='other'
+    +afQuickField name='specifyOtherRanavirusConfirmationMethods'
+
+template(name="dateAndLocation")
+  h3 Date and Location
+  .row.form-input-block
+    .col-sm-12
+      .row
+        .col-sm-4
+          +afQuickField name="eventDate"
+      .row
+        .col-sm-12
+          +afQuickField name="eventLocation"

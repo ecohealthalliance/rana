@@ -6,32 +6,27 @@
 When running meteor locally the
 [cucumber tests](https://github.com/xolvio/meteor-cucumber)
 will run automatically when meteor starts or when files change.
-Errors will be reported in the console and in the browser via the velocity html-reporter.
+Errors will be reported in a log file and in the browser via the velocity html-reporter.
 
-To run the tests from the command line without running meteor, use ```meteor run --test```.
+Before running the tests, you will need to install the packages they use.
+In the tests/cucumber directory run `npm install`.
 
+To run the tests from the command line without running meteor, use ```meteor run --test```
+with the environment variables documented below.
 
-To run meteor without running tests, stop the selenium server (you'll get errors in the console, but it won't break the app) or use ```meteor run --production``` (note this also minifies the code)
+To run meteor without running tests use one of these commands:
 
+```VELOCITY=0 meteor run```
 
-The tests run using a remote selenium server, which must be started separately.
-Make sure you aren't running anything on port 5000 as the mirror app that is used for testing will not work.
-The same goes for port 4444 which selenium uses.
+```meteor run --production``` (note this also minifies the code)
 
 #### On a Mac:
-* Download [the selenium standalone server](https://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar)
-* Download and unzip [chromedriver](http://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip)
-* Put those in the same directory and start the selenium server: 
-```
-java -jar selenium-server-standalone-2.43.1.jar -Dwebdriver.chrome.driver=chromedriver
-```
-* Run the tests: ```meteor run --test```
+* Run the tests: ```SELENIUM_BROWSER=chrome CUCUMBER_TAGS=~@ignore meteor run --test```
 
-
-#### On Ubuntu:
-* Install Xvfb, the JRE, and unzip: 
+#### On Ubuntu (without a display):
+* Install Xvfb and the JRE: 
 ```
-sudo apt-get install xvfb default-jre unzip
+sudo apt-get install xvfb default-jre
 ```
 * Install Chrome:
 ```
@@ -40,26 +35,21 @@ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /et
 sudo apt-get update 
 sudo apt-get install google-chrome-stable 
 ```
-* Download the selenium standalone server:
-```
-wget https://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar
-```
-* Download chromedriver: 
-```
-wget http://chromedriver.storage.googleapis.com/2.14/chromedriver_linux64.zip
-unzip chromedriver_linux64.zip
-```
 * Start Xvfb: 
 ```
-Xvfb :99 -screen 5 1024x768x8 &
+Xvfb :99 -screen 5 1280x1024x8 &
+# Make sure the DISPLAY environement variable is defined in the terminal
+# you run meteor from. I suggest adding it to your .bashrc
 export DISPLAY=:99.5
 ```
-* Start the selenium server: 
+* Run the tests:
 ```
-java -jar selenium-server-standalone-2.43.1.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome -Dwebdriver.chrome.driver=chromedriver &
+SELENIUM_BROWSER=chrome CUCUMBER_TAGS=~@ignore meteor run --test
 ```
-* Run the tests: ```meteor run --test```
 
+The cucumber environment variables may change in the future.
+Check the following files if cucumber is updated beyond 0.8.0:
 
+https://github.com/xolvio/meteor-cucumber/blob/master/README.md
 
-
+https://github.com/xolvio/meteor-cucumber/blob/master/src/mirror-server.js

@@ -1,0 +1,102 @@
+.hero
+  background url(images/home-hero.jpg)
+  background-size cover
+  background-position center center
+  min-height 350px
+  position relative
+  .header
+    position absolute
+    top 50%
+    left 50%
+    centerPosition(-50%,-50%)
+    z-index 15
+.hero-header
+  color white
+  width 50%
+  margin 0
+  font-size 375%
+  letter-spacing 0.03em
+  line-height .9
+  @extend .dark-shadow
+  span
+    &:first-child
+      font-size 145%
+      display block
+      text-transform uppercase
+    &:last-child
+      font-weight 700
+.mask
+  cover()
+  background rgba(157, 83, 42, .5)
+  z-index 10
+
+.intro
+  width 80%
+  font-size 26px
+  text-align center
+  margin 50px auto 80px auto
+
+.simple-nav
+  margin-bottom 40px
+  
+  li
+    text-align center
+  i,
+  h2
+    transition()
+  h2
+    font-size 24px
+    color primary
+  i
+    font-size 80px
+    display block
+    margin-bottom 20px
+    color secondary
+    line-height normal
+  a
+    transition()
+    &:hover,
+    &:focus
+      text-decoration none
+      outline 0
+      i,
+      h2
+        transition()
+      i
+        color primary-strong
+      h2
+        color darken(primary, 20%)
+      
+.home-help
+  margin 50px 0 60px 0
+  text-align center
+  h2
+    font-size 24px
+  .btn
+    padding 12px 32px
+
+@media (max-width: 768px)
+  .hero
+    min-height 200px
+    .header
+      left 0
+      centerPosition(0, -50%)
+  .hero-header
+    width 100%
+    font-size 200%
+  .intro
+    width 100%
+    text-align left
+    font-size 18px
+    margin 30px auto 40px auto
+  .simple-nav
+    padding-bottom 20px
+    h2
+      font-size 18px
+    li
+      margin-bottom 30px
+  .home-help
+    margin 0
+    h2
+      font-size 18px
+      

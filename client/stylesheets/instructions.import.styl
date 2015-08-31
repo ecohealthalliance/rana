@@ -1,0 +1,50 @@
+.import-instructions
+  padding-bottom 20px
+  section
+    padding 30px 0 20px 0
+    .sub-section
+      margin-bottom 25px
+    p
+      margin-bottom 15px
+      width 80%
+    h4
+      color #666
+  .location
+    pre
+      margin-bottom 20px
+      &:last-of-type
+        margin-bottom 10px
+  .container
+    section
+      p
+        width 70%
+
+#importing-data
+  background #F5F5F5
+  padding-bottom 40px
+  margin-bottom 20px
+  border-bottom 1px solid #CCC
+  @extend .light-shadow
+  .btn
+    @extend .dark-shadow
+    span
+      vAlign()
+    span.glyphicon
+      top 0
+      font-size 130%
+      padding-left 3px
+pre
+  margin-bottom 10px
+  width 80%
+  @extend .light-shadow
+
+@media (max-width: 768px)
+  .import-instructions
+    section
+      p
+        width 100%
+  #importing-data
+    .btn
+      width 100%
+  pre
+    width 100%

@@ -1,0 +1,87 @@
+template(name="reportFormComplete")
+
+  if type
+    .report-form.space-btm-3
+      section.rm-pad-btm.odd
+        .container.name-action.title
+          h1
+            if isInsert
+              span New
+            else if isUpdate
+              span Update
+            span Report
+            span.preposition of
+            span.study-name #{study.name}
+            a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
+      if showApprovalBar
+        +approvalBar
+      else
+        .space-btm-2
+
+      .container
+        p.required-text #[span *] Indicates required field
+
+      +autoForm(
+        id="ranavirus-report"
+        collection="collections.Reports"
+        type=type
+        doc=reportDoc
+        redirectOnSubmit=urlQuery.redirectOnSubmit
+      )
+
+        +afQuickField name='studyId'
+
+        if isInsert
+          +afQuickField name='approval' value=userApproval
+
+        section.rm-pad-top
+          .container
+            +contactInfo
+
+        section.date-location.rm-pad-top
+          .container
+            +dateAndLocation
+
+        section.odd
+          .container
+            +populationInfo
+
+        section
+          .container
+            +species numInvolved=true
+
+        section.odd
+          .container
+            +classesMethods report=true
+
+        section
+          .container
+            .row.form-input-block
+              .col-md-4.col-sm-6.input-block
+                +afQuickField name='pathologyReports' id='pathologyReports'
+              .col-md-4.col-sm-6.input-block
+                +afQuickField name='images' id='images'
+              .col-md-4.col-sm-6.input-block
+                +afQuickField name='genBankAccessionNumbers' id='genBankAccessionNumbers'
+
+        section.rm-pad-top
+          .container
+            .row
+              .col-sm-9
+                +afQuickField name='additionalNotes' id='additionalNotes'
+
+        section.rm-pad-top
+          .container
+            +permissions
+
+        unless eq type "disabled"
+          +submit
+
+  else
+    h3 Invalid form id
+
+  unless isInsert
+    .review-panel
+      .review-panel-header Reviews
+      .review-content.hidden-panel
+        +reviews reportId=report._id

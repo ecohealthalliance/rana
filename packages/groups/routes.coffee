@@ -1,8 +1,11 @@
 Groups = share.Groups
 Invites = share.Invites
 
-Router.route "/group/:groupPath", {
+BASE_PATH = '/grrs'
 
+Router.route BASE_PATH + "/group/:groupPath", {
+
+  name: 'groupHome'
   template: 'groupHome'
 
   data: () ->
@@ -18,12 +21,14 @@ Router.route "/group/:groupPath", {
 }
 
 
-Router.route "/newGroup", {
+Router.route BASE_PATH + "/newGroup", {
+  name: 'newGroup'
+  template: 'newGroup'
   data: () ->
     groups: Groups
 }
 
-Router.route "/join/:inviteId", {
+Router.route BASE_PATH + "/join/:inviteId", {
   name: 'join'
   template: 'join'
 
@@ -37,7 +42,8 @@ Router.route "/join/:inviteId", {
     Meteor.subscribe "invite", @params.inviteId
 }
 
-Router.route('/group/:groupPath/info',
+Router.route(BASE_PATH + '/group/:groupPath/info',
+  name: 'groupInfo'
   where: 'client'
   template: 'groupInfo'
   data: ->

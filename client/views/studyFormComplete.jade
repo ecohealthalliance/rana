@@ -1,0 +1,68 @@
+template(name="studyFormComplete")
+
+  if type
+    +autoForm(
+      id="ranavirus-study"
+      collection="collections.Studies"
+      type=type
+      doc=studyDoc
+      redirectOnSubmit=urlQuery.redirectOnSubmit
+    )
+
+      .study-form.space-btm-3
+        section.rm-pad-btm.odd
+          .container.name-action.title
+            h1
+              if eq type 'insert'
+                span Add a New Study
+              else eq type 'update'
+                span.name  #{study.name}
+                span.action Update Study
+                a.btn.btn-primary.btn-inline.add-report(href="{{pathFor route='newReport' data=studyId query=redirectOnSubmit}}") Add a report
+                a.btn.btn-primary.btn-inline.import-reports(href="{{pathFor route='importReports' data=studyId query=redirectOnSubmit}}") Import CSV reports
+            p.required-text #[span *] Indicates required field
+
+        section.rm-pad
+          .container
+            .row.space-top-3
+              .col-sm-4
+                +afQuickField name='name'
+
+        section.contact
+          .container
+            +contactInfo
+
+        section.odd
+          .container
+            +permissions
+
+        section.form-grp-container.publication
+          .container
+            +afQuickField name='publicationInfo' id='publicationInfo'
+
+        section.instructions
+          .container
+            h2.space-top-2 Set default values for the reports in this study.
+            p Optional. Any values provided will be used as defaults for future reports added to this study.
+
+        section.date-location.rm-pad-top
+          .container
+            +dateAndLocation
+
+        section.odd
+          .container
+            +populationInfo
+
+        section
+          .container
+            +species numInvolved=false
+
+        section.odd.space-btm-5
+          .container
+            +classesMethods study=true
+
+        unless eq type "disabled"
+          +submit
+
+  else
+    h3 Invalid study id

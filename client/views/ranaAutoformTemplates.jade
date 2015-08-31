@@ -8,33 +8,36 @@
 // In the future we may want to use extension lib this:
 // https://github.com/aldeed/meteor-template-extension
 
+template(name="infoIcon")
+  span.infoIcon ?
+
 template(name="afFormGroup_rana")
   .form-group(class="form-group{{#if afFieldIsInvalid name=this.atts.name}} has-error{{/if}}")
     unless skipLabel
-      label($dyn=tooltipAtts)
+      label($dyn=dynamicAttrs)
         if this.label
           | this.label
         else
           | {{afFieldLabelText name=this.atts.name}}
+        if dynamicAttrs.tooltip
+          +infoIcon
       if minorLabelBlockText this.atts.name
         span.minor-label.block {{minorLabelBlockText this.atts.name}}
     +afFieldInput this.afFieldInputAtts
     span.help-block {{afFieldMessage name=this.atts.name}}
 
 template(name="afObjectField_rana")
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title {{afFieldLabelText name=this.atts.name}}
-    .panel-body
-      if afFieldIsInvalid name=this.atts.name
-        .help-block {{afFieldMessage name=this.atts.name}}
-      +afQuickFields name=this.atts.name
+  h3 {{afFieldLabelText name=this.atts.name}}
+  if afFieldIsInvalid name=this.atts.name
+    .help-block {{afFieldMessage name=this.atts.name}}
+  +afQuickFields name=this.atts.name
 
 template(name="afArrayField_rana")
   .panel.panel-default.content-panel
     .panel-heading
-      h3.panel-title {{afFieldLabelText name=this.atts.name}}
-        +tooltip name=this.atts.name
+      label($dyn=dynamicAttrs) {{afFieldLabelText name=this.atts.name}}
+        if dynamicAttrs.tooltip
+          +infoIcon
     if afFieldIsInvalid name=this.atts.name
      .panel-body.has-error
         .help-block {{afFieldMessage name=this.atts.name}}
@@ -47,9 +50,9 @@ template(name="afArrayField_rana")
                 span.glyphicon.glyphicon-minus
             +afQuickField name=this.name label=false options="auto" template="plain"
     if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
-      button.add-content.autoform-add-item(type="button", data-autoform-field="{{this.atts.name}}", data-autoform-minCount="{{this.atts.minCount}}", data-autoform-maxCount="{{this.atts.maxCount}}")
+      button.add-content.autoform-add-item(type="button", data-autoform-field="{{this.atts.name}}", data-autoform-minCount="{{this.atts.minCount}}", data-autoform-maxCount="{{this.atts.maxCount}}" title="Add another")
         span.glyphicon.glyphicon-plus
-        span Add another
+        span Add Another
 
 template(name="afCheckboxGroup_rana")
   .af-checkbox-group($dyn=dsk)
@@ -57,7 +60,9 @@ template(name="afCheckboxGroup_rana")
       .checkbox
         label
           input(type="checkbox", value="{{this.value}}", $dyn=atts)
-          span($dyn=tooltipAtts) #{this.label}
+          span($dyn=dynamicAttrs) #{this.label}
+            if dynamicAttrs.tooltip
+              +infoIcon
 
 template(name="afRadioGroup_rana")
   .af-radio-group($dyn=dsk)
@@ -65,7 +70,9 @@ template(name="afRadioGroup_rana")
       .radio
         label
           input(type="radio", value="{{this.value}}", $dyn=atts)
-          span($dyn=tooltipAtts) #{this.label}
+          span($dyn=dynamicAttrs) #{this.label}
+            if dynamicAttrs.tooltip
+              +infoIcon
 
 template(name="afBooleanRadioGroup_rana")
   div($dyn=dsk)
@@ -95,19 +102,19 @@ template(name="afSelect_rana")
         option($dyn=optionAtts) #{this.label}
 
 template(name='afInputText_rana')
-  input(type='text', value='#{this.value}', $dyn=atts)
+  input.form-control(type='text', value='#{this.value}', $dyn=atts)
 
 template(name='afInputDate_rana')
-  input(type='date', value='#{this.value}', $dyn=atts)
+  input.form-control(type='date', value='#{this.value}', $dyn=atts)
 
 template(name='afInputNumber_rana')
-  input(type='number' value='#{this.value}', $dyn=atts)
+  input.form-control(type='number' value='#{this.value}', $dyn=atts)
 
 template(name='afInputEmail_rana')
-  input(type='email' value='#{this.value}', $dyn=atts)
+  input.form-control(type='email' value='#{this.value}', $dyn=atts)
 
 template(name='afInputTel_rana')
-  input(type='tel', value='#{this.value}', $dyn=atts)
+  input.form-control(type='tel', value='#{this.value}', $dyn=atts)
 
 template(name='genusAutocomplete_rana')
-  input(type='text', value='#{this.value}', $dyn=atts)
+  input.form-control(type='text', value='#{this.value}', $dyn=atts)

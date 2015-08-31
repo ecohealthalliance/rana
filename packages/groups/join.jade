@@ -1,7 +1,9 @@
 template(name="join")
-  if invite
-  
-    button.btn.btn-primary.btn-large.join-button Join #{group.name}
+  .container
+    section
+      if invite
+      
+        button.btn.btn-primary.btn-large.join-button Become an admin of #{group.name}
 
-  else
-    .alert.alert-danger Invite is invalid or has already been used
+      else
+        .alert.alert-danger Invite is invalid or has already been used

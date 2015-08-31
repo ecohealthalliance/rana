@@ -1,0 +1,38 @@
+template(name="reportFormObfuscated")
+
+  if type
+    .report-form.space-btm-3
+      section.title.rm-pad-btm.odd
+        .container.name-action
+          if study.name
+            h1
+              span Report
+              span.preposition of
+              span.study-name #{study.name}
+              a.btn.btn-primary.btn-inline.study-link(href="{{pathFor route='editStudy' data=studyId}}") View Study
+      if showApprovalBar
+        +approvalBar
+      else
+        .space-btm-2
+
+    +autoForm(
+      id="ranavirus-report"
+      class="obfuscated"
+      collection="collections.Reports"
+      type="disabled"
+      doc=reportDoc
+    )
+
+      section.space-top-3
+        .container
+          +contactInfo
+
+      section.date-location.rm-pad-top
+        .container
+          h3 Location
+          .row.form-input-block
+            .col-sm-4
+              +afQuickField name="eventLocation.country"
+
+  else
+    h3 Invalid form id

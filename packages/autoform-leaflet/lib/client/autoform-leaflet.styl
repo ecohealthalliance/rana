@@ -1,6 +1,42 @@
+makeButton(color, text, shadow = 0)
+  color text
+  darker = darken(color, 10%)
+  background color
+  border 1px solid darker
+  transition .2s
+  font-weight 300
+  letter-spacing 0.03em
+  text-shadow 0 1px 0 rgba(shadow,shadow,shadow,.3)
+  &:hover,
+  &:focus
+    background darker
+    transition .2s
+    border-color darker
+  &:active
+    background darken(color, 20%)
+
+loading(positioned=false)
+  font-family icons
+  animate(2s)
+  if positioned
+    position absolute
+    top 50%
+    left 43%
+    transform translate(-50%, -50%)
+    z-index 100
+  opacity 1
+  font-size 180px
+  line-height 0
+
+animate(speed)
+  animation spin speed infinite linear
+  -webkit-animation spin speed infinite linear
+  -moz-animation spin speed infinite linear
+  -o-animation spin speed infinite linear
+
 .leaflet-canvas
-  width 500px
-  height 300px
+  min-width 100%
+  min-height 550px
 
 .leaflet-search
   margin-top 16px
@@ -32,5 +68,102 @@
 .form-group label
   width 300px
 
-.btn-group button
-  margin 16px
+.location-info
+  .form-group-header,
+  .form-group-subHeader
+    margin-bottom 12px
+    font-size 14px
+    font-weight bold
+    color #444
+  .form-group-subHeader
+    color #666
+  .form-group
+    margin-bottom 15px
+  label
+    font-size 13px
+  .row:last-child,
+  .form-group:last-child
+      margin-bottom 0
+  h5
+    color #666
+
+.location-details-wrap
+  position relative
+
+.location-details
+  .form-group-header
+    &:first-of-type
+      margin-top 0
+
+.location-btns
+  margin-top 15px
+  margin-bottom 25px
+
+.leaflet-locate
+  makeButton(#3F88A0, white)
+  
+.leaflet-clear
+  makeButton(#ebebeb, #333, 255)
+
+.loader
+  display none
+
+.loading
+  .loader
+    loading(true)
+    display block
+  div
+    opacity .7
+    transition .2s
+
+.button-default[disabled], 
+.btn[disabled]
+  background #EBEBEB
+
+.btn-loading
+  background #CCC
+  .loader
+    display inline-block
+    vertical-align middle
+    loading(false)
+    margin-right 5px
+    font-size 20px
+  
+
+marker-width = 22px
+marker-height = 40px
+arrow-top = (marker-height * 4 / 5)
+arrow-width = (marker-width * 3 / 4)
+arrow-height = (marker-height / 2)
+
+.map-marker-default
+  position relative
+  text-align center
+  // Shift marker position so it points to the correct location
+  margin-top (-(arrow-top + arrow-height))
+  margin-left (-(marker-width / 2))
+  text-shadow 0px 2px 5px rgba(0,0,0,.1)
+  &::before
+    content 'm'
+    display block
+    font-family icons
+    font-size marker-height
+    color #9D532A
+
+@media (max-width: 992px)
+  .leaflet-canvas
+    margin-top 0
+  .location-btns
+    button
+      margin-bottom 10px
+      padding 15px
+  .location-details
+    margin-top 30px
+  .leaflet-canvas
+    min-height 400px
+  .loading .loader
+    left 36%
+
+@media (max-width: 768px)
+  .leaflet-canvas
+    min-height 350px

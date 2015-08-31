@@ -1,0 +1,25 @@
+.banner
+  background primary
+  p,
+  i
+    vAlign()
+    shadow(0, .4)
+  p
+    margin 0
+    padding 5px 0
+    color lighten(primary, 90%)
+    font-weight 200
+    font-size 13px
+    letter-spacing .01em
+  i
+    font-size 130%
+    color pending
+
+.banner-hidden
+  padding 0
+  max-height 0
+
+.banner-showing
+  transition(.8s, , ease-out, .5s)
+  max-height 40px
+  border-bottom 2px solid primary-dark

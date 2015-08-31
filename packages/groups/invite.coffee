@@ -6,7 +6,7 @@ InviteSchema = new SimpleSchema {
   email:
     type: String
     regEx: SimpleSchema.RegEx.Email
-    label: "Invite a user by email"
+    label: "Invite an admin by email"
   group:
     type: String
     autoform:
@@ -30,12 +30,14 @@ if Meteor.isServer
         groupName = Groups.findOne(doc.group).name
 
         userEmail = Meteor.users.findOne(@userId).emails[0].address
+        joinPath = Router.path 'join', {inviteId: inviteId}
+        joinPath = joinPath.slice 1 # remove extra slash
 
         Email.send {
           from: "#{groupName} Administrator<no-reply@ecohealth.io>"
           to: doc.email
-          subject: "Join #{groupName}"
-          text: "You have been invited to #{groupName} by #{userEmail}. Visit #{Meteor.absoluteUrl()}join/#{inviteId} to join."
+          subject: "Become an admin of #{groupName}"
+          text: "You have been invited to become an admin of #{groupName} by #{userEmail}. Visit #{Meteor.absoluteUrl()}#{joinPath} to accept."
         }
       else
         throw new Meteor.Error "403", "user is not a group admin"
@@ -44,7 +46,7 @@ if Meteor.isServer
       if @userId
         invite = Invites.findOne inviteId
         if invite
-          Roles.addUsersToRoles @userId, "user", invite.group
+          Roles.addUsersToRoles @userId, "admin", invite.group
           Invites.remove invite._id
         else
           throw new Meteor.Error "404", "invite not found"

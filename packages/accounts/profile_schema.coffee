@@ -1,28 +1,34 @@
 share.UserProfileSchema = new SimpleSchema
-  name: 
+  name:
     type: String
-  phone:
-    type: String
-    optional: true
   organization:
     type: String
     optional: true
+    label: 'Organization Name'
   'organizationStreet':
     type: String
     optional: true
+    label: 'Address'
   'organizationStreet2':
     type: String,
     optional: true
+    label: 'Address 2 (Apt, Floor, Suite)'
   'organizationCity':
     type: String
     optional: true
+    label: 'City'
   'organizationStateOrProvince':
     type: String
+    optional: true
+    label: 'State or Province'
+  'organizationPostalCode':
+    type: String
+    label: 'Zip Code'
     optional: true
   'organizationCountry':
     type: String
     optional: true
-  'organizationPostalCode':
+    label: 'Country'
+  phone:
     type: String
-    label: 'ZIP'
     optional: true

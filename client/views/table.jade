@@ -1,9 +1,28 @@
 template(name="table")
-  .vis-container
-    #control-panel
-      +filterControls query=query
-    .vis-table
-      if isEmpty
-        h2 No Reports Found
-      else
-        +reactiveTable collection=collection settings=settings
+  section.rm-pad-btm
+    .container
+      button.toggle-filter.btn.btn-primary(href="#")
+        span Filter Tables
+        i.fa.fa-filter
+      button.export.btn.btn-primary.btn-inline(href="#")
+        span Export
+        i.fa.fa-download
+      a.btn.btn-primary.btn-inline(href="{{pathFor route='selectImportStudy'}}")
+        span Import
+        i.fa.fa-upload
+      .filter-controls.table-filters.hidden
+        +filterControls query=query
+
+  section.rm-pad-top
+    .container
+      h1 Full Reports
+    .table-wrap.reports-table.container
+      +reactiveTable collection="reports" settings=settings filters=filters
+  section.rm-pad-top
+    .container
+      h1 Obfuscated Reports
+    .table-wrap.reports-table.container
+      +reactiveTable collection="obfuscatedReports" settings=obfuscatedSettings filters=filters
+
+template(name="noReports")
+  h3 No Reports Found

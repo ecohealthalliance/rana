@@ -1,0 +1,7 @@
+template(name="selectImportStudy")
+  section.rm-pad-btm.odd
+    .container.name-action.title
+      h1 Select a Study to Import Reports
+  section
+    .container.studies.table-wrap
+      +reactiveTable collection="studiesCreatedByUser" settings=settings

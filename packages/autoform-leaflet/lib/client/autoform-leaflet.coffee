@@ -39,7 +39,15 @@ Template.leaflet.rendered = ->
 
   @setMarker = (location, zoom=0) =>
     @clearMarker()
-    @marker = L.marker(location).addTo(@map)
+    @marker = L.marker(location,
+      icon: L.divIcon({
+        className: 'map-marker-container'
+        iconSize:null
+        html:"""
+          <div class="map-marker-default">
+          </div>
+        """
+      })).addTo(@map)
 
   @clearMarker = () =>
     if @marker then @map.removeLayer(@marker)
@@ -98,6 +106,15 @@ Template.leaflet.rendered = ->
       @setMarker location
       @map.panTo location
 
+  @toggleLoader = (e) =>
+    details = $('.location-details-wrap')
+    if(e)
+      $(e.target).attr('disabled', true).addClass('btn-loading')
+      details.addClass('loading')
+    else
+      $('.leaflet-locate').attr('disabled', false).removeClass('btn-loading')
+      details.removeClass('loading')
+
   @reset = () =>
     @clearMarker()
     @map.panTo new L.LatLng(@options.defaultLat, @options.defaultLon)
@@ -122,25 +139,30 @@ Template.leaflet.rendered = ->
 
   @marker = null
 
-  @map = L.map(@$('.leaflet-canvas')[0]).setView [0, -0], 2
-  L.tileLayer('//otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png', {
-    attribution: """
-    Map Data &copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors,
-    Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>
-    <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />
+  @map = L.map(@$('.leaflet-canvas')[0],
+    scrollWheelZoom: false
+    maxBounds: L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
+    ).setView [0, -0], 2
+  L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+    attribution: """Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.
     <br>
     CRS:
-    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" target="_blank">
-      EPSG:3857
+    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" >
+    EPSG:3857
     </a>,
-    Projection: Spherical Mercator
-    """
-    subdomains: '1234'
-    type: 'osm'
+    Projection: Spherical Mercator""",
+    subdomains: 'abcd',
+    type: 'osm',
     maxZoom: 18
   }).addTo(@map)
   L.control.scale().addTo(@map)
-  
+
+  that = @
+  @map.on 'click', () ->
+    that.map.scrollWheelZoom.enable()
+  @map.on 'mouseout', () ->
+    that.map.scrollWheelZoom.disable()
+
   if @data.value
     $(@$('.leaflet-search')[0]).val ''
     $(@$('.lon')[0]).val @data.value.geo.coordinates[0]
@@ -178,14 +200,20 @@ Template.leaflet.rendered = ->
     @updateMinSecFromLonLat()
     @map.setView @marker.getLatLng(), @map.getZoom()
 
+    @toggleLoader()
+
+
   @$('.leaflet-canvas').closest('form').on 'reset', =>
     @reset()
+
+  @$('.leaflet-canvas').data { map: @map }
 
 Template.leaflet.events
 
   'click .leaflet-locate': (e, t) ->
     e.preventDefault()
     unless navigator.geolocation then return false
+    t.toggleLoader(e)
     t.map.locate()
 
   'click .leaflet-clear': (e, t) ->
@@ -199,7 +227,7 @@ Template.leaflet.events
     t.updateViewFromLonLat()
 
   'change .northing, change .easting, change .zone': (e, t) ->
-    t.$(t.$('.source')[0]).val 'utm'
+    t.$(t.$('.source')[0]).val 'UTM'
     t.updateLonLatFromUTM()
     t.updateMinSecFromLonLat()
     t.updateViewFromLonLat()

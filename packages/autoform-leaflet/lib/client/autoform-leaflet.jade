@@ -1,62 +1,68 @@
 template(name='leaflet')
-  div(data-schema-key=schemaKey)
+  div.location-info(data-schema-key=schemaKey)
     input.source(type='hidden')
-    .col-md-6
-      .form-group
+    .row.location-btns-wrap
+      .col-sm-6.location-btns
         .row
-          h4.form-group-header Degrees Decimal
-          .col-md-6
-            label(for='lon') Longitude
-            input.lon.form-control(name='lon')
-          .col-md-6
-            label(for='lat') Latitude
-            input.lat.form-control(name='lat')
-        .row
-          h4.form-group-header Degrees / Minutes / Seconds
-          .col-md-6
-            h5 Longitude
-            .row
-              .col-md-4
-                label(for='degreesLon') degrees:
-                input.degreesLon.form-control(name='degreesLon')
-              .col-md-4
-                label(for='minutesLon') minutes:
-                input.minutesLon.form-control(name='minutesLon')
-              .col-md-4
-                label(for='secondsLon') seconds:
-                input.secondsLon.form-control(name='secondsLon')
-        .row
-          .col-md-6
-            h5 Latitude
-            .row
-              .col-md-4
-                label(for='degreesLat') degrees:
-                input.degreesLat.form-control(name='degreesLat')
-              .col-md-4
-                label(for='minutesLat') minutes:
-                input.minutesLat.form-control(name='minutesLat')
-              .col-md-4
-                label(for='secondsLat') seconds:
-                input.secondsLat.form-control(name='secondsLat')
-        .row
-          h4.form-group-header Universal Transverse Mercator
-          .col-md-4
-            label(for='easting') Easting
-            input.easting.form-control(name='easting')
-          .col-md-4
-            label(for='norting') Northing
-            input.northing.form-control(name='northing')
-          .col-md-4
-            label(for='zone') Zone
-            input.zone.form-control(name='zone')
-        .row
-          .col-md-4
-            label(for='country') Country
-            input.country.form-control(name='country')
-    .col-md-6
-      div
-        //- input.leaflet-search.map-controls(type='text')
+          .col-md-6.col-sm-8.col-xs-8
+            button.leaflet-locate.btn.btn-primary.btn-block 
+              span.loader l
+              span Current location
+          .col-md-3.col-sm-4.col-xs-4
+            button.leaflet-clear.btn.btn-default.btn-block Clear
+    .row.location-details-wrap
+      span.loader l
+      .col-md-6
         div.leaflet-canvas
-        .btn-group
-          button.leaflet-locate.btn.btn-default My location
-          button.leaflet-clear.btn.btn-default Clear
+      .col-md-6.location-details
+        .form-group
+          h5.form-group-header Degrees Decimal
+          .row
+            .col-xs-6
+              label(for='lat') Latitude
+              input.lat.form-control(name='lat')
+            .col-xs-6
+              label(for='lon') Longitude
+              input.lon.form-control(name='lon')
+        .form-group
+          h5.form-group-header Degrees / Minutes / Seconds
+          h5.form-group-subHeader Latitude
+          .row
+            .col-sm-4.col-xs-6
+              label(for='degreesLat') degrees:
+              input.degreesLat.form-control(name='degreesLat')
+            .col-sm-4.col-xs-6
+              label(for='minutesLat') minutes:
+              input.minutesLat.form-control(name='minutesLat')
+            .col-sm-4.col-xs-6
+              label(for='secondsLat') seconds:
+              input.secondsLat.form-control(name='secondsLat')
+          h5.form-group-subHeader Longitude
+          .row
+            .col-sm-4.col-xs-6
+              label(for='degreesLon') degrees:
+              input.degreesLon.form-control(name='degreesLon')
+            .col-sm-4.col-xs-6
+              label(for='minutesLon') minutes:
+              input.minutesLon.form-control(name='minutesLon')
+            .col-sm-4.col-xs-6
+              label(for='secondsLon') seconds:
+              input.secondsLon.form-control(name='secondsLon')
+        .form-group
+          h5.form-group-header Universal Transverse Mercator
+          .row
+            .col-sm-4.col-xs-6
+              label(for='easting') Easting
+              input.easting.form-control(name='easting')
+            .col-sm-4.col-xs-6
+              label(for='northing') Northing
+              input.northing.form-control(name='northing')
+            .col-sm-4.col-xs-6
+              label(for='zone') Zone
+              input.zone.form-control(name='zone')
+        .form-group
+          .row
+            .col-sm-4
+              label(for='country') Country
+              input.country.form-control(name='country')
+

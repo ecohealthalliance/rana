@@ -1,0 +1,77 @@
+secondary = #3F88A0
+
+.group-info
+  h1
+    margin-bottom 25px
+  h2
+    font-size 24px
+    color secondary
+  ul
+    margin-bottom 20px
+  img
+    max-width 200px
+    display inline-block
+    margin 10px
+    opacity .9
+    transition opacity .2s
+    border 2px solid transparent
+    border-radius 3px
+    &:hover,
+    &:focus
+      opacity 1
+      transition opacity .2s
+      border 2px solid secondary
+.group
+  button.btn
+    width 25%
+    
+.create-group
+  h2
+    text-align center
+
+.panel
+  border 0
+  box-shadow none
+  .panel-heading
+    background lighten(secondary, 90%)
+    border-bottom 2px solid lighten(secondary, 75%)
+  
+.user-info
+  padding-bottom 10px
+  border-bottom 1px solid #CCC
+  &:last-child
+    border-bottom 0
+  .email,
+  .organization
+    padding-left 15px
+
+.invite-user
+  margin-top 45px
+  
+.user-info
+  td
+    padding 5px
+  span
+    display block
+  
+@media (max-width: 768px)
+
+  .group-admin
+    .btn
+      width 100%
+    .users
+      margin-top 25px 
+  .group
+    button.btn
+      width 100%
+      padding 15px
+  .group-admin
+    .panel-body
+      padding-left 0
+      padding-right 0
+@media (max-width: 460px)
+  .group-info
+    img
+      min-width 100%
+      margin 0 0 15px 0
+

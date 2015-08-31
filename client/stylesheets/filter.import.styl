@@ -1,0 +1,201 @@
+.reports-table
+  .group-wrap,
+  .filter-wrap
+    margin 0
+
+.group-wrap
+  margin 10px
+
+.filter-controls
+  padding 10px
+  background ll-gray
+  border-radius 5px
+  border 1px solid darken(ll-gray, 10%)
+  margin-top 10px
+
+.filter
+  margin-top 20px
+  margin 10px auto
+  padding-top 20px
+  border-top 1px solid l-gray
+
+.filter-blocks
+  &::after
+    clearFix()
+
+.filter-panel
+  position relative
+
+.filter-wrap
+  margin 5px
+  clearFix()
+  .autoform-array-item,
+  .autoform-add-item
+    position relative
+    float left
+    width 23%
+    padding 20px
+    background white
+    border 1px solid darken(ll-gray,10%)
+    border-radius 5px
+    margin 1%
+    box-shadow 0 1px 2px rgba(100,100,100,.1)
+    
+  .autoform-array-item
+    min-height 250px
+    h3
+      display none
+
+  .autoform-remove-item
+    position absolute
+    top 4px
+    right 4px
+    font-size 24px
+    margin 0
+    color d-gray
+    span
+      top 0
+      line-height 0
+    &:hover
+      color primary-strong
+    
+  .autoform-add-item
+    text-align center
+    min-height 265px
+    span
+      position absolute
+      top 50%
+      left 50%
+      centerPosition()
+      font-size 40px    
+      color m-gray
+      transition()
+    &:hover
+      background darken(ll-gray, 2%)
+      transition()
+      span
+        color darken(m-gray, 10%)
+        transition()
+
+.table-filters
+  .filter-buttons
+    width 60%
+    margin 0 auto
+    button
+      float left
+      padding 10px
+    .run-filter
+      width 75%
+    .clear
+      width 20%
+      float right
+      margin 0
+    &::after
+      clearFix()
+    
+.map-filters
+  .autoform-array-item,
+  .autoform-add-item
+    width 48%
+  .filter
+    border 0
+    padding-top 0
+  .autoform-remove-item
+    font-size 24px
+  .filter-buttons
+    margin 0 10px
+
+
+#control-panel
+  position absolute
+  left 50px
+  top 10px
+  z-index 100
+  max-width 400px
+  min-width 25%
+  border-radius 5px
+  max-height 100%
+  overflow-y auto
+  overflow-x hidden
+  box-shadow 0 1px 5px rgba(0,0,0,0.3)
+  background rgba(255,255,255,.8)
+
+.toggler
+  display block
+  border-top 1px solid m-gray
+  padding 10px
+  font-size 16px
+  font-weight 600
+  position relative
+  color primary
+  transition()
+  &::after
+    @extend .icons
+    content '+'
+    position absolute
+    right 5px
+    top 50%
+    centerPosition(-50%,0)
+    line-height 0
+    font-size 20px
+  &:hover
+    background-color primary
+    color white
+    text-decoration none
+    transition()
+  &:first-of-type
+    border 0
+
+.toggler.active
+  background-color secondary
+  color white
+  text-decoration none
+  &::after
+    @extend .icons
+    content '-'
+    position absolute
+    right 5px
+    top 50%
+    centerPosition(-50%,0)
+    line-height 0
+  &:hover
+    background-color primary
+    color white
+    text-decoration none
+    
+@media (max-width: 900px)
+  .filter-wrap
+    .autoform-array-item,
+    .autoform-add-item
+      width 48%  
+  #control-panel
+    bottom 50px
+    right 10px
+    left 10px
+    top auto
+    max-width 100%
+    
+@media (max-width: 768px)
+  .filter-controls
+    padding 0
+    background none
+    border 0
+    .autoform-array-item,
+    .autoform-add-item
+      width 100%
+    .autoform-add-item
+      min-height 80px
+      margin-top 10px
+      margin-bottom 20px
+      font-size 30px
+    .filter-buttons
+      width 100%
+      .btn
+        width 100%
+        float none
+        margin-bottom 10px
+    .filter
+      border 0
+      margin 10px 0 20px 0
+      padding 0
+        

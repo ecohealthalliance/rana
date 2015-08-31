@@ -16,22 +16,22 @@ Template.map.query = ->
 
 Template.map.rendered = ->
   L.Icon.Default.imagePath = "/packages/fuatsengul_leaflet/images"
-  lMap = L.map(@$('.vis-map')[0]).setView([0, -0], 2)
-  L.tileLayer('//otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png', {
-    attribution: """
-    Map Data &copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors,
-    Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>
-    <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />
+  lMap = L.map(@$('.vis-map')[0],
+      maxBounds: L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180))
+    ).setView([10, -0], 2)
+  L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+    attribution: """Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.
     <br>
     CRS:
-    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" target="_blank">
-      EPSG:3857
+    <a href="http://wiki.openstreetmap.org/wiki/EPSG:3857" >
+    EPSG:3857
     </a>,
-    Projection: Spherical Mercator
-    """
-    subdomains: '1234'
+    Projection: Spherical Mercator""",
+    subdomains: 'abcd',
     type: 'osm'
+    minZoom: 2
     maxZoom: 18
+    noWrap: true
   }).addTo(lMap)
   L.control.scale().addTo(lMap)
 
@@ -44,20 +44,38 @@ Template.map.rendered = ->
     markers = new L.FeatureGroup()
     curGroupBy = Template.instance().groupBy.get()
     colors = [
-      '#8dd3c7'
-      '#ffffb3'
-      '#bebada'
-      '#fb8072'
-      '#80b1d3'
-      '#fdb462'
-      '#b3de69'
-      '#fccde5'
-      '#d9d9d9'
+      '#BC6A28'
+      '#C78DCA'
+      '#86C8DF'
+      '#6354BF'
+      '#FDAE61'
+      '#00A453'
+      '#C10004'
+      '#363636'
+      '#2C7BB6'
     ]
     groups = []
     if curGroupBy
+      getGroup = (report) ->
+        keys = curGroupBy.split "."
+        result = report
+        for key in keys
+          result = result?[key]
+        if _.isArray result
+          # Combine array keys into a human readable string using the schema
+          reportSchema = collections.Reports.simpleSchema().schema()
+          schemaOptions = reportSchema[curGroupBy].autoform.options
+          readableResult = _.filter(schemaOptions, (option) ->
+            _.contains(result, option.value)
+          )
+          readableResult = _.map(readableResult, (schemaOption) ->
+            schemaOption.label
+          )
+          readableResult.sort().join(", ")
+        else
+          result
       groups = _.uniq(data.map((report)->
-        report[curGroupBy]
+        getGroup(report)
       )).map((value, idx) ->
         name: value
         color: colors[idx]
@@ -70,43 +88,48 @@ Template.map.rendered = ->
     data?.forEach((report)->
       if curGroupBy
         color = _.findWhere(groups, {
-          name: report[curGroupBy]
+          name: getGroup(report)
         }).color
       else
         color = colors[0]
       if report.eventLocation and report.eventLocation isnt "," and report.eventLocation isnt null
+
+        mapPath = Router.path 'map'
+        editPath = Router.path 'editReport', {reportId: report._id}, {query: "redirectOnSubmit=#{mapPath}"}
+        numInvolvedOpts = getCollections().Reports
+          .simpleSchema()
+          .schema()
+          .numInvolved.autoform.afFieldInput.options
+        formattedNumInvolved = _.findWhere(numInvolvedOpts, {
+          value: report.numInvolved
+        })?.label
+        
         L.marker(report.eventLocation.geo.coordinates.reverse(), {
           icon: L.divIcon({
             className: 'map-marker-container'
             iconSize:null
             html:"""
-            <div class="map-marker" style="background-color:#{color};">
-              <div class="arrow" style="border-top-color:#{color};"></div>
+            <div class="map-marker" style="color:#{color};">
             </div>
             """
           })
-        })
-        .addTo(markers)
-        .bindPopup("""
-        <div>
-        <dl>
-          <dt>Date</dt>
-          <dd>#{report.eventDate}</dd>
-          <dt>Type of population</dt>
-          <dd>#{report.populationType}</dd>
-          <dt>Vertebrate classes</dt>
-          <dd>#{report.vertebrateClasses}</dd>
-          <dt>Species affected name</dt>
-          <dd>#{report.speciesName}</dd>
-          <dt>Number of individuals involved</dt>
-          <dd>#{report.numInvolved}</dd>
-          <dt>Reported By</dt>
-          <dd>#{report.createdBy.name}</dd>
-        </dl>
-        <a class="btn btn-primary btn-edit" href="/report/#{report._id}?redirectOnSubmit=/map">
-          View/Edit
-        </a>
-        </div>
-        """)
-      )
+        }).addTo(markers).bindPopup(
+          Blaze.toHTMLWithData(Template.mapPopup, {
+            studyName: getCollections().Studies.findOne(report.studyId).name
+            report: report
+            editPath: editPath
+            formattedNumInvolved: formattedNumInvolved
+          })
+        )
+    )
     markers.addTo(lMap)
+
+Template.map.events
+  'click .toggle-group': () ->
+    $('.group-wrap').toggleClass('hidden showing')
+    $('.toggle-group').toggleClass('active')
+  'click .toggle-filter': () ->
+    $('.map-filters').toggleClass('hidden showing')
+    $('.toggle-filter').toggleClass('active')
+  'click .btn-edit': () ->
+    toastr.remove()

@@ -1,0 +1,203 @@
+html,
+body
+  height 100%
+
+body
+  color body-text
+  @extend .open-sans
+
+h1,
+h2,
+h3,
+h4
+  color primary
+  font-weight 700
+
+h1
+  font-size 42px
+  font-weight 800
+
+h2
+  font-size 32px
+  color primary
+  margin-bottom 20px
+  margin-top 0
+
+h2.section-title
+  font-size 40px
+  margin-top 0
+
+h2 a.more-info
+  font-size 12px
+  color btn-default
+
+h3
+  font-size 20px
+  margin-top 0
+  margin-bottom 15px
+  color secondary
+
+h4
+  color body-text
+  font-weight 600
+  font-size 15px
+
+h5
+  font-size 100%
+  font-weight 600
+  color d-gray
+
+a,
+button,
+.btn
+  transition()
+  &:hover
+    transition()
+
+a
+  color primary-strong
+  &:hover,
+  &:focus
+    color primary
+
+
+textarea
+  display block
+  width 100%
+  height 34px
+  padding 6px 12px
+  font-size 14px
+  line-height 1.42857143
+  color #555
+  background-color #fff
+  background-image none
+  border 1px solid #ccc
+  border-radius 4px
+  -webkit-box-shadow inset 0 1px 1px rgba(0, 0, 0, .075)
+  box-shadow inset 0 1px 1px rgba(0, 0, 0, .075)
+  -webkit-transition border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s
+  -o-transition border-color ease-in-out .15s, box-shadow ease-in-out .15s
+  transition border-color ease-in-out .15s, box-shadow ease-in-out .15s
+
+select.form-control,
+input.form-control,
+textarea,
+textarea.form-control
+  border 2px solid m-gray
+
+input,
+textarea,
+.form-control
+  &:focus
+    outline 0
+    box-shadow none
+    webkit-box-shadow none
+    border-color secondary
+
+.page-wrap
+  position relative
+  min-height 100%
+
+.content-wrap
+  padding-bottom footer-height-actual+10
+
+.rm-pad
+  padding 0
+
+.rm-pad-top
+  padding-top 0
+  
+.rm-pad-btm
+  padding-bottom 0
+
+.btn
+  border-width 2px
+  .fa
+    padding 0 0 0 5px
+    font-size 110%
+    line-height 0
+    vAlign()
+
+.btn-primary
+  makeButton(secondary)
+
+.btn-danger
+  makeButton(primary-strong)
+
+.file-upload .btn, 
+.file-upload label.btn
+  makeButton(secondary)
+
+.button-default[disabled],
+.btn[disabled]
+  background lighten(secondary-light, 20%)
+  color body-text
+  text-shadow none
+
+.btn-primary
+  makeButton(secondary)
+
+.btn-success,
+.at-btn
+  makeButton(confirm)
+
+.jumbotron
+  margin-top 60px
+  background #FFF
+
+.hidden
+  display none
+  
+.showing
+  display block !important
+  visibility visible !important
+
+.hide
+  display none
+.show
+  display block  
+
+.col-sm-0
+  width 0%
+
+for num in 2 3 4 5 6
+  
+  .space-btm-{num}
+    margin-bottom num*10px
+
+  .space-top-{num}
+    margin-top num*10px
+
+for num in 1 2 3
+
+  .border-btm-{num}
+    addBorder('bottom', num, l-gray)
+
+  .border-top-{num}
+    addBorder('top', num, l-gray)
+
+.curtain
+  &::before
+    content ''
+    display block
+    background rgba(0,0,0,.4)
+    cover()
+
+i.fa
+  line-height 0
+  
+#toast-container 
+  > div
+    -moz-border-radius 3px 3px 0px 0px
+    -webkit-border-radius 3px 3px 0px 0px
+    border-radius 3px 3px 0px 0px
+ 
+@media (max-width: 768px) 
+
+  h1
+    font-size 32px
+  .content-wrap
+    padding-bottom footer-height-mobile-actual
+  .add-space-btm
+    @extend .space-btm-4
+  

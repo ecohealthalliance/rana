@@ -4,16 +4,13 @@
   'use strict';
 
   var assert = require('assert');
-
-  var _ = Package["underscore"]._;
+  var _ = require("underscore");
+  var url = require("url");
 
   module.exports = function () {
-
-    var helper = this;
-
     this.visit = function (path, callback) {
-      helper.world.browser
-      .url(helper.world.cucumber.mirror.rootUrl + path)
+      this.browser
+      .url(url.resolve(process.env.ROOT_URL, 'grrs/' + path))
       .waitForExist(".container", function(err, exists){
         assert(!err);
         assert(exists, "Could not find container element");
@@ -29,54 +26,68 @@
     this.Given('I am on the "$path" page', this.visit);
     this.When('I navigate to the "$path" page', this.visit);
 
-    this.Then('I should be redirected to the "$path" page', function (path, callback) {
-      helper.world.browser
-      .pause(4000)
-      .url(function (err, result) {
-        assert.ifError(err);
-        if(result.value.slice(-path.length) !== path) {
-          helper.world.browser.saveScreenshot(
-            helper.getAppDirectory() +
-            "/tests/screenshots/redirect failure - " +
-            helper.world.scenario.getName() +
-            ".png"
-          );
-        }
-        assert.equal(result.value.slice(-path.length), path);
-      }).call(callback);
-    });
-
     this.Then(/^I should see the title of "([^"]*)"$/, function (expectedTitle, callback) {
-      helper.world.browser.
+      this.browser.
         title(function (err, res) {
           assert.equal(res.value, expectedTitle);
           callback();
         });
     });
 
-    this.When(/^I click submit$/, function (callback) {
-      helper.world.browser
-        .saveScreenshot(
-          helper.getAppDirectory() +
-          "/tests/screenshots/submit - " +
-          helper.world.scenario.getName() +
-          ".png"
-        )
+    this.When(/^I click submit(?: again)?$/, function (callback) {
+      this.browser
+        .mustExist('[type=submit]')
         .click('[type=submit]')
+        .pause(200)
+        // .saveScreenshot(
+        //   this.getAppDirectory() +
+        //   "/tests/screenshots/submit - " +
+        //   this.scenario.getName() +
+        //   ".png"
+        // )
         .call(callback);
     });
 
     this.When('I click the "$buttonName" button',
     function (buttonName, callback) {
       var buttonNameToSelector = {
-        "Columns" : ".reactive-table-columns-dropdown button"
+        "Columns" : ".reactive-table-columns-dropdown button",
+        "Remove" : "a.remove",
+        "Edit Report" : ".toast-message a",
+        "Import CSV Reports": "a.import-reports",
+        "Import reports": "#import-submit"
       };
       var selector = buttonName;
       if(buttonName in buttonNameToSelector) {
         selector = buttonNameToSelector[buttonName];
       }
-      helper.world.browser
-        .click(selector)
+      this.browser
+        .clickWhenVisible(selector)
+        .call(callback);
+    });
+
+    this.When('I type "$word" into the prompt',
+    function (word, callback) {
+      this.browser.alertText(word)
+        .call(callback);
+    });
+
+    this.When('I accept the prompt',
+    function (callback) {
+      this.browser.alertAccept()
+      .call(callback);
+    });
+
+    this.When('I dismiss the toast',
+    function (callback) {
+      this.browser.clickWhenVisible('.toast').pause(1000).call(callback);
+    });
+
+    // This is broken. Webdriver complains that another element would receive the click.
+    this.When('I click on the edit link in the toast',
+    function (callback) {
+      this.browser
+        .click('.toast-message a')
         .call(callback);
     });
 
@@ -85,26 +96,19 @@
     function (shouldNot, prop, value, callback) {
       var query = {};
       query[prop] = value;
-      helper.world.browser
-      .executeAsync(function(query, done){
-        Meteor.subscribe("reports");
-        Tracker.autorun(function(){
-          var reports = collections.Reports.find(query);
-          if(reports.count() > 0) done(reports.fetch());
-        });
-        window.setTimeout(done, 2000);
-      }, query, _.once(function(err, ret){
-        assert.ifError(err);
-        if(shouldNot) {
-          assert(!ret.value, 'Report found');
+      this.checkForReports(query, function (reports) {
+        if (shouldNot) {
+          assert(!reports.length, "Report found");
         } else {
-          assert.equal(ret.value.length, 1, 'Incorrect number of reports');
+          assert.equal(reports.length, 1, "Incorrect number of reports");
         }
-      })).call(callback);
+        callback();
+      });
     });
 
     this.Given(/^there is a report( with a geopoint)?( created by someone else)? in the database$/,
     function(withGeo, someoneElse, callback) {
+      var that = this;
       var report = {
         studyId: 'fakeid',
         consent: true,
@@ -129,6 +133,11 @@
             coordinates: [ 121.55189514218364, 25.046919772516173 ]
           }
         };
+        report["numInvolved"] = "1";
+        report["vertebrateClasses"] = ["amphibian"];
+        report["populationType"] = "production";
+        report["speciesName"] = "A B";
+        report["eventDate"] = "1/2/2010";
       }
       if(someoneElse) {
         report['createdBy'] = {
@@ -136,70 +145,88 @@
           name: "Someone Else"
         };
       }
-      helper.addReports([report], function(err){
+      this.addReports([report], function(err){
         assert.ifError(err);
-        helper.world.browser
+        that.browser
         .waitForReport(report)
         .call(callback);
       });
     });
 
-    this.Then("there should be no delete button for the report by someone else",
-    function(callback){
-      helper.world.browser
-        .mustExist('.reactive-table tr')
-        .execute(function() {
-          return $('.reactive-table tr').map(function(idx, element){
-            var $el = $(element);
-            var someoneElse = /Someone Else/.test(
-              $el.find('td[class="createdBy.name"]').text()
-            );
-            var hasDelete = Boolean($el.find(".remove-form").length);
-            if(someoneElse && hasDelete) {
-              return $el.find('td').map(function(idx, item){
-                return item.textContent;
-              }).toArray().join(", ");
-            }
-            return false;
-          });
-        }, function(err, result){
-          assert.ifError(err);
-          var badRows = result.value.filter(function(item){
-            return item;
-          });
-          assert.equal(badRows.length, 0, "Delete button found in rows:\n" + badRows.join("\n"));
-        })
+    this.Given(/^there is a study( created by someone else)? in the database$/,
+    function(someoneElse, callback) {
+      var study = {
+        consent: true,
+        contact: {name: 'Test User', email: 'test@foo.com'},
+        dataUsePermissions: "Share full record"
+      };
+      if(someoneElse) {
+        study['createdBy'] = {
+          userId: "fakeId",
+          name: "Someone Else"
+        };
+      }
+      var that = this;
+      this.addStudies([study], function(err){
+        assert.ifError(err);
+        that.browser
+        .waitForStudy(study)
         .call(callback);
+      });
+    });
+
+    // Currently this is just used for benchmarking tests that aren't included
+    // in the main branch of the repository.
+    this.Given(/^there are (\d+) reports in the database$/,
+    function(number, callback) {
+      number = parseInt(number, 10);
+      var reports = _.range(number).map(function(){
+        return {
+          studyId: 'fakeid',
+          consent: true,
+          contact: {name: 'Test User', email: 'test@foo.com'},
+          dataUsePermissions: "Share full record",
+          // Random data to simulate large reports
+          speciesNotes: _.range(200).map(Math.random).join(' '),
+          eventLocation: {
+            source: 'LonLat',
+            // These fields are not used in the many reports test,
+            // so we do not need to generate correct values for them.
+            northing: 1,
+            easting: 2,
+            zone: 3,
+            degreesLon: -170,
+            minutesLon: 30,
+            secondsLon: 40.58647497889751,
+            degreesLat: 0,
+            minutesLat: 0,
+            secondsLat: 0.032469748221482304,
+            country: 'USA',
+            geo: {
+              type: 'Point',
+              coordinates: [
+                Math.random() * 360 - 180,
+                Math.random() * 180 - 90
+              ]
+            }
+          }
+        };
+      });
+      this.addReports(reports, function(err){
+        assert.ifError(err);
+        callback();
+      }, 200 * number);
     });
 
     this.Given(/^there are no reports in the database$/,
     function (callback) {
-      helper.resetTestDB([], callback);
-    });
-
-    this.When("I delete the report", function(callback){
-      helper.world.browser
-        .clickWhenVisible(".remove-form")
-        .alertText("delete", assert.ifError)
-        .alertAccept(assert.ifError)
-        .call(callback);
-    });
-
-    this.Then("I should not see a checkbox for the edit column",
-    function (callback) {
-      helper.world.browser
-        .getTextWhenVisible('.reactive-table-columns-dropdown li:last-child label',
-        function(err, text){
-          assert(!err);
-          assert.notEqual(text.trim(), "Controls column has visible checkbox.");
-        })
-        .call(callback);
+      this.resetTestDB([], callback);
     });
 
     this.Then(/^I should( not)? see the text "([^"]*)"/,
     function (shouldNot, text, callback) {
 
-      helper.world.browser
+      this.browser
         .waitForText('body')
         .getText('body', function(err, bodyText){
           assert(!err);
@@ -217,10 +244,57 @@
         }).call(callback);
     });
 
+    this.Then('I should be on the "$path" page', function (path, callback) {
+      var that = this;
+      this.browser
+      .pause(4000)
+      .url(function (err, result) {
+        assert.ifError(err);
+        if(result.value.slice(-path.length) !== path) {
+          that.browser.saveScreenshot(
+            that.getAppDirectory() +
+            "/tests/screenshots/redirect failure - " +
+            that.scenario.getName() +
+            ".png"
+          );
+        }
+        assert.equal(result.value.slice(-path.length), path);
+      }).call(callback);
+    });
+
+
     this.When('I click on the edit button',
     function(callback){
-      helper.world.browser
-      .click('.reactive-table td.controls .btn-edit')
+      this.browser
+      .click('.reactive-table td.controls .edit')
+      .call(callback);
+    });
+
+    this.When('I click on the admin settings button',
+    function(callback){
+      this.browser
+      .click('.admin-settings')
+      .call(callback);
+    });
+
+    this.When('I click on the view button',
+    function(callback){
+      this.browser
+      .click('.reactive-table td.controls .view')
+      .call(callback);
+    });
+
+    this.When('I click on the profile button',
+    function(callback){
+      this.browser
+      .click('.profile')
+      .call(callback);
+    });
+
+    this.When('I click the Add a report button',
+    function(callback){
+      this.browser
+      .click('.add-report')
       .call(callback);
     });
 

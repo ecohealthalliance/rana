@@ -1,0 +1,245 @@
+.table > tbody > tr > td
+  vertical-align middle
+
+.table-striped > tbody > tr:nth-of-type(odd)
+  background lighten(secondary-subtle,50%)
+
+.table-hover>tbody>tr
+  transition()
+
+.table-hover>tbody>tr:hover
+  background lighten(primary-subtle,50%)
+  transition()
+
+.table>thead>tr>th, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>tbody>tr>td, 
+.table>tfoot>tr>td
+  border-color darken(secondary-subtle, 10%)
+
+.reactive-table
+  padding 0
+  font-size 13px
+  th
+    color d-gray
+
+.reactive-table-options
+  width 100%
+  margin-bottom 10px
+  padding 0
+  float none
+  &::after
+    clearFix()
+
+.pull-right > .dropdown-menu
+  left 0
+
+.reports-table .reactive-table-columns-dropdown, .studies .reactive-table-columns-dropdown
+  float left !important
+  padding 0
+  button
+    float none
+    
+.reactive-table-filter
+  width 33%
+  padding 0
+
+.reactive-table-columns-dropdown
+  button
+    &::after
+      content '\f0db'
+      @extend .font-awesome
+      display inline-block
+      padding-left 10px
+      font-size 110%
+
+.reports-table
+  h1
+    margin 0
+  .reactive-table-columns-dropdown
+    float left
+    padding 0
+    width 100%
+    button
+      float right
+  .pull-right > .dropdown-menu
+    left auto
+  .positioned
+    position absolute
+    z-index 200
+  .filter-controls
+    margin 10px 0
+.table-striped>tbody>tr
+  &.approved
+    background none
+  &.rejected
+    background lighten(deny,90%)
+  &.pending
+    background lighten(pending,90%)
+
+.showingOpts
+  &::before
+    @extend .icons
+    vAlign()
+    content 'x'
+    font-size 120%
+    padding-right 5px
+    
+.reactive-table-navigation 
+  .form-inline input
+    vertical-align initial
+
+.controls
+  text-align right
+  vertical-align middle
+  white-space nowrap
+
+.control
+  vAlign()
+  linkColor(secondary)
+  padding 5px   
+  &:before,
+  &:after
+    vAlign()    
+    @extend .font-awesome
+    content ''
+    font-size 24px
+    line-height 0
+
+  &.view,
+  &.add-report
+    &:before
+      font-size 22px
+            
+  &.approve-report,
+  &.approve-user
+    linkColor(confirm)
+
+  &.remove
+    linkColor(d-gray, primary-strong)
+    &:before
+      content '\f014'
+  &.view
+    &:before
+      content '\f002'
+  &.edit
+    &:before
+      content '\f044'    
+      padding-top 2px
+  &.add-report
+    position relative
+    &:before
+      content '\f067'
+      font-size 12px
+      position absolute
+      left 9px
+      top 18px
+    &:after
+      content '\f016'
+  &.approve-report
+    &:before
+      content '\f00c'
+  &.reject-report
+    linkColor(deny)
+    &:before
+      content '\f00d'
+  &.approve-user
+    &:before
+      content '\f234'
+  &.reject-user
+    linkColor(deny)
+    &:before
+      content '\f235'
+
+@media (max-width: 768px)
+
+  .reactive-table-filter
+    width 40%
+    padding 0
+
+@media (max-width: 768px)
+  .table>tbody>tr>td
+    padding 0
+  .toggle-filter
+    width 100%
+    padding 10px
+  .table-wrap
+    padding 0
+    h1
+      margin-bottom 15px
+
+  .reactive-table
+    thead
+      display none
+    tr
+      position relative
+      display block
+      padding 15px
+      min-height 30px
+      border-bottom 1px solid l-gray
+      &:first-child
+        border-top 1px solid l-gray
+    td
+      display none
+      border-top 0 !important
+      &:first-child
+        font-weight 700
+      &:first-child,
+      &:nth-last-child(2)
+        display block
+        padding-right 50%        
+    .controls
+      display block
+      position absolute
+      right 15px
+      top 50%
+      centerPosition(0,-50%)
+      width 50%
+      text-align right
+      padding 0
+      .btn
+        margin 0 2px
+        &:last-of-type
+          margin-right 0
+    tr:last-child td:first-child
+      border 0
+  .reactive-table-filter
+    padding 10px 0 10px 0
+    width 100%
+  .reactive-table-options
+    margin 0
+    padding 15px
+    .dropdown-toggle
+      display none
+  .reactive-table-input
+    padding 20px 10px
+  .next-page
+  .page-number
+    width 100%
+    float none
+    label 
+      display none
+    .previous-page,
+    .next-page
+      display block
+      width 45%
+      float left
+      background secondary
+      text-align center
+      padding 10px
+      color white
+      border-radius 3px
+      cursor pointer
+      &:focus,
+      &:hover
+        background darken(secondary, 15%)
+        border primary
+        color white
+      
+    .next-page
+      float right
+      
+  .rows-per-page
+    display none

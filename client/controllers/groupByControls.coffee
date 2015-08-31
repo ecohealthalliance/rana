@@ -2,11 +2,11 @@ getCollections = => @collections
 
 Template.groupByControls.groups = ->
   [
-    ""
     "speciesName"
     "speciesGenus"
     "populationType"
     "vertebrateClasses"
+    "ranavirusConfirmationMethods"
     "ageClasses"
     "createdBy.name"
   ].map((item)->

@@ -1,15 +1,17 @@
 UserProfileSchema = share.UserProfileSchema
 
-Router.route 'profile', 
-  
+BASE_PATH = '/grrs'
+
+Router.route BASE_PATH + '/profile', 
+  name: 'currentUserProfile'
   action: () ->
-    @redirect "/profile/#{Meteor.userId()}"
+    @redirect Router.path 'profile', {_id: Meteor.userId()}
     
 Router.plugin "ensureSignedIn", {only: ["profile"]}
 
 
-Router.route '/profile/:_id',
-  
+Router.route BASE_PATH + '/profile/:_id',
+  name: 'profile'
   template: 'profile'
   
   data: () ->
@@ -21,4 +23,3 @@ Router.route '/profile/:_id',
   waitOn: () ->
     Meteor.subscribe "userInfo", @params._id
 
-    

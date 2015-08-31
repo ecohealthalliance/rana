@@ -61,7 +61,10 @@ Template.filterControls.created = ->
             "eventDate"
             "totalAnimalsConfirmedInfected"
             "totalAnimalsConfirmedDiseased"
-            {label: "creator", value: "createdBy.name"}
+            "ranavirusConfirmationMethods"
+            "eventLocation.country"
+            {label: "Creator", value: "createdBy.name"}
+            {label: "Study Name", value: "studyName"}
           ].map((item)->
             if _.isObject(item)
               item
@@ -99,13 +102,37 @@ Template.filterControls.rendered = ->
       filter = {}
       value = filterSpecification['value']
       property = filterSpecification['property']
+      if property == "studyName"
+        return $.Deferred ->
+          if filterSpecification['predicate'] != "="
+            return @reject "Predicate is not supported for study name."
+          Meteor.call "getStudyByName", value, (err, resp)=>
+            if err
+              @reject err
+            else
+              if resp?._id
+                @resolve {
+                  studyId : resp._id
+                }
+              else
+                # Filtering by a value that returns no documents is not an error
+                # so this is not rejected.
+                @resolve {
+                  thisShouldMatchNothing: "true"
+                }
+        .promise()
       if value and reportSchema[property].type == Number
         value = parseFloat(value)
       if value and reportSchema[property].type == Date
         value = new Date(value)
         if ("" + value) == "Invalid Date"
-          alert("Invalid Date Format")
-          return {}
+          return $.Deferred(-> @reject "Invalid Date Format").promise()
+      if value and reportSchema[property].type == Array
+        # Try to match search terms to the property option labels
+        schemaOptions = reportSchema[property].autoform.options
+        selectedOption = _.findWhere(schemaOptions, {label: value})
+        if selectedOption
+          value = selectedOption.value
       if filterSpecification['predicate'] == 'defined'
         filter[property] = {
           $exists: true
@@ -115,12 +142,16 @@ Template.filterControls.rendered = ->
           $exists: false
         }
       else if not value
-        return {}
+        return $.Deferred(-> @reject "No value").promise()
       else if filterSpecification['predicate'] == '>'
+        if reportSchema[property].type == String
+          return $.Deferred(-> @reject "Invalid predicate").promise()
         filter[property] = {
           $gt: value
         }
       else if filterSpecification['predicate'] == '<'
+        if reportSchema[property].type == String
+          return $.Deferred(-> @reject "Invalid predicate").promise()
         filter[property] = {
           $lt: value
         }
@@ -133,26 +164,32 @@ Template.filterControls.rendered = ->
             # expand species name queries
             Meteor.call("getSpeciesBySynonym", value, (err, resp)=>
               if err
-                alert JSON.stringify(err)
-                return
+                return @reject err
               if resp.length > 2
                 console.log "Ambiguous species"
               if resp.length == 0
-                @resolve filter
-                return
+                return @resolve filter
               filter["speciesName"] = {
                 $in: _.flatten(_.map(resp[0].synonyms, expandCase))
               }
               @resolve filter
             )
-      return $.Deferred(-> @resolve filter)
-    $.when.apply(this, filterPromises).then ()=>
+          .promise()
+      return $.Deferred(-> @resolve filter).promise()
+    $.when.apply(this, filterPromises)
+    .then ()=>
       filters = Array.prototype.slice.call(arguments)
       query = {}
       if filters.length > 0
         query = 
           $and: filters
       reactiveQuery.set(query)
+    .fail (result)=>
+      console.log result
+      reactiveQuery.set({
+        thisShouldMatchNothing: "true"
+      })
+      alert(result?.message or result)
 
 Template.filterControls.filterCollection = ->
   Template.instance().filterCollection
@@ -161,7 +198,7 @@ Template.filterControls.filter = ->
   Template.instance().filterCollection.findOne()
 
 Template.filterControls.events
-  'click .reset': ()->
+  'click .clear': ()->
     @._af.collection.remove(@._af.doc._id)
     @._af.collection.insert({
       filters: []
@@ -173,6 +210,7 @@ Template.filterControls.events
     schemaKeyIdx = schemaKeyComponents.slice(-2)[0]
     if schemaKeyType == "value"
       filterSpecification = AutoForm.getFormValues("filter-panel").insertDoc.filters[schemaKeyIdx]
+      if filterSpecification.property == "studyName" then return
       query = {}
       query[filterSpecification.property] = {
         $regex: "^" + utils.regexEscape($(e.target).val())

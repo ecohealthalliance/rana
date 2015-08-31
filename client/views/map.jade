@@ -1,20 +1,51 @@
 template(name="map")
   .vis-container
-    #control-panel
-      +groupByControls var=groupBy
-      if groups.length
-        .panel.panel-default
-          .panel-heading
-            h3.panel-title Groups
-          .panel-body
-            ul.list-group
-              each groups
-                li.list-group-item
-                  span.badge(style="background-color:#{color};") &nbsp;
-                  if name
-                    | #{name}
-                  else
-                    i [ empty ]
-      +filterControls query=query
     .vis-map
+    #control-panel
+      a.toggle-group.toggler(href="#") Group
+      .group-wrap.hidden
+        +groupByControls var=groupBy
+        if groups.length
+          .panel.panel-default
+            .panel-heading
+              h3.panel-title Groups
+            .panel-body
+              ul.list-group
+                each groups
+                  li.list-group-item
+                    span.badge(style="color:#{color};")
+                    if name
+                      | #{name}
+                    else
+                      i [ empty ]
+      a.toggle-filter.toggler(href="#") Filter
+      .map-filters.hidden
+        +filterControls query=query
 
+template(name="mapPopup")
+  .map-popup
+    h2 #{studyName}
+    dl
+      if report.eventDate
+        dt Date
+        dd #{report.eventDate}
+  
+      if report.vertebrateClasses
+        dt Vertebrate classes
+        dd #{report.vertebrateClasses}
+
+      if report.populationType
+        dt Type of population
+        dd #{report.populationType}
+
+      if report.speciesName
+        dt Species affected name
+        dd #{report.speciesName}
+
+      if formattedNumInvolved
+        dt Number of individuals involved
+        dd #{formattedNumInvolved}
+      
+      dt Reported By
+      dd #{report.createdBy.name}
+    a.btn.btn-primary.btn-block.btn-edit(href="#{editPath}") View/Edit

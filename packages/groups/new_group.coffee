@@ -8,6 +8,6 @@ AutoForm.hooks
           console.log "error", err
         onReady: () ->
           groupPath = Groups.findOne(result)?.path
-          Router.go "/group/#{groupPath}"
+          Router.go 'groupHome', {groupPath: groupPath}
       }
       

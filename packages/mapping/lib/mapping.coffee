@@ -1,17 +1,21 @@
 Mapping = {}
 
+round = (num) ->
+  parseFloat(parseFloat(num).toFixed(8))
+
+
 Mapping.utmFromLonLat = (lon, lat) ->
   zone = Mapping.lon2UTMZone lon
   utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
   lonlatProj = proj4.Proj('WGS84')
   utm = proj4.transform(lonlatProj, utmProj, [lon, lat])
-  { easting: utm.x, northing: utm.y, zone: zone }
+  { easting: round(utm.x), northing: round(utm.y), zone: zone }
 
 Mapping.lonLatFromUTM = (easting, northing, zone) ->
   utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
   lonlatProj =  proj4.Proj('WGS84')
   lonLat = proj4.transform utmProj, lonlatProj, [easting, northing]
-  { lon: lonLat.x, lat: lonLat.y }
+  { lon: round(lonLat.x), lat: round(lonLat.y) }
 
 Mapping.lon2UTMZone = (lon) ->
   Math.floor(((lon + 180) / 6) %% 60) + 1
@@ -23,7 +27,7 @@ Mapping.decimal2MinSec = (decimal) ->
 
   degrees: degrees
   minutes: minutes
-  seconds: seconds
+  seconds: round(seconds)
 
 Mapping.minSec2Decimal = (degrees, min, sec) ->
-  degrees + min / 60 + sec / 3600
+  round(degrees + min / 60 + sec / 3600)
