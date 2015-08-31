@@ -1,11 +1,5 @@
 Template.selectImportStudy.helpers
 
-  selector: ->
-    $or: [
-      { "createdBy.userId": Meteor.userId() }
-      { "dataUsePermissions": { $not: "Share obfuscated" } }
-    ]
-
   settings: () =>
 
     selectReportButton = (obj) ->

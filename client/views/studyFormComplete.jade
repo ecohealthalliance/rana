@@ -15,11 +15,13 @@ template(name="studyFormComplete")
             h1
               if eq type 'insert'
                 span Add a New Study
-              else eq type 'update'
+              else if eq type 'update'
                 span.name  #{study.name}
                 span.action Update Study
                 a.btn.btn-primary.btn-inline.add-report(href="{{pathFor route='newReport' data=studyId query=redirectOnSubmit}}") Add a report
                 a.btn.btn-primary.btn-inline.import-reports(href="{{pathFor route='importReports' data=studyId query=redirectOnSubmit}}") Import CSV reports
+              else
+                span.name  #{study.name}
             p.required-text #[span *] Indicates required field
 
         section.rm-pad

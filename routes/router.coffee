@@ -23,8 +23,14 @@ Router.route('newReport',
   template: 'reportForm'
   where: 'client',
   data: ->
-    type: 'insert'
-    study: getCollections().Studies.findOne @params.studyId
+    study = getCollections().Studies.findOne @params.studyId
+    type = if Meteor.userId() and Meteor.userId() == study.createdBy.userId
+        'insert'
+      else
+        'disabled'
+
+    type: type
+    study: study
     urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
@@ -116,8 +122,12 @@ Router.route('importReports',
   template: 'importForm'
   where: 'client',
   data: ->
-    study: getCollections().Studies.findOne(@params.studyId)
+    study = getCollections().Studies.findOne(@params.studyId)
+    canImport = Meteor.userId() and Meteor.userId() == study.createdBy.userId
+
+    study: study
     urlQuery: @params.query
+    canImport: canImport
   waitOn: ->
     [
       Meteor.subscribe("studies", @params.studyId)
