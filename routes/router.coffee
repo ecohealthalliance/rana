@@ -23,8 +23,14 @@ Router.route('newReport',
   template: 'reportForm'
   where: 'client',
   data: ->
-    type: 'insert'
-    study: getCollections().Studies.findOne @params.studyId
+    study = getCollections().Studies.findOne @params.studyId
+    type = if Meteor.userId() and Meteor.userId() == study.createdBy.userId
+        'insert'
+      else
+        'disabled'
+
+    type: type
+    study: study
     urlQuery: @params.query
   onAfterAction: ->
     Meteor.subscribe("genera")
