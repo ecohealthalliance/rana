@@ -98,13 +98,12 @@ loadCSVData = (csvFile, study, redirect) ->
   Meteor.call 'getCSVData', csvFile, (err, data) ->
     reportSchema = collections.Reports.simpleSchema()._schema
     reportFields = Object.keys reportSchema
-    report = {}
-    for studyField in Object.keys study
-      if studyField != '_id' and studyField in reportFields
-        report[studyField] = _.clone study[studyField]
-
     for importData in data
-      importReport = buildReportFromImportData importData, report
+      report = {}
+      for studyField in Object.keys study
+        if studyField != '_id' and studyField in reportFields
+          report[studyField] = _.clone study[studyField]
+      importReport = buildReportFromImportData importData
       _.extend report, importReport
       report.createdBy =
         userId: Meteor.user()._id
@@ -137,7 +136,7 @@ updateImportReports = (data, errorCallback) ->
 
   for row in data
 
-    report = buildReportFromImportData row, report
+    report = buildReportFromImportData row
 
     report.studyId = 'fakeid'
     report.createdBy =
@@ -156,7 +155,7 @@ updateImportReports = (data, errorCallback) ->
 
     ImportReports.insert report, errorCallback
 
-buildReportFromImportData = (importData, report) ->
+buildReportFromImportData = (importData) ->
 
   report = {}
 
