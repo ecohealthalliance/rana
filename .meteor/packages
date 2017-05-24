@@ -10,6 +10,7 @@ stylus
 mquandalle:jade
 underscore
 iron:router
+iron:middleware-stack@1.1.0
 twbs:bootstrap
 aldeed:autoform
 aldeed:collection2
