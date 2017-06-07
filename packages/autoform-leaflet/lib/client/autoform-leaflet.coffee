@@ -11,7 +11,7 @@ AutoForm.addInputType 'leaflet',
     if node.find('.lat').val() != ''
       northing: parseFloat node.find('.northing').val()
       easting: parseFloat node.find('.easting').val()
-      zone: parseInt node.find('.zone').val()
+      zone: node.find('.zone').val()
       degreesLon: parseFloat node.find('.degreesLon').val()
       minutesLon: parseFloat node.find('.minutesLon').val()
       secondsLon: parseFloat node.find('.secondsLon').val()
@@ -64,7 +64,7 @@ Template.leaflet.rendered = ->
   @updateLonLatFromUTM = () =>
     easting = parseFloat($(@$('.easting')[0]).val())
     northing = parseFloat($(@$('.northing')[0]).val())
-    zone = parseInt($(@$('.zone')[0]).val())
+    zone = $(@$('.zone')[0]).val()
     if not isNaN(easting) and not isNaN(northing) and not isNaN(zone)
       coords = Mapping.lonLatFromUTM easting, northing, zone
       $(@$('.lat')[0]).val coords.lat

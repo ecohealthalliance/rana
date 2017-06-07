@@ -6,13 +6,21 @@ round = (num) ->
 
 Mapping.utmFromLonLat = (lon, lat) ->
   zone = Mapping.lon2UTMZone lon
-  utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
+  southernHemisphere = ''
+  if lat < 0
+    southernHemisphere = ' +south'
+    zone += ' south'
+  utmProj = proj4.Proj('+proj=utm +zone=' + String(zone) + southernHemisphere)
   lonlatProj = proj4.Proj('WGS84')
   utm = proj4.transform(lonlatProj, utmProj, [lon, lat])
   { easting: round(utm.x), northing: round(utm.y), zone: zone }
 
 Mapping.lonLatFromUTM = (easting, northing, zone) ->
-  utmProj = proj4.Proj('+proj=utm +zone=' + String(zone))
+  hemisphere = zone.split(' ')[1]
+  southernHemisphere = ''
+  if hemisphere == 'south'
+    southernHemisphere = ' +south'
+  utmProj = proj4.Proj('+proj=utm +zone=' + String(zone) + southernHemisphere)
   lonlatProj =  proj4.Proj('WGS84')
   lonLat = proj4.transform utmProj, lonlatProj, [easting, northing]
   { lon: round(lonLat.x), lat: round(lonLat.y) }

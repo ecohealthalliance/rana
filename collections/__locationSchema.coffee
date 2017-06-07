@@ -6,7 +6,7 @@ SimpleSchema.messages
   lonOutOfRange: '[label] longitude should be between -180 and 180'
   northing: '[label] northing should be between 0 and 10,000,000'
   easting: '[label] easting should be between 0 and 1,000,000'
-  zone: '[label] zone should be between 1 and 60'
+  zone: '[label] zone should be between 1 and 60. North or south can be appended to specify the hemisphere.'
   degressLonOutOfRange: '[label] longitude degrees should be between -180 and 180'
   minutesLonOutOfRange: '[label] latitude minutes should be between 1 and 60'
   secondsLonOutOfRange: '[label] latitude seconds should be between 1 and 60'
@@ -17,7 +17,7 @@ SimpleSchema.messages
 @locationSchema = new SimpleSchema
   source:
     type: String
-    allowedValues: [ 'LonLat', 'MinSec', 'utm', 'map' ]
+    allowedValues: [ 'LonLat', 'MinSec', 'utm', 'map', 'UTM' ]
   northing:
     type: Number
     decimal: true
@@ -29,9 +29,16 @@ SimpleSchema.messages
     custom: ->
       return 'easting' unless 0 <= @value <= 11000000
   zone:
-    type: Number
+    type: String
     custom: ->
-      return 'zone' unless 1 <= @value <= 60
+      [zoneNum, hemisphere] = @value.split(' ')
+      if parseInt(zoneNum, 10) < 1
+        return 'zone'
+      else if parseInt(zoneNum, 10) > 60
+        return 'zone'
+      else if hemisphere
+        if hemisphere.toLowerCase() != 'north' and hemisphere.toLowerCase() != 'south'
+          return 'zone'
   degreesLon:
     type: Number
     custom: ->
